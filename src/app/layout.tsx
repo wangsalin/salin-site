@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import { MouseSpotlight } from "@/components/ui/mouse-spotlight";
 import { BackToTop } from "@/components/ui/back-to-top";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -9,7 +10,7 @@ import { siteConfig } from "@/data/site";
 export const metadata: Metadata = {
   title: {
     default: siteConfig.title,
-    template: `%s | ${siteConfig.name}`,
+    template: `%s | ${siteConfig.brandName}`,
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
@@ -81,7 +82,9 @@ export default function RootLayout({
         <main className="flex-1 pt-16">{children}</main>
         <SiteFooter />
         <BackToTop />
+        <Analytics />
       </body>
     </html>
   );
 }
+

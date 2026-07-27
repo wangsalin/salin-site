@@ -51,10 +51,10 @@ export function SiteHeader() {
             </div>
             <div className="flex flex-col">
               <span className="font-extrabold tracking-wider text-sm text-[var(--text-primary)] leading-none flex items-center gap-1">
-                Salin <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+                狗哥 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
               </span>
               <span className="text-[10px] font-mono text-[var(--text-secondary)] tracking-tight leading-tight mt-0.5">
-                FDE & AI LANDING
+                Wang Salin · AI 实践
               </span>
             </div>
           </Link>
