@@ -48,62 +48,9 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_380px] gap-12 lg:gap-16">
-        {/* 左侧：双向选择 */}
-        <div className="space-y-10">
-          {/* 适合交流的方向 */}
-          <div>
-            <h2
-              className="text-lg font-bold mb-5 flex items-center gap-2"
-              style={{ color: "var(--text-primary)" }}
-            >
-              <CheckCircle2 className="text-emerald-500" size={20} /> 适合联系我的情况
-            </h2>
-            <div className="space-y-3">
-              {suitable.map((dir) => (
-                <div
-                  key={dir.label}
-                  className="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] glass-card-hover"
-                >
-                  <div className="font-bold text-base mb-1" style={{ color: "var(--text-primary)" }}>
-                    {dir.label}
-                  </div>
-                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                    {dir.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* 不适合的情况 */}
-          <div>
-            <h2
-              className="text-lg font-bold mb-5 flex items-center gap-2"
-              style={{ color: "var(--text-primary)" }}
-            >
-              <span className="w-5 h-5 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center text-xs">✕</span> 不太适合的情况
-            </h2>
-            <div className="space-y-3">
-              {unsuitable.map((dir) => (
-                <div
-                  key={dir.label}
-                  className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] opacity-70"
-                >
-                  <div className="font-bold text-sm mb-1" style={{ color: "var(--text-secondary)" }}>
-                    {dir.label}
-                  </div>
-                  <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
-                    {dir.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* 右侧：真实的联系信息卡片 (展示微信二维码) */}
-        <div className="space-y-5">
+      <div className="flex flex-col lg:grid lg:grid-cols-[1fr_380px] gap-10 lg:gap-16">
+        {/* 微信二维码与联系卡片 (移动端优先置顶展示) */}
+        <div className="order-1 lg:order-2 space-y-5">
           {/* 响应 SLA */}
           <div className="p-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2 font-medium">
             <Clock size={16} className="shrink-0" />
@@ -112,7 +59,7 @@ export default function ContactPage() {
 
           {/* 微信与真实二维码展示 */}
           <div
-            className="rounded-3xl p-6 border border-[var(--border)] bg-[var(--surface)] shadow-lg space-y-4"
+            className="rounded-3xl p-5 sm:p-6 border border-[var(--border)] bg-[var(--surface)] shadow-lg space-y-4"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2" style={{ color: "var(--text-secondary)" }}>
@@ -125,13 +72,13 @@ export default function ContactPage() {
             </div>
 
             {/* 真实微信二维码 Image */}
-            <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-[var(--border)] bg-white p-2 flex items-center justify-center shadow-inner">
+            <div className="relative w-full max-w-[280px] mx-auto aspect-square rounded-2xl overflow-hidden border border-[var(--border)] bg-white p-2 flex items-center justify-center shadow-inner">
               <Image
                 src={siteConfig.wechatQr}
                 alt="王善林 Salin 微信二维码"
                 fill
                 className="object-contain p-2"
-                sizes="320px"
+                sizes="280px"
               />
             </div>
 
@@ -209,6 +156,59 @@ export default function ContactPage() {
               <p className="text-base font-bold" style={{ color: "var(--text-primary)" }}>
                 {siteConfig.location} (支持全国出差驻场)
               </p>
+            </div>
+          </div>
+        </div>
+
+        {/* 左侧：双向选择 */}
+        <div className="order-2 lg:order-1 space-y-10">
+          {/* 适合交流的方向 */}
+          <div>
+            <h2
+              className="text-lg font-bold mb-5 flex items-center gap-2"
+              style={{ color: "var(--text-primary)" }}
+            >
+              <CheckCircle2 className="text-emerald-500" size={20} /> 适合联系我的情况
+            </h2>
+            <div className="space-y-3">
+              {suitable.map((dir) => (
+                <div
+                  key={dir.label}
+                  className="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] glass-card-hover"
+                >
+                  <div className="font-bold text-base mb-1" style={{ color: "var(--text-primary)" }}>
+                    {dir.label}
+                  </div>
+                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                    {dir.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 不适合的情况 */}
+          <div>
+            <h2
+              className="text-lg font-bold mb-5 flex items-center gap-2"
+              style={{ color: "var(--text-primary)" }}
+            >
+              <span className="w-5 h-5 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center text-xs">✕</span> 不太适合的情况
+            </h2>
+            <div className="space-y-3">
+              {unsuitable.map((dir) => (
+                <div
+                  key={dir.label}
+                  className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] opacity-70"
+                >
+                  <div className="font-bold text-sm mb-1" style={{ color: "var(--text-secondary)" }}>
+                    {dir.label}
+                  </div>
+                  <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                    {dir.desc}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -42,6 +42,19 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" className="h-full" suppressHydrationWarning>
       <head>
+        {/* 微信与全平台社交分享卡片 (OpenGraph & WeChat Share Card) */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={siteConfig.url} />
+        <meta property="og:title" content={siteConfig.title} />
+        <meta property="og:description" content={siteConfig.description} />
+        <meta property="og:image" content={siteConfig.ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content={siteConfig.name} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={siteConfig.title} />
+        <meta name="twitter:description" content={siteConfig.description} />
+        <meta name="twitter:image" content={siteConfig.ogImage} />
         <script
           dangerouslySetInnerHTML={{
             __html: `

@@ -5,7 +5,7 @@ export const siteConfig = {
   title: "王善林 (Salin) - 个人与 FDE 企业 AI 落地官网",
   description:
     "王善林 (Salin) 的个人与 FDE 企业 AI 落地官网。专注于 FDE 前向部署工程师模式落地、餐饮连锁 AI 运营系统 (FoodOps)、商家 AI 服务平台 (饿狸 Eli)、美业精细化 SaaS (悦颜智店) 与个人关系网络 APP (Nian)。",
-  url: "https://salin.dev", // TODO: 替换为实际部署域名
+  url: "https://salin.wang",
   location: "山东 · 临沂",
   email: "salin910525@gmail.com",
   wechat: "50219067",
@@ -15,7 +15,7 @@ export const siteConfig = {
   twitter: "https://x.com/EyuSalin",
   locale: "zh-CN",
   twitterHandle: "@EyuSalin",
-  ogImage: "/images/projects/fde-cover.webp",
+  ogImage: "https://salin.wang/images/og-share-card.png",
   nowUpdatedAt: "2025 年 7 月",
   nowStatus: "主导 FDE 模式企业 AI 驻场落地，同步迭代 FoodOps、饿狸 (Eli) 餐饮 AI 与 Nian 人脉网络 APP。",
   heroTags: ["FDE AI LANDING", "BUILDING IN PUBLIC", "LINYI & ON-SITE"],

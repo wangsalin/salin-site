@@ -19,9 +19,9 @@ export function FdeRoiCalculator() {
   const roiMultiplier = (annualCostSaved / Math.max(1, estimatedImplementationCost)).toFixed(1);
 
   return (
-    <section className="py-24 md:py-32 border-t border-[var(--border)] relative overflow-hidden">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 relative z-10">
-        <div className="max-w-2xl mb-12">
+    <section className="py-12 sm:py-20 md:py-32 border-t border-[var(--border)] relative overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+        <div className="max-w-2xl mb-8 sm:mb-12">
           <div className="flex items-center gap-2 mb-3">
             <span className="p-1.5 rounded-md bg-[var(--accent)] text-[var(--accent-foreground)]">
               <Calculator size={16} />
@@ -30,17 +30,17 @@ export function FdeRoiCalculator() {
               INTERACTIVE ROI CALCULATOR
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4" style={{ color: "var(--text-primary)" }}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight mb-3 sm:mb-4" style={{ color: "var(--text-primary)" }}>
             FDE 驻场企业 AI 落地收益计算器
           </h2>
-          <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+          <p className="text-sm sm:text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             拖动下方滑动条，实时算一算如果采用 FDE (前向部署工程师) 模式将重复琐碎流程自动化，您的团队每年能省下多少时间与薪酬成本。
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 sm:gap-8 items-stretch">
           {/* 左侧控制滑块卡片 */}
-          <div className="p-6 md:p-8 rounded-3xl border border-[var(--border)] bg-[var(--surface)] shadow-lg space-y-8">
+          <div className="p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-[var(--border)] bg-[var(--surface)] shadow-lg space-y-6 sm:space-y-8">
             {/* 滑块 1: 员工人数 */}
             <div className="space-y-3">
               <div className="flex justify-between items-center">
@@ -120,18 +120,18 @@ export function FdeRoiCalculator() {
           </div>
 
           {/* 右侧实时收益仪表板 */}
-          <div className="p-8 rounded-3xl border-2 border-[var(--brand)] bg-[var(--brand)] text-[var(--brand-foreground)] shadow-2xl relative overflow-hidden space-y-6">
+          <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl border-2 border-[var(--brand)] bg-[var(--brand)] text-[var(--brand-foreground)] shadow-2xl relative overflow-hidden space-y-5 sm:space-y-6">
             <div className="flex justify-between items-center border-b border-[var(--brand-foreground)]/20 pb-4">
               <span className="text-xs font-bold uppercase tracking-widest opacity-80">预估降本增效仪表盘</span>
-              <span className="text-xs px-2.5 py-1 rounded-full font-extrabold bg-[var(--accent)] text-[var(--accent-foreground)] flex items-center gap-1">
-                <Sparkles size={12} /> 预估 ROI {roiMultiplier} 倍
+              <span className="text-xs px-2.5 py-1 rounded-full font-extrabold bg-[var(--accent)] text-[var(--accent-foreground)] flex items-center gap-1 shrink-0">
+                <Sparkles size={12} /> ROI {roiMultiplier} 倍
               </span>
             </div>
 
             {/* 核心数字 1: 每年节省薪酬成本 */}
             <div>
               <p className="text-xs font-semibold uppercase opacity-75 mb-1">每年可为您直接节省的薪酬成本</p>
-              <div className="text-4xl md:text-5xl font-extrabold tracking-tight font-mono text-[var(--accent)]">
+              <div className="text-3xl sm:text-5xl font-extrabold tracking-tight font-mono text-[var(--accent)]">
                 ¥ {annualCostSaved.toLocaleString()}
               </div>
             </div>

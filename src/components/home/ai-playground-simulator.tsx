@@ -69,9 +69,9 @@ export function AiPlaygroundSimulator() {
   }
 
   return (
-    <section className="py-24 md:py-32 border-t border-[var(--border)]" style={{ background: "var(--surface)" }}>
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8">
-        <div className="max-w-2xl mb-12">
+    <section className="py-12 sm:py-20 md:py-32 border-t border-[var(--border)]" style={{ background: "var(--surface)" }}>
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
+        <div className="max-w-2xl mb-8 sm:mb-12">
           <div className="flex items-center gap-2 mb-3">
             <span className="p-1.5 rounded-md bg-[var(--accent)] text-[var(--accent-foreground)]">
               <Sparkles size={16} />
@@ -80,18 +80,18 @@ export function AiPlaygroundSimulator() {
               LIVE AGENT PLAYGROUND
             </span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4" style={{ color: "var(--text-primary)" }}>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight mb-3 sm:mb-4" style={{ color: "var(--text-primary)" }}>
             AI 垂直场景回复 & 文案生成模拟器
           </h2>
-          <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+          <p className="text-sm sm:text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
             挑选一个真实业务场景，点击“实时生成”亲自体验 AI Agent 如何摆脱套话，生成兼具人情味、专业度与高转化率的定制文本。
           </p>
         </div>
 
         {/* 交互核心面板 */}
-        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-stretch">
           {/* 左侧：选择与输入卡片 */}
-          <div className="p-6 md:p-8 rounded-3xl border border-[var(--border)] bg-[var(--background)] flex flex-col justify-between space-y-6">
+          <div className="p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-[var(--border)] bg-[var(--background)] flex flex-col justify-between space-y-5 sm:space-y-6">
             <div className="space-y-4">
               <label className="text-sm font-bold block" style={{ color: "var(--text-primary)" }}>
                 选择预设真实场景：
@@ -148,7 +148,7 @@ export function AiPlaygroundSimulator() {
           </div>
 
           {/* 右侧：代码与回复渲染输出终端 */}
-          <div className="p-6 md:p-8 rounded-3xl border border-slate-800 bg-slate-950 text-slate-100 flex flex-col justify-between space-y-6 shadow-2xl relative">
+          <div className="p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-slate-800 bg-slate-950 text-slate-100 flex flex-col justify-between space-y-5 sm:space-y-6 shadow-2xl relative">
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                 <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
