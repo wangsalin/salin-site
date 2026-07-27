@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#111512"/>
+  <rect x="0" y="0" width="600" height="630" fill="#173C32" opacity="0.3"/>
+  <text x="600" y="270" font-family="system-ui, sans-serif" font-size="72" font-weight="700" fill="#F2F1EB" text-anchor="middle">Salin</text>
+  <text x="600" y="340" font-family="system-ui, sans-serif" font-size="24" fill="#B8F05A" text-anchor="middle">创业与 AI 实践</text>
+  <text x="600" y="390" font-family="system-ui, sans-serif" font-size="16" fill="#A9B0A9" text-anchor="middle">连续创业者 / AI 商业实践者</text>
+</svg>

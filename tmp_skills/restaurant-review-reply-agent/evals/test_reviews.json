@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "input": "鱼太咸了，叫服务员加米饭叫了三次才送！",
+    "rating": 2,
+    "expected_category": "口味+上菜服务"
+  },
+  {
+    "id": 2,
+    "input": "环境吵得要死，卫生也不好，桌子上油呼呼的。",
+    "rating": 1,
+    "expected_category": "环境卫生"
+  }
+]

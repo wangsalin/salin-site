@@ -1,0 +1,7 @@
+{
+  "name": "ad_compliance_and_sensitive_wordlist",
+  "version": "2.5.0",
+  "data_file": "wordlist.json",
+  "checker_py": "scripts/compliance_checker.py",
+  "checker_js": "scripts/compliance_checker.js"
+}

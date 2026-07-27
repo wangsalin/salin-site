@@ -1,0 +1,8 @@
+{
+  "name": "xiaohongshu_food_copywriting_pack",
+  "version": "3.1.0",
+  "type": "multi_file_prompt_pack",
+  "author": "Salin",
+  "prompts_dir": "prompts/",
+  "filters": "filters/sensitive_words.json"
+}

@@ -1,0 +1,30 @@
+export const siteConfig = {
+  name: "王善林 (Salin)",
+  author: "王善林 (Salin)",
+  role: "全栈 AI 开发者 / FDE 前向部署工程师",
+  title: "王善林 (Salin) - 个人与 FDE 企业 AI 落地官网",
+  description:
+    "王善林 (Salin) 的个人与 FDE 企业 AI 落地官网。专注于 FDE 前向部署工程师模式落地、餐饮连锁 AI 运营系统 (FoodOps)、商家 AI 服务平台 (饿狸 Eli)、美业精细化 SaaS (悦颜智店) 与个人关系网络 APP (Nian)。",
+  url: "https://salin.dev", // TODO: 替换为实际部署域名
+  location: "山东 · 临沂",
+  email: "salin910525@gmail.com",
+  wechat: "50219067",
+  wechatQr: "/images/wechat-qr.jpg",
+  gongzhonghao: "狗哥的胡思乱想",
+  github: "https://github.com/wangsalin",
+  twitter: "https://x.com/EyuSalin",
+  locale: "zh-CN",
+  twitterHandle: "@EyuSalin",
+  ogImage: "/images/projects/fde-cover.webp",
+  nowUpdatedAt: "2025 年 7 月",
+  nowStatus: "主导 FDE 模式企业 AI 驻场落地，同步迭代 FoodOps、饿狸 (Eli) 餐饮 AI 与 Nian 人脉网络 APP。",
+  heroTags: ["FDE AI LANDING", "BUILDING IN PUBLIC", "LINYI & ON-SITE"],
+  navLinks: [
+    { label: "首页", href: "/" },
+    { label: "项目", href: "/projects" },
+    { label: "技能包下载", href: "/skills" },
+    { label: "文章", href: "/notes" },
+    { label: "关于我", href: "/about" },
+    { label: "联系我", href: "/contact" },
+  ],
+};

@@ -1,0 +1,8 @@
+{
+  "name": "merchant_rag_data_cleaning_schema",
+  "version": "1.1.0",
+  "chunk_size": 300,
+  "chunk_overlap": 50,
+  "script": "scripts/chunk_and_vectorize.py",
+  "sample": "templates/faq_chunk_sample.json"
+}

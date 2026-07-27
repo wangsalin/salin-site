@@ -1,0 +1,12 @@
+{
+  "name": "restaurant_review_reply_agent",
+  "version": "1.2.0",
+  "type": "multi_file_agent_skill",
+  "author": "Salin FDE Team",
+  "entry_prompt": "prompts/system_prompt.md",
+  "tools": [
+    "tools/keyword_extractor.py",
+    "tools/reply_formatter.js"
+  ],
+  "evals": "evals/test_reviews.json"
+}

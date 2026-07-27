@@ -1,0 +1,15 @@
+{
+  "name": "fde_onsite_ai_diagnostic_sop",
+  "version": "2.0.0",
+  "type": "multi_file_sop_bundle",
+  "author": "Salin FDE Team",
+  "documents": [
+    "docs/01_onsite_audit_sop.md",
+    "docs/02_rag_cleaning_guide.md",
+    "docs/03_roi_formula_spec.md"
+  ],
+  "templates": [
+    "templates/onsite_observation_log.csv",
+    "templates/roi_calculator.csv"
+  ]
+}

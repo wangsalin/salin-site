@@ -1,0 +1,17 @@
+{
+  "name": "merchant_rag_data_cleaning_schema",
+  "version": "1.1.0",
+  "description": "中小商家私有 RAG 向量知识库清洗 Schema 与 Python 分词脚本规范",
+  "chunk_size_recommendation": {
+    "min_chars": 150,
+    "max_chars": 400,
+    "overlap": 50
+  },
+  "metadata_fields": [
+    { "field": "store_id", "type": "string", "description": "门店唯一标识" },
+    { "field": "category", "type": "string", "description": "模块分类 (菜品/服务/规则/FAQ)" },
+    { "field": "valid_period", "type": "string", "description": "有效期" },
+    { "field": "keywords", "type": "array", "description": "高频检索关键词" }
+  ],
+  "python_ingestion_snippet": "import json\\nfrom langchain_text_splitters import RecursiveCharacterTextSplitter\\n\\ndef clean_and_chunk_merchant_doc(raw_text, category_label, store_id):\\n    splitter = RecursiveCharacterTextSplitter(\\n        chunk_size=300,\\n        chunk_overlap=50,\\n        separators=['\\\\n\\\\n', '\\\\n', '。', '！']\\n    )\\n    docs = splitter.split_text(raw_text)\\n    chunks = []\\n    for idx, text in enumerate(docs):\\n        chunks.append({\\n            'chunk_id': f'{store_id}_{category_label}_{idx}',\\n            'content': text,\\n            'metadata': {\\n                'store_id': store_id,\\n                'category': category_label\\n            }\\n        })\\n    return chunks"
+}

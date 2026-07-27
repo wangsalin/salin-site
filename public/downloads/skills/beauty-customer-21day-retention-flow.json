@@ -1,0 +1,36 @@
+{
+  "name": "beauty_customer_21day_retention_flow",
+  "version": "1.0.0",
+  "author": "Salin FDE Team",
+  "description": "美业老客 21 天黄金护理生命周期关怀与召回工作流 JSON 引擎",
+  "workflow_steps": [
+    {
+      "step": 1,
+      "trigger_days": 1,
+      "goal": "护理后首日防敏关怀与好感建立",
+      "template_rule": "基于用户【{{service_item}}】生成无推销感的第一天防晒与水分关怀",
+      "ai_prompt": "以专属美容师【{{beautician_name}}】的口吻，微信给【{{customer_name}}】姐发一段 50 字以内的首日防敏关怀。提及昨天的【{{service_item}}】，叮嘱今天多喝水、防晒。语气亲切温暖。"
+    },
+    {
+      "step": 2,
+      "trigger_days": 3,
+      "goal": "养护吸收高峰期效果确认",
+      "template_rule": "询问顾客皮肤吸收感受，建立专业美导信任感",
+      "ai_prompt": "问候【{{customer_name}}】姐护理第 3 天的肤感（如补水后的润泽感、水光后的退红情况），提醒晚上搭配家居精油。"
+    },
+    {
+      "step": 3,
+      "trigger_days": 7,
+      "goal": "家居养护产品搭配指导",
+      "template_rule": "延伸服务价值，指导正确家居手法",
+      "ai_prompt": "温馨提醒【{{customer_name}}】姐坚持使用配套护理精华，可附带一段 15 秒家居提拉手法小建议。"
+    },
+    {
+      "step": 4,
+      "trigger_days": 21,
+      "goal": "皮肤角质代谢周期到期预约召回",
+      "template_rule": "基于 21 天生理周期，发起无强迫感的定期保养预约",
+      "ai_prompt": "温馨提醒【{{customer_name}}】姐距离上次护理已满 21 天，刚好到了皮肤代谢养护黄金期。告知本周店里到货的新植物因子，并预留其最喜欢的【{{beautician_name}}】技师与 2 号养护房间。"
+    }
+  ]
+}

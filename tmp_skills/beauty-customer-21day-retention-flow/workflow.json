@@ -1,0 +1,23 @@
+{
+  "name": "beauty_customer_21day_retention_flow",
+  "version": "1.0.0",
+  "nodes": [
+    {
+      "id": "node_day_1",
+      "file": "prompts/day_01_care.md"
+    },
+    {
+      "id": "node_day_3",
+      "file": "prompts/day_03_absorption.md"
+    },
+    {
+      "id": "node_day_7",
+      "file": "prompts/day_07_homecare.md"
+    },
+    {
+      "id": "node_day_21",
+      "file": "prompts/day_21_metabolism_recall.md"
+    }
+  ],
+  "helper_script": "scripts/calculate_next_visit.js"
+}
