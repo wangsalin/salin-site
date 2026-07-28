@@ -69,6 +69,7 @@ export default function RootLayout({
             `,
           }}
         />
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js" defer />
         <link
           rel="alternate"
           type="application/rss+xml"
@@ -77,6 +78,16 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col antialiased relative">
+        {/* 微信内置浏览器抓取 300x300 首图兜底 (WeChat Share Card Fallback) */}
+        <div style={{ display: "none" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://salin.wang/images/wechat-share-300.jpg"
+            alt="狗哥 微信分享卡片封面"
+            width="300"
+            height="300"
+          />
+        </div>
         <MouseSpotlight />
         <SiteHeader />
         <main className="flex-1 pt-16">{children}</main>
