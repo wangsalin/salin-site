@@ -55,12 +55,12 @@ export function HeroSection() {
               className="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.15] tracking-tight mb-5"
               style={{ color: "var(--text-primary)", letterSpacing: "-0.03em" }}
             >
-              用 AI 与 FDE 模式，
+              用 AI，
               <br />
-              把企业真实业务
+              把生意
               <br />
               <span className="relative inline-block text-[var(--brand)] font-black">
-                重做一遍。
+                重新做一遍。
                 <svg className="absolute left-0 bottom-[-4px] w-full h-3" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M2 10C50 3 150 3 198 10" stroke="var(--accent)" strokeWidth="5" strokeLinecap="round" />
                 </svg>
@@ -72,7 +72,7 @@ export function HeroSection() {
               className="text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 max-w-xl font-medium"
               style={{ color: "var(--text-secondary)" }}
             >
-              采用 Palantir 式的 <strong className="text-[var(--text-primary)] font-extrabold">FDE (Forward Deployed Engineer)</strong> 前向部署工程师模式。工程师亲自深入企业办公与生产现场，抓取核心断点流程，沉淀私有知识库，定制专属 Agent 工作流，确保企业 AI 产生明确的 ROI 结果。
+              做过本地生活内容，也亲自下场经营餐饮。现在把十多年积累的商业、内容和产品经验，变成真正能落地的 AI 工具与解决方案。
             </p>
 
             {/* 行动按钮 - H5 端全宽 */}

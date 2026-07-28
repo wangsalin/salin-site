@@ -18,7 +18,7 @@ export function SiteFooter() {
               {siteConfig.name}
             </div>
             <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              FDE 前向部署工程师与全栈 AI 开发者。深耕餐饮连锁、美业 SaaS 与企业 AI 驻场落地，把真实业务流重做一遍。
+              连续创业者与 AI 商业实践者。把十多年积累的商业、内容和产品经验，变成真正能落地的 AI 工具与解决方案。
             </p>
             <div className="flex items-center gap-1.5 mt-3 text-xs" style={{ color: "var(--text-secondary)" }}>
               <MapPin size={13} className="text-[var(--brand)]" />
