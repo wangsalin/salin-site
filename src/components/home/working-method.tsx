@@ -5,15 +5,23 @@ import { Lightbulb } from "lucide-react";
 export function WorkingMethod() {
   return (
     <section
-      className="py-24 md:py-32 border-t border-[var(--border)]"
-      style={{ background: "var(--surface)" }}
+      className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface-muted)]/40"
     >
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+            SECTION 07
+          </span>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)]">
+            METHODOLOGY · 狗哥的工作原则
+          </span>
+        </div>
+
         <SectionHeading
           label="工作方法论"
           title="我的工作方式：从真实问题逆向倒推。"
           description="不搞花哨功能，不为了技术而技术。四步法确保每一个产品都直击要害。"
-          className="mb-16"
+          className="mb-12 sm:mb-16"
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">

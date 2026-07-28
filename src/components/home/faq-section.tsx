@@ -41,15 +41,16 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 md:py-32 border-t border-[var(--border)]" style={{ background: "var(--surface)" }}>
+    <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface)]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
         <div className="max-w-2xl mb-12">
           <div className="flex items-center gap-2 mb-3">
-            <span className="p-1.5 rounded-md bg-[var(--accent)] text-[var(--accent-foreground)]">
-              <HelpCircle size={16} />
+            <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+              SECTION 11
             </span>
-            <span className="text-xs font-bold tracking-widest uppercase text-[var(--brand)]">
-              FREQUENTLY ASKED QUESTIONS
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)] flex items-center gap-1">
+              <HelpCircle size={13} />
+              FREQUENTLY ASKED QUESTIONS · 常见疑问答疑
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4" style={{ color: "var(--text-primary)" }}>

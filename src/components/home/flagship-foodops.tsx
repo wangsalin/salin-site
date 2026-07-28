@@ -11,9 +11,12 @@ export function FlagshipFoodops() {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* 旗舰徽章 */}
         <div className="flex items-center gap-2 mb-4">
+          <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+            SECTION 05
+          </span>
           <span className="px-3 py-1 rounded-full text-xs font-mono font-extrabold bg-[var(--brand)] text-[var(--brand-foreground)] shadow-md flex items-center gap-1.5 uppercase">
             <Sparkles size={13} />
-            FLAGSHIP CASE STUDY
+            FLAGSHIP CASE STUDY · 旗舰案例
           </span>
           <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-600">
             持续迭代 / 开源验证

@@ -11,11 +11,12 @@ export function CooperationSection() {
         {/* 标题 */}
         <div className="max-w-3xl mb-10 sm:mb-14">
           <div className="flex items-center gap-2 mb-3">
-            <span className="p-1 rounded-md bg-[var(--brand)] text-[var(--brand-foreground)]">
-              <Handshake size={14} />
+            <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+              SECTION 08
             </span>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)]">
-              HOW WE CAN WORK TOGETHER
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)] flex items-center gap-1">
+              <Handshake size={14} />
+              HOW WE CAN WORK TOGETHER · 合作方式与双向选择
             </span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4" style={{ color: "var(--text-primary)" }}>

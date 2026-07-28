@@ -6,16 +6,17 @@ import { evidenceItems } from "@/data/evidence";
 
 export function EvidenceSection() {
   return (
-    <section className="py-12 sm:py-20 md:py-28 border-t border-[var(--border)] relative overflow-hidden bg-[var(--surface)]">
+    <section className="py-12 sm:py-20 md:py-28 border-t border-[var(--border)] relative overflow-hidden bg-[var(--surface-muted)]/30">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
         {/* 标题 */}
         <div className="max-w-3xl mb-10 sm:mb-14">
           <div className="flex items-center gap-2 mb-3">
-            <span className="p-1 rounded-md bg-[var(--brand)] text-[var(--brand-foreground)]">
-              <Sparkles size={14} />
+            <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+              SECTION 04
             </span>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)]">
-              REAL PRACTICE PROOF
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)] flex items-center gap-1">
+              <Sparkles size={12} />
+              REAL PRACTICE PROOF · 真实实践证据
             </span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-4" style={{ color: "var(--text-primary)" }}>

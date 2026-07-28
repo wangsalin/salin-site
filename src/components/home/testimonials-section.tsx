@@ -34,15 +34,16 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-24 md:py-32 border-t border-[var(--border)] relative overflow-hidden bg-grid-pattern">
+    <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] relative overflow-hidden bg-[var(--surface-muted)]/40">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="max-w-2xl mb-12">
           <div className="flex items-center gap-2 mb-3">
-            <span className="p-1.5 rounded-md bg-[var(--accent)] text-[var(--accent-foreground)]">
-              <Quote size={16} />
+            <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+              SECTION 10
             </span>
-            <span className="text-xs font-bold tracking-widest uppercase text-[var(--brand)]">
-              CLIENT TESTIMONIALS
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)] flex items-center gap-1">
+              <Quote size={13} />
+              CLIENT TESTIMONIALS · 合作现场反馈
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4" style={{ color: "var(--text-primary)" }}>

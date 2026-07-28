@@ -41,9 +41,14 @@ export function NowSection() {
         <div className="grid lg:grid-cols-[320px_1fr] gap-8 lg:gap-14 items-start">
           {/* 左侧：NOW 大号标题 */}
           <div className="space-y-4 lg:sticky lg:top-24">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--brand)]/30 bg-[var(--brand)]/10 text-[var(--brand)] text-xs font-bold font-mono uppercase tracking-wider">
-              <Sparkles size={13} />
-              NOW FOCUS
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+                SECTION 02
+              </span>
+              <div className="inline-flex items-center gap-1 text-[11px] font-mono font-extrabold uppercase text-[var(--brand)]">
+                <Sparkles size={12} />
+                NOW FOCUS
+              </div>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight" style={{ color: "var(--text-primary)" }}>
               我现在重点

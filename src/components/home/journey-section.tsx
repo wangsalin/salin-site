@@ -5,13 +5,22 @@ import { cn } from "@/lib/cn";
 
 export function JourneySection() {
   return (
-    <section className="py-24 md:py-32">
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8">
+    <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface)]">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+            SECTION 03
+          </span>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)]">
+            CAREER & JOURNEY · 狗哥的真实经历
+          </span>
+        </div>
+
         <SectionHeading
           label="经历履历"
           title="我不是从 AI 开始的。"
           description="先在内容传播中理解消费者，再下场实体经营经历血与火，最后才用技术把所有断点串起来。"
-          className="mb-16"
+          className="mb-12 sm:mb-16"
         />
 
         <div className="relative">

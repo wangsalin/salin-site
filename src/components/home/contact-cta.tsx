@@ -5,10 +5,19 @@ import { siteConfig } from "@/data/site";
 export function ContactCta() {
   return (
     <section
-      className="py-24 md:py-32"
+      className="py-16 sm:py-24 md:py-28"
       style={{ background: "var(--brand)" }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
+        <div className="flex items-center gap-2 mb-6 opacity-85">
+          <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--accent)] text-[var(--accent-foreground)]">
+            SECTION 12
+          </span>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand-foreground)]">
+            NEXT STEPS · 预约沟通与联系 CTA
+          </span>
+        </div>
+
         <div className="grid md:grid-cols-[1fr_280px] gap-12 items-center">
           {/* 左侧主内容 */}
           <div>

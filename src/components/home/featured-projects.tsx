@@ -18,8 +18,17 @@ export function FeaturedProjects() {
   const projects = getFeaturedProjects();
 
   return (
-    <section className="py-24 md:py-32 bg-grid-pattern">
+    <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface)]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+            SECTION 06
+          </span>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)]">
+            PROJECT MATRIX · 代表项目与软件
+          </span>
+        </div>
+
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <SectionHeading
             label="真实项目矩阵"
