@@ -2,19 +2,19 @@
 
 @layer base {
   :root {
-    --background: #F4F1EA;
-    --foreground: #111512;
+    --background: #F6F5F0;
+    --foreground: #0F1412;
     --surface: #FFFFFF;
-    --surface-muted: #EAE6DD;
-    --brand: #173C32;
-    --brand-foreground: #F2F1EB;
-    --accent: #B8F05A;
-    --accent-foreground: #111512;
-    --text-primary: #111512;
-    --text-secondary: #5E645E;
-    --border: #DCD7CC;
-    --shadow-subtle: 0 4px 20px -2px rgba(23, 60, 50, 0.05);
-    --shadow-card: 0 12px 32px -4px rgba(23, 60, 50, 0.08);
+    --surface-muted: #ECE9E1;
+    --brand: #064E3B;
+    --brand-foreground: #F0FDF4;
+    --accent: #84CC16;
+    --accent-foreground: #0F1412;
+    --text-primary: #0F1412;
+    --text-secondary: #525B56;
+    --border: #121815;
+    --shadow-subtle: 4px 4px 0px 0px #121815;
+    --shadow-card: 6px 6px 0px 0px #121815;
     --z-sticky: 50;
     --z-modal: 100;
   }
@@ -23,16 +23,16 @@
     --background: #0B0E0C;
     --foreground: #F2F1EB;
     --surface: #141916;
-    --surface-muted: #1B221E;
-    --brand: #B8F05A;
+    --surface-muted: #1E2621;
+    --brand: #10B981;
     --brand-foreground: #0B0E0C;
-    --accent: #B8F05A;
+    --accent: #A3E635;
     --accent-foreground: #0B0E0C;
     --text-primary: #F2F1EB;
-    --text-secondary: #A9B0A9;
-    --border: #232B25;
-    --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-    --shadow-card: 0 12px 32px -4px rgba(0, 0, 0, 0.7);
+    --text-secondary: #A0AAA4;
+    --border: #2D3A32;
+    --shadow-subtle: 4px 4px 0px 0px #000000;
+    --shadow-card: 6px 6px 0px 0px #000000;
   }
 
   html {
@@ -43,25 +43,63 @@
   body {
     background-color: var(--background);
     color: var(--text-primary);
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
     overflow-x: hidden;
   }
 }
 
-/* 干净优雅的留白与卡片浮动 */
+/* Neo-Brutalist Bento Grid Utilities */
+.bento-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-subtle);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card-hover {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-subtle);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-card-hover:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-card);
+}
+
+.bento-badge {
+  display: inline-flex;
+  items-center: center;
+  gap: 0.375rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  box-shadow: 2px 2px 0px 0px var(--border);
+}
+
+/* 兼容现有 glass-card 类名，直接重映射至 Bento 高对比度 */
 .glass-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   box-shadow: var(--shadow-subtle);
 }
 
 .glass-card-hover {
-  transition: all 0.25s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card-hover:hover {
-  transform: translateY(-3px);
-  border-color: var(--brand);
+  transform: translate(-3px, -3px);
   box-shadow: var(--shadow-card);
 }
 
@@ -73,7 +111,7 @@
 
 .prose-article h1, .prose-article h2, .prose-article h3 {
   color: var(--text-primary);
-  font-weight: 700;
+  font-weight: 800;
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
@@ -92,10 +130,11 @@
 }
 
 .prose-article pre {
-  background: #1e2420;
+  background: #0f1412;
   color: #f2f1eb;
   padding: 1.25rem;
   border-radius: 0.75rem;
   overflow-x: auto;
   margin-bottom: 1.5rem;
+  border: 2px solid var(--border);
 }
