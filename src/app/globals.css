@@ -48,61 +48,21 @@
   }
 }
 
-/* 炫酷网格背景粒子与光晕 */
-.bg-grid-pattern {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--border) 40%, transparent) 1px, transparent 1px);
-}
-
-/* 炫酷动态霓虹边框 */
-.animated-gradient-border {
-  position: relative;
-  border-radius: 1rem;
-  background: linear-gradient(var(--surface), var(--surface)) padding-box,
-              linear-gradient(135deg, var(--brand), var(--accent), #3B82F6) border-box;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.animated-gradient-border:hover {
-  box-shadow: 0 0 25px -5px color-mix(in srgb, var(--accent) 50%, transparent);
-}
-
-/* 炫酷玻璃拟态卡片 */
+/* 干净优雅的留白与卡片浮动 */
 .glass-card {
-  background: color-mix(in srgb, var(--surface) 80%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-subtle);
 }
 
 .glass-card-hover {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s ease-in-out;
 }
 
 .glass-card-hover:hover {
-  transform: translateY(-6px) scale(1.01);
-  border-color: var(--accent);
-  box-shadow: 0 20px 40px -15px color-mix(in srgb, var(--accent) 30%, transparent);
-}
-
-/* 炫酷脉冲光效 */
-@keyframes neon-pulse {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-}
-
-.neon-glow {
-  animation: neon-pulse 4s infinite ease-in-out;
+  transform: translateY(-3px);
+  border-color: var(--brand);
+  box-shadow: var(--shadow-card);
 }
 
 .prose-article {

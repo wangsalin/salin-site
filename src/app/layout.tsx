@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import { MouseSpotlight } from "@/components/ui/mouse-spotlight";
 import { BackToTop } from "@/components/ui/back-to-top";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -88,7 +87,6 @@ export default function RootLayout({
             height="300"
           />
         </div>
-        <MouseSpotlight />
         <SiteHeader />
         <main className="flex-1 pt-16">{children}</main>
         <SiteFooter />
