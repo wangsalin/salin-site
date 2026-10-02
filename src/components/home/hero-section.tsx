@@ -309,9 +309,9 @@ export function HeroSection() {
       title="点击地面任意位置，让狗哥走动"
     >
       {/* 01. Giant Typographic Backdrop: "SALIN" */}
-      {/* Desktop (md+) Horizontal Layout: centered with character corridor */}
+      {/* Desktop (md+) Horizontal Layout: starts cleanly to the right of Introduction (left-[34vw]), with character corridor */}
       <div
-        className="hidden md:flex absolute top-[21.5vh] inset-x-0 w-full items-center justify-center pointer-events-none select-none z-0"
+        className="hidden md:flex absolute top-[21.5vh] left-[33vw] lg:left-[35vw] right-[2vw] items-center justify-between pointer-events-none select-none z-0"
         aria-hidden="true"
       >
         <motion.div
@@ -320,34 +320,32 @@ export function HeroSection() {
             opacity: bgTextOpacity,
             x: mousePos.x * -14,
           }}
-          className="w-full flex items-center justify-center px-4"
+          className="w-full flex items-center justify-between"
         >
           <h2
-            className="w-full m-0 font-black text-[clamp(116px,22vw,390px)] lg:text-[clamp(136px,24vw,450px)] xl:text-[clamp(152px,25.5vw,490px)] leading-[0.82] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_4px_28px_rgba(90,95,130,0.22)] uppercase tracking-wider text-center"
+            className="w-full m-0 font-black text-[clamp(90px,16.5vw,320px)] leading-[0.82] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_4px_28px_rgba(90,95,130,0.20)] uppercase tracking-wider flex items-center justify-between"
             style={{
               fontFamily:
                 'Impact, "Arial Black", "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
             }}
           >
-            <span className="w-full flex items-center justify-center transform scale-x-[1.03] origin-center">
-              {/* Left group: S A */}
-              <span className="flex-1 flex items-center justify-end gap-4 md:gap-6 lg:gap-8 pr-2">
-                <span>S</span>
-                <span>A</span>
-              </span>
+            {/* Letter S: sits cleanly in the space between Introduction and Character */}
+            <span className="flex items-center justify-center shrink-0 pr-2">
+              <span>S</span>
+            </span>
 
-              {/* Exact center breathing corridor for the 3D character */}
-              <span
-                className="w-[17vw] lg:w-[19vw] xl:w-[21vw] shrink-0 pointer-events-none"
-                aria-hidden="true"
-              />
+            {/* Breathing corridor for the 3D character (centered at 50vw) */}
+            <span
+              className="w-[14vw] lg:w-[16vw] xl:w-[18vw] shrink-0 pointer-events-none"
+              aria-hidden="true"
+            />
 
-              {/* Right group: L I N */}
-              <span className="flex-1 flex items-center justify-start gap-4 md:gap-6 lg:gap-8 pl-2">
-                <span>L</span>
-                <span>I</span>
-                <span>N</span>
-              </span>
+            {/* Right group: A L I N in the spacious open right stage */}
+            <span className="flex-1 flex items-center justify-between gap-4 md:gap-5 lg:gap-7 pl-2">
+              <span>A</span>
+              <span>L</span>
+              <span>I</span>
+              <span>N</span>
             </span>
           </h2>
         </motion.div>
@@ -505,11 +503,6 @@ export function HeroSection() {
               className="absolute -bottom-1 w-12 sm:w-16 h-3 sm:h-4 rounded-full bg-slate-400/40 blur-xs pointer-events-none"
             />
           )}
-
-          {/* Hover hint */}
-          <span className="absolute bottom-28 sm:bottom-36 right-1/4 translate-x-12 px-2.5 py-1 rounded-full bg-[#d5f085] text-[#1c1d24] text-[10px] font-black border border-[#202126] shadow-[2px_2px_0px_#202126] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
-            可拖我 / 点击地面走动 🕹️
-          </span>
         </motion.div>
 
         {/* Standing / Bending Ground Shadow */}
@@ -558,21 +551,27 @@ export function HeroSection() {
       </motion.div>
 
       {/* 03. Left Column: Editorial Headline & Tactile Stickers */}
-      <div className="relative z-20 max-w-[55vw] xs:max-w-[56vw] sm:max-w-[50vw] md:max-w-[480px] pl-3.5 sm:pl-8 lg:pl-16 pt-[84px] sm:pt-[110px] md:pt-32 pb-14 sm:pb-16 flex flex-col items-start gap-2 sm:gap-4 lg:gap-5 pointer-events-none">
+      <div className="relative z-20 w-full max-w-[55vw] xs:max-w-[56vw] sm:max-w-[50vw] md:max-w-[540px] lg:max-w-[580px] xl:max-w-[620px] pl-3.5 sm:pl-8 lg:pl-16 pt-[84px] sm:pt-[110px] md:pt-28 lg:pt-32 pb-14 sm:pb-16 flex flex-col items-start gap-3 sm:gap-4 lg:gap-5 pointer-events-none">
         {/* Eyebrow badge */}
-        <p className="font-mono text-[9px] sm:text-xs font-black tracking-[0.14em] sm:tracking-[0.22em] text-[#474f67] dark:text-[#a0a8c2] uppercase pointer-events-auto">
-          AI APPLICATION & BUSINESS PRACTITIONER
-        </p>
+        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/75 dark:bg-black/40 backdrop-blur-xs border border-[#202126]/20 dark:border-white/15 shadow-[1.5px_1.5px_0px_#202126] dark:shadow-none pointer-events-auto">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#5867d2] animate-pulse shrink-0" />
+          <span className="font-mono text-[9px] sm:text-[11px] font-black tracking-[0.16em] sm:tracking-[0.2em] text-[#3c4155] dark:text-[#a0a8c4] uppercase">
+            AI APPLICATION & BUSINESS PRACTITIONER
+          </span>
+        </div>
 
-        {/* Big Impact Headline */}
-        <h1 className="text-[23px] xs:text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-black tracking-[-0.03em] sm:tracking-[-0.04em] text-[#1b1d24] dark:text-white leading-[1.18] sm:leading-[1.12] pointer-events-auto">
-          你好，我是<strong className="text-[#0d0e12] dark:text-white">狗哥。</strong>
-          <br />
-          欢迎来到我的现场。
+        {/* Big Impact Headline: cleanly structured into two natural unbreakable phrases */}
+        <h1 className="text-[23px] xs:text-2xl sm:text-4xl md:text-[42px] lg:text-[50px] xl:text-[54px] font-black tracking-[-0.035em] text-[#16171d] dark:text-white leading-[1.18] sm:leading-[1.14] pointer-events-auto">
+          <span className="block whitespace-nowrap">
+            你好，我是<strong className="text-[#0a0b0e] dark:text-white">狗哥。</strong>
+          </span>
+          <span className="block whitespace-nowrap text-[#282a36] dark:text-[#e1e4f0] mt-0.5 sm:mt-1">
+            欢迎来到我的现场。
+          </span>
         </h1>
 
         {/* Subtitle description */}
-        <p className="text-[11.5px] sm:text-[15px] text-[#424657] dark:text-[#b0b8c8] font-medium leading-[1.6] sm:leading-[1.8] max-w-[420px] pointer-events-auto">
+        <p className="text-[11.5px] sm:text-[14.5px] lg:text-[15.5px] text-[#343847] dark:text-[#b4bcd0] font-medium leading-[1.65] sm:leading-[1.75] max-w-[480px] pointer-events-auto">
           <span className="hidden sm:inline">用代码与实战经验探索 AI 落地。做过 6 年探店，亲自下场开过餐厅。把十多年摸爬滚打的商业死结，变成真正能跑通的 AI 实战工具。</span>
           <span className="sm:hidden">用代码与实战经验探索 AI 落地，把十多年实体商业摸爬滚打的死结，变成真正能跑通的 AI 实战工具。</span>
         </p>
@@ -580,13 +579,13 @@ export function HeroSection() {
         {/* Tactile Stickers Stack */}
         <div className="flex flex-col items-start gap-1.5 sm:gap-2.5 pt-0.5 sm:pt-1 pointer-events-auto" aria-label="狗哥身份与态度标签">
           {/* Sticker 1: Lime Pill Badge */}
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#d5f085] text-[#1c1d24] font-black text-[10px] sm:text-xs border border-[#202126] shadow-[2px_2px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#d5f085] text-[#1c1d24] font-black text-[10px] sm:text-xs border-2 border-[#202126] shadow-[2.5px_2.5px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
             <span className="truncate">身份卡 / 实体老兵 · 临沂</span>
           </div>
 
           {/* Sticker 2: White Paper Note (Tilted -1deg) */}
-          <div className="inline-block px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-[11px] sm:text-sm border border-[#202126] shadow-[2px_2px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+          <div className="inline-block px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-[11px] sm:text-sm border-2 border-[#202126] shadow-[2.5px_2.5px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
             喜欢把「死磕现场」
             <em className="not-italic text-[#4f5fc8] font-black underline decoration-[#c7ec73] decoration-2 ml-1">
               写成真的。
@@ -594,7 +593,7 @@ export function HeroSection() {
           </div>
 
           {/* Sticker 3: White Paper Note (Tilted +1deg) */}
-          <div className="inline-block px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-[11px] sm:text-sm border border-[#202126] shadow-[2px_2px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] transform rotate-1 hover:rotate-0 transition-transform cursor-default">
+          <div className="inline-block px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-[11px] sm:text-sm border-2 border-[#202126] shadow-[2.5px_2.5px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] transform rotate-1 hover:rotate-0 transition-transform cursor-default">
             <span className="hidden sm:inline">主导 FoodOps 餐饮连锁 AI 落地，让好点子在现场活下去。</span>
             <span className="sm:hidden">
               主导 FoodOps 餐饮 AI
@@ -607,7 +606,7 @@ export function HeroSection() {
         <div className="pt-1 sm:pt-2 pointer-events-auto">
           <Link
             href="#projects"
-            className="group inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-6 sm:py-3.5 rounded-full bg-[#fffefa] hover:bg-[#d5f085] text-[#1c1d24] font-black text-xs sm:text-sm border-2 border-[#202126] shadow-[3px_3px_0px_#202126] sm:shadow-[4px_4px_0px_#202126] hover:shadow-[5px_6px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
+            className="group inline-flex items-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-6 sm:py-3.5 rounded-full bg-[#202126] hover:bg-[#d5f085] text-[#fffefa] hover:text-[#202126] font-black text-xs sm:text-sm border-2 border-[#202126] shadow-[3.5px_3.5px_0px_rgba(0,0,0,0.25)] hover:shadow-[4.5px_5px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
           >
             <span>进入我的工作台</span>
             <ArrowUpRight
