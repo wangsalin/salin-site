@@ -315,20 +315,20 @@ export function HeroSection() {
           opacity: bgTextOpacity,
           x: mousePos.x * -14,
         }}
-        className="absolute top-[clamp(44px,7.5vh,90px)] inset-x-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
+        className="absolute top-[clamp(20px,3.8vh,48px)] inset-x-0 w-full flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
         aria-hidden="true"
       >
-        <span
-          className="font-black text-[clamp(68px,17vw,290px)] leading-[0.92] text-white/95 dark:text-white/10 select-none drop-shadow-[0_2px_8px_rgba(255,255,255,0.2)]"
+        <h2
+          className="m-0 font-black text-[clamp(82px,22.5vw,450px)] leading-[0.87] tracking-[-0.025em] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_2px_18px_rgba(141,144,173,0.12)] text-center whitespace-nowrap"
           style={{
             fontFamily:
-              'Impact, "Arial Narrow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-            letterSpacing: "clamp(6px, 2.5vw, 46px)",
-            marginRight: "clamp(-6px, -2.5vw, -46px)",
+              'Impact, "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
           }}
         >
-          SALIN
-        </span>
+          <span className="inline-block transform scale-x-[1.08] origin-center">
+            SALIN
+          </span>
+        </h2>
       </motion.div>
 
       {/* Ground Click Ripples (Footstep Destinations) */}
@@ -508,7 +508,7 @@ export function HeroSection() {
       </motion.div>
 
       {/* 03. Left Column: Editorial Headline & Tactile Stickers */}
-      <div className="relative z-20 max-w-[52vw] sm:max-w-[50vw] md:max-w-[480px] pl-3.5 sm:pl-8 lg:pl-16 pt-20 sm:pt-28 pb-14 sm:pb-16 flex flex-col items-start gap-2 sm:gap-4 lg:gap-5 pointer-events-none">
+      <div className="relative z-20 max-w-[52vw] sm:max-w-[50vw] md:max-w-[480px] pl-3.5 sm:pl-8 lg:pl-16 pt-[108px] sm:pt-[130px] md:pt-32 pb-14 sm:pb-16 flex flex-col items-start gap-2 sm:gap-4 lg:gap-5 pointer-events-none">
         {/* Eyebrow badge */}
         <p className="font-mono text-[9px] sm:text-xs font-black tracking-[0.14em] sm:tracking-[0.22em] text-[#474f67] dark:text-[#a0a8c2] uppercase pointer-events-auto">
           AI APPLICATION & BUSINESS PRACTITIONER
