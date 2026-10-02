@@ -6,28 +6,40 @@ import Link from "next/link";
 import { ArrowUpRight, MessageSquareQuote } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring } from "motion/react";
 
-const QUOTES = [
+const STANDING_QUOTES = [
   "“代码跑通了，现场看一眼？”",
   "“餐饮的毛利是扣出来的，AI 是帮人省时间的。”",
   "“先看懂生意的死结，再敲第一行 Prompt。”",
   "“拒绝空中楼阁，只做能帮生意算过账的 AI。”",
-  "“临沂 / 全国，有具体业务死结随时找我。”",
+];
+
+const BENDING_QUOTES = [
+  "“哎？我弯腰看看下面写了啥……”",
+  "“这几个经历数据，都是肉身在门店踩出来的。”",
+  "“继续往下滑，带你看看现场做了什么。”",
+];
+
+const PRONE_QUOTES = [
+  "“被你发现了…… 趴着看更清楚！👀”",
+  "“下面的每一个案例，我都深入现场驻场交付过。”",
+  "“慢点滑，我都快趴到屏幕边缘外面去了哈哈！”",
+  "“做实战就是得伏下身子，死磕到底。”",
 ];
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
-  const [quoteIndex, setQuoteIndex] = useState(0);
+  const [quoteText, setQuoteText] = useState("");
   const [showQuote, setShowQuote] = useState(false);
   const [quoteTimer, setQuoteTimer] = useState<NodeJS.Timeout | null>(null);
 
-  // Mouse parallax interaction (alive on desktop)
+  // Mouse parallax interaction (desktop)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
     setMousePos({ x, y });
   };
 
@@ -35,12 +47,53 @@ export function HeroSection() {
     setMousePos({ x: 0, y: 0 });
   };
 
-  // Click character to trigger speech bubble
+  // Scroll-driven animation physics
+  const { scrollY } = useScroll();
+
+  // Pose 1: Standing upright (0 -> 180px)
+  const pose1Opacity = useTransform(scrollY, [0, 80, 180], [1, 0.9, 0]);
+
+  // Pose 2: Bending forward with hands on knees (100px -> 380px)
+  const pose2Opacity = useTransform(scrollY, [90, 180, 310, 390], [0, 1, 1, 0]);
+
+  // Pose 3: Lying prone on the ground peering down over the edge (310px -> 500px+)
+  const pose3Opacity = useTransform(scrollY, [310, 420], [0, 1]);
+
+  // 3D forward lean physics for standing/bending poses
+  const rawRotateX = useTransform(scrollY, [0, 340], [0, 20]);
+  const rawScale = useTransform(scrollY, [0, 340], [1, 1.06]);
+  const rawTranslateY = useTransform(scrollY, [0, 340], [0, 32]);
+
+  const smoothRotateX = useSpring(rawRotateX, { stiffness: 140, damping: 22 });
+  const smoothScale = useSpring(rawScale, { stiffness: 140, damping: 22 });
+  const smoothTranslateY = useSpring(rawTranslateY, { stiffness: 140, damping: 22 });
+
+  // Prone pose specific motion: gently sliding right to the bottom edge
+  const rawProneY = useTransform(scrollY, [310, 520], [25, 0]);
+  const smoothProneY = useSpring(rawProneY, { stiffness: 140, damping: 22 });
+
+  // Shadows
+  const standingShadowOpacity = useTransform(scrollY, [0, 220, 330], [0.35, 0.48, 0]);
+  const proneShadowOpacity = useTransform(scrollY, [310, 420], [0, 0.42]);
+
+  // Background text parallax & fade
+  const bgTextY = useTransform(scrollY, [0, 450], [0, -50]);
+  const bgTextOpacity = useTransform(scrollY, [0, 360], [0.95, 0.3]);
+
+  // Dynamic speech bubble triggered by click
   const handleCharacterClick = () => {
     if (quoteTimer) clearTimeout(quoteTimer);
-    setQuoteIndex((prev) => (prev + 1) % QUOTES.length);
+    const currentY = scrollY.get();
+    let pool = STANDING_QUOTES;
+    if (currentY > 320) {
+      pool = PRONE_QUOTES;
+    } else if (currentY > 100) {
+      pool = BENDING_QUOTES;
+    }
+    const randomQuote = pool[Math.floor(Math.random() * pool.length)];
+    setQuoteText(randomQuote);
     setShowQuote(true);
-    const timer = setTimeout(() => setShowQuote(false), 3800);
+    const timer = setTimeout(() => setShowQuote(false), 3600);
     setQuoteTimer(timer);
   };
 
@@ -49,30 +102,6 @@ export function HeroSection() {
       if (quoteTimer) clearTimeout(quoteTimer);
     };
   }, [quoteTimer]);
-
-  // Scroll-driven animation physics
-  const { scrollY } = useScroll();
-
-  // Pose morphing: from standing upright (pose 1) to bending forward looking down (pose 2)
-  const pose1Opacity = useTransform(scrollY, [0, 220], [1, 0]);
-  const pose2Opacity = useTransform(scrollY, [50, 240], [0, 1]);
-
-  // 3D forward lean physics: anchor at feet, tilting upper body forward
-  const rawRotateX = useTransform(scrollY, [0, 360], [0, 16]);
-  const rawScale = useTransform(scrollY, [0, 360], [1, 1.05]);
-  const rawTranslateY = useTransform(scrollY, [0, 360], [0, 26]);
-
-  const smoothRotateX = useSpring(rawRotateX, { stiffness: 120, damping: 20 });
-  const smoothScale = useSpring(rawScale, { stiffness: 120, damping: 20 });
-  const smoothTranslateY = useSpring(rawTranslateY, { stiffness: 120, damping: 20 });
-
-  // Ground shadow reaction
-  const shadowScale = useTransform(scrollY, [0, 360], [1, 1.25]);
-  const shadowOpacity = useTransform(scrollY, [0, 360], [0.32, 0.45]);
-
-  // Background text subtle parallax & fade
-  const bgTextY = useTransform(scrollY, [0, 400], [0, -40]);
-  const bgTextOpacity = useTransform(scrollY, [0, 350], [0.92, 0.35]);
 
   return (
     <section
@@ -88,7 +117,7 @@ export function HeroSection() {
       }}
     >
       {/* 01. Giant Typographic Backdrop: "SALIN" */}
-      {/* Positioned higher (beneath header, framing head and shoulders) with wide tracking */}
+      {/* Positioned high up behind head and shoulders with wide horizontal tracking */}
       <motion.div
         style={{
           y: bgTextY,
@@ -104,16 +133,16 @@ export function HeroSection() {
             fontFamily:
               'Impact, "Arial Narrow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             letterSpacing: "clamp(12px, 3.2vw, 46px)",
-            marginRight: "clamp(-12px, -3.2vw, -46px)", // Offset trailing letter spacing to keep perfectly centered
+            marginRight: "clamp(-12px, -3.2vw, -46px)",
           }}
         >
           SALIN
         </span>
       </motion.div>
 
-      {/* 02. Interactive 3D Character Cutout Layered in front of Backdrop Text */}
+      {/* 02. Interactive 3D Character Area */}
       <div
-        className="absolute left-1/2 bottom-0 -translate-x-1/2 z-10 flex flex-col items-center pointer-events-auto select-none w-full max-w-[680px]"
+        className="absolute left-1/2 bottom-0 -translate-x-1/2 z-10 flex flex-col items-center pointer-events-auto select-none w-full max-w-[760px]"
         style={{ perspective: "1000px" }}
       >
         {/* Floating speech bubble when clicked */}
@@ -122,22 +151,22 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 15, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.9 }}
-            className="absolute -top-12 sm:-top-16 z-30 px-4 py-2.5 bg-[#fffefa] text-[#202126] font-black text-xs sm:text-sm rounded-2xl border-2 border-[#202126] shadow-[4px_4px_0px_#202126] max-w-[320px] text-center pointer-events-none"
+            className="absolute -top-14 sm:-top-16 z-30 px-4 py-2.5 bg-[#fffefa] text-[#202126] font-black text-xs sm:text-sm rounded-2xl border-2 border-[#202126] shadow-[4px_4px_0px_#202126] max-w-[340px] text-center pointer-events-none"
           >
             <div className="flex items-center justify-center gap-1.5">
               <MessageSquareQuote size={15} className="text-[#5867d2] shrink-0" />
-              <span>{QUOTES[quoteIndex]}</span>
+              <span>{quoteText}</span>
             </div>
-            {/* Triangle indicator */}
+            {/* Triangle tail */}
             <div className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-3.5 h-3.5 bg-[#fffefa] border-r-2 border-b-2 border-[#202126] rotate-45" />
           </motion.div>
         )}
 
-        {/* Character Figure Container with Scroll Bending + Mouse Parallax */}
+        {/* --- Poses 1 & 2: Standing & Bending Forward (Scroll 0 -> 350px) --- */}
         <motion.div
           onClick={handleCharacterClick}
           style={{
-            transformOrigin: "50% 92%", // Ground anchor point: bend forward from feet
+            transformOrigin: "50% 92%", // Tilt forward from feet
             rotateX: smoothRotateX,
             scale: smoothScale,
             y: smoothTranslateY,
@@ -146,7 +175,7 @@ export function HeroSection() {
           className="relative w-full flex justify-center cursor-pointer group"
           title="点击狗哥互动"
         >
-          {/* Pose 1: Standing upright front view (default idle pose) */}
+          {/* Pose 1: Standing Upright */}
           <motion.div
             style={{ opacity: pose1Opacity }}
             className="w-full flex justify-center"
@@ -162,14 +191,14 @@ export function HeroSection() {
             />
           </motion.div>
 
-          {/* Pose 2: Bending forward peering down with hands on knees (scroll pose) */}
+          {/* Pose 2: Bending Forward with hands on knees */}
           <motion.div
             style={{ opacity: pose2Opacity }}
             className="absolute inset-0 w-full flex justify-center"
           >
             <Image
               src="/images/salin-hero-bending-alpha.png"
-              alt="Wang Salin 狗哥 3D 虚拟形象 (弯腰查看姿态)"
+              alt="Wang Salin 狗哥 3D 虚拟形象 (弯腰探视姿态)"
               width={768}
               height={1376}
               priority
@@ -178,20 +207,50 @@ export function HeroSection() {
             />
           </motion.div>
 
-          {/* Subtle click me hint badge on hover */}
+          {/* Hover hint */}
           <span className="absolute bottom-28 sm:bottom-36 right-1/4 translate-x-12 px-2.5 py-1 rounded-full bg-[#d5f085] text-[#1c1d24] text-[10px] font-black border border-[#202126] shadow-[2px_2px_0px_#202126] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
             点我一下 💬
           </span>
         </motion.div>
 
-        {/* Soft ground contact shadow */}
+        {/* Standing & Bending Ground Shadow */}
         <motion.div
-          style={{
-            scale: shadowScale,
-            opacity: shadowOpacity,
-          }}
+          style={{ opacity: standingShadowOpacity }}
           className="w-56 sm:w-72 h-6 rounded-[100%] bg-black/35 blur-md -mt-3 shrink-0 pointer-events-none"
         />
+
+        {/* --- Pose 3: Lying Prone On Ground Looking Over The Bottom Edge (Scroll 320px+) --- */}
+        <motion.div
+          onClick={handleCharacterClick}
+          style={{
+            opacity: pose3Opacity,
+            y: smoothProneY,
+            x: mousePos.x * 10,
+          }}
+          className="absolute bottom-0 inset-x-0 w-full flex flex-col items-center justify-end cursor-pointer group"
+          title="点击狗哥互动"
+        >
+          <div className="relative w-full max-w-[720px] flex justify-center px-4">
+            <Image
+              src="/images/salin-hero-prone-alpha.png"
+              alt="Wang Salin 狗哥 3D 虚拟形象 (趴在地上查看姿态)"
+              width={1376}
+              height={768}
+              className="h-[36vh] sm:h-[45vh] max-h-[440px] min-h-[220px] w-auto object-contain object-bottom drop-shadow-[0_20px_35px_rgba(25,27,38,0.38)] pointer-events-none"
+            />
+          </div>
+
+          {/* Prone pose horizontal contact shadow */}
+          <motion.div
+            style={{ opacity: proneShadowOpacity }}
+            className="w-[70%] sm:w-[80%] max-w-[580px] h-6 rounded-[100%] bg-black/45 blur-lg -mt-3 shrink-0 pointer-events-none"
+          />
+
+          {/* Playful prone status pill */}
+          <span className="absolute -top-6 right-8 sm:right-16 px-3 py-1 rounded-full bg-[#d5f085] text-[#1c1d24] text-[11px] font-black border border-[#202126] shadow-[3px_3px_0px_#202126] pointer-events-none">
+            趴下查看中 👀
+          </span>
+        </motion.div>
       </div>
 
       {/* 03. Left Column: Editorial Headline & Tactile Stickers */}
