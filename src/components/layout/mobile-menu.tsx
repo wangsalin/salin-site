@@ -74,10 +74,13 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         <div className="space-y-1.5">
           {siteConfig.navLinks.map((link) => {
             const isActive = pathname === link.href;
+            const isExternal = link.href.startsWith("http");
             return (
               <Link
                 key={link.href}
                 href={link.href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
                 onClick={onClose}
                 className={cn(
                   "flex items-center justify-between px-4 py-3.5 rounded-2xl text-lg font-bold transition-all",

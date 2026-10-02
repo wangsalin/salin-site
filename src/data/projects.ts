@@ -3,6 +3,65 @@ import { siteConfig } from "@/data/site";
 
 export const projects: Project[] = [
   {
+    name: "狗哥资源库 (Gouge Hub)",
+    slug: "gouge-hub",
+    subtitle: "优质夸克与百度网盘资源精选下载站，前沿 AI 工具与商业效率资产平台",
+    summary:
+      "狗哥资源库（主域名 zl.eyu.ink / 备用域名 ziliaoku.fun）专注精选高质量夸克资源与百度网盘资源下载。汇聚前沿 AI 工具与生图提示词、自媒体变现教程、高阶办公模板、餐饮工具箱及精品数字资产，免密直达极速转存，持续人工精选与实测验证。",
+    description:
+      `面向内容创作者、商业操盘手与 AI 实践者的全网高价值数字资产精选平台。全站收录 2,400+ 份高质量资源，涵盖 AI Agent 工具箱、Claude Code 终端实操、ComfyUI 商业工作流、自媒体搞钱实操教程、投行级财务动态模型、餐饮数字化经营工具箱等。所有资源均支持夸克网盘与百度网盘双通道免密转存，人工 100% 校验真实有效性，提供极速补档服务与专属检索。采用双域名多节点部署（主域名 zl.eyu.ink 与备用域名 ziliaoku.fun），确保全天候高可用访问。`,
+    category: "ai-product",
+    status: "持续迭代",
+    year: "2025",
+    role: ["平台主理人", "数字资产架构", "资源真实性校验", "全网分发"],
+    cover: "/images/projects/ziliaoku-cover.jpg",
+    logo: "/images/projects/ziliaoku-logo.png",
+    featured: true,
+    technologies: ["Next.js", "TailwindCSS", "Cloudflare", "Quark API", "Baidu Netdisk"],
+    problem: [
+      "全网网盘资源鱼龙混杂，大量链接失效、虚假解压码或层层套路诱导，查找耗费大量时间",
+      "前沿 AI 生图提示词、ComfyUI 工作流和自媒体爆款脚本散落在各群聊与知识星球中，缺乏系统化沉淀",
+      "很多中小创业者急需现成的餐饮工具箱、高阶财务表格或商业路演 PPT，但找不到高质量工业级模板",
+      "单一域名容易受解析波动或临时拦截影响，急需高可用的备用域名双保险机制"
+    ],
+    insight: [
+      "信息差永远存在，但靠套路换不来长期信任。做资源库的核心不是拼数量，而是做‘100% 实测可用’的硬核交付",
+      "为 AI 工具与效率模板建立结构化标签体系，让用户 30 秒内精准定位目标资源并一键极速转存",
+      "双域名部署（主域名 zl.eyu.ink + 备用域名 ziliaoku.fun）保障长期可用性与访问稳定性"
+    ],
+    solution: [
+      "核心收录 2,400+ 份高价值资源：覆盖 AI 工具、自媒体运营、个人提升、办公效率、餐饮经营等 11 大核心分类",
+      "夸克 + 百度双通道免密直达：杜绝繁琐密码与套路，支持一键极速转存至个人网盘",
+      "严格人工复核与 24 小时补档承诺：每项资源入库前均经过解压与可用性实测，失效即补",
+      "主备双域名部署机制：主站访问 zl.eyu.ink，遇解析异常自动无缝切换备用域名 ziliaoku.fun"
+    ],
+    modules: [
+      {
+        title: "AI 工具与 Skills 专区",
+        description: "收录 Claude Code 终端实操、ComfyUI 商业工作流、AI Agent 多文件技能包与生图 Prompt",
+      },
+      {
+        title: "自媒体运营与商业实操",
+        description: "小红书千赞爆款脚本、抖音与视频号获客拆解、一人公司商业变现实操手册",
+      },
+      {
+        title: "餐饮经营数字化工具箱",
+        description: "522道高利润商业小吃核心配方、外卖运营测算表、餐厅连锁成本管控动态模型",
+      },
+      {
+        title: "高阶办公效率模板",
+        description: "投行级财务动态测算模型、50套极简商业路演 PPT、自动化 Excel 函数看板",
+      },
+    ],
+    progress: "已稳定运行，收录 2,400+ 份精选资源，每日保持人工动态校验与上新，访问量稳步增长中。",
+    learnings: [
+      "把好资源做成不设门槛的直达站，比设各种关注套路更能积累真实的口碑与长久用户",
+      "主备双域名策略（zl.eyu.ink / ziliaoku.fun）能有效对抗网络解析波动，让用户永远找得到根据地",
+    ],
+    externalUrl: "https://zl.eyu.ink",
+    lastUpdated: "2026-10",
+  },
+  {
     name: "FDE 企业 AI 驻场落地服务",
     slug: "fde-enterprise-ai",
     subtitle: "以前向部署工程师 (FDE) 模式入驻企业现场，交付软硬一体的 AI 生产力",

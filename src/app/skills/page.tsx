@@ -59,6 +59,32 @@ export default function SkillsPage() {
         <p className="text-lg leading-relaxed" style={{ color: "var(--text-secondary)" }}>
           AI Agent 的技能（Skill）不是单一的文本，而是包含配置文件、场景 Prompt、工具代码、测试用例与 SOP 指南的完整多文件工作包。所有技能包均提供解压即用的 <strong style={{ color: "var(--text-primary)" }}>.ZIP 源码压缩包下载</strong>。
         </p>
+
+        {/* 狗哥资源库联动 Banner */}
+        <div className="mt-6 p-4 sm:p-5 rounded-2xl border-2 border-emerald-500/30 bg-emerald-500/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[var(--brand)] text-[var(--brand-foreground)]">
+                网盘精选
+              </span>
+              <span className="text-sm font-extrabold text-[var(--text-primary)]">
+                寻找更多前沿 AI 工具、提示词与商业效率模板？
+              </span>
+            </div>
+            <p className="text-xs text-[var(--text-secondary)]">
+              欢迎前往【<strong>狗哥资源库</strong>】(主域名: zl.eyu.ink / 备用: ziliaoku.fun)，已精选收录 2,400+ 份夸克与百度网盘优质资源，100% 免密极速转存。
+            </p>
+          </div>
+          <a
+            href="https://zl.eyu.ink"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-xl text-xs font-bold bg-[var(--brand)] text-[var(--brand-foreground)] hover:opacity-90 transition-opacity shrink-0 flex items-center gap-1.5 shadow-sm"
+          >
+            <span>访问狗哥资源库</span>
+            <span>↗</span>
+          </a>
+        </div>
       </div>
 
       {/* 实时搜索与分类筛选控制栏 */}

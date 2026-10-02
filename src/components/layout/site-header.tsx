@@ -61,20 +61,25 @@ export function SiteHeader() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
-            {siteConfig.navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "px-4 py-2 rounded-full text-sm font-medium transition-colors",
-                  pathname === link.href
-                    ? "bg-[var(--surface-muted)] text-[var(--text-primary)] font-bold"
-                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-muted)]"
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {siteConfig.navLinks.map((link) => {
+              const isExternal = link.href.startsWith("http");
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                  className={cn(
+                    "px-3.5 py-2 rounded-full text-sm font-medium transition-colors",
+                    pathname === link.href
+                      ? "bg-[var(--surface-muted)] text-[var(--text-primary)] font-bold"
+                      : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-muted)]"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className="mx-2 h-4 w-px bg-[var(--border)]" />
             <Link
               href="/contact"

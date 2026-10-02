@@ -27,22 +27,63 @@ export function SiteFooter() {
           </div>
 
           {/* 右侧导航 */}
+          {/* 右侧导航 */}
           <div className="flex flex-wrap gap-10">
             <div>
               <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "var(--text-secondary)" }}>
                 全站导航
               </div>
               <div className="flex flex-col gap-2">
-                {siteConfig.navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-xs transition-colors hover:text-[var(--brand)] font-medium"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                {siteConfig.navLinks.map((link) => {
+                  const isExternal = link.href.startsWith("http");
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      className="text-xs transition-colors hover:text-[var(--brand)] font-medium"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div>
+              <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "var(--text-secondary)" }}>
+                旗下站点 & 资源
+              </div>
+              <div className="flex flex-col gap-2 text-xs">
+                <a
+                  href="https://zl.eyu.ink"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-[var(--text-primary)] hover:text-[var(--brand)] transition-colors flex items-center gap-1"
+                >
+                  狗哥资源库 <span className="text-[10px] font-mono text-[var(--accent)] bg-[var(--brand)] px-1.5 py-0.2 rounded">精选</span>
+                </a>
+                <a
+                  href="https://zl.eyu.ink"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors"
+                >
+                  主站: zl.eyu.ink ↗
+                </a>
+                <a
+                  href="https://ziliaoku.fun"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[var(--text-secondary)] hover:text-[var(--brand)] transition-colors"
+                >
+                  备用: ziliaoku.fun ↗
+                </a>
+                <span className="text-[11px] text-[var(--text-secondary)] opacity-80 pt-1">
+                  2,400+ 夸克与百度网盘资源
+                </span>
               </div>
             </div>
 

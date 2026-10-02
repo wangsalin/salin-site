@@ -482,7 +482,7 @@ export function HeroSection() {
           y: smoothProneY,
           x: mousePos.x * 10,
         }}
-        className="absolute bottom-0 inset-x-0 w-full z-15 flex flex-col items-center justify-end pointer-events-auto select-none cursor-pointer group"
+        className="absolute bottom-0 inset-x-0 w-full z-[15] md:z-20 flex flex-col items-center justify-end pointer-events-auto select-none cursor-pointer group"
         title="点击狗哥互动"
       >
         <div className="relative w-full max-w-[720px] flex justify-center px-4">

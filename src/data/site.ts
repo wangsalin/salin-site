@@ -23,10 +23,13 @@ export const siteConfig = {
   nowUpdatedAt: "2026 年 7 月",
   nowStatus: "主导 FoodOps 开源案例与临沂本地企业 AI 落地，同步推进 AI 产品实践与经验沉淀。",
   heroTags: ["AI 商业实践", "FoodOps 开源中", "临沂 & 全国驻场"],
+  ziliaokuUrl: "https://zl.eyu.ink",
+  ziliaokuBackupUrl: "https://ziliaoku.fun",
   navLinks: [
     { label: "首页", href: "/" },
     { label: "FoodOps 旗舰", href: "/projects/foodops" },
     { label: "代表项目", href: "/projects" },
+    { label: "狗哥资源库 ↗", href: "https://zl.eyu.ink" },
     { label: "技能包下载", href: "/skills" },
     { label: "实践记录", href: "/notes" },
     { label: "关于狗哥", href: "/about" },

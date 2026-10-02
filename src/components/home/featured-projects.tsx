@@ -121,7 +121,11 @@ export function FeaturedProjects() {
 
               {/* 底部按钮指示器 */}
               <div className="pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs font-bold text-[var(--brand)]">
-                <span>了解完整 FDE 落地 SOP 与技术架构</span>
+                <span>
+                  {project.externalUrl
+                    ? "支持在线直达 (zl.eyu.ink / 备用: ziliaoku.fun)"
+                    : "了解完整落地 SOP 与技术架构"}
+                </span>
                 <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                   查看项目详情 <ArrowRight size={14} />
                 </span>
