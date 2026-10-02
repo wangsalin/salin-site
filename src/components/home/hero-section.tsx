@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, MessageSquareQuote } from "lucide-react";
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
+import { ArrowUpRight, MessageSquareQuote, Footprints, Sparkles } from "lucide-react";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "motion/react";
 
 const STANDING_QUOTES = [
   "“代码跑通了，现场看一眼？”",
@@ -26,11 +26,26 @@ const PRONE_QUOTES = [
   "“做实战就是得伏下身子，死磕到底。”",
 ];
 
+const WALKING_QUOTES = [
+  "“四处溜达溜达，巡视一下现场~”",
+  "“走，带你看看我的实战工作台！”",
+  "“实干家从来不坐着，巡店去！”",
+  "“别催别催，正在走过来的路上了~”",
+];
+
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
   const [quoteText, setQuoteText] = useState("");
   const [showQuote, setShowQuote] = useState(false);
   const [quoteTimer, setQuoteTimer] = useState<NodeJS.Timeout | null>(null);
+
+  // --- 自由走动系统 (Free Roam & Walk System) ---
+  const [walkX, setWalkX] = useState(0); // Position offset in px from center
+  const [facing, setFacing] = useState<"right" | "left">("right");
+  const [isWalking, setIsWalking] = useState(false);
+  const [isJumping, setIsJumping] = useState(false);
+  const [clickRipples, setClickRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
+  const [walkCounter, setWalkCounter] = useState(0);
 
   // Mouse parallax interaction (desktop)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -53,7 +68,7 @@ export function HeroSection() {
   // Pose 1: Standing upright (0 -> 180px)
   const pose1Opacity = useTransform(scrollY, [0, 80, 180], [1, 0.9, 0]);
 
-  // Pose 2: Bending forward with hands on knees (100px -> 380px)
+  // Pose 2: Bending forward with hands on knees (90px -> 380px)
   const pose2Opacity = useTransform(scrollY, [90, 180, 310, 390], [0, 1, 1, 0]);
 
   // Pose 3: Lying prone on the ground peering down over the edge (310px -> 500px+)
@@ -80,22 +95,108 @@ export function HeroSection() {
   const bgTextY = useTransform(scrollY, [0, 450], [0, -50]);
   const bgTextOpacity = useTransform(scrollY, [0, 360], [0.95, 0.3]);
 
-  // Dynamic speech bubble triggered by click
-  const handleCharacterClick = () => {
-    if (quoteTimer) clearTimeout(quoteTimer);
-    const currentY = scrollY.get();
-    let pool = STANDING_QUOTES;
-    if (currentY > 320) {
-      pool = PRONE_QUOTES;
-    } else if (currentY > 100) {
-      pool = BENDING_QUOTES;
-    }
-    const randomQuote = pool[Math.floor(Math.random() * pool.length)];
-    setQuoteText(randomQuote);
-    setShowQuote(true);
-    const timer = setTimeout(() => setShowQuote(false), 3600);
-    setQuoteTimer(timer);
+  // Trigger speech bubble
+  const triggerQuote = useCallback(
+    (customText?: string) => {
+      if (quoteTimer) clearTimeout(quoteTimer);
+      if (customText) {
+        setQuoteText(customText);
+      } else {
+        const currentY = scrollY.get();
+        let pool = STANDING_QUOTES;
+        if (isWalking) {
+          pool = WALKING_QUOTES;
+        } else if (currentY > 320) {
+          pool = PRONE_QUOTES;
+        } else if (currentY > 100) {
+          pool = BENDING_QUOTES;
+        }
+        const randomQuote = pool[Math.floor(Math.random() * pool.length)];
+        setQuoteText(randomQuote);
+      }
+      setShowQuote(true);
+      const timer = setTimeout(() => setShowQuote(false), 3600);
+      setQuoteTimer(timer);
+    },
+    [isWalking, quoteTimer, scrollY]
+  );
+
+  // Click on the character directly
+  const handleCharacterClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    triggerQuote();
   };
+
+  // --- Click Ground to Walk There ---
+  const handleGroundClick = (e: React.MouseEvent<HTMLElement>) => {
+    // If clicked on an interactive link/button, ignore
+    if ((e.target as HTMLElement).closest("a, button, input, [role='button']")) {
+      return;
+    }
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const clickXFromCenter = e.clientX - (rect.left + rect.width / 2);
+
+    // Limit walking boundaries so character doesn't walk completely off screen
+    const maxBound = Math.min(rect.width * 0.38, 420);
+    const clampedX = Math.max(-maxBound, Math.min(maxBound, clickXFromCenter));
+
+    // Direction and walk trigger
+    setFacing(clampedX > walkX ? "right" : "left");
+    setIsWalking(true);
+    setWalkX(clampedX);
+    setWalkCounter((c) => c + 1);
+
+    // Add visual click ripple indicator on the floor
+    const newRipple = {
+      id: Date.now() + Math.random(),
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+    setClickRipples((prev) => [...prev.slice(-4), newRipple]);
+    setTimeout(() => {
+      setClickRipples((prev) => prev.filter((r) => r.id !== newRipple.id));
+    }, 700);
+
+    // Walk duration timer
+    const distance = Math.abs(clampedX - walkX);
+    const walkDuration = Math.max(500, Math.min(1200, distance * 2.5));
+    setTimeout(() => setIsWalking(false), walkDuration);
+
+    // Occasionally speak when walking
+    if (Math.random() > 0.65) {
+      setTimeout(() => triggerQuote(), 250);
+    }
+  };
+
+  // --- Keyboard Walking: Arrow keys / WASD & Space to Jump ---
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName || "")) return;
+
+      const step = 48;
+      const maxBound = 420;
+
+      if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
+        setFacing("left");
+        setIsWalking(true);
+        setWalkX((prev) => Math.max(prev - step, -maxBound));
+        setTimeout(() => setIsWalking(false), 300);
+      } else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
+        setFacing("right");
+        setIsWalking(true);
+        setWalkX((prev) => Math.min(prev + step, maxBound));
+        setTimeout(() => setIsWalking(false), 300);
+      } else if (e.key === " " || e.key === "Spacebar") {
+        e.preventDefault();
+        setIsJumping(true);
+        setTimeout(() => setIsJumping(false), 550);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -106,18 +207,19 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
+      onClick={handleGroundClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-[96vh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-[#c8cbe0] dark:bg-[#12141c] text-[#1c1d24] dark:text-[#f2f1eb] transition-colors"
+      className="relative min-h-[96vh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-[#c8cbe0] dark:bg-[#12141c] text-[#1c1d24] dark:text-[#f2f1eb] transition-colors cursor-crosshair select-none"
       style={{
         backgroundImage:
           "radial-gradient(rgba(32, 33, 40, 0.13) 1.2px, transparent 1.2px)",
         backgroundSize: "24px 24px",
         perspective: "1200px",
       }}
+      title="点击地面任意位置，让狗哥走动"
     >
       {/* 01. Giant Typographic Backdrop: "SALIN" */}
-      {/* Positioned high up behind head and shoulders with wide horizontal tracking */}
       <motion.div
         style={{
           y: bgTextY,
@@ -140,12 +242,45 @@ export function HeroSection() {
         </span>
       </motion.div>
 
-      {/* 02. Interactive 3D Character Area */}
-      <div
-        className="absolute left-1/2 bottom-0 -translate-x-1/2 z-10 flex flex-col items-center pointer-events-auto select-none w-full max-w-[760px]"
+      {/* Ground Click Ripples (Footstep Destinations) */}
+      <AnimatePresence>
+        {clickRipples.map((ripple) => (
+          <motion.div
+            key={ripple.id}
+            initial={{ scale: 0.2, opacity: 0.9 }}
+            animate={{ scale: 1.8, opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.65, ease: "easeOut" }}
+            style={{ left: ripple.x, top: ripple.y }}
+            className="absolute -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-2 border-[#5867d2] pointer-events-none z-10 flex items-center justify-center"
+          >
+            <Footprints size={14} className="text-[#5867d2] opacity-75" />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
+      {/* 02. Interactive Free-Roaming Character Stage */}
+      <motion.div
+        animate={{
+          x: walkX,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 110,
+          damping: 17,
+        }}
+        drag="x"
+        dragConstraints={{ left: -400, right: 400 }}
+        dragElastic={0.08}
+        onDragStart={() => setIsWalking(true)}
+        onDragEnd={(_, info) => {
+          setIsWalking(false);
+          setWalkX((prev) => prev + info.offset.x * 0.3);
+        }}
+        className="absolute left-1/2 bottom-0 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-auto select-none w-full max-w-[760px] cursor-grab active:cursor-grabbing"
         style={{ perspective: "1000px" }}
       >
-        {/* Floating speech bubble when clicked */}
+        {/* Floating Speech Bubble Above Character */}
         {showQuote && (
           <motion.div
             initial={{ opacity: 0, y: 15, scale: 0.9 }}
@@ -157,23 +292,34 @@ export function HeroSection() {
               <MessageSquareQuote size={15} className="text-[#5867d2] shrink-0" />
               <span>{quoteText}</span>
             </div>
-            {/* Triangle tail */}
+            {/* Speech bubble tail */}
             <div className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-3.5 h-3.5 bg-[#fffefa] border-r-2 border-b-2 border-[#202126] rotate-45" />
           </motion.div>
         )}
 
-        {/* --- Poses 1 & 2: Standing & Bending Forward (Scroll 0 -> 350px) --- */}
+        {/* --- Poses 1 & 2: Standing & Bending (Scroll 0 -> 350px) --- */}
         <motion.div
           onClick={handleCharacterClick}
+          animate={{
+            y: isJumping ? -42 : isWalking ? [0, -10, 0, -10, 0] : 0,
+            scaleX: facing === "left" ? -1 : 1, // Turn around left/right!
+          }}
+          transition={{
+            y: isJumping
+              ? { duration: 0.5, ease: "easeOut" }
+              : isWalking
+              ? { duration: 0.5, repeat: Infinity, ease: "easeInOut" }
+              : { duration: 0.2 },
+            scaleX: { duration: 0.2 },
+          }}
           style={{
-            transformOrigin: "50% 92%", // Tilt forward from feet
+            transformOrigin: "50% 92%", // Ground anchor
             rotateX: smoothRotateX,
             scale: smoothScale,
-            y: smoothTranslateY,
             rotateY: mousePos.x * 6,
           }}
           className="relative w-full flex justify-center cursor-pointer group"
-          title="点击狗哥互动"
+          title="点击狗哥互动，或直接拖拽他！"
         >
           {/* Pose 1: Standing Upright */}
           <motion.div
@@ -191,7 +337,7 @@ export function HeroSection() {
             />
           </motion.div>
 
-          {/* Pose 2: Bending Forward with hands on knees */}
+          {/* Pose 2: Bending Forward (hands on knees) */}
           <motion.div
             style={{ opacity: pose2Opacity }}
             className="absolute inset-0 w-full flex justify-center"
@@ -207,14 +353,29 @@ export function HeroSection() {
             />
           </motion.div>
 
+          {/* Walking dust animation indicator */}
+          {isWalking && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: [0.3, 0.8, 0], scale: [0.8, 1.4, 1.6] }}
+              transition={{ repeat: Infinity, duration: 0.4 }}
+              className="absolute -bottom-1 w-16 h-4 rounded-full bg-slate-400/40 blur-xs pointer-events-none"
+            />
+          )}
+
           {/* Hover hint */}
           <span className="absolute bottom-28 sm:bottom-36 right-1/4 translate-x-12 px-2.5 py-1 rounded-full bg-[#d5f085] text-[#1c1d24] text-[10px] font-black border border-[#202126] shadow-[2px_2px_0px_#202126] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
-            点我一下 💬
+            可拖我 / 点击地面走动 🕹️
           </span>
         </motion.div>
 
-        {/* Standing & Bending Ground Shadow */}
+        {/* Standing / Bending Ground Shadow */}
         <motion.div
+          animate={{
+            scale: isJumping ? 0.6 : isWalking ? [1, 0.88, 1] : 1,
+            opacity: isJumping ? 0.2 : 0.4,
+          }}
+          transition={{ repeat: isWalking ? Infinity : 0, duration: 0.5 }}
           style={{ opacity: standingShadowOpacity }}
           className="w-56 sm:w-72 h-6 rounded-[100%] bg-black/35 blur-md -mt-3 shrink-0 pointer-events-none"
         />
@@ -251,29 +412,29 @@ export function HeroSection() {
             趴下查看中 👀
           </span>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* 03. Left Column: Editorial Headline & Tactile Stickers */}
-      <div className="relative z-20 max-w-[480px] pl-6 sm:pl-10 lg:pl-16 pt-24 sm:pt-28 pb-12 sm:pb-16 flex flex-col items-start gap-4 sm:gap-5">
+      <div className="relative z-20 max-w-[480px] pl-6 sm:pl-10 lg:pl-16 pt-24 sm:pt-28 pb-12 sm:pb-16 flex flex-col items-start gap-4 sm:gap-5 pointer-events-none">
         {/* Eyebrow badge */}
-        <p className="font-mono text-[11px] sm:text-xs font-black tracking-[0.22em] text-[#474f67] dark:text-[#a0a8c2] uppercase">
+        <p className="font-mono text-[11px] sm:text-xs font-black tracking-[0.22em] text-[#474f67] dark:text-[#a0a8c2] uppercase pointer-events-auto">
           AI APPLICATION & BUSINESS PRACTITIONER
         </p>
 
         {/* Big Impact Headline */}
-        <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-black tracking-[-0.04em] text-[#1b1d24] dark:text-white leading-[1.12]">
+        <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-black tracking-[-0.04em] text-[#1b1d24] dark:text-white leading-[1.12] pointer-events-auto">
           你好，我是<strong className="text-[#0d0e12] dark:text-white">狗哥。</strong>
           <br />
           欢迎来到我的现场。
         </h1>
 
         {/* Subtitle description */}
-        <p className="text-sm sm:text-[15px] text-[#424657] dark:text-[#b0b8c8] font-medium leading-[1.8] max-w-[420px]">
+        <p className="text-sm sm:text-[15px] text-[#424657] dark:text-[#b0b8c8] font-medium leading-[1.8] max-w-[420px] pointer-events-auto">
           用代码与实战经验探索 AI 落地。做过 6 年探店，亲自下场开过餐厅。把十多年摸爬滚打的商业死结，变成真正能跑通的 AI 实战工具。
         </p>
 
         {/* Tactile Stickers Stack */}
-        <div className="flex flex-col items-start gap-2.5 pt-1.5" aria-label="狗哥身份与态度标签">
+        <div className="flex flex-col items-start gap-2.5 pt-1.5 pointer-events-auto" aria-label="狗哥身份与态度标签">
           {/* Sticker 1: Lime Pill Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d5f085] text-[#1c1d24] font-black text-xs border border-[#202126] shadow-[2px_2px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
             <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
@@ -298,7 +459,7 @@ export function HeroSection() {
         </div>
 
         {/* Primary CTA Button */}
-        <div className="pt-2">
+        <div className="pt-2 pointer-events-auto">
           <Link
             href="#projects"
             className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#fffefa] hover:bg-[#d5f085] text-[#1c1d24] font-black text-sm border-2 border-[#202126] shadow-[4px_4px_0px_#202126] hover:shadow-[5px_6px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
@@ -312,10 +473,18 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* 04. Right Column: Status pill & Side Note */}
-      <div className="hidden sm:inline-flex items-center gap-2 absolute right-6 sm:right-12 top-1/2 -translate-y-1/2 z-20 px-3.5 py-1.5 rounded-full bg-white/75 dark:bg-[#1d202b]/80 backdrop-blur border border-[#202126]/30 text-xs font-bold text-[#292c3a] dark:text-white shadow-[2px_2px_0px_rgba(0,0,0,0.15)]">
+      {/* 04. Right Column: Status pill & Interactive Game Hint */}
+      <div className="hidden sm:inline-flex items-center gap-2 absolute right-6 sm:right-12 top-1/2 -translate-y-1/2 z-20 px-3.5 py-1.5 rounded-full bg-white/75 dark:bg-[#1d202b]/80 backdrop-blur border border-[#202126]/30 text-xs font-bold text-[#292c3a] dark:text-white shadow-[2px_2px_0px_rgba(0,0,0,0.15)] pointer-events-auto">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
         <span>全国驻场 · 现场交付中</span>
+      </div>
+
+      {/* Interactive Roaming HUD Hint */}
+      <div className="absolute left-6 sm:left-12 bottom-5 z-20 pointer-events-auto">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 dark:bg-black/40 backdrop-blur border border-[#202126]/20 text-[11px] font-bold text-[#434757] dark:text-[#a5adbf]">
+          <Sparkles size={12} className="text-[#5867d2]" />
+          <span>点击地面 / 键盘 ← → 键，狗哥自由走动 · 空格跳跃</span>
+        </div>
       </div>
 
       <div className="hidden lg:block absolute right-12 bottom-12 z-20 max-w-[240px] text-right pointer-events-auto">
