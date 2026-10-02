@@ -308,28 +308,32 @@ export function HeroSection() {
       }}
       title="点击地面任意位置，让狗哥走动"
     >
-      {/* 01. Giant Typographic Backdrop: "SALIN" */}
-      <motion.div
-        style={{
-          y: bgTextY,
-          opacity: bgTextOpacity,
-          x: mousePos.x * -14,
-        }}
-        className="absolute top-[clamp(20px,3.8vh,48px)] inset-x-0 w-full flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
+      {/* 01. Giant Typographic Backdrop: "SALIN" (Shifted to yellow-box zone: right stage behind character) */}
+      <div
+        className="absolute top-[22vh] sm:top-[24vh] md:top-[25vh] left-[16%] md:left-[30%] w-[84%] md:w-[68%] flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
         aria-hidden="true"
       >
-        <h2
-          className="m-0 font-black text-[clamp(82px,22.5vw,450px)] leading-[0.87] tracking-[-0.025em] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_2px_18px_rgba(141,144,173,0.12)] text-center whitespace-nowrap"
+        <motion.div
           style={{
-            fontFamily:
-              'Impact, "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
+            y: bgTextY,
+            opacity: bgTextOpacity,
+            x: mousePos.x * -14,
           }}
+          className="w-full flex items-center justify-center"
         >
-          <span className="inline-block transform scale-x-[1.08] origin-center">
-            SALIN
-          </span>
-        </h2>
-      </motion.div>
+          <h2
+            className="m-0 font-black text-[clamp(76px,18.5vw,360px)] leading-[0.87] tracking-[-0.025em] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_2px_18px_rgba(141,144,173,0.12)] text-center whitespace-nowrap"
+            style={{
+              fontFamily:
+                'Impact, "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
+            }}
+          >
+            <span className="inline-block transform scale-x-[1.06] origin-center">
+              SALIN
+            </span>
+          </h2>
+        </motion.div>
+      </div>
 
       {/* Ground Click Ripples (Footstep Destinations) */}
       <AnimatePresence>
