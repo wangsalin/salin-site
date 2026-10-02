@@ -348,7 +348,7 @@ export function HeroSection() {
         ))}
       </AnimatePresence>
 
-      {/* 02. Interactive Free-Roaming Character Stage */}
+      {/* 02. Interactive Free-Roaming Character Stage (Poses 1 & 2: Standing & Bending) */}
       <motion.div
         animate={{
           x: walkX,
@@ -359,7 +359,7 @@ export function HeroSection() {
           damping: 17,
         }}
         drag="x"
-        dragConstraints={{ left: isMobile ? -40 : -400, right: isMobile ? 40 : 400 }}
+        dragConstraints={{ left: isMobile ? -30 : -400, right: isMobile ? 30 : 400 }}
         dragElastic={0.08}
         onDragStart={() => {
           lastInteractionRef.current = Date.now();
@@ -370,7 +370,7 @@ export function HeroSection() {
           setIsWalking(false);
           setWalkX((prev) => prev + info.offset.x * (isMobile ? 0.12 : 0.3));
         }}
-        className="absolute left-[70%] sm:left-[64%] md:left-1/2 bottom-0 -translate-x-1/2 z-10 md:z-20 flex flex-col items-center pointer-events-auto select-none w-[68vw] sm:w-[50vw] md:w-full md:max-w-[760px] cursor-grab active:cursor-grabbing"
+        className="absolute right-0 sm:right-3 md:right-auto md:left-1/2 md:-translate-x-1/2 bottom-0 z-10 md:z-20 flex flex-col items-center pointer-events-auto select-none w-[46vw] sm:w-[48vw] md:w-full md:max-w-[760px] cursor-grab active:cursor-grabbing"
         style={{ perspective: "1000px" }}
       >
         {/* Floating Speech Bubble Above Character */}
@@ -379,14 +379,14 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 15, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.9 }}
-            className="absolute -top-12 sm:-top-16 z-30 px-3 py-1.5 sm:px-4 sm:py-2.5 bg-[#fffefa] text-[#202126] font-black text-[11px] sm:text-sm rounded-2xl border-2 border-[#202126] shadow-[3px_3px_0px_#202126] max-w-[210px] sm:max-w-[340px] text-center pointer-events-none right-2 sm:right-auto sm:left-1/2 sm:-translate-x-1/2"
+            className="absolute -top-12 sm:-top-16 z-30 px-3 py-1.5 sm:px-4 sm:py-2.5 bg-[#fffefa] text-[#202126] font-black text-[11px] sm:text-sm rounded-2xl border-2 border-[#202126] shadow-[3px_3px_0px_#202126] max-w-[190px] sm:max-w-[340px] text-center pointer-events-none right-1 sm:right-auto sm:left-1/2 sm:-translate-x-1/2"
           >
             <div className="flex items-center justify-center gap-1.5">
               <MessageSquareQuote size={13} className="text-[#5867d2] shrink-0" />
               <span className="leading-snug">{quoteText}</span>
             </div>
             {/* Speech bubble tail */}
-            <div className="absolute right-10 sm:right-auto sm:left-1/2 -bottom-2 sm:-translate-x-1/2 w-3 h-3 bg-[#fffefa] border-r-2 border-b-2 border-[#202126] rotate-45" />
+            <div className="absolute right-8 sm:right-auto sm:left-1/2 -bottom-2 sm:-translate-x-1/2 w-3 h-3 bg-[#fffefa] border-r-2 border-b-2 border-[#202126] rotate-45" />
           </motion.div>
         )}
 
@@ -426,7 +426,7 @@ export function HeroSection() {
               height={1376}
               priority
               fetchPriority="high"
-              className="h-[48vh] sm:h-[62vh] md:h-[83vh] max-h-[850px] min-h-[320px] sm:min-h-[460px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_16px_28px_rgba(25,27,38,0.24)] sm:drop-shadow-[0_22px_36px_rgba(25,27,38,0.26)] pointer-events-none"
+              className="h-[46vh] sm:h-[60vh] md:h-[83vh] max-h-[850px] min-h-[300px] sm:min-h-[440px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_16px_28px_rgba(25,27,38,0.24)] sm:drop-shadow-[0_22px_36px_rgba(25,27,38,0.26)] pointer-events-none"
             />
           </motion.div>
 
@@ -442,7 +442,7 @@ export function HeroSection() {
               height={1376}
               priority
               fetchPriority="high"
-              className="h-[48vh] sm:h-[62vh] md:h-[83vh] max-h-[850px] min-h-[320px] sm:min-h-[460px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_18px_32px_rgba(25,27,38,0.28)] sm:drop-shadow-[0_28px_42px_rgba(25,27,38,0.32)] pointer-events-none"
+              className="h-[46vh] sm:h-[60vh] md:h-[83vh] max-h-[850px] min-h-[300px] sm:min-h-[440px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_18px_32px_rgba(25,27,38,0.28)] sm:drop-shadow-[0_28px_42px_rgba(25,27,38,0.32)] pointer-events-none"
             />
           </motion.div>
 
@@ -452,7 +452,7 @@ export function HeroSection() {
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: [0.3, 0.8, 0], scale: [0.8, 1.4, 1.6] }}
               transition={{ repeat: Infinity, duration: 0.4 }}
-              className="absolute -bottom-1 w-14 sm:w-16 h-3 sm:h-4 rounded-full bg-slate-400/40 blur-xs pointer-events-none"
+              className="absolute -bottom-1 w-12 sm:w-16 h-3 sm:h-4 rounded-full bg-slate-400/40 blur-xs pointer-events-none"
             />
           )}
 
@@ -470,45 +470,45 @@ export function HeroSection() {
           }}
           transition={{ repeat: isWalking ? Infinity : 0, duration: 0.5 }}
           style={{ opacity: standingShadowOpacity }}
-          className="w-36 sm:w-56 md:w-72 h-4 sm:h-6 rounded-[100%] bg-black/35 blur-sm sm:blur-md -mt-2 sm:-mt-3 shrink-0 pointer-events-none"
+          className="w-32 sm:w-56 md:w-72 h-3.5 sm:h-6 rounded-[100%] bg-black/35 blur-sm sm:blur-md -mt-2 sm:-mt-3 shrink-0 pointer-events-none"
+        />
+      </motion.div>
+
+      {/* --- Pose 3: Lying Prone On Ground Looking Over The Bottom Edge (Scroll 320px+) --- */}
+      <motion.div
+        onClick={handleCharacterClick}
+        style={{
+          opacity: pose3Opacity,
+          y: smoothProneY,
+          x: mousePos.x * 10,
+        }}
+        className="absolute bottom-0 inset-x-0 w-full z-15 flex flex-col items-center justify-end pointer-events-auto select-none cursor-pointer group"
+        title="点击狗哥互动"
+      >
+        <div className="relative w-full max-w-[720px] flex justify-center px-4">
+          <Image
+            src="/images/salin-hero-prone-alpha.png"
+            alt="Wang Salin 狗哥 3D 虚拟形象 (趴在地上查看姿态)"
+            width={1376}
+            height={768}
+            className="h-[22vh] sm:h-[36vh] md:h-[45vh] max-h-[440px] min-h-[140px] sm:min-h-[220px] w-auto object-contain object-bottom drop-shadow-[0_18px_32px_rgba(25,27,38,0.36)] pointer-events-none"
+          />
+        </div>
+
+        {/* Prone pose horizontal contact shadow */}
+        <motion.div
+          style={{ opacity: proneShadowOpacity }}
+          className="w-[85%] max-w-[580px] h-4 sm:h-6 rounded-[100%] bg-black/45 blur-md sm:blur-lg -mt-2 sm:-mt-3 shrink-0 pointer-events-none"
         />
 
-        {/* --- Pose 3: Lying Prone On Ground Looking Over The Bottom Edge (Scroll 320px+) --- */}
-        <motion.div
-          onClick={handleCharacterClick}
-          style={{
-            opacity: pose3Opacity,
-            y: smoothProneY,
-            x: mousePos.x * 10,
-          }}
-          className="absolute bottom-0 inset-x-0 w-full flex flex-col items-center justify-end cursor-pointer group"
-          title="点击狗哥互动"
-        >
-          <div className="relative w-full max-w-[720px] flex justify-center px-4">
-            <Image
-              src="/images/salin-hero-prone-alpha.png"
-              alt="Wang Salin 狗哥 3D 虚拟形象 (趴在地上查看姿态)"
-              width={1376}
-              height={768}
-              className="h-[24vh] sm:h-[36vh] md:h-[45vh] max-h-[440px] min-h-[150px] sm:min-h-[220px] w-auto object-contain object-bottom drop-shadow-[0_18px_32px_rgba(25,27,38,0.36)] pointer-events-none"
-            />
-          </div>
-
-          {/* Prone pose horizontal contact shadow */}
-          <motion.div
-            style={{ opacity: proneShadowOpacity }}
-            className="w-[80%] max-w-[580px] h-4 sm:h-6 rounded-[100%] bg-black/45 blur-md sm:blur-lg -mt-2 sm:-mt-3 shrink-0 pointer-events-none"
-          />
-
-          {/* Playful prone status pill */}
-          <span className="absolute -top-4 sm:-top-6 right-3 sm:right-16 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#d5f085] text-[#1c1d24] text-[10px] sm:text-[11px] font-black border border-[#202126] shadow-[2px_2px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] pointer-events-none">
-            趴下查看中 👀
-          </span>
-        </motion.div>
+        {/* Playful prone status pill */}
+        <span className="absolute -top-4 sm:-top-6 right-3 sm:right-16 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#d5f085] text-[#1c1d24] text-[10px] sm:text-[11px] font-black border border-[#202126] shadow-[2px_2px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] pointer-events-none">
+          趴下查看中 👀
+        </span>
       </motion.div>
 
       {/* 03. Left Column: Editorial Headline & Tactile Stickers */}
-      <div className="relative z-20 max-w-[58%] sm:max-w-[55%] md:max-w-[480px] pl-3.5 sm:pl-10 lg:pl-16 pt-20 sm:pt-28 pb-14 sm:pb-16 flex flex-col items-start gap-2 sm:gap-4 lg:gap-5 pointer-events-none">
+      <div className="relative z-20 max-w-[52vw] sm:max-w-[50vw] md:max-w-[480px] pl-3.5 sm:pl-8 lg:pl-16 pt-20 sm:pt-28 pb-14 sm:pb-16 flex flex-col items-start gap-2 sm:gap-4 lg:gap-5 pointer-events-none">
         {/* Eyebrow badge */}
         <p className="font-mono text-[9px] sm:text-xs font-black tracking-[0.14em] sm:tracking-[0.22em] text-[#474f67] dark:text-[#a0a8c2] uppercase pointer-events-auto">
           AI APPLICATION & BUSINESS PRACTITIONER
@@ -546,8 +546,8 @@ export function HeroSection() {
           <div className="inline-block px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-[11px] sm:text-sm border border-[#202126] shadow-[2px_2px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] transform rotate-1 hover:rotate-0 transition-transform cursor-default">
             <span className="hidden sm:inline">主导 FoodOps 餐饮连锁 AI 落地，让好点子在现场活下去。</span>
             <span className="sm:hidden">
-              主导 FoodOps 餐饮 AI，
-              <em className="not-italic text-[#4f5fc8] font-black ml-0.5">现场交付。</em>
+              主导 FoodOps 餐饮 AI
+              <em className="not-italic text-[#4f5fc8] font-black ml-1">现场落地。</em>
             </span>
           </div>
         </div>
@@ -556,11 +556,11 @@ export function HeroSection() {
         <div className="pt-1 sm:pt-2 pointer-events-auto">
           <Link
             href="#projects"
-            className="group inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3.5 rounded-full bg-[#fffefa] hover:bg-[#d5f085] text-[#1c1d24] font-black text-xs sm:text-sm border-2 border-[#202126] shadow-[3px_3px_0px_#202126] sm:shadow-[4px_4px_0px_#202126] hover:shadow-[5px_6px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
+            className="group inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-6 sm:py-3.5 rounded-full bg-[#fffefa] hover:bg-[#d5f085] text-[#1c1d24] font-black text-xs sm:text-sm border-2 border-[#202126] shadow-[3px_3px_0px_#202126] sm:shadow-[4px_4px_0px_#202126] hover:shadow-[5px_6px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
           >
             <span>进入我的工作台</span>
             <ArrowUpRight
-              size={15}
+              size={14}
               className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
             />
           </Link>
