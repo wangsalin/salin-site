@@ -36,7 +36,8 @@ const WALKING_QUOTES = [
 ];
 
 // Presets for autonomous roaming waypoints
-const ROAM_SPOTS = [-220, -120, 0, 140, 240];
+const DESKTOP_ROAM_SPOTS = [-220, -120, 0, 140, 240];
+const MOBILE_ROAM_SPOTS = [-24, -12, 0, 12, 24];
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -45,12 +46,20 @@ export function HeroSection() {
   const [quoteTimer, setQuoteTimer] = useState<NodeJS.Timeout | null>(null);
 
   // --- 自由走动与自主漫游系统 (Free Roam & Autonomous Walking System) ---
-  const [walkX, setWalkX] = useState(0); // Position offset in px from center
+  const [walkX, setWalkX] = useState(0); // Position offset in px from anchor
   const [facing, setFacing] = useState<"right" | "left">("right");
   const [isWalking, setIsWalking] = useState(false);
   const [isJumping, setIsJumping] = useState(false);
   const [autoRoam, setAutoRoam] = useState(true); // Autonomous walking on by default!
   const [clickRipples, setClickRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const lastInteractionRef = useRef(Date.now());
   const walkXRef = useRef(0);
@@ -146,6 +155,31 @@ export function HeroSection() {
     if (!containerRef.current) return;
     lastInteractionRef.current = Date.now();
 
+    const isMobileDevice = window.innerWidth < 768;
+
+    if (isMobileDevice) {
+      // On mobile, keep character subtly moving within its right-side corridor
+      const targetOffset = (Math.random() - 0.5) * 44; // -22px to +22px
+      setFacing(targetOffset > walkX ? "right" : "left");
+      setIsWalking(true);
+      setWalkX(targetOffset);
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const newRipple = {
+        id: Date.now() + Math.random(),
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+      setClickRipples((prev) => [...prev.slice(-3), newRipple]);
+      setTimeout(() => {
+        setClickRipples((prev) => prev.filter((r) => r.id !== newRipple.id));
+      }, 700);
+
+      setTimeout(() => setIsWalking(false), 450);
+      if (Math.random() > 0.6) setTimeout(() => triggerQuote(), 250);
+      return;
+    }
+
     const rect = containerRef.current.getBoundingClientRect();
     const clickXFromCenter = e.clientX - (rect.left + rect.width / 2);
 
@@ -221,9 +255,13 @@ export function HeroSection() {
       // 2. If user scrolled down (> 60px), character is busy bending/prone, don't wander
       if (scrollY.get() > 60) return;
 
+      const isMobileDevice = window.innerWidth < 768;
+      const spots = isMobileDevice ? MOBILE_ROAM_SPOTS : DESKTOP_ROAM_SPOTS;
+      const threshold = isMobileDevice ? 10 : 70;
+
       // 3. Choose a random spot from predefined comfortable waypoints
       const current = walkXRef.current;
-      const otherSpots = ROAM_SPOTS.filter((s) => Math.abs(s - current) > 70);
+      const otherSpots = spots.filter((s) => Math.abs(s - current) >= threshold);
       if (otherSpots.length === 0) return;
 
       const target = otherSpots[Math.floor(Math.random() * otherSpots.length)];
@@ -235,12 +273,12 @@ export function HeroSection() {
       setWalkX(target);
 
       // Walk duration proportional to distance
-      const duration = Math.max(650, Math.min(1300, distance * 2.8));
+      const duration = Math.max(500, Math.min(1300, distance * (isMobileDevice ? 16 : 2.8)));
       setTimeout(() => {
         setIsWalking(false);
 
-        // 25% chance of popping up a casual wandering reflection after arriving
-        if (Math.random() < 0.3) {
+        // Chance of popping up a casual wandering reflection after arriving
+        if (Math.random() < 0.28) {
           triggerQuote();
         }
       }, duration);
@@ -261,7 +299,7 @@ export function HeroSection() {
       onClick={handleGroundClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-[96vh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-[#c8cbe0] dark:bg-[#12141c] text-[#1c1d24] dark:text-[#f2f1eb] transition-colors cursor-crosshair select-none"
+      className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-[#c8cbe0] dark:bg-[#12141c] text-[#1c1d24] dark:text-[#f2f1eb] transition-colors cursor-crosshair select-none"
       style={{
         backgroundImage:
           "radial-gradient(rgba(32, 33, 40, 0.13) 1.2px, transparent 1.2px)",
@@ -277,16 +315,16 @@ export function HeroSection() {
           opacity: bgTextOpacity,
           x: mousePos.x * -14,
         }}
-        className="absolute top-[clamp(52px,9vh,90px)] inset-x-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
+        className="absolute top-[clamp(44px,7.5vh,90px)] inset-x-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
         aria-hidden="true"
       >
         <span
-          className="font-black text-[clamp(115px,18.5vw,290px)] leading-[0.92] text-white/95 dark:text-white/10 select-none drop-shadow-[0_2px_8px_rgba(255,255,255,0.2)]"
+          className="font-black text-[clamp(68px,17vw,290px)] leading-[0.92] text-white/95 dark:text-white/10 select-none drop-shadow-[0_2px_8px_rgba(255,255,255,0.2)]"
           style={{
             fontFamily:
               'Impact, "Arial Narrow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-            letterSpacing: "clamp(12px, 3.2vw, 46px)",
-            marginRight: "clamp(-12px, -3.2vw, -46px)",
+            letterSpacing: "clamp(6px, 2.5vw, 46px)",
+            marginRight: "clamp(-6px, -2.5vw, -46px)",
           }}
         >
           SALIN
@@ -303,9 +341,9 @@ export function HeroSection() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.65, ease: "easeOut" }}
             style={{ left: ripple.x, top: ripple.y }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-2 border-[#5867d2] pointer-events-none z-10 flex items-center justify-center"
+            className="absolute -translate-x-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full border-2 border-[#5867d2] pointer-events-none z-10 flex items-center justify-center"
           >
-            <Footprints size={14} className="text-[#5867d2] opacity-75" />
+            <Footprints size={13} className="text-[#5867d2] opacity-75" />
           </motion.div>
         ))}
       </AnimatePresence>
@@ -321,7 +359,7 @@ export function HeroSection() {
           damping: 17,
         }}
         drag="x"
-        dragConstraints={{ left: -400, right: 400 }}
+        dragConstraints={{ left: isMobile ? -40 : -400, right: isMobile ? 40 : 400 }}
         dragElastic={0.08}
         onDragStart={() => {
           lastInteractionRef.current = Date.now();
@@ -330,9 +368,9 @@ export function HeroSection() {
         onDragEnd={(_, info) => {
           lastInteractionRef.current = Date.now();
           setIsWalking(false);
-          setWalkX((prev) => prev + info.offset.x * 0.3);
+          setWalkX((prev) => prev + info.offset.x * (isMobile ? 0.12 : 0.3));
         }}
-        className="absolute left-1/2 bottom-0 -translate-x-1/2 z-20 flex flex-col items-center pointer-events-auto select-none w-full max-w-[760px] cursor-grab active:cursor-grabbing"
+        className="absolute left-[70%] sm:left-[64%] md:left-1/2 bottom-0 -translate-x-1/2 z-10 md:z-20 flex flex-col items-center pointer-events-auto select-none w-[68vw] sm:w-[50vw] md:w-full md:max-w-[760px] cursor-grab active:cursor-grabbing"
         style={{ perspective: "1000px" }}
       >
         {/* Floating Speech Bubble Above Character */}
@@ -341,14 +379,14 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 15, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.9 }}
-            className="absolute -top-14 sm:-top-16 z-30 px-4 py-2.5 bg-[#fffefa] text-[#202126] font-black text-xs sm:text-sm rounded-2xl border-2 border-[#202126] shadow-[4px_4px_0px_#202126] max-w-[340px] text-center pointer-events-none"
+            className="absolute -top-12 sm:-top-16 z-30 px-3 py-1.5 sm:px-4 sm:py-2.5 bg-[#fffefa] text-[#202126] font-black text-[11px] sm:text-sm rounded-2xl border-2 border-[#202126] shadow-[3px_3px_0px_#202126] max-w-[210px] sm:max-w-[340px] text-center pointer-events-none right-2 sm:right-auto sm:left-1/2 sm:-translate-x-1/2"
           >
             <div className="flex items-center justify-center gap-1.5">
-              <MessageSquareQuote size={15} className="text-[#5867d2] shrink-0" />
-              <span>{quoteText}</span>
+              <MessageSquareQuote size={13} className="text-[#5867d2] shrink-0" />
+              <span className="leading-snug">{quoteText}</span>
             </div>
             {/* Speech bubble tail */}
-            <div className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-3.5 h-3.5 bg-[#fffefa] border-r-2 border-b-2 border-[#202126] rotate-45" />
+            <div className="absolute right-10 sm:right-auto sm:left-1/2 -bottom-2 sm:-translate-x-1/2 w-3 h-3 bg-[#fffefa] border-r-2 border-b-2 border-[#202126] rotate-45" />
           </motion.div>
         )}
 
@@ -388,7 +426,7 @@ export function HeroSection() {
               height={1376}
               priority
               fetchPriority="high"
-              className="h-[75vh] sm:h-[83vh] max-h-[850px] min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_22px_36px_rgba(25,27,38,0.26)] pointer-events-none"
+              className="h-[48vh] sm:h-[62vh] md:h-[83vh] max-h-[850px] min-h-[320px] sm:min-h-[460px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_16px_28px_rgba(25,27,38,0.24)] sm:drop-shadow-[0_22px_36px_rgba(25,27,38,0.26)] pointer-events-none"
             />
           </motion.div>
 
@@ -404,7 +442,7 @@ export function HeroSection() {
               height={1376}
               priority
               fetchPriority="high"
-              className="h-[75vh] sm:h-[83vh] max-h-[850px] min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_28px_42px_rgba(25,27,38,0.32)] pointer-events-none"
+              className="h-[48vh] sm:h-[62vh] md:h-[83vh] max-h-[850px] min-h-[320px] sm:min-h-[460px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_18px_32px_rgba(25,27,38,0.28)] sm:drop-shadow-[0_28px_42px_rgba(25,27,38,0.32)] pointer-events-none"
             />
           </motion.div>
 
@@ -414,7 +452,7 @@ export function HeroSection() {
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: [0.3, 0.8, 0], scale: [0.8, 1.4, 1.6] }}
               transition={{ repeat: Infinity, duration: 0.4 }}
-              className="absolute -bottom-1 w-16 h-4 rounded-full bg-slate-400/40 blur-xs pointer-events-none"
+              className="absolute -bottom-1 w-14 sm:w-16 h-3 sm:h-4 rounded-full bg-slate-400/40 blur-xs pointer-events-none"
             />
           )}
 
@@ -432,7 +470,7 @@ export function HeroSection() {
           }}
           transition={{ repeat: isWalking ? Infinity : 0, duration: 0.5 }}
           style={{ opacity: standingShadowOpacity }}
-          className="w-56 sm:w-72 h-6 rounded-[100%] bg-black/35 blur-md -mt-3 shrink-0 pointer-events-none"
+          className="w-36 sm:w-56 md:w-72 h-4 sm:h-6 rounded-[100%] bg-black/35 blur-sm sm:blur-md -mt-2 sm:-mt-3 shrink-0 pointer-events-none"
         />
 
         {/* --- Pose 3: Lying Prone On Ground Looking Over The Bottom Edge (Scroll 320px+) --- */}
@@ -452,52 +490,52 @@ export function HeroSection() {
               alt="Wang Salin 狗哥 3D 虚拟形象 (趴在地上查看姿态)"
               width={1376}
               height={768}
-              className="h-[36vh] sm:h-[45vh] max-h-[440px] min-h-[220px] w-auto object-contain object-bottom drop-shadow-[0_20px_35px_rgba(25,27,38,0.38)] pointer-events-none"
+              className="h-[24vh] sm:h-[36vh] md:h-[45vh] max-h-[440px] min-h-[150px] sm:min-h-[220px] w-auto object-contain object-bottom drop-shadow-[0_18px_32px_rgba(25,27,38,0.36)] pointer-events-none"
             />
           </div>
 
           {/* Prone pose horizontal contact shadow */}
           <motion.div
             style={{ opacity: proneShadowOpacity }}
-            className="w-[70%] sm:w-[80%] max-w-[580px] h-6 rounded-[100%] bg-black/45 blur-lg -mt-3 shrink-0 pointer-events-none"
+            className="w-[80%] max-w-[580px] h-4 sm:h-6 rounded-[100%] bg-black/45 blur-md sm:blur-lg -mt-2 sm:-mt-3 shrink-0 pointer-events-none"
           />
 
           {/* Playful prone status pill */}
-          <span className="absolute -top-6 right-8 sm:right-16 px-3 py-1 rounded-full bg-[#d5f085] text-[#1c1d24] text-[11px] font-black border border-[#202126] shadow-[3px_3px_0px_#202126] pointer-events-none">
+          <span className="absolute -top-4 sm:-top-6 right-3 sm:right-16 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#d5f085] text-[#1c1d24] text-[10px] sm:text-[11px] font-black border border-[#202126] shadow-[2px_2px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] pointer-events-none">
             趴下查看中 👀
           </span>
         </motion.div>
       </motion.div>
 
       {/* 03. Left Column: Editorial Headline & Tactile Stickers */}
-      <div className="relative z-20 max-w-[480px] pl-6 sm:pl-10 lg:pl-16 pt-24 sm:pt-28 pb-12 sm:pb-16 flex flex-col items-start gap-4 sm:gap-5 pointer-events-none">
+      <div className="relative z-20 max-w-[58%] sm:max-w-[55%] md:max-w-[480px] pl-3.5 sm:pl-10 lg:pl-16 pt-20 sm:pt-28 pb-14 sm:pb-16 flex flex-col items-start gap-2 sm:gap-4 lg:gap-5 pointer-events-none">
         {/* Eyebrow badge */}
-        <p className="font-mono text-[11px] sm:text-xs font-black tracking-[0.22em] text-[#474f67] dark:text-[#a0a8c2] uppercase pointer-events-auto">
+        <p className="font-mono text-[9px] sm:text-xs font-black tracking-[0.14em] sm:tracking-[0.22em] text-[#474f67] dark:text-[#a0a8c2] uppercase pointer-events-auto">
           AI APPLICATION & BUSINESS PRACTITIONER
         </p>
 
         {/* Big Impact Headline */}
-        <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-black tracking-[-0.04em] text-[#1b1d24] dark:text-white leading-[1.12] pointer-events-auto">
+        <h1 className="text-[22px] xs:text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-black tracking-[-0.03em] sm:tracking-[-0.04em] text-[#1b1d24] dark:text-white leading-[1.15] sm:leading-[1.12] pointer-events-auto">
           你好，我是<strong className="text-[#0d0e12] dark:text-white">狗哥。</strong>
           <br />
           欢迎来到我的现场。
         </h1>
 
         {/* Subtitle description */}
-        <p className="text-sm sm:text-[15px] text-[#424657] dark:text-[#b0b8c8] font-medium leading-[1.8] max-w-[420px] pointer-events-auto">
+        <p className="text-[11.5px] sm:text-[15px] text-[#424657] dark:text-[#b0b8c8] font-medium leading-[1.6] sm:leading-[1.8] max-w-[420px] pointer-events-auto line-clamp-3 sm:line-clamp-none">
           用代码与实战经验探索 AI 落地。做过 6 年探店，亲自下场开过餐厅。把十多年摸爬滚打的商业死结，变成真正能跑通的 AI 实战工具。
         </p>
 
         {/* Tactile Stickers Stack */}
-        <div className="flex flex-col items-start gap-2.5 pt-1.5 pointer-events-auto" aria-label="狗哥身份与态度标签">
+        <div className="flex flex-col items-start gap-1.5 sm:gap-2.5 pt-1 pointer-events-auto" aria-label="狗哥身份与态度标签">
           {/* Sticker 1: Lime Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d5f085] text-[#1c1d24] font-black text-xs border border-[#202126] shadow-[2px_2px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
-            <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-            <span>身份卡 / 实体餐饮老兵 · 临沂</span>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#d5f085] text-[#1c1d24] font-black text-[10px] sm:text-xs border border-[#202126] shadow-[2px_2px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
+            <span className="truncate">身份卡 / 实体餐饮老兵 · 临沂</span>
           </div>
 
           {/* Sticker 2: White Paper Note (Tilted -1deg) */}
-          <div className="inline-block px-4 py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-xs sm:text-sm border border-[#202126] shadow-[3px_3px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+          <div className="inline-block px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-[11px] sm:text-sm border border-[#202126] shadow-[2px_2px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
             喜欢把「死磕现场」
             <em className="not-italic text-[#4f5fc8] font-black underline decoration-[#c7ec73] decoration-2 ml-1">
               写成真的。
@@ -505,23 +543,24 @@ export function HeroSection() {
           </div>
 
           {/* Sticker 3: White Paper Note (Tilted +1deg) */}
-          <div className="inline-block px-4 py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-xs sm:text-sm border border-[#202126] shadow-[3px_3px_0px_#202126] transform rotate-1 hover:rotate-0 transition-transform cursor-default">
-            主导 FoodOps 餐饮连锁 AI 落地，
-            <em className="not-italic text-[#4f5fc8] font-black ml-1">
-              让好点子在现场活下去。
-            </em>
+          <div className="inline-block px-2.5 py-1.5 sm:px-4 sm:py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-[11px] sm:text-sm border border-[#202126] shadow-[2px_2px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] transform rotate-1 hover:rotate-0 transition-transform cursor-default">
+            <span className="hidden sm:inline">主导 FoodOps 餐饮连锁 AI 落地，让好点子在现场活下去。</span>
+            <span className="sm:hidden">
+              主导 FoodOps 餐饮 AI，
+              <em className="not-italic text-[#4f5fc8] font-black ml-0.5">现场交付。</em>
+            </span>
           </div>
         </div>
 
         {/* Primary CTA Button */}
-        <div className="pt-2 pointer-events-auto">
+        <div className="pt-1 sm:pt-2 pointer-events-auto">
           <Link
             href="#projects"
-            className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#fffefa] hover:bg-[#d5f085] text-[#1c1d24] font-black text-sm border-2 border-[#202126] shadow-[4px_4px_0px_#202126] hover:shadow-[5px_6px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
+            className="group inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3.5 rounded-full bg-[#fffefa] hover:bg-[#d5f085] text-[#1c1d24] font-black text-xs sm:text-sm border-2 border-[#202126] shadow-[3px_3px_0px_#202126] sm:shadow-[4px_4px_0px_#202126] hover:shadow-[5px_6px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
           >
             <span>进入我的工作台</span>
             <ArrowUpRight
-              size={18}
+              size={15}
               className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
             />
           </Link>
@@ -535,7 +574,7 @@ export function HeroSection() {
       </div>
 
       {/* Interactive Roaming HUD: Toggle Auto Wander / Manual Walk */}
-      <div className="absolute left-6 sm:left-12 bottom-5 z-20 pointer-events-auto flex flex-wrap items-center gap-2">
+      <div className="absolute left-3.5 sm:left-12 bottom-3.5 sm:bottom-5 z-20 pointer-events-auto flex items-center gap-2">
         <button
           type="button"
           onClick={(e) => {
@@ -543,27 +582,27 @@ export function HeroSection() {
             setAutoRoam(!autoRoam);
             triggerQuote(autoRoam ? "“收到，那我先在原地站会儿~”" : "“巡店模式开启！四处溜达溜达~”");
           }}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 dark:bg-black/60 backdrop-blur border border-[#202126]/30 text-[11px] font-black text-[#202126] dark:text-white shadow-[2px_2px_0px_#202126] hover:bg-[#d5f085] hover:text-[#202126] transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/90 dark:bg-black/70 backdrop-blur border border-[#202126]/30 text-[10px] sm:text-[11px] font-black text-[#202126] dark:text-white shadow-[2px_2px_0px_#202126] hover:bg-[#d5f085] hover:text-[#202126] transition-colors cursor-pointer"
           title={autoRoam ? "点击暂停自主走动" : "点击开启自主走动"}
         >
           {autoRoam ? (
             <>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>自动巡店漫步中</span>
-              <Pause size={10} className="ml-0.5 opacity-70" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>自动漫步中</span>
+              <Pause size={9} className="ml-0.5 opacity-70" />
             </>
           ) : (
             <>
-              <span className="w-2 h-2 rounded-full bg-amber-500" />
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
               <span>漫步已暂停</span>
-              <Play size={10} className="ml-0.5 opacity-70" />
+              <Play size={9} className="ml-0.5 opacity-70" />
             </>
           )}
         </button>
 
-        <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-black/40 backdrop-blur border border-[#202126]/20 text-[11px] font-bold text-[#434757] dark:text-[#a5adbf]">
+        <div className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-black/40 backdrop-blur border border-[#202126]/20 text-[11px] font-bold text-[#434757] dark:text-[#a5adbf]">
           <Sparkles size={11} className="text-[#5867d2]" />
-          <span>点击地面随时唤他走过去 · 空格跳跃</span>
+          <span>点击地面唤他走动 · 空格跳跃</span>
         </div>
       </div>
 

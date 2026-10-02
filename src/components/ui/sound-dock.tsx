@@ -110,7 +110,7 @@ export function SoundDock() {
   return (
     <aside
       className={cn(
-        "fixed z-50 right-4 sm:right-7 bottom-4 sm:bottom-7 transition-all duration-300 font-sans",
+        "fixed z-50 right-3.5 sm:right-7 bottom-3.5 sm:bottom-7 transition-all duration-300 font-sans",
         isTucked ? "translate-x-[calc(100%-36px)]" : "translate-x-0"
       )}
       aria-label="狗哥的现场播放盒"
@@ -119,7 +119,7 @@ export function SoundDock() {
       {isTucked && (
         <button
           onClick={() => setIsTucked(false)}
-          className="absolute left-0 bottom-1 w-9 h-14 bg-[#d5f085] border-2 border-[#202126] rounded-l-xl flex items-center justify-center text-[#202126] font-black shadow-[-3px_3px_0px_#202126] cursor-pointer hover:bg-[#c6e86b]"
+          className="absolute left-0 bottom-1 w-8 sm:w-9 h-12 sm:h-14 bg-[#d5f085] border-2 border-[#202126] rounded-l-xl flex items-center justify-center text-[#202126] font-black shadow-[-3px_3px_0px_#202126] cursor-pointer hover:bg-[#c6e86b]"
           title="展开播放盒"
         >
           ♫
@@ -127,11 +127,11 @@ export function SoundDock() {
       )}
 
       {/* Main floating pill button */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2">
         <button
           type="button"
           onClick={() => setIsTucked(true)}
-          className="w-7 h-7 rounded-full bg-[#d5f085] border border-[#202126] flex items-center justify-center text-xs font-bold text-[#202126] shadow-[2px_2px_0px_#202126] hover:bg-[#fff] cursor-pointer"
+          className="hidden sm:flex w-7 h-7 rounded-full bg-[#d5f085] border border-[#202126] items-center justify-center text-xs font-bold text-[#202126] shadow-[2px_2px_0px_#202126] hover:bg-[#fff] cursor-pointer"
           title="收进右侧边缘"
         >
           →
@@ -140,18 +140,19 @@ export function SoundDock() {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2.5 px-3 py-2 bg-[#fffdf5] border-2 border-[#202126] rounded-2xl shadow-[4px_4px_0px_#202126] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#202126] transition-all cursor-pointer text-left"
+          className="flex items-center gap-2 p-1 sm:px-3 sm:py-2 bg-[#fffdf5] border-2 border-[#202126] rounded-full sm:rounded-2xl shadow-[3px_3px_0px_#202126] sm:shadow-[4px_4px_0px_#202126] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#202126] transition-all cursor-pointer text-left"
+          title="狗哥的播放盒"
         >
           {/* Spinning disc indicator */}
           <span
             className={cn(
-              "w-9 h-9 rounded-full border-2 border-[#202126] bg-[#d5f085] flex items-center justify-center text-base text-[#202126] shrink-0",
+              "w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-[#202126] bg-[#d5f085] flex items-center justify-center text-xs sm:text-base text-[#202126] shrink-0",
               isPlaying && "animate-[spin_4s_linear_infinite]"
             )}
           >
             ♫
           </span>
-          <div className="flex flex-col min-w-0 pr-1">
+          <div className="hidden sm:flex flex-col min-w-0 pr-1">
             <span className="text-xs font-black text-[#202126] tracking-tight whitespace-nowrap">
               狗哥的播放盒
             </span>
@@ -159,13 +160,13 @@ export function SoundDock() {
               {isPlaying ? currentTrack.title : "默认安静 · 点击选歌"}
             </span>
           </div>
-          <span className="text-xs font-bold text-[#202126] pl-1">↗</span>
+          <span className="hidden sm:inline text-xs font-bold text-[#202126] pl-1">↗</span>
         </button>
       </div>
 
       {/* Pop-up Jukebox Panel */}
       {isOpen && (
-        <div className="absolute right-0 bottom-[calc(100%+14px)] w-[320px] sm:w-[350px] p-5 bg-[#fffdf7] border-2 border-[#202126] rounded-2xl shadow-[8px_9px_0px_#202126] text-[#202126] animate-in fade-in slide-in-from-bottom-3 duration-200">
+        <div className="absolute right-0 bottom-[calc(100%+12px)] w-[calc(100vw-28px)] max-w-[340px] sm:max-w-[350px] p-4 sm:p-5 bg-[#fffdf7] border-2 border-[#202126] rounded-2xl shadow-[6px_6px_0px_#202126] sm:shadow-[8px_9px_0px_#202126] text-[#202126] animate-in fade-in slide-in-from-bottom-3 duration-200">
           <div className="flex items-start justify-between mb-4 pb-2 border-b border-[#202126]/20">
             <div>
               <span className="text-[10px] font-mono font-black text-[#6355b8] tracking-widest uppercase block">
