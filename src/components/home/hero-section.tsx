@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, MessageSquareQuote, Footprints, Sparkles } from "lucide-react";
+import { ArrowUpRight, MessageSquareQuote, Footprints, Sparkles, Play, Pause } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "motion/react";
 
 const STANDING_QUOTES = [
@@ -30,8 +30,13 @@ const WALKING_QUOTES = [
   "“四处溜达溜达，巡视一下现场~”",
   "“走，带你看看我的实战工作台！”",
   "“实干家从来不坐着，巡店去！”",
-  "“别催别催，正在走过来的路上了~”",
+  "“溜达到这边瞧瞧，找找业务灵感。”",
+  "“实体餐饮的死结，往往藏在不起眼的动线里。”",
+  "“四处巡视一圈，稳妥！”",
 ];
+
+// Presets for autonomous roaming waypoints
+const ROAM_SPOTS = [-220, -120, 0, 140, 240];
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -39,13 +44,17 @@ export function HeroSection() {
   const [showQuote, setShowQuote] = useState(false);
   const [quoteTimer, setQuoteTimer] = useState<NodeJS.Timeout | null>(null);
 
-  // --- 自由走动系统 (Free Roam & Walk System) ---
+  // --- 自由走动与自主漫游系统 (Free Roam & Autonomous Walking System) ---
   const [walkX, setWalkX] = useState(0); // Position offset in px from center
   const [facing, setFacing] = useState<"right" | "left">("right");
   const [isWalking, setIsWalking] = useState(false);
   const [isJumping, setIsJumping] = useState(false);
+  const [autoRoam, setAutoRoam] = useState(true); // Autonomous walking on by default!
   const [clickRipples, setClickRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
-  const [walkCounter, setWalkCounter] = useState(0);
+
+  const lastInteractionRef = useRef(Date.now());
+  const walkXRef = useRef(0);
+  walkXRef.current = walkX;
 
   // Mouse parallax interaction (desktop)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -124,6 +133,7 @@ export function HeroSection() {
   // Click on the character directly
   const handleCharacterClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    lastInteractionRef.current = Date.now();
     triggerQuote();
   };
 
@@ -134,6 +144,8 @@ export function HeroSection() {
       return;
     }
     if (!containerRef.current) return;
+    lastInteractionRef.current = Date.now();
+
     const rect = containerRef.current.getBoundingClientRect();
     const clickXFromCenter = e.clientX - (rect.left + rect.width / 2);
 
@@ -145,7 +157,6 @@ export function HeroSection() {
     setFacing(clampedX > walkX ? "right" : "left");
     setIsWalking(true);
     setWalkX(clampedX);
-    setWalkCounter((c) => c + 1);
 
     // Add visual click ripple indicator on the floor
     const newRipple = {
@@ -173,6 +184,7 @@ export function HeroSection() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName || "")) return;
+      lastInteractionRef.current = Date.now();
 
       const step = 48;
       const maxBound = 420;
@@ -197,6 +209,45 @@ export function HeroSection() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  // --- 核心灵魂：自主漫步与巡店 AI (Autonomous Wandering Loop) ---
+  useEffect(() => {
+    if (!autoRoam) return;
+
+    const wanderInterval = setInterval(() => {
+      // 1. If user interacted recently (< 3.5s), don't interrupt
+      if (Date.now() - lastInteractionRef.current < 3500) return;
+
+      // 2. If user scrolled down (> 60px), character is busy bending/prone, don't wander
+      if (scrollY.get() > 60) return;
+
+      // 3. Choose a random spot from predefined comfortable waypoints
+      const current = walkXRef.current;
+      const otherSpots = ROAM_SPOTS.filter((s) => Math.abs(s - current) > 70);
+      if (otherSpots.length === 0) return;
+
+      const target = otherSpots[Math.floor(Math.random() * otherSpots.length)];
+      const distance = Math.abs(target - current);
+      const direction = target > current ? "right" : "left";
+
+      setFacing(direction);
+      setIsWalking(true);
+      setWalkX(target);
+
+      // Walk duration proportional to distance
+      const duration = Math.max(650, Math.min(1300, distance * 2.8));
+      setTimeout(() => {
+        setIsWalking(false);
+
+        // 25% chance of popping up a casual wandering reflection after arriving
+        if (Math.random() < 0.3) {
+          triggerQuote();
+        }
+      }, duration);
+    }, 5500); // Decides next wander step every ~5.5s
+
+    return () => clearInterval(wanderInterval);
+  }, [autoRoam, scrollY, triggerQuote]);
 
   useEffect(() => {
     return () => {
@@ -272,8 +323,12 @@ export function HeroSection() {
         drag="x"
         dragConstraints={{ left: -400, right: 400 }}
         dragElastic={0.08}
-        onDragStart={() => setIsWalking(true)}
+        onDragStart={() => {
+          lastInteractionRef.current = Date.now();
+          setIsWalking(true);
+        }}
         onDragEnd={(_, info) => {
+          lastInteractionRef.current = Date.now();
           setIsWalking(false);
           setWalkX((prev) => prev + info.offset.x * 0.3);
         }}
@@ -302,7 +357,7 @@ export function HeroSection() {
           onClick={handleCharacterClick}
           animate={{
             y: isJumping ? -42 : isWalking ? [0, -10, 0, -10, 0] : 0,
-            scaleX: facing === "left" ? -1 : 1, // Turn around left/right!
+            scaleX: facing === "left" ? -1 : 1, // Turn around left/right smoothly!
           }}
           transition={{
             y: isJumping
@@ -479,11 +534,36 @@ export function HeroSection() {
         <span>全国驻场 · 现场交付中</span>
       </div>
 
-      {/* Interactive Roaming HUD Hint */}
-      <div className="absolute left-6 sm:left-12 bottom-5 z-20 pointer-events-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 dark:bg-black/40 backdrop-blur border border-[#202126]/20 text-[11px] font-bold text-[#434757] dark:text-[#a5adbf]">
-          <Sparkles size={12} className="text-[#5867d2]" />
-          <span>点击地面 / 键盘 ← → 键，狗哥自由走动 · 空格跳跃</span>
+      {/* Interactive Roaming HUD: Toggle Auto Wander / Manual Walk */}
+      <div className="absolute left-6 sm:left-12 bottom-5 z-20 pointer-events-auto flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setAutoRoam(!autoRoam);
+            triggerQuote(autoRoam ? "“收到，那我先在原地站会儿~”" : "“巡店模式开启！四处溜达溜达~”");
+          }}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 dark:bg-black/60 backdrop-blur border border-[#202126]/30 text-[11px] font-black text-[#202126] dark:text-white shadow-[2px_2px_0px_#202126] hover:bg-[#d5f085] hover:text-[#202126] transition-colors cursor-pointer"
+          title={autoRoam ? "点击暂停自主走动" : "点击开启自主走动"}
+        >
+          {autoRoam ? (
+            <>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>自动巡店漫步中</span>
+              <Pause size={10} className="ml-0.5 opacity-70" />
+            </>
+          ) : (
+            <>
+              <span className="w-2 h-2 rounded-full bg-amber-500" />
+              <span>漫步已暂停</span>
+              <Play size={10} className="ml-0.5 opacity-70" />
+            </>
+          )}
+        </button>
+
+        <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-black/40 backdrop-blur border border-[#202126]/20 text-[11px] font-bold text-[#434757] dark:text-[#a5adbf]">
+          <Sparkles size={11} className="text-[#5867d2]" />
+          <span>点击地面随时唤他走过去 · 空格跳跃</span>
         </div>
       </div>
 
