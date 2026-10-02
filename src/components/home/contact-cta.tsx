@@ -9,7 +9,7 @@ export function ContactCta() {
       style={{ background: "var(--brand)" }}
     >
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
-        <div className="flex items-center gap-2 mb-6 opacity-85">
+        <div className="flex flex-wrap items-center gap-2 mb-6 opacity-85">
           <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--accent)] text-[var(--accent-foreground)]">
             SECTION 12
           </span>
@@ -22,7 +22,7 @@ export function ContactCta() {
           {/* 左侧主内容 */}
           <div>
             <h2
-              className="text-4xl md:text-5xl font-bold leading-[1.15] tracking-tight mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.15] tracking-tight mb-6"
               style={{ color: "var(--brand-foreground)", letterSpacing: "-0.02em" }}
             >
               有真实问题，

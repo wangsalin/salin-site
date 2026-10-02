@@ -10,7 +10,7 @@ export function FlagshipFoodops() {
     <section className="py-12 sm:py-20 md:py-28 border-t border-[var(--border)] relative overflow-hidden bg-gradient-to-b from-[var(--surface-muted)]/50 to-[var(--background)]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         {/* 旗舰徽章 */}
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex flex-wrap items-center gap-2 mb-4">
           <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
             SECTION 05
           </span>
@@ -24,7 +24,7 @@ export function FlagshipFoodops() {
         </div>
 
         {/* 旗舰案例大卡片布局 */}
-        <div className="p-6 sm:p-10 rounded-3xl border-2 border-[var(--brand)] bg-[var(--surface)] shadow-2xl space-y-8">
+        <div className="p-4 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl border-2 border-[var(--brand)] bg-[var(--surface)] shadow-2xl space-y-8">
           <div className="grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-center">
             {/* 左侧：40% 介绍文案 */}
             <div className="space-y-5">

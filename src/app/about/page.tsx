@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <div className="max-w-[1200px] mx-auto px-6 md:px-8 py-16 md:py-24">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
         {/* 开头故事 */}
         <div className="max-w-3xl mb-20">
           <div className="flex items-center gap-2 mb-4">
@@ -75,7 +75,7 @@ export default function AboutPage() {
             {journeyStages.map((stage) => (
               <div
                 key={stage.period}
-                className="grid md:grid-cols-[180px_1fr] gap-4 md:gap-12 p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)]"
+                className="grid md:grid-cols-[180px_1fr] gap-4 md:gap-12 p-4 sm:p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)]"
               >
                 <div className="flex items-center gap-3 md:flex-col md:items-start">
                   <span

@@ -10,7 +10,7 @@ export function LatestNotes() {
   return (
     <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface)]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex flex-wrap items-center gap-2 mb-4">
           <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
             SECTION 09
           </span>

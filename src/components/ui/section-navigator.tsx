@@ -40,8 +40,8 @@ export function SectionNavigator() {
       const progress = totalHeight > 0 ? (scrollY / totalHeight) * 100 : 0;
       setScrollProgress(Math.min(100, Math.max(0, progress)));
 
-      // 仅在稍有滚动或非首屏后更显式展示
-      setIsVisible(scrollY > 120);
+      // 滚动离开首屏后优雅浮现
+      setIsVisible(scrollY > 320);
 
       // 检查当前在哪个 section 视口中
       const sectionElements = SECTIONS.map((sec) => document.getElementById(sec.id)).filter(Boolean);
@@ -176,36 +176,36 @@ export function SectionNavigator() {
         </div>
       </aside>
 
-      {/* 移动端/平板：底部居中轻量分区滑动 HUD */}
+      {/* 移动端/平板：左下角微型分区滑动 HUD */}
       <aside
         className={cn(
-          "lg:hidden fixed left-1/2 -translate-x-1/2 bottom-[calc(14px+env(safe-area-inset-bottom,0px))] z-40 transition-all duration-300 pointer-events-auto",
+          "lg:hidden fixed left-3.5 bottom-[calc(14px+env(safe-area-inset-bottom,0px))] z-40 transition-all duration-300 pointer-events-auto",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
         )}
         aria-label="移动端分区导航"
       >
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 dark:bg-[#161922]/95 backdrop-blur-md border-2 border-[#202126] shadow-[3px_3px_0px_#202126] text-[#202126] dark:text-white">
+        <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/95 dark:bg-[#161922]/95 backdrop-blur-md border-2 border-[#202126] shadow-[2.5px_2.5px_0px_#202126] text-[#202126] dark:text-white">
           <span className="w-1.5 h-1.5 rounded-full bg-[#d5f085] animate-pulse" />
           <span className="font-mono text-[10px] font-black text-[#5867d2]">{currentSection.number}</span>
-          <span className="text-xs font-black truncate max-w-[110px]">{currentSection.name}</span>
+          <span className="text-[11px] font-black truncate max-w-[85px]">{currentSection.shortName}</span>
           <div className="h-3 w-px bg-[#202126]/20 mx-0.5" />
           <button
             type="button"
             onClick={handlePrev}
             disabled={activeIndex === 0}
-            className="w-6 h-6 rounded-full hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center disabled:opacity-20 cursor-pointer"
+            className="w-5 h-5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center disabled:opacity-20 cursor-pointer"
             title="上一区"
           >
-            <ChevronUp size={13} />
+            <ChevronUp size={12} />
           </button>
           <button
             type="button"
             onClick={handleNext}
             disabled={activeIndex === SECTIONS.length - 1}
-            className="w-6 h-6 rounded-full hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center disabled:opacity-20 cursor-pointer"
+            className="w-5 h-5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center disabled:opacity-20 cursor-pointer"
             title="下一区"
           >
-            <ChevronDown size={13} />
+            <ChevronDown size={12} />
           </button>
         </div>
       </aside>

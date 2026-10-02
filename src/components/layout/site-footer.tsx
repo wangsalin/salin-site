@@ -10,7 +10,7 @@ export function SiteFooter() {
       className="border-t border-[var(--border)] mt-auto"
       style={{ background: "var(--surface)" }}
     >
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-12">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 pt-12 pb-[calc(84px+env(safe-area-inset-bottom,0px))] md:pb-12">
         <div className="flex flex-col md:flex-row justify-between gap-8">
           {/* 左侧 */}
           <div className="max-w-sm">

@@ -23,7 +23,7 @@ export default function NotesPage() {
   );
 
   return (
-    <div className="max-w-[1200px] mx-auto px-6 md:px-8 py-16 md:py-24">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
       <SectionHeading
         label="实践记录"
         title="写下来的思考，比说出来的更清晰。"
@@ -71,7 +71,7 @@ export default function NotesPage() {
             <Link
               key={note.slug}
               href={`/notes/${note.slug}`}
-              className="group block py-8 border-b border-[var(--border)] -mx-4 px-4 rounded-xl hover:bg-[var(--surface-muted)] transition-colors"
+              className="group block py-8 border-b border-[var(--border)] -mx-2 sm:-mx-4 px-2 sm:px-4 rounded-xl hover:bg-[var(--surface-muted)] transition-colors"
             >
               <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
                 <span

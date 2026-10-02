@@ -38,7 +38,7 @@ export default function SkillsPage() {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto px-6 md:px-8 py-16 md:py-24">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
       {/* 头部标题区 */}
       <div className="max-w-3xl mb-12">
         <div className="flex items-center gap-2 mb-4">
@@ -251,7 +251,7 @@ export default function SkillsPage() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
               <div className="flex items-center gap-2">
                 <FolderArchive className="text-amber-400" size={18} />
                 <h3 className="font-bold text-sm text-slate-200">{selectedSkill.name}</h3>
@@ -265,8 +265,8 @@ export default function SkillsPage() {
             </div>
 
             {/* Modal Content */}
-            <div className="p-6 overflow-y-auto font-mono text-xs leading-relaxed space-y-5">
-              <div className="flex items-center justify-between text-slate-400 border-b border-slate-800 pb-3 text-[11px]">
+            <div className="p-4 sm:p-6 overflow-y-auto font-mono text-xs leading-relaxed space-y-5">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-slate-400 border-b border-slate-800 pb-3 text-[11px]">
                 <span>包类型: 多文件 .ZIP 源码架构</span>
                 <span>更新日期: {selectedSkill.updatedAt}</span>
               </div>
@@ -297,26 +297,26 @@ export default function SkillsPage() {
 
               <div>
                 <p className="text-slate-300 font-bold mb-2 font-sans text-sm">📁 多文件架构目录树预览:</p>
-                <pre className="bg-slate-950 p-4 rounded-xl border border-slate-800 overflow-x-auto text-amber-300 font-mono text-xs">
+                <pre className="bg-slate-950 p-3 sm:p-4 rounded-xl border border-slate-800 overflow-x-auto text-amber-300 font-mono text-xs">
                   <code>{selectedSkill.codeSnippet}</code>
                 </pre>
               </div>
             </div>
 
             {/* Modal Footer Actions */}
-            <div className="px-6 py-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between gap-3">
-              <span className="text-xs text-slate-400">完整源代码包开源可直接商用</span>
-              <div className="flex gap-2">
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-t border-slate-800 bg-slate-950 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span className="text-xs text-slate-400 self-start sm:self-center">完整源码包开源可直接商用</span>
+              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                 <button
                   onClick={() => handleCopySnippet(selectedSkill.id, selectedSkill.codeSnippet)}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-200 transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center gap-1.5 text-xs font-bold px-3.5 py-2.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-200 transition-colors cursor-pointer w-full sm:w-auto"
                 >
                   {copiedId === selectedSkill.id ? <Check size={14} /> : <Copy size={14} />}
                   {copiedId === selectedSkill.id ? "已复制目录树" : "复制目录树"}
                 </button>
                 <button
                   onClick={() => handleDownloadZip(selectedSkill)}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-lg bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center gap-1.5 text-xs font-bold px-4 py-2.5 rounded-lg bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors cursor-pointer w-full sm:w-auto"
                 >
                   <Download size={14} />
                   下载 .ZIP 技能源码包

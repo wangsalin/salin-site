@@ -24,7 +24,7 @@ export default function ContactPage() {
   const unsuitable = contactDirections.filter((d) => !d.suitable);
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-16 md:py-24">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
       {/* 页面标题 */}
       <div className="max-w-3xl mb-16">
         <SectionHeading

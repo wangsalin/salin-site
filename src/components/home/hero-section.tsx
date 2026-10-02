@@ -365,7 +365,7 @@ export function HeroSection() {
           className="flex flex-col items-center"
         >
           <h2
-            className="m-0 flex flex-col items-center font-black text-[clamp(44px,11.5vw,62px)] leading-[0.82] text-[#fffdf5]/80 dark:text-white/15 select-none drop-shadow-[0_2px_14px_rgba(100,105,140,0.18)] uppercase tracking-tight"
+            className="m-0 flex flex-col items-center gap-1 sm:gap-1.5 font-black text-[clamp(42px,11vw,60px)] leading-none text-[#fffdf5]/80 dark:text-white/15 select-none drop-shadow-[0_2px_14px_rgba(100,105,140,0.18)] uppercase tracking-tight"
             style={{
               fontFamily:
                 'Impact, "Arial Black", "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',

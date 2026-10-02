@@ -44,7 +44,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
   return (
     <>
-      <article className="max-w-[1200px] mx-auto px-6 md:px-8 py-16 md:py-24">
+      <article className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
         {/* 返回 */}
         <Link
           href="/projects"

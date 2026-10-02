@@ -30,7 +30,7 @@ const categoryLabels: Record<string, string> = {
 
 export default function ProjectsPage() {
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-16 md:py-24">
+    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
       {/* 页面标题 */}
       <SectionHeading
         label="真实项目矩阵"
@@ -54,7 +54,7 @@ export default function ProjectsPage() {
           <Link
             key={project.slug}
             href={`/projects/${project.slug}`}
-            className="group flex flex-col md:flex-row items-start md:items-center gap-6 p-6 sm:p-7 rounded-3xl border border-[var(--border)] hover:border-[var(--brand)] transition-all duration-300 glass-card-hover"
+            className="group flex flex-col md:flex-row items-start md:items-center gap-6 p-4 sm:p-7 rounded-2xl sm:rounded-3xl border border-[var(--border)] hover:border-[var(--brand)] transition-all duration-300 glass-card-hover"
             style={{ background: "var(--surface)" }}
           >
             {/* 专属 3D Logo Icon */}

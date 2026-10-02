@@ -10,7 +10,7 @@ export function EvidenceSection() {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
         {/* 标题 */}
         <div className="max-w-3xl mb-10 sm:mb-14">
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
               SECTION 04
             </span>

@@ -44,7 +44,7 @@ export function FaqSection() {
     <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface)]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
         <div className="max-w-2xl mb-12">
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
               SECTION 11
             </span>
@@ -98,7 +98,7 @@ export function FaqSection() {
 
                 {isOpen && (
                   <div className="px-5 sm:px-6 pb-6 pt-1 text-sm leading-relaxed border-t border-[var(--border)]/50" style={{ color: "var(--text-secondary)" }}>
-                    <p className="pl-11">{faq.answer}</p>
+                    <p className="pl-0 sm:pl-11">{faq.answer}</p>
                   </div>
                 )}
               </div>
