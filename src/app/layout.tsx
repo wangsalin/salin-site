@@ -5,6 +5,7 @@ import { BackToTop } from "@/components/ui/back-to-top";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { siteConfig } from "@/data/site";
+import { SoundDock } from "@/components/ui/sound-dock";
 
 export const metadata: Metadata = {
   title: {
@@ -88,9 +89,10 @@ export default function RootLayout({
           />
         </div>
         <SiteHeader />
-        <main className="flex-1 pt-16">{children}</main>
+        <main className="flex-1">{children}</main>
         <SiteFooter />
         <BackToTop />
+        <SoundDock />
         <Analytics />
       </body>
     </html>

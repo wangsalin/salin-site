@@ -1,213 +1,127 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Building2, Store, Code2, Users, ChefHat, ShieldCheck, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/data/site";
-import { cn } from "@/lib/cn";
-
-const bentoTabs = [
-  {
-    id: "restaurant",
-    title: "01 / 实体餐饮视角",
-    subtitle: "做过 6 年探店 · 服务 2000+ 商家 · 投钱开店 3 年",
-    desc: "熟悉美团点评防守、团购损耗控制与后厨经营死结，拒对着空洞报表谈经营。",
-    badge: "实操死结拆解",
-    icon: ChefHat,
-  },
-  {
-    id: "fde",
-    title: "02 / FDE 企业 AI 驻场",
-    subtitle: "Palantir 模式前向部署 · 工程师深入企业现场",
-    desc: "1-2 周驻场抓取高频工时死结，搭建私有知识库，微信/企微极简交付零门槛。",
-    badge: "1-2周驻场交付",
-    icon: Building2,
-  },
-  {
-    id: "foodops",
-    title: "03 / FoodOps 旗舰开源",
-    subtitle: "餐饮连锁 AI 运营与内容协同工作流",
-    desc: "差评自动化抚慰、连锁店长今日智能工作台、多渠道营销素材自动化衍生。",
-    badge: "开源持续验证",
-    icon: Code2,
-  },
-];
+import { ArrowUpRight } from "lucide-react";
 
 export function HeroSection() {
-  const [activeTabId, setActiveTabId] = useState("restaurant");
-  const activeTab = bentoTabs.find((t) => t.id === activeTabId) ?? bentoTabs[0];
-
   return (
-    <section className="relative pt-6 pb-12 sm:pt-10 sm:pb-16 md:py-20 overflow-hidden">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 w-full">
-        
-        {/* Neo-Brutalist Bento Master Grid Container */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-          
-          {/* Bento Cell 1 (Left 7 Cols): Master Headline & Persona */}
-          <div className="lg:col-span-7 bento-card p-6 sm:p-9 flex flex-col justify-between space-y-6 bg-[var(--surface)]">
-            <div className="space-y-5">
-              {/* Status Badges Row */}
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="bento-badge bg-[var(--brand)] text-[var(--brand-foreground)]">
-                  <Building2 size={13} />
-                  {siteConfig.name}
-                </span>
-                <span className="bento-badge">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  {siteConfig.location} · 可全国驻场
-                </span>
-                <span className="bento-badge bg-[var(--accent)] text-[var(--accent-foreground)]">
-                  <Zap size={13} /> FDE AI 落地
-                </span>
-              </div>
+    <section
+      className="relative min-h-[95vh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-[#c8cbe0] dark:bg-[#12141c] text-[#1c1d24] dark:text-[#f2f1eb] transition-colors"
+      style={{
+        backgroundImage:
+          "radial-gradient(rgba(32, 33, 40, 0.14) 1.2px, transparent 1.2px)",
+        backgroundSize: "24px 24px",
+      }}
+    >
+      {/* 01. Giant Typographic Backdrop: "SALIN" spanning across full width */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <span
+          className="font-black text-[22vw] leading-none tracking-[-0.06em] text-white/95 dark:text-white/10 select-none transform -translate-y-10 sm:-translate-y-6"
+          style={{
+            fontFamily:
+              'Impact, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+          }}
+        >
+          SALIN
+        </span>
+      </div>
 
-              {/* Ultra-Bold Neo-Brutalist H1 Headline */}
-              <h1
-                className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.12] tracking-tight"
-                style={{ color: "var(--text-primary)", letterSpacing: "-0.03em" }}
-              >
-                用 AI，
-                <br />
-                把生意
-                <br />
-                <span className="relative inline-block text-[var(--brand)] underline decoration-[var(--accent)] decoration-wavy decoration-4">
-                  重新做一遍。
-                </span>
-              </h1>
-
-              {/* Bio Summary */}
-              <p className="text-base sm:text-lg leading-relaxed font-medium text-[var(--text-secondary)] max-w-xl">
-                做过本地生活内容，也亲自下场经营餐饮。现在把十多年积累的商业、内容和产品经验，变成真正能落地的 AI 工具与解决方案。
-              </p>
-            </div>
-
-            {/* Bottom Actions Row */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t-2 border-[var(--border)]">
-              <Button href="/projects/foodops" size="lg" variant="primary" className="justify-center shadow-[4px_4px_0px_0px_var(--border)]">
-                查看 FoodOps 旗舰案例
-                <ArrowRight size={18} />
-              </Button>
-              <Button href="/contact" size="lg" variant="outline" className="justify-center shadow-[4px_4px_0px_0px_var(--border)]">
-                预约 30 分钟拆解沟通
-              </Button>
-            </div>
-          </div>
-
-          {/* Bento Cell 2 (Right 5 Cols): Interactive Bento Persona Switcher */}
-          <div className="lg:col-span-5 bento-card p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-[var(--surface-muted)]/40">
-            {/* Cell Header */}
-            <div className="flex items-center justify-between border-b-2 border-[var(--border)] pb-4">
-              <div className="flex items-center gap-3">
-                <div className="relative w-11 h-11 rounded-xl border-2 border-[var(--border)] bg-slate-900 overflow-hidden shrink-0 shadow-[2px_2px_0px_0px_var(--border)]">
-                  <Image
-                    src="/images/salin-brand-logo.png"
-                    alt="狗哥 Logo"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <h3 className="font-black text-base text-[var(--text-primary)]">
-                    狗哥 (Wang Salin)
-                  </h3>
-                  <p className="text-xs font-mono font-bold text-[var(--text-secondary)]">
-                    连续创业者 / AI 商业实践者
-                  </p>
-                </div>
-              </div>
-
-              <span className="bento-badge bg-[var(--accent)] text-[var(--accent-foreground)]">
-                {activeTab.badge}
-              </span>
-            </div>
-
-            {/* Bento Selector Pills */}
-            <div className="grid grid-cols-3 gap-2">
-              {bentoTabs.map((tab) => {
-                const Icon = tab.icon;
-                const isActive = tab.id === activeTabId;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTabId(tab.id)}
-                    className={cn(
-                      "py-2.5 px-2 rounded-xl text-xs font-mono font-extrabold transition-all border-2 flex flex-col items-center gap-1 cursor-pointer",
-                      isActive
-                        ? "border-[var(--border)] bg-[var(--brand)] text-[var(--brand-foreground)] shadow-[2px_2px_0px_0px_var(--border)]"
-                        : "border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                    )}
-                  >
-                    <Icon size={16} />
-                    <span>{tab.title.slice(5, 9)}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Active Content Showcase Box */}
-            <div className="p-4 rounded-xl border-2 border-[var(--border)] bg-[var(--surface)] shadow-[3px_3px_0px_0px_var(--border)] space-y-2">
-              <div className="flex items-center justify-between text-xs font-mono font-bold text-[var(--brand)]">
-                <span>{activeTab.title}</span>
-                <ShieldCheck size={14} />
-              </div>
-              <h4 className="text-sm font-black text-[var(--text-primary)]">
-                {activeTab.subtitle}
-              </h4>
-              <p className="text-xs leading-relaxed text-[var(--text-secondary)] font-medium">
-                {activeTab.desc}
-              </p>
-            </div>
-
-            {/* Bento Cell Footer Link */}
-            <div className="pt-2 flex items-center justify-between text-xs font-mono font-bold text-[var(--text-secondary)]">
-              <span>拒绝虚幻概念套话</span>
-              <Link href="/projects/foodops" className="text-[var(--brand)] hover:underline font-extrabold">
-                探索 FoodOps →
-              </Link>
-            </div>
-          </div>
-
-          {/* Bento Sub-Grid (Bottom 3 Feature Cards) */}
-          <div className="lg:col-span-4 bento-card p-5 bg-[var(--surface)] glass-card-hover">
-            <div className="flex items-center gap-3">
-              <span className="p-2.5 rounded-xl border-2 border-[var(--border)] bg-[var(--brand)] text-[var(--brand-foreground)] shadow-[2px_2px_0px_0px_var(--border)]">
-                <Store size={18} />
-              </span>
-              <div>
-                <h4 className="text-sm font-black text-[var(--text-primary)]">实体餐饮一线经历</h4>
-                <p className="text-xs text-[var(--text-secondary)] font-bold">6年探店 + 服务2000+商家 + 投钱开店</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 bento-card p-5 bg-[var(--surface)] glass-card-hover">
-            <div className="flex items-center gap-3">
-              <span className="p-2.5 rounded-xl border-2 border-[var(--border)] bg-[var(--accent)] text-[var(--accent-foreground)] shadow-[2px_2px_0px_0px_var(--border)]">
-                <Code2 size={18} />
-              </span>
-              <div>
-                <h4 className="text-sm font-black text-[var(--text-primary)]">真实 AI 工具与 MVP</h4>
-                <p className="text-xs text-[var(--text-secondary)] font-bold">断点死结优先 · 微信群极简 Agent 嵌入</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 bento-card p-5 bg-[var(--surface)] glass-card-hover">
-            <div className="flex items-center gap-3">
-              <span className="p-2.5 rounded-xl border-2 border-[var(--border)] bg-[var(--surface-muted)] text-[var(--text-primary)] shadow-[2px_2px_0px_0px_var(--border)]">
-                <Users size={18} />
-              </span>
-              <div>
-                <h4 className="text-sm font-black text-[var(--text-primary)]">务实落地与双向选择</h4>
-                <p className="text-xs text-[var(--text-secondary)] font-bold">不先承诺庞大概念 · 以实际 ROI 验收</p>
-              </div>
-            </div>
-          </div>
-
+      {/* 02. Center 3D Character Cutout Layered in front of Backdrop Text */}
+      <div
+        className="absolute left-1/2 bottom-0 -translate-x-1/2 z-10 flex flex-col items-center pointer-events-none select-none w-full max-w-[680px]"
+        aria-hidden="true"
+      >
+        <div className="relative w-full flex justify-center">
+          <Image
+            src="/images/salin-hero-alpha.png"
+            alt="Wang Salin 狗哥 3D 虚拟形象"
+            width={768}
+            height={1376}
+            priority
+            fetchPriority="high"
+            className="h-[76vh] sm:h-[84vh] max-h-[860px] min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_24px_38px_rgba(25,27,38,0.28)]"
+          />
         </div>
+        {/* Soft ground contact shadow */}
+        <div className="w-56 sm:w-72 h-6 rounded-[100%] bg-black/30 blur-md -mt-3 shrink-0" />
+      </div>
+
+      {/* 03. Left Column: Editorial Headline & Tactile Stickers */}
+      <div className="relative z-20 max-w-xl pl-6 sm:pl-12 lg:pl-20 pt-24 sm:pt-28 pb-12 sm:pb-16 flex flex-col items-start gap-4 sm:gap-5">
+        {/* Eyebrow badge */}
+        <p className="font-mono text-[11px] sm:text-xs font-black tracking-[0.22em] text-[#474f67] dark:text-[#a0a8c2] uppercase">
+          AI APPLICATION & BUSINESS PRACTITIONER
+        </p>
+
+        {/* Big Impact Headline */}
+        <h1 className="text-4xl sm:text-5xl lg:text-[62px] font-black tracking-[-0.04em] text-[#1b1d24] dark:text-white leading-[1.12]">
+          你好，我是<strong className="text-[#0d0e12] dark:text-white">狗哥。</strong>
+          <br />
+          欢迎来到我的现场。
+        </h1>
+
+        {/* Subtitle description */}
+        <p className="text-sm sm:text-[15px] text-[#424657] dark:text-[#b0b8c8] font-medium leading-[1.8] max-w-[430px]">
+          用代码与实战经验探索 AI 落地。做过 6 年探店，亲自下场开过餐厅。把十多年摸爬滚打的商业死结，变成真正能跑通的 AI 实战工具。
+        </p>
+
+        {/* Tactile Stickers Stack (The signature Xiaolin-style tactile element) */}
+        <div className="flex flex-col items-start gap-2.5 pt-1.5" aria-label="狗哥身份与态度标签">
+          {/* Sticker 1: Lime Pill Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d5f085] text-[#1c1d24] font-black text-xs border border-[#202126] shadow-[2px_2px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+            <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+            <span>身份卡 / 实体餐饮老兵 · 临沂</span>
+          </div>
+
+          {/* Sticker 2: White Paper Note (Tilted -1.5deg) */}
+          <div className="inline-block px-4 py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-xs sm:text-sm border border-[#202126] shadow-[3px_3px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+            喜欢把「死磕现场」
+            <em className="not-italic text-[#4f5fc8] font-black underline decoration-[#c7ec73] decoration-2 ml-1">
+              写成真的。
+            </em>
+          </div>
+
+          {/* Sticker 3: White Paper Note (Tilted +1deg) */}
+          <div className="inline-block px-4 py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-xs sm:text-sm border border-[#202126] shadow-[3px_3px_0px_#202126] transform rotate-1 hover:rotate-0 transition-transform cursor-default">
+            主导 FoodOps 餐饮连锁 AI 落地，
+            <em className="not-italic text-[#4f5fc8] font-black ml-1">
+              让好点子在现场活下去。
+            </em>
+          </div>
+        </div>
+
+        {/* Primary CTA Button */}
+        <div className="pt-2">
+          <Link
+            href="#projects"
+            className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#fffefa] hover:bg-[#d5f085] text-[#1c1d24] font-black text-sm border-2 border-[#202126] shadow-[4px_4px_0px_#202126] hover:shadow-[5px_6px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
+          >
+            <span>进入我的工作台</span>
+            <ArrowUpRight
+              size={18}
+              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+            />
+          </Link>
+        </div>
+      </div>
+
+      {/* 04. Right Column: Status pill & Side Note */}
+      <div className="hidden sm:inline-flex items-center gap-2 absolute right-6 sm:right-12 top-1/2 -translate-y-1/2 z-20 px-3.5 py-1.5 rounded-full bg-white/75 dark:bg-[#1d202b]/80 backdrop-blur border border-[#202126]/30 text-xs font-bold text-[#292c3a] dark:text-white shadow-[2px_2px_0px_rgba(0,0,0,0.15)]">
+        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <span>全国驻场 · 现场交付中</span>
+      </div>
+
+      <div className="hidden lg:block absolute right-12 bottom-12 z-20 max-w-[240px] text-right pointer-events-auto">
+        <span className="text-[10px] font-mono font-black tracking-widest text-[#555d77] dark:text-[#8d96b0] uppercase block mb-1">
+          ABOUT THIS SPACE
+        </span>
+        <p className="text-xs text-[#3f4559] dark:text-[#b4bccf] font-semibold leading-relaxed">
+          七个章节，一点点认识我的经历、实战项目和正在探索的方向。
+        </p>
       </div>
     </section>
   );
