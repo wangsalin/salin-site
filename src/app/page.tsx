@@ -13,6 +13,8 @@ import { LatestNotes } from "@/components/home/latest-notes";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { FaqSection } from "@/components/home/faq-section";
 import { ContactCta } from "@/components/home/contact-cta";
+import { SectionNavigator } from "@/components/ui/section-navigator";
+import { ScrollSection } from "@/components/ui/scroll-section";
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -23,44 +25,69 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* 01 Hero 首屏 */}
+      {/* 00 全站分区动态滑动交互导航器 */}
+      <SectionNavigator />
+
+      {/* 01 Hero 首屏 (内部自带 id="hero") */}
       <HeroSection />
 
       {/* 02 可信数字 */}
-      <CredibilityStrip />
+      <ScrollSection id="credibility">
+        <CredibilityStrip />
+      </ScrollSection>
 
       {/* 03 NOW：当前重点推进的事情 */}
-      <NowSection />
+      <ScrollSection id="now">
+        <NowSection />
+      </ScrollSection>
 
       {/* 04 狗哥的真实经历 */}
-      <JourneySection />
+      <ScrollSection id="journey">
+        <JourneySection />
+      </ScrollSection>
 
       {/* 05 真实实践证据 */}
-      <EvidenceSection />
+      <ScrollSection id="evidence">
+        <EvidenceSection />
+      </ScrollSection>
 
       {/* 06 FoodOps 旗舰大屏案例 */}
-      <FlagshipFoodops />
+      <ScrollSection id="foodops">
+        <FlagshipFoodops />
+      </ScrollSection>
 
       {/* 07 其他代表项目 */}
-      <FeaturedProjects />
+      <ScrollSection id="projects">
+        <FeaturedProjects />
+      </ScrollSection>
 
       {/* 08 工作方式 */}
-      <WorkingMethod />
+      <ScrollSection id="method">
+        <WorkingMethod />
+      </ScrollSection>
 
       {/* 09 合作方式与双向选择 */}
-      <CooperationSection />
+      <ScrollSection id="cooperation">
+        <CooperationSection />
+      </ScrollSection>
 
       {/* 10 实践记录 (真实文章) */}
-      <LatestNotes />
+      <ScrollSection id="notes">
+        <LatestNotes />
+      </ScrollSection>
 
       {/* 11 合作反馈 */}
       <TestimonialsSection />
 
       {/* 12 常见问题 */}
-      <FaqSection />
+      <ScrollSection id="faq">
+        <FaqSection />
+      </ScrollSection>
 
       {/* 13 联系预约 CTA */}
-      <ContactCta />
+      <ScrollSection id="contact">
+        <ContactCta />
+      </ScrollSection>
     </>
   );
 }

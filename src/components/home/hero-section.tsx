@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, MessageSquareQuote, Footprints, Sparkles, Play, Pause } from "lucide-react";
+import { ArrowUpRight, ArrowDown, MessageSquareQuote, Footprints, Sparkles, Play, Pause } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "motion/react";
 
 const STANDING_QUOTES = [
@@ -295,6 +295,7 @@ export function HeroSection() {
 
   return (
     <section
+      id="hero"
       ref={containerRef}
       onClick={handleGroundClick}
       onMouseMove={handleMouseMove}
@@ -654,6 +655,20 @@ export function HeroSection() {
           <Sparkles size={11} className="text-[#5867d2]" />
           <span>点击地面唤他走动 · 空格跳跃</span>
         </div>
+
+        {/* 交互效果：滑动进入下一区按钮 */}
+        <a
+          href="#credibility"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById("credibility")?.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#d5f085] hover:bg-[#c6e86b] text-[#202126] border border-[#202126] text-[11px] font-black shadow-[2px_2px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
+          title="点击平滑滑动至下一分区"
+        >
+          <span>滑动进入下一区</span>
+          <ArrowDown size={11} className="animate-bounce" />
+        </a>
       </div>
 
       <div className="hidden lg:block absolute right-12 bottom-12 z-20 max-w-[240px] text-right pointer-events-auto">
