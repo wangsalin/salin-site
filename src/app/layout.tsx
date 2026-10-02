@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { siteConfig } from "@/data/site";
 import { SoundDock } from "@/components/ui/sound-dock";
+import { WeChatShare } from "@/components/ui/wechat-share";
 
 export const metadata: Metadata = {
   title: {
@@ -56,6 +57,10 @@ export default function RootLayout({
         <meta name="twitter:title" content={siteConfig.title} />
         <meta name="twitter:description" content={siteConfig.description} />
         <meta name="twitter:image" content={siteConfig.ogImage} />
+        {/* QQ 与 微信生态 Microdata 标题与封面抓取规范 */}
+        <meta itemProp="name" content={siteConfig.title} />
+        <meta itemProp="description" content={siteConfig.description} />
+        <meta itemProp="image" content={siteConfig.wechatThumb} />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -79,13 +84,13 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col antialiased relative">
         {/* 微信内置浏览器抓取 300x300 首图兜底 (WeChat Share Card Fallback) */}
-        <div style={{ display: "none" }}>
+        <div style={{ display: "none" }} aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://salin.wang/images/wechat-share-300.jpg"
             alt="狗哥 微信分享卡片封面"
-            width="300"
-            height="300"
+            width={300}
+            height={300}
           />
         </div>
         <SiteHeader />
@@ -93,6 +98,7 @@ export default function RootLayout({
         <SiteFooter />
         <BackToTop />
         <SoundDock />
+        <WeChatShare />
         <Analytics />
       </body>
     </html>
