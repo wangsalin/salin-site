@@ -308,9 +308,9 @@ export function HeroSection() {
       }}
       title="点击地面任意位置，让狗哥走动"
     >
-      {/* 01. Giant Typographic Backdrop: "SALIN" (Shifted to yellow-box zone: right stage behind character) */}
+      {/* 01. Giant Typographic Backdrop: "SALIN" (Enlarged, spaced out, mathematically centered around character) */}
       <div
-        className="absolute top-[22vh] sm:top-[24vh] md:top-[25vh] left-[16%] md:left-[30%] w-[84%] md:w-[68%] flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
+        className="absolute top-[19vh] sm:top-[21vh] md:top-[21.5vh] inset-x-0 w-full flex items-center justify-center pointer-events-none select-none z-0"
         aria-hidden="true"
       >
         <motion.div
@@ -319,17 +319,34 @@ export function HeroSection() {
             opacity: bgTextOpacity,
             x: mousePos.x * -14,
           }}
-          className="w-full flex items-center justify-center"
+          className="w-full flex items-center justify-center px-2 sm:px-4"
         >
           <h2
-            className="m-0 font-black text-[clamp(76px,18.5vw,360px)] leading-[0.87] tracking-[-0.025em] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_2px_18px_rgba(141,144,173,0.12)] text-center whitespace-nowrap"
+            className="w-full m-0 font-black text-[clamp(60px,15vw,96px)] sm:text-[clamp(88px,19vw,150px)] md:text-[clamp(116px,22vw,390px)] lg:text-[clamp(136px,24vw,450px)] xl:text-[clamp(152px,25.5vw,490px)] leading-[0.82] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_4px_28px_rgba(90,95,130,0.22)] uppercase tracking-wider text-center"
             style={{
               fontFamily:
-                'Impact, "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
+                'Impact, "Arial Black", "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
             }}
           >
-            <span className="inline-block transform scale-x-[1.06] origin-center">
-              SALIN
+            <span className="w-full flex items-center justify-center transform scale-x-[1.03] origin-center">
+              {/* Left group: S A (aligned to right, sitting cleanly to the left of the character) */}
+              <span className="flex-1 flex items-center justify-end gap-2 sm:gap-4 md:gap-6 lg:gap-8 pr-1 sm:pr-2">
+                <span>S</span>
+                <span>A</span>
+              </span>
+
+              {/* Exact center breathing corridor for the 3D character */}
+              <span
+                className="w-3 sm:w-6 md:w-[17vw] lg:w-[19vw] xl:w-[21vw] shrink-0 pointer-events-none"
+                aria-hidden="true"
+              />
+
+              {/* Right group: L I N (aligned to left, sitting cleanly to the right of the character) */}
+              <span className="flex-1 flex items-center justify-start gap-2 sm:gap-4 md:gap-6 lg:gap-8 pl-1 sm:pl-2">
+                <span>L</span>
+                <span>I</span>
+                <span>N</span>
+              </span>
             </span>
           </h2>
         </motion.div>
