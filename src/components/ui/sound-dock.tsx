@@ -110,7 +110,7 @@ export function SoundDock() {
   return (
     <aside
       className={cn(
-        "fixed z-50 right-3.5 sm:right-7 bottom-3.5 sm:bottom-7 transition-all duration-300 font-sans",
+        "fixed z-50 right-3 sm:right-7 bottom-[calc(14px+env(safe-area-inset-bottom,0px))] sm:bottom-7 transition-all duration-300 font-sans",
         isTucked ? "translate-x-[calc(100%-36px)]" : "translate-x-0"
       )}
       aria-label="狗哥的现场播放盒"

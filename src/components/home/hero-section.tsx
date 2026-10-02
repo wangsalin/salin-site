@@ -299,7 +299,7 @@ export function HeroSection() {
       onClick={handleGroundClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-[#c8cbe0] dark:bg-[#12141c] text-[#1c1d24] dark:text-[#f2f1eb] transition-colors cursor-crosshair select-none"
+      className="relative min-h-[100dvh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-[#c8cbe0] dark:bg-[#12141c] text-[#1c1d24] dark:text-[#f2f1eb] transition-colors cursor-crosshair select-none"
       style={{
         backgroundImage:
           "radial-gradient(rgba(32, 33, 40, 0.13) 1.2px, transparent 1.2px)",
@@ -308,9 +308,10 @@ export function HeroSection() {
       }}
       title="点击地面任意位置，让狗哥走动"
     >
-      {/* 01. Giant Typographic Backdrop: "SALIN" (Enlarged, spaced out, mathematically centered around character) */}
+      {/* 01. Giant Typographic Backdrop: "SALIN" */}
+      {/* Desktop (md+) Horizontal Layout: centered with character corridor */}
       <div
-        className="absolute top-[19vh] sm:top-[21vh] md:top-[21.5vh] inset-x-0 w-full flex items-center justify-center pointer-events-none select-none z-0"
+        className="hidden md:flex absolute top-[21.5vh] inset-x-0 w-full items-center justify-center pointer-events-none select-none z-0"
         aria-hidden="true"
       >
         <motion.div
@@ -319,35 +320,63 @@ export function HeroSection() {
             opacity: bgTextOpacity,
             x: mousePos.x * -14,
           }}
-          className="w-full flex items-center justify-center px-2 sm:px-4"
+          className="w-full flex items-center justify-center px-4"
         >
           <h2
-            className="w-full m-0 font-black text-[clamp(60px,15vw,96px)] sm:text-[clamp(88px,19vw,150px)] md:text-[clamp(116px,22vw,390px)] lg:text-[clamp(136px,24vw,450px)] xl:text-[clamp(152px,25.5vw,490px)] leading-[0.82] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_4px_28px_rgba(90,95,130,0.22)] uppercase tracking-wider text-center"
+            className="w-full m-0 font-black text-[clamp(116px,22vw,390px)] lg:text-[clamp(136px,24vw,450px)] xl:text-[clamp(152px,25.5vw,490px)] leading-[0.82] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_4px_28px_rgba(90,95,130,0.22)] uppercase tracking-wider text-center"
             style={{
               fontFamily:
                 'Impact, "Arial Black", "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
             }}
           >
             <span className="w-full flex items-center justify-center transform scale-x-[1.03] origin-center">
-              {/* Left group: S A (aligned to right, sitting cleanly to the left of the character) */}
-              <span className="flex-1 flex items-center justify-end gap-2 sm:gap-4 md:gap-6 lg:gap-8 pr-1 sm:pr-2">
+              {/* Left group: S A */}
+              <span className="flex-1 flex items-center justify-end gap-4 md:gap-6 lg:gap-8 pr-2">
                 <span>S</span>
                 <span>A</span>
               </span>
 
               {/* Exact center breathing corridor for the 3D character */}
               <span
-                className="w-3 sm:w-6 md:w-[17vw] lg:w-[19vw] xl:w-[21vw] shrink-0 pointer-events-none"
+                className="w-[17vw] lg:w-[19vw] xl:w-[21vw] shrink-0 pointer-events-none"
                 aria-hidden="true"
               />
 
-              {/* Right group: L I N (aligned to left, sitting cleanly to the right of the character) */}
-              <span className="flex-1 flex items-center justify-start gap-2 sm:gap-4 md:gap-6 lg:gap-8 pl-1 sm:pl-2">
+              {/* Right group: L I N */}
+              <span className="flex-1 flex items-center justify-start gap-4 md:gap-6 lg:gap-8 pl-2">
                 <span>L</span>
                 <span>I</span>
                 <span>N</span>
               </span>
             </span>
+          </h2>
+        </motion.div>
+      </div>
+
+      {/* Mobile (<md) Backdrop: Vertical SALIN watermark on the right stage behind the character (avoids colliding with left text) */}
+      <div
+        className="md:hidden absolute right-1 sm:right-3 top-[12vh] sm:top-[14vh] w-[46vw] sm:w-[48vw] flex flex-col items-center justify-start pointer-events-none select-none z-0"
+        aria-hidden="true"
+      >
+        <motion.div
+          style={{
+            y: bgTextY,
+            opacity: bgTextOpacity,
+          }}
+          className="flex flex-col items-center"
+        >
+          <h2
+            className="m-0 flex flex-col items-center font-black text-[clamp(44px,11.5vw,62px)] leading-[0.82] text-[#fffdf5]/80 dark:text-white/15 select-none drop-shadow-[0_2px_14px_rgba(100,105,140,0.18)] uppercase tracking-tight"
+            style={{
+              fontFamily:
+                'Impact, "Arial Black", "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
+            }}
+          >
+            <span>S</span>
+            <span>A</span>
+            <span>L</span>
+            <span>I</span>
+            <span>N</span>
           </h2>
         </motion.div>
       </div>
@@ -400,14 +429,14 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 15, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.9 }}
-            className="absolute -top-12 sm:-top-16 z-30 px-3 py-1.5 sm:px-4 sm:py-2.5 bg-[#fffefa] text-[#202126] font-black text-[11px] sm:text-sm rounded-2xl border-2 border-[#202126] shadow-[3px_3px_0px_#202126] max-w-[190px] sm:max-w-[340px] text-center pointer-events-none right-1 sm:right-auto sm:left-1/2 sm:-translate-x-1/2"
+            className="absolute -top-10 sm:-top-16 z-30 px-2.5 py-1 sm:px-4 sm:py-2.5 bg-[#fffefa] text-[#202126] font-black text-[10.5px] sm:text-sm rounded-2xl border-2 border-[#202126] shadow-[3px_3px_0px_#202126] max-w-[170px] sm:max-w-[340px] text-center pointer-events-none right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2"
           >
             <div className="flex items-center justify-center gap-1.5">
               <MessageSquareQuote size={13} className="text-[#5867d2] shrink-0" />
               <span className="leading-snug">{quoteText}</span>
             </div>
             {/* Speech bubble tail */}
-            <div className="absolute right-8 sm:right-auto sm:left-1/2 -bottom-2 sm:-translate-x-1/2 w-3 h-3 bg-[#fffefa] border-r-2 border-b-2 border-[#202126] rotate-45" />
+            <div className="absolute right-6 sm:right-auto sm:left-1/2 -bottom-2 sm:-translate-x-1/2 w-3 h-3 bg-[#fffefa] border-r-2 border-b-2 border-[#202126] rotate-45" />
           </motion.div>
         )}
 
@@ -447,7 +476,7 @@ export function HeroSection() {
               height={1376}
               priority
               fetchPriority="high"
-              className="h-[46vh] sm:h-[60vh] md:h-[83vh] max-h-[850px] min-h-[300px] sm:min-h-[440px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_16px_28px_rgba(25,27,38,0.24)] sm:drop-shadow-[0_22px_36px_rgba(25,27,38,0.26)] pointer-events-none"
+              className="h-[50vh] xs:h-[53vh] sm:h-[62vh] md:h-[83vh] max-h-[850px] min-h-[320px] sm:min-h-[440px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_16px_28px_rgba(25,27,38,0.24)] sm:drop-shadow-[0_22px_36px_rgba(25,27,38,0.26)] pointer-events-none"
             />
           </motion.div>
 
@@ -463,7 +492,7 @@ export function HeroSection() {
               height={1376}
               priority
               fetchPriority="high"
-              className="h-[46vh] sm:h-[60vh] md:h-[83vh] max-h-[850px] min-h-[300px] sm:min-h-[440px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_18px_32px_rgba(25,27,38,0.28)] sm:drop-shadow-[0_28px_42px_rgba(25,27,38,0.32)] pointer-events-none"
+              className="h-[50vh] xs:h-[53vh] sm:h-[62vh] md:h-[83vh] max-h-[850px] min-h-[320px] sm:min-h-[440px] md:min-h-[500px] w-auto object-contain object-bottom drop-shadow-[0_18px_32px_rgba(25,27,38,0.28)] sm:drop-shadow-[0_28px_42px_rgba(25,27,38,0.32)] pointer-events-none"
             />
           </motion.div>
 
@@ -529,30 +558,31 @@ export function HeroSection() {
       </motion.div>
 
       {/* 03. Left Column: Editorial Headline & Tactile Stickers */}
-      <div className="relative z-20 max-w-[52vw] sm:max-w-[50vw] md:max-w-[480px] pl-3.5 sm:pl-8 lg:pl-16 pt-[108px] sm:pt-[130px] md:pt-32 pb-14 sm:pb-16 flex flex-col items-start gap-2 sm:gap-4 lg:gap-5 pointer-events-none">
+      <div className="relative z-20 max-w-[55vw] xs:max-w-[56vw] sm:max-w-[50vw] md:max-w-[480px] pl-3.5 sm:pl-8 lg:pl-16 pt-[84px] sm:pt-[110px] md:pt-32 pb-14 sm:pb-16 flex flex-col items-start gap-2 sm:gap-4 lg:gap-5 pointer-events-none">
         {/* Eyebrow badge */}
         <p className="font-mono text-[9px] sm:text-xs font-black tracking-[0.14em] sm:tracking-[0.22em] text-[#474f67] dark:text-[#a0a8c2] uppercase pointer-events-auto">
           AI APPLICATION & BUSINESS PRACTITIONER
         </p>
 
         {/* Big Impact Headline */}
-        <h1 className="text-[22px] xs:text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-black tracking-[-0.03em] sm:tracking-[-0.04em] text-[#1b1d24] dark:text-white leading-[1.15] sm:leading-[1.12] pointer-events-auto">
+        <h1 className="text-[23px] xs:text-2xl sm:text-4xl md:text-5xl lg:text-[58px] font-black tracking-[-0.03em] sm:tracking-[-0.04em] text-[#1b1d24] dark:text-white leading-[1.18] sm:leading-[1.12] pointer-events-auto">
           你好，我是<strong className="text-[#0d0e12] dark:text-white">狗哥。</strong>
           <br />
           欢迎来到我的现场。
         </h1>
 
         {/* Subtitle description */}
-        <p className="text-[11.5px] sm:text-[15px] text-[#424657] dark:text-[#b0b8c8] font-medium leading-[1.6] sm:leading-[1.8] max-w-[420px] pointer-events-auto line-clamp-3 sm:line-clamp-none">
-          用代码与实战经验探索 AI 落地。做过 6 年探店，亲自下场开过餐厅。把十多年摸爬滚打的商业死结，变成真正能跑通的 AI 实战工具。
+        <p className="text-[11.5px] sm:text-[15px] text-[#424657] dark:text-[#b0b8c8] font-medium leading-[1.6] sm:leading-[1.8] max-w-[420px] pointer-events-auto">
+          <span className="hidden sm:inline">用代码与实战经验探索 AI 落地。做过 6 年探店，亲自下场开过餐厅。把十多年摸爬滚打的商业死结，变成真正能跑通的 AI 实战工具。</span>
+          <span className="sm:hidden">用代码与实战经验探索 AI 落地，把十多年实体商业摸爬滚打的死结，变成真正能跑通的 AI 实战工具。</span>
         </p>
 
         {/* Tactile Stickers Stack */}
-        <div className="flex flex-col items-start gap-1.5 sm:gap-2.5 pt-1 pointer-events-auto" aria-label="狗哥身份与态度标签">
+        <div className="flex flex-col items-start gap-1.5 sm:gap-2.5 pt-0.5 sm:pt-1 pointer-events-auto" aria-label="狗哥身份与态度标签">
           {/* Sticker 1: Lime Pill Badge */}
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#d5f085] text-[#1c1d24] font-black text-[10px] sm:text-xs border border-[#202126] shadow-[2px_2px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
-            <span className="truncate">身份卡 / 实体餐饮老兵 · 临沂</span>
+            <span className="truncate">身份卡 / 实体老兵 · 临沂</span>
           </div>
 
           {/* Sticker 2: White Paper Note (Tilted -1deg) */}
@@ -595,7 +625,7 @@ export function HeroSection() {
       </div>
 
       {/* Interactive Roaming HUD: Toggle Auto Wander / Manual Walk */}
-      <div className="absolute left-3.5 sm:left-12 bottom-3.5 sm:bottom-5 z-20 pointer-events-auto flex items-center gap-2">
+      <div className="absolute left-3 sm:left-12 bottom-[calc(14px+env(safe-area-inset-bottom,0px))] sm:bottom-5 z-20 pointer-events-auto flex items-center gap-2">
         <button
           type="button"
           onClick={(e) => {
