@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Mail, MapPin, GitFork, Clock, CheckCircle2, MessageSquare, Share2, Bookmark } from "lucide-react";
+import { Mail, MapPin, GitFork, Clock, CheckCircle2, MessageSquare, Share2, Bookmark, ArrowRight, X } from "lucide-react";
 import { siteConfig } from "@/data/site";
 import { contactDirections } from "@/data/journey";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -24,9 +24,21 @@ export default function ContactPage() {
   const unsuitable = contactDirections.filter((d) => !d.suitable);
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
+    <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-20 md:py-28 overflow-hidden">
+      {/* Decorative ambient background glows */}
+      <div 
+        className="pointer-events-none absolute -top-40 right-20 w-[500px] h-[500px] rounded-full blur-[140px] opacity-25 dark:opacity-15"
+        style={{ background: "radial-gradient(circle, var(--brand), transparent 70%)" }}
+        aria-hidden="true"
+      />
+      <div 
+        className="pointer-events-none absolute top-1/2 -left-40 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 dark:opacity-10"
+        style={{ background: "radial-gradient(circle, var(--accent), transparent 70%)" }}
+        aria-hidden="true"
+      />
+
       {/* 页面标题 */}
-      <div className="max-w-3xl mb-16">
+      <div className="relative max-w-3xl mb-16 sm:mb-20">
         <SectionHeading
           label="联系合作与 FDE 驻场预约"
           title="先说真实业务断点，再谈技术落地。"
@@ -35,44 +47,58 @@ export default function ContactPage() {
       </div>
 
       {/* 合作流程卡片 */}
-      <div className="mb-16">
-        <p className="text-xs font-bold uppercase tracking-wider mb-6 text-[var(--text-secondary)]">合作流转标准流程</p>
-        <div className="grid md:grid-cols-3 gap-5">
+      <div className="relative mb-20">
+        <div className="flex items-center gap-2 mb-6">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand)]" />
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-muted)]">
+            STANDARD PROCESS · 合作流转标准流程
+          </span>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
           {processSteps.map((s) => (
-            <div key={s.step} className="p-5 sm:p-6 rounded-3xl border border-[var(--border)] bg-[var(--surface)] glass-card-hover">
-              <div className="text-3xl font-extrabold mb-2 text-[var(--brand)]">{s.step}</div>
-              <h3 className="font-bold text-base mb-2" style={{ color: "var(--text-primary)" }}>{s.title}</h3>
-              <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{s.desc}</p>
+            <div 
+              key={s.step} 
+              className="relative p-6 sm:p-8 rounded-3xl border border-[var(--border-glass)] bg-[var(--surface-glass)] backdrop-blur-xl shadow-md hover:shadow-xl hover:border-[var(--brand)]/30 hover:bg-[var(--surface-elevated)]/80 transition-all duration-300 group"
+            >
+              <div className="text-4xl font-mono font-black mb-3 text-[var(--brand)]/40 group-hover:text-[var(--brand)] transition-colors">
+                {s.step}
+              </div>
+              <h3 className="font-bold text-base sm:text-lg mb-2 text-[var(--text-primary)]">
+                {s.title}
+              </h3>
+              <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)] font-normal">
+                {s.desc}
+              </p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="flex flex-col lg:grid lg:grid-cols-[1fr_380px] gap-10 lg:gap-16">
+      <div className="relative flex flex-col lg:grid lg:grid-cols-[1fr_390px] gap-10 lg:gap-14">
         {/* 微信二维码与联系卡片 (移动端优先置顶展示) */}
-        <div className="order-1 lg:order-2 space-y-5">
+        <div className="order-1 lg:order-2 space-y-6">
           {/* 响应 SLA */}
-          <div className="p-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2 font-medium">
-            <Clock size={16} className="shrink-0" />
+          <div className="p-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 text-xs sm:text-sm flex items-center gap-2.5 font-medium backdrop-blur-md">
+            <Clock size={17} className="shrink-0 text-emerald-500 animate-pulse" />
             <span>通常在 24 小时内回复所有有具体问题的邮件与微信消息。</span>
           </div>
 
           {/* 微信与真实二维码展示 */}
-          <div
-            className="rounded-3xl p-5 sm:p-6 border border-[var(--border)] bg-[var(--surface)] shadow-lg space-y-4"
-          >
+          <div className="rounded-3xl p-6 sm:p-7 border border-[var(--border-glass)] bg-[var(--surface-glass)] backdrop-blur-2xl shadow-xl shadow-emerald-950/5 space-y-5">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2" style={{ color: "var(--text-secondary)" }}>
-                <MessageSquare size={18} className="text-emerald-500" />
-                <span className="text-xs font-bold tracking-widest uppercase">微信联系与二维码</span>
+              <div className="flex items-center gap-2 text-[var(--text-primary)]">
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                  <MessageSquare size={16} />
+                </div>
+                <span className="text-xs font-mono font-bold tracking-wider uppercase">微信扫码直联</span>
               </div>
-              <span className="text-xs font-mono font-bold text-[var(--brand)] bg-[var(--surface-muted)] px-2.5 py-0.5 rounded-full">
-                微信号: {siteConfig.wechat}
+              <span className="text-xs font-mono font-bold text-[var(--brand)] bg-[var(--brand)]/10 px-3 py-1 rounded-full border border-[var(--brand)]/20">
+                {siteConfig.wechat}
               </span>
             </div>
 
             {/* 真实微信二维码 Image */}
-            <div className="relative w-full max-w-[280px] mx-auto aspect-square rounded-2xl overflow-hidden border border-[var(--border)] bg-white p-2 flex items-center justify-center shadow-inner">
+            <div className="relative w-full max-w-[280px] mx-auto aspect-square rounded-2xl overflow-hidden border border-[var(--border-glass)] bg-white p-3 flex items-center justify-center shadow-lg">
               <Image
                 src={siteConfig.wechatQr}
                 alt="王善林 Salin 微信二维码"
@@ -82,34 +108,31 @@ export default function ContactPage() {
               />
             </div>
 
-            <div className="space-y-2 pt-2 border-t border-[var(--border)]">
+            <div className="space-y-3 pt-3 border-t border-[var(--border-glass)]">
               <div className="flex justify-between items-center text-xs">
-                <span className="text-[var(--text-secondary)]">微信号直接复制:</span>
+                <span className="text-[var(--text-secondary)] font-medium">微信号复制:</span>
                 <CopyButton text={siteConfig.wechat} label="复制微信号" />
               </div>
-              <p className="text-[11px] text-center text-[var(--text-secondary)] italic">
+              <p className="text-[11px] text-center text-[var(--text-muted)] italic">
                 * 扫码添加好友请备注“Salin 官网 FDE 沟通”
               </p>
             </div>
           </div>
 
           {/* 邮箱 */}
-          <div
-            className="rounded-2xl p-5 border border-[var(--border)] bg-[var(--surface)]"
-          >
-            <div className="flex items-center gap-2 mb-2" style={{ color: "var(--text-secondary)" }}>
-              <Mail size={16} />
-              <span className="text-xs font-bold tracking-widest uppercase">电子邮件</span>
+          <div className="rounded-3xl p-6 border border-[var(--border-glass)] bg-[var(--surface-glass)] backdrop-blur-xl shadow-md">
+            <div className="flex items-center gap-2 mb-3 text-[var(--text-muted)]">
+              <Mail size={15} />
+              <span className="text-xs font-mono font-bold tracking-widest uppercase">电子邮件</span>
             </div>
-            <p className="text-base font-bold mb-3 font-mono" style={{ color: "var(--text-primary)" }}>
+            <p className="text-base sm:text-lg font-bold mb-4 font-mono text-[var(--text-primary)]">
               {siteConfig.email}
             </p>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-3">
               <CopyButton text={siteConfig.email} label="复制邮箱" />
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-lg border border-[var(--border)] hover:bg-[var(--surface-muted)] transition-colors font-medium"
-                style={{ color: "var(--text-primary)" }}
+                className="inline-flex items-center gap-1.5 text-xs px-3.5 py-1.5 rounded-full border border-[var(--border-glass)] bg-[var(--surface)] text-[var(--text-primary)] hover:border-[var(--brand)]/40 hover:text-[var(--brand)] transition-all font-medium"
               >
                 直接发信
               </a>
@@ -117,19 +140,19 @@ export default function ContactPage() {
           </div>
 
           {/* 公众号 & 社交阵地 */}
-          <div className="rounded-2xl p-5 border border-[var(--border)] bg-[var(--surface)] space-y-3">
-            <div className="flex items-center gap-2" style={{ color: "var(--text-secondary)" }}>
-              <Bookmark size={16} />
-              <span className="text-xs font-bold tracking-widest uppercase">微信公众号</span>
+          <div className="rounded-3xl p-6 border border-[var(--border-glass)] bg-[var(--surface-glass)] backdrop-blur-xl shadow-md space-y-4">
+            <div className="flex items-center gap-2 text-[var(--text-muted)]">
+              <Bookmark size={15} />
+              <span className="text-xs font-mono font-bold tracking-widest uppercase">微信公众号</span>
             </div>
-            <p className="text-sm font-extrabold text-[var(--brand)]">
+            <p className="text-base font-extrabold text-[var(--brand)]">
               {siteConfig.gongzhonghao}
             </p>
 
-            <div className="pt-2 border-t border-[var(--border)] space-y-2">
+            <div className="pt-3 border-t border-[var(--border-glass)] space-y-2.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="flex items-center gap-1.5 text-[var(--text-secondary)]">
-                  <GitFork size={14} /> GitHub:
+                  <GitFork size={13} className="text-[var(--brand)]" /> GitHub:
                 </span>
                 <a href={siteConfig.github} target="_blank" rel="noopener noreferrer" className="font-mono font-bold hover:underline text-[var(--brand)]">
                   wangsalin
@@ -137,7 +160,7 @@ export default function ContactPage() {
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="flex items-center gap-1.5 text-[var(--text-secondary)]">
-                  <Share2 size={14} /> X (Twitter):
+                  <Share2 size={13} className="text-[var(--accent)]" /> X (Twitter):
                 </span>
                 <a href={siteConfig.twitter} target="_blank" rel="noopener noreferrer" className="font-mono font-bold hover:underline text-[var(--brand)]">
                   @EyuSalin
@@ -147,13 +170,13 @@ export default function ContactPage() {
           </div>
 
           {/* 所在地 */}
-          <div
-            className="rounded-2xl p-5 border border-[var(--border)] bg-[var(--surface)] flex items-center gap-3"
-          >
-            <MapPin size={18} className="text-[var(--brand)] shrink-0" />
+          <div className="rounded-3xl p-6 border border-[var(--border-glass)] bg-[var(--surface-glass)] backdrop-blur-xl shadow-md flex items-center gap-3.5">
+            <div className="w-10 h-10 rounded-2xl bg-[var(--brand)]/10 text-[var(--brand)] flex items-center justify-center shrink-0">
+              <MapPin size={18} />
+            </div>
             <div>
-              <p className="text-xs" style={{ color: "var(--text-secondary)" }}>常驻城市 / FDE 驻场覆盖</p>
-              <p className="text-base font-bold" style={{ color: "var(--text-primary)" }}>
+              <p className="text-xs text-[var(--text-muted)] font-medium">常驻城市 / FDE 驻场覆盖</p>
+              <p className="text-sm sm:text-base font-bold text-[var(--text-primary)]">
                 {siteConfig.location} (支持全国出差驻场)
               </p>
             </div>
@@ -161,25 +184,23 @@ export default function ContactPage() {
         </div>
 
         {/* 左侧：双向选择 */}
-        <div className="order-2 lg:order-1 space-y-10">
+        <div className="order-2 lg:order-1 space-y-12">
           {/* 适合交流的方向 */}
           <div>
-            <h2
-              className="text-lg font-bold mb-5 flex items-center gap-2"
-              style={{ color: "var(--text-primary)" }}
-            >
-              <CheckCircle2 className="text-emerald-500" size={20} /> 适合联系我的情况
+            <h2 className="text-lg sm:text-xl font-bold mb-6 flex items-center gap-2.5 text-[var(--text-primary)]">
+              <CheckCircle2 className="text-emerald-500" size={22} />
+              <span>适合联系我的情况</span>
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {suitable.map((dir) => (
                 <div
                   key={dir.label}
-                  className="p-4 sm:p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] glass-card-hover"
+                  className="p-5 sm:p-6 rounded-3xl border border-[var(--border-glass)] bg-[var(--surface-glass)] backdrop-blur-xl hover:border-[var(--brand)]/40 hover:bg-[var(--surface-elevated)]/80 hover:shadow-lg transition-all duration-300"
                 >
-                  <div className="font-bold text-base mb-1" style={{ color: "var(--text-primary)" }}>
+                  <div className="font-bold text-base sm:text-lg mb-1.5 text-[var(--text-primary)]">
                     {dir.label}
                   </div>
-                  <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)] font-normal">
                     {dir.desc}
                   </p>
                 </div>
@@ -189,22 +210,22 @@ export default function ContactPage() {
 
           {/* 不适合的情况 */}
           <div>
-            <h2
-              className="text-lg font-bold mb-5 flex items-center gap-2"
-              style={{ color: "var(--text-primary)" }}
-            >
-              <span className="w-5 h-5 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center text-xs">✕</span> 不太适合的情况
+            <h2 className="text-lg sm:text-xl font-bold mb-6 flex items-center gap-2.5 text-[var(--text-primary)]">
+              <div className="w-5 h-5 rounded-full bg-rose-500/10 text-rose-500 font-bold flex items-center justify-center text-xs">
+                <X size={12} strokeWidth={3} />
+              </div>
+              <span>不太适合的情况</span>
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-3.5">
               {unsuitable.map((dir) => (
                 <div
                   key={dir.label}
-                  className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] opacity-70"
+                  className="p-4 sm:p-5 rounded-2xl border border-[var(--border-glass)] bg-[var(--surface-muted)]/50 backdrop-blur-md opacity-80 hover:opacity-100 transition-opacity"
                 >
-                  <div className="font-bold text-sm mb-1" style={{ color: "var(--text-secondary)" }}>
+                  <div className="font-bold text-xs sm:text-sm mb-1 text-[var(--text-secondary)]">
                     {dir.label}
                   </div>
-                  <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-xs leading-relaxed text-[var(--text-muted)]">
                     {dir.desc}
                   </p>
                 </div>

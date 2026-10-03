@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Music, Volume2, VolumeX, Play, Pause, ChevronRight, X, Disc3 } from "lucide-react";
+import { Music, Volume2, VolumeX, Play, Pause, ChevronRight, X, Disc3, Sparkles } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 interface Track {
@@ -119,80 +119,80 @@ export function SoundDock() {
       {isTucked && (
         <button
           onClick={() => setIsTucked(false)}
-          className="absolute left-0 bottom-1 w-8 sm:w-9 h-12 sm:h-14 bg-[#d5f085] border-2 border-[#202126] rounded-l-xl flex items-center justify-center text-[#202126] font-black shadow-[-3px_3px_0px_#202126] cursor-pointer hover:bg-[#c6e86b]"
+          className="absolute left-0 bottom-1 w-8 sm:w-9 h-12 sm:h-14 bg-[var(--surface-elevated)] border border-[var(--border-glass)] rounded-l-2xl flex items-center justify-center text-[var(--brand)] font-black backdrop-blur-xl shadow-lg cursor-pointer hover:bg-[var(--surface)] transition-colors"
           title="展开播放盒"
         >
-          ♫
+          <Music size={16} />
         </button>
       )}
 
       {/* Main floating pill button */}
-      <div className="flex items-center gap-1.5 sm:gap-2">
+      <div className="flex items-center gap-2">
         <button
           type="button"
           onClick={() => setIsTucked(true)}
-          className="hidden sm:flex w-7 h-7 rounded-full bg-[#d5f085] border border-[#202126] items-center justify-center text-xs font-bold text-[#202126] shadow-[2px_2px_0px_#202126] hover:bg-[#fff] cursor-pointer"
+          className="hidden sm:flex w-7 h-7 rounded-full bg-[var(--surface-glass)] border border-[var(--border-glass)] backdrop-blur-md items-center justify-center text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--brand)]/30 transition-all cursor-pointer shadow-2xs"
           title="收进右侧边缘"
         >
-          →
+          <ChevronRight size={14} />
         </button>
 
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 p-1 sm:px-3 sm:py-2 bg-[#fffdf5] border-2 border-[#202126] rounded-full sm:rounded-2xl shadow-[3px_3px_0px_#202126] sm:shadow-[4px_4px_0px_#202126] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_#202126] transition-all cursor-pointer text-left"
+          className="flex items-center gap-2.5 p-1.5 sm:px-3 sm:py-2 rounded-full sm:rounded-2xl border border-[var(--border-glass)] bg-[var(--surface-glass-heavy)] backdrop-blur-2xl shadow-xl shadow-emerald-950/10 hover:border-[var(--brand)]/30 hover:bg-[var(--surface-elevated)] transition-all cursor-pointer text-left group"
           title="狗哥的播放盒"
         >
           {/* Spinning disc indicator */}
           <span
             className={cn(
-              "w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-[#202126] bg-[#d5f085] flex items-center justify-center text-xs sm:text-base text-[#202126] shrink-0",
+              "w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-tr from-[var(--brand)] to-[var(--accent)] flex items-center justify-center text-white shrink-0 shadow-md shadow-emerald-500/20",
               isPlaying && "animate-[spin_4s_linear_infinite]"
             )}
           >
-            ♫
+            <Music size={14} />
           </span>
           <div className="hidden sm:flex flex-col min-w-0 pr-1">
-            <span className="text-xs font-black text-[#202126] tracking-tight whitespace-nowrap">
+            <span className="text-xs font-bold text-[var(--text-primary)] tracking-tight whitespace-nowrap">
               狗哥的播放盒
             </span>
-            <span className="text-[10px] text-[#6b6775] font-semibold truncate max-w-[110px]">
-              {isPlaying ? currentTrack.title : "默认安静 · 点击选歌"}
+            <span className="text-[10px] text-[var(--text-muted)] truncate max-w-[120px] font-mono">
+              {isPlaying ? currentTrack.title : "环境音 · 点击选歌"}
             </span>
           </div>
-          <span className="hidden sm:inline text-xs font-bold text-[#202126] pl-1">↗</span>
+          <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-[var(--brand)] ml-1" />
         </button>
       </div>
 
       {/* Pop-up Jukebox Panel */}
       {isOpen && (
-        <div className="absolute right-0 bottom-[calc(100%+12px)] w-[calc(100vw-28px)] max-w-[340px] sm:max-w-[350px] p-4 sm:p-5 bg-[#fffdf7] border-2 border-[#202126] rounded-2xl shadow-[6px_6px_0px_#202126] sm:shadow-[8px_9px_0px_#202126] text-[#202126] animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <div className="flex items-start justify-between mb-4 pb-2 border-b border-[#202126]/20">
+        <div className="absolute right-0 bottom-[calc(100%+14px)] w-[calc(100vw-28px)] max-w-[340px] sm:max-w-[360px] p-5 sm:p-6 rounded-3xl border border-[var(--border-glass)] bg-[var(--surface-elevated)]/95 backdrop-blur-2xl shadow-2xl shadow-emerald-950/20 text-[var(--text-primary)] animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <div className="flex items-start justify-between mb-4 pb-3 border-b border-[var(--border-glass)]">
             <div>
-              <span className="text-[10px] font-mono font-black text-[#6355b8] tracking-widest uppercase block">
-                THE LITTLE JUKEBOX / 01
+              <span className="text-[10px] font-mono font-bold text-[var(--brand)] tracking-widest uppercase block">
+                THE AMBIENT JUKEBOX
               </span>
-              <h3 className="text-lg font-black tracking-tight mt-0.5">今天，听点什么？</h3>
+              <h3 className="text-base sm:text-lg font-black tracking-tight mt-0.5">今天，听点什么？</h3>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="w-7 h-7 rounded-full border border-[#202126] bg-white flex items-center justify-center text-sm font-bold hover:bg-[#d5f085] cursor-pointer"
+              className="w-7 h-7 rounded-full border border-[var(--border-glass)] bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--brand)]/30 flex items-center justify-center text-sm font-bold transition-all cursor-pointer"
             >
-              ×
+              <X size={14} />
             </button>
           </div>
 
           {/* Current track card */}
-          <div className="p-3.5 bg-[#ebe7ff] border-2 border-[#202126] rounded-xl flex items-center gap-3.5 mb-4 shadow-[3px_3px_0px_#202126]">
-            <div className="w-16 h-16 rounded-lg bg-[#202126] flex items-center justify-center text-[#d5f085] text-2xl font-black shrink-0 border border-[#202126]">
-              <Disc3 size={32} className={cn(isPlaying && "animate-spin")} />
+          <div className="p-3.5 rounded-2xl border border-[var(--border-glass)] bg-[var(--surface)] flex items-center gap-3.5 mb-4 shadow-sm">
+            <div className="w-14 h-14 rounded-xl bg-slate-950 text-[var(--accent)] flex items-center justify-center shrink-0 border border-[var(--border-glass)] shadow-inner">
+              <Disc3 size={28} className={cn(isPlaying && "animate-spin text-emerald-400")} />
             </div>
             <div className="flex flex-col min-w-0 flex-1">
-              <span className="inline-block self-start text-[9px] font-black px-1.5 py-0.5 bg-[#d5f085] rounded text-[#202126] mb-1">
+              <span className="inline-block self-start text-[9px] font-mono font-bold px-2 py-0.5 bg-[var(--brand)]/10 text-[var(--brand)] border border-[var(--brand)]/20 rounded-full mb-1">
                 {currentTrack.mood}
               </span>
-              <strong className="text-sm font-black truncate">{currentTrack.title}</strong>
-              <small className="text-[11px] text-[#635d72] font-semibold truncate">{currentTrack.artist}</small>
+              <strong className="text-xs sm:text-sm font-bold truncate text-[var(--text-primary)]">{currentTrack.title}</strong>
+              <small className="text-[11px] text-[var(--text-muted)] truncate">{currentTrack.artist}</small>
             </div>
           </div>
 
@@ -200,36 +200,36 @@ export function SoundDock() {
           <div className="flex items-center justify-center gap-3 mb-4">
             <button
               onClick={() => setCurrentTrackIndex((prev) => (prev > 0 ? prev - 1 : TRACKS.length - 1))}
-              className="w-8 h-8 rounded-full border border-[#202126] bg-white flex items-center justify-center text-xs font-black hover:bg-[#ebe7ff] cursor-pointer"
+              className="w-8 h-8 rounded-full border border-[var(--border-glass)] bg-[var(--surface)] flex items-center justify-center text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--brand)]/30 transition-all cursor-pointer"
             >
               ←
             </button>
             <button
               onClick={togglePlay}
-              className="w-11 h-11 rounded-full border-2 border-[#202126] bg-[#d5f085] flex items-center justify-center text-base font-black shadow-[3px_3px_0px_#202126] hover:bg-[#c8e86e] cursor-pointer"
+              className="w-11 h-11 rounded-full bg-[var(--brand)] text-[var(--brand-foreground)] flex items-center justify-center text-base font-bold shadow-md shadow-emerald-500/25 hover:opacity-95 transition-all cursor-pointer"
             >
               {isPlaying ? <Pause size={16} /> : <Play size={16} className="ml-0.5" />}
             </button>
             <button
               onClick={() => setCurrentTrackIndex((prev) => (prev < TRACKS.length - 1 ? prev + 1 : 0))}
-              className="w-8 h-8 rounded-full border border-[#202126] bg-white flex items-center justify-center text-xs font-black hover:bg-[#ebe7ff] cursor-pointer"
+              className="w-8 h-8 rounded-full border border-[var(--border-glass)] bg-[var(--surface)] flex items-center justify-center text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--brand)]/30 transition-all cursor-pointer"
             >
               →
             </button>
             <button
               onClick={() => setIsMuted(!isMuted)}
-              className="w-8 h-8 rounded-full border border-[#202126] bg-white flex items-center justify-center text-xs font-black hover:bg-[#ebe7ff] cursor-pointer ml-2"
+              className="w-8 h-8 rounded-full border border-[var(--border-glass)] bg-[var(--surface)] flex items-center justify-center text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--brand)]/30 transition-all cursor-pointer ml-1"
               title={isMuted ? "取消静音" : "静音"}
             >
-              {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+              {isMuted ? <VolumeX size={14} className="text-rose-500" /> : <Volume2 size={14} />}
             </button>
           </div>
 
           {/* Track playlist */}
-          <div className="space-y-1.5 pt-2 border-t border-[#202126]/20">
-            <div className="flex justify-between items-center text-[11px] font-black text-[#555260] px-1 mb-1">
-              <span>狗哥的随身现场 BGM</span>
-              <span className="font-mono">03 首环境音</span>
+          <div className="space-y-1.5 pt-3 border-t border-[var(--border-glass)]">
+            <div className="flex justify-between items-center text-[10px] font-mono font-bold uppercase text-[var(--text-muted)] px-1 mb-1.5">
+              <span>随身现场 BGM</span>
+              <span>03 首环境音</span>
             </div>
             {TRACKS.map((t, i) => (
               <button
@@ -239,25 +239,28 @@ export function SoundDock() {
                   setIsPlaying(true);
                 }}
                 className={cn(
-                  "w-full px-2.5 py-1.5 rounded-lg border text-left flex items-center justify-between transition-colors cursor-pointer",
+                  "w-full px-3 py-2 rounded-xl border text-left flex items-center justify-between transition-all cursor-pointer",
                   currentTrackIndex === i
-                    ? "bg-[#eff8d7] border-[#202126] font-black"
-                    : "border-transparent hover:bg-slate-100 font-medium text-[#444]"
+                    ? "bg-[var(--brand)]/10 border-[var(--brand)]/30 font-bold text-[var(--brand)]"
+                    : "border-transparent bg-transparent hover:bg-[var(--surface)] text-[var(--text-secondary)]"
                 )}
               >
                 <div className="flex items-center gap-2 truncate">
-                  <span className="text-[10px] font-mono text-[#888]">0{i + 1}</span>
+                  <span className="text-[10px] font-mono opacity-60">0{i + 1}</span>
                   <span className="text-xs truncate">{t.title}</span>
                 </div>
                 {currentTrackIndex === i && isPlaying && (
-                  <span className="text-[10px] font-black text-[#5844bb]">播放中</span>
+                  <span className="text-[10px] font-mono font-bold text-[var(--brand)] flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand)] animate-pulse" />
+                    播放中
+                  </span>
                 )}
               </button>
             ))}
           </div>
 
-          <p className="mt-3 text-[10px] text-[#7d7986] font-medium text-center">
-            声音由现场合成器轻量播放，默认静音，点播放才会响起。
+          <p className="mt-3 text-[10px] text-[var(--text-muted)] text-center">
+            声音由轻量现场合成器生成，默认静音，点击选歌播放。
           </p>
         </div>
       )}

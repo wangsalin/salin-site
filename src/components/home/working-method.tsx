@@ -5,11 +5,11 @@ import { Lightbulb } from "lucide-react";
 export function WorkingMethod() {
   return (
     <section
-      className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface-muted)]/40"
+      className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface-muted)]/30 relative overflow-hidden"
     >
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="flex flex-wrap items-center gap-2 mb-4">
-          <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+          <span className="text-[11px] font-mono font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-[var(--brand)]/10 text-[var(--brand)] border border-[var(--brand)]/20">
             SECTION 07
           </span>
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)]">
@@ -28,18 +28,17 @@ export function WorkingMethod() {
           {workingMethod.map((step) => (
             <div
               key={step.step}
-              className="relative p-6 rounded-2xl border border-[var(--border)] bg-[var(--background)] flex flex-col justify-between"
+              className="relative p-6 sm:p-7 rounded-3xl border border-[var(--border)] bg-[var(--surface)] backdrop-blur-xl shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] hover:border-[var(--border-hover)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 <div
-                  className="text-4xl font-extrabold mb-3 tracking-tighter"
-                  style={{ color: "var(--brand)" }}
+                  className="text-4xl sm:text-5xl font-extrabold mb-3 tracking-tighter font-mono text-[var(--brand)]"
                   aria-hidden="true"
                 >
                   {step.step}
                 </div>
                 <h3
-                  className="text-xl font-bold mb-2"
+                  className="text-xl font-bold mb-2 tracking-tight"
                   style={{ color: "var(--text-primary)" }}
                 >
                   {step.title}
@@ -53,9 +52,9 @@ export function WorkingMethod() {
               </div>
 
               {/* 实例注解 */}
-              <div className="pt-3 border-t border-[var(--border)] flex items-start gap-2 text-xs" style={{ color: "var(--text-secondary)" }}>
+              <div className="pt-3 border-t border-[var(--border)] flex items-start gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
                 <Lightbulb size={14} className="text-amber-500 shrink-0 mt-0.5" />
-                <span className="italic">{step.example}</span>
+                <span className="italic leading-relaxed">{step.example}</span>
               </div>
             </div>
           ))}
@@ -63,16 +62,16 @@ export function WorkingMethod() {
 
         {/* 强调语 */}
         <div
-          className="p-6 rounded-2xl border-l-4 border-y border-r border-[var(--border)] flex items-center justify-between gap-4"
-          style={{ borderColor: "var(--accent)", background: "var(--background)" }}
+          className="p-6 sm:p-8 rounded-3xl border border-[var(--border)] bg-[var(--surface)] backdrop-blur-2xl shadow-[var(--shadow-card)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative overflow-hidden"
         >
+          <div className="absolute top-0 left-0 w-2 h-full bg-[var(--brand)]" />
           <p
-            className="text-lg md:text-xl font-bold"
+            className="text-lg md:text-xl font-bold tracking-tight pl-2"
             style={{ color: "var(--text-primary)" }}
           >
             “AI 不是起点，它只是解决现实商业问题的一种高效率工具。”
           </p>
-          <span className="text-xs px-3 py-1.5 rounded-full font-bold uppercase shrink-0" style={{ background: "var(--accent)", color: "var(--accent-foreground)" }}>
+          <span className="text-xs px-3.5 py-1.5 rounded-full font-bold uppercase shrink-0 bg-[var(--brand)]/10 text-[var(--brand)] border border-[var(--brand)]/20 self-start sm:self-auto">
             SALIN PHILOSOPHY
           </span>
         </div>

@@ -41,14 +41,14 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface)]">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
+    <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] bg-[var(--surface)] relative overflow-hidden">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="max-w-2xl mb-12">
           <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-[var(--brand)]/10 text-[var(--brand)] border border-[var(--brand)]/20">
               SECTION 11
             </span>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)] flex items-center gap-1">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)] flex items-center gap-1.5">
               <HelpCircle size={13} />
               FREQUENTLY ASKED QUESTIONS · 常见疑问答疑
             </span>
@@ -69,21 +69,21 @@ export function FaqSection() {
               <div
                 key={idx}
                 className={cn(
-                  "rounded-2xl border transition-all duration-200 overflow-hidden",
+                  "rounded-3xl border transition-all duration-300 overflow-hidden backdrop-blur-xl",
                   isOpen
-                    ? "border-[var(--brand)] bg-[var(--background)] shadow-md"
-                    : "border-[var(--border)] bg-[var(--surface)] hover:border-[var(--brand)]"
+                    ? "border-[var(--brand)]/50 bg-[var(--surface)] shadow-[var(--shadow-card)]"
+                    : "border-[var(--border)] bg-[var(--surface)]/70 hover:border-[var(--border-hover)] hover:bg-[var(--surface)] shadow-xs"
                 )}
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
                   className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="p-2 rounded-xl bg-[var(--surface-muted)] text-[var(--brand)] shrink-0">
+                  <div className="flex items-center gap-3.5">
+                    <span className="p-2.5 rounded-2xl bg-[var(--surface-muted)] text-[var(--brand)] shrink-0 border border-[var(--border)] shadow-xs">
                       <IconComponent size={18} />
                     </span>
-                    <h3 className="text-base sm:text-lg font-bold" style={{ color: "var(--text-primary)" }}>
+                    <h3 className="text-base sm:text-lg font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>
                       {faq.question}
                     </h3>
                   </div>
@@ -97,8 +97,8 @@ export function FaqSection() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm leading-relaxed border-t border-[var(--border)]/50" style={{ color: "var(--text-secondary)" }}>
-                    <p className="pl-0 sm:pl-11">{faq.answer}</p>
+                  <div className="px-6 pb-6 pt-1 text-sm leading-relaxed border-t border-[var(--border)]" style={{ color: "var(--text-secondary)" }}>
+                    <p className="pl-0 sm:pl-12 font-normal leading-relaxed">{faq.answer}</p>
                   </div>
                 )}
               </div>

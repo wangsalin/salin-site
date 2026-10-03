@@ -34,14 +34,14 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] relative overflow-hidden bg-[var(--surface-muted)]/40">
+    <section className="py-16 sm:py-24 md:py-28 border-t border-[var(--border)] relative overflow-hidden bg-[var(--surface-muted)]/30">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="max-w-2xl mb-12">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-[11px] font-mono font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded bg-[var(--brand)] text-[var(--brand-foreground)]">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-[var(--brand)]/10 text-[var(--brand)] border border-[var(--brand)]/20">
               SECTION 10
             </span>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)] flex items-center gap-1">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--brand)] flex items-center gap-1.5">
               <Quote size={13} />
               CLIENT TESTIMONIALS · 合作现场反馈
             </span>
@@ -54,11 +54,11 @@ export function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
           {testimonials.map((item, idx) => (
             <div
               key={idx}
-              className="p-6 sm:p-7 rounded-3xl border border-[var(--border)] bg-[var(--surface)] glass-card-hover flex flex-col justify-between"
+              className="p-6 sm:p-8 rounded-3xl border border-[var(--border)] bg-[var(--surface)] backdrop-blur-xl shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] hover:border-[var(--border-hover)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 {/* 5 星评价与标签 */}
@@ -68,7 +68,7 @@ export function TestimonialsSection() {
                       <Star key={i} size={14} fill="currentColor" />
                     ))}
                   </div>
-                  <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[var(--brand)] text-[var(--brand-foreground)]">
+                  <span className="text-[11px] font-mono font-bold px-3 py-0.5 rounded-full bg-[var(--brand)]/10 text-[var(--brand)] border border-[var(--brand)]/20">
                     {item.tag}
                   </span>
                 </div>
@@ -80,19 +80,19 @@ export function TestimonialsSection() {
               </div>
 
               {/* 底部作者与指标 */}
-              <div className="pt-4 border-t border-[var(--border)] space-y-2">
+              <div className="pt-4 border-t border-[var(--border)] space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>
+                    <h4 className="text-sm font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>
                       {item.author}
                     </h4>
-                    <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                    <p className="text-xs text-[var(--text-secondary)]">
                       {item.role}
                     </p>
                   </div>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full shadow-2xs">
                   <CheckCircle2 size={13} /> {item.metric}
                 </div>
               </div>

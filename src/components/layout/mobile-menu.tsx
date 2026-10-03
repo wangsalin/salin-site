@@ -37,11 +37,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[var(--z-modal)] md:hidden flex flex-col bg-[var(--background)]/95 backdrop-blur-xl animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[var(--z-modal)] md:hidden flex flex-col bg-[var(--background)]/90 backdrop-blur-2xl animate-in fade-in duration-300">
       {/* 顶部 Header */}
-      <div className="flex items-center justify-between px-4 h-16 border-b border-[var(--border)] bg-[var(--surface)]/80">
-        <Link href="/" onClick={onClose} className="flex items-center gap-2.5">
-          <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-[var(--border)] bg-slate-900 shrink-0">
+      <div className="flex items-center justify-between px-5 h-16 border-b border-[var(--border)] bg-[var(--surface)]/60 backdrop-blur-xl">
+        <Link href="/" onClick={onClose} className="flex items-center gap-3">
+          <div className="relative w-8 h-8 rounded-2xl overflow-hidden border border-[var(--border)] bg-slate-900 shrink-0 shadow-xs">
             <Image
               src="/images/salin-brand-logo.png"
               alt="Salin Brand Logo"
@@ -51,27 +51,27 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold tracking-wider text-sm text-[var(--text-primary)] leading-none flex items-center gap-1">
-              狗哥 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+            <span className="font-extrabold tracking-wide text-sm text-[var(--text-primary)] leading-none flex items-center gap-1.5">
+              狗哥 <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand)] animate-pulse" />
             </span>
-            <span className="text-[10px] font-mono text-[var(--text-secondary)] tracking-tight leading-tight mt-0.5">
-              Wang Salin · AI 实践
+            <span className="text-[10px] font-mono text-[var(--text-muted)] tracking-tight leading-tight mt-0.5">
+              Wang Salin · 商业与 AI
             </span>
           </div>
         </Link>
         <button
           onClick={onClose}
           aria-label="关闭菜单"
-          className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--surface-muted)] text-[var(--text-primary)] hover:opacity-80 transition-opacity"
+          className="w-9 h-9 flex items-center justify-center rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--surface-muted)] transition-colors shadow-xs"
         >
-          <X size={20} />
+          <X size={18} />
         </button>
       </div>
 
       {/* 菜单列表与触控卡片 */}
       <div className="flex-1 px-5 py-6 space-y-6 overflow-y-auto">
         {/* 快捷方式链接 */}
-        <div className="space-y-1.5">
+        <div className="space-y-2">
           {siteConfig.navLinks.map((link) => {
             const isActive = pathname === link.href;
             const isExternal = link.href.startsWith("http");
@@ -83,17 +83,17 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 rel={isExternal ? "noopener noreferrer" : undefined}
                 onClick={onClose}
                 className={cn(
-                  "flex items-center justify-between px-4 py-3.5 rounded-2xl text-lg font-bold transition-all",
+                  "flex items-center justify-between px-5 py-3.5 rounded-2xl text-base font-bold transition-all duration-200 border",
                   isActive
-                    ? "bg-[var(--brand)] text-[var(--brand-foreground)] shadow-md"
-                    : "text-[var(--text-primary)] hover:bg-[var(--surface-muted)]"
+                    ? "bg-[var(--brand)] text-[var(--brand-foreground)] border-transparent shadow-[0_6px_20px_rgba(16,185,129,0.3)]"
+                    : "bg-[var(--surface)] text-[var(--text-primary)] border-[var(--border)] hover:bg-[var(--surface-muted)] shadow-xs"
                 )}
               >
                 <span>{link.label}</span>
                 {isActive ? (
-                  <Sparkles size={18} />
+                  <Sparkles size={16} />
                 ) : (
-                  <ArrowRight size={16} className="opacity-40" />
+                  <ArrowRight size={15} className="opacity-40" />
                 )}
               </Link>
             );
@@ -101,17 +101,17 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         </div>
 
         {/* 快速联系卡片 */}
-        <div className="p-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] space-y-3">
+        <div className="p-5 rounded-3xl border border-[var(--border)] bg-[var(--surface)] backdrop-blur-xl shadow-[var(--shadow-subtle)] space-y-3.5">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)] flex items-center gap-1.5">
               <MessageSquare size={14} className="text-[var(--brand)]" /> 快速微信沟通
             </span>
-            <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+            <span className="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
               在线响应
             </span>
           </div>
 
-          <div className="flex items-center justify-between p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+          <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[var(--background)]/80 border border-[var(--border)]">
             <div className="space-y-0.5">
               <div className="text-xs font-bold" style={{ color: "var(--text-primary)" }}>
                 微信号：{siteConfig.wechat}
@@ -122,7 +122,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </div>
             <button
               onClick={copyWechat}
-              className="px-3 py-1.5 rounded-lg text-xs font-bold bg-[var(--brand)] text-[var(--brand-foreground)] flex items-center gap-1 shrink-0 active:scale-95 transition-transform cursor-pointer"
+              className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[var(--brand)] text-[var(--brand-foreground)] flex items-center gap-1 shrink-0 active:scale-95 transition-transform cursor-pointer shadow-xs border border-white/20"
             >
               {copiedWechat ? (
                 <>
@@ -139,7 +139,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <div className="flex items-center gap-2 pt-1">
             <a
               href={`mailto:${siteConfig.email}`}
-              className="flex-1 py-2.5 px-3 rounded-xl border border-[var(--border)] bg-[var(--background)] text-xs font-bold text-center flex items-center justify-center gap-1.5"
+              className="flex-1 py-2.5 px-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-xs font-bold text-center flex items-center justify-center gap-1.5 shadow-xs hover:bg-[var(--surface-muted)] transition-colors"
               style={{ color: "var(--text-primary)" }}
             >
               <Mail size={14} /> 发送邮件
@@ -147,7 +147,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             <Link
               href="/contact"
               onClick={onClose}
-              className="flex-1 py-2.5 px-3 rounded-xl bg-[var(--brand)] text-[var(--brand-foreground)] text-xs font-bold text-center flex items-center justify-center gap-1"
+              className="flex-1 py-2.5 px-3 rounded-xl bg-[var(--brand)] text-[var(--brand-foreground)] text-xs font-bold text-center flex items-center justify-center gap-1 shadow-sm hover:shadow-md transition-all border border-white/20"
             >
               预约 FDE 诊断 <ArrowRight size={14} />
             </Link>

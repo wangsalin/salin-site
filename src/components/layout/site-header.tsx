@@ -27,42 +27,44 @@ export function SiteHeader() {
         className={cn(
           "fixed top-0 left-0 right-0 z-[var(--z-sticky)] transition-all duration-300",
           scrolled
-            ? "border-b border-[var(--border)] backdrop-blur-md"
-            : "bg-transparent"
+            ? "border-b border-[var(--border)] bg-[var(--surface-glass-heavy)] backdrop-blur-2xl shadow-[var(--shadow-subtle)]"
+            : "bg-[var(--surface-glass-subtle)] backdrop-blur-md border-b border-transparent"
         )}
-        style={{
-          background: scrolled ? "color-mix(in srgb, var(--background) 85%, transparent)" : "transparent",
-        }}
       >
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 h-16 flex items-center justify-between">
-          {/* 左上角: 互联网科技公司风格 Brand Header Logo */}
+          {/* 左上角: 苹果风精工 Brand Header Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 group hover:opacity-90 transition-opacity"
+            className="flex items-center gap-3 group hover:opacity-95 transition-opacity"
           >
-            <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-[var(--border)] bg-slate-900 shadow-sm group-hover:scale-105 transition-transform shrink-0">
+            <div className="relative w-9 h-9 rounded-2xl overflow-hidden border border-[var(--border)] bg-slate-900/80 shadow-xs group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all shrink-0">
               <Image
                 src="/images/salin-brand-logo.png"
                 alt="Salin Brand Logo"
                 fill
                 className="object-cover"
-                sizes="32px"
+                sizes="36px"
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold tracking-wider text-sm text-[var(--text-primary)] leading-none flex items-center gap-1">
-                狗哥 <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+              <span className="font-extrabold tracking-wide text-sm text-[var(--text-primary)] leading-none flex items-center gap-1.5">
+                狗哥
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand)]" />
+                </span>
               </span>
-              <span className="text-[10px] font-mono text-[var(--text-secondary)] tracking-tight leading-tight mt-0.5">
-                Wang Salin · AI 实践
+              <span className="text-[10.5px] font-mono text-[var(--text-muted)] tracking-tight leading-tight mt-1">
+                Wang Salin · 商业与 AI 实践
               </span>
             </div>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-1 bg-[var(--surface)] p-1 rounded-full border border-[var(--border)] shadow-xs backdrop-blur-xl">
             {siteConfig.navLinks.map((link) => {
               const isExternal = link.href.startsWith("http");
+              const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
@@ -70,9 +72,9 @@ export function SiteHeader() {
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
                   className={cn(
-                    "px-3.5 py-2 rounded-full text-sm font-medium transition-colors",
-                    pathname === link.href
-                      ? "bg-[var(--surface-muted)] text-[var(--text-primary)] font-bold"
+                    "px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200",
+                    isActive
+                      ? "bg-[var(--surface-solid)] text-[var(--brand)] font-bold shadow-xs border border-[var(--border)]"
                       : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-muted)]"
                   )}
                 >
@@ -80,10 +82,10 @@ export function SiteHeader() {
                 </Link>
               );
             })}
-            <div className="mx-2 h-4 w-px bg-[var(--border)]" />
+            <div className="mx-1 h-3.5 w-px bg-[var(--border)]" />
             <Link
               href="/contact"
-              className="px-4 py-2 rounded-full text-sm font-bold bg-[var(--brand)] text-[var(--brand-foreground)] hover:opacity-90 transition-opacity shadow-sm"
+              className="px-4 py-1.5 rounded-full text-xs font-bold bg-[var(--brand)] text-[var(--brand-foreground)] hover:shadow-[0_4px_16px_rgba(16,185,129,0.3)] hover:-translate-y-0.2 active:translate-y-0 transition-all border border-white/20"
             >
               联系合作
             </Link>
@@ -91,16 +93,15 @@ export function SiteHeader() {
           </nav>
 
           {/* Mobile nav */}
-          <div className="flex md:hidden items-center gap-1">
+          <div className="flex md:hidden items-center gap-1.5">
             <ThemeToggle />
             <button
               onClick={() => setMobileOpen(true)}
               aria-label="打开菜单"
               aria-expanded={mobileOpen}
-              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--surface-muted)] transition-colors cursor-pointer"
-              style={{ color: "var(--text-secondary)" }}
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--surface)] border border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--surface-muted)] transition-colors cursor-pointer shadow-xs"
             >
-              <Menu size={22} />
+              <Menu size={20} />
             </button>
           </div>
         </div>

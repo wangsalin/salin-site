@@ -2,139 +2,274 @@
 
 @layer base {
   :root {
-    --background: #F6F5F0;
-    --foreground: #0F1412;
-    --surface: #FFFFFF;
-    --surface-muted: #ECE9E1;
-    --brand: #064E3B;
-    --brand-foreground: #F0FDF4;
-    --accent: #84CC16;
-    --accent-foreground: #0F1412;
-    --text-primary: #0F1412;
-    --text-secondary: #525B56;
-    --border: #121815;
-    --shadow-subtle: 4px 4px 0px 0px #121815;
-    --shadow-card: 6px 6px 0px 0px #121815;
+    /* 苹果温润灵动磨砂玻璃风 (Light Mode) */
+    --background: #F8FAF9;
+    --background-subtle: #F0F4F2;
+    --foreground: #0F1713;
+    
+    /* 玻璃表面与模糊 */
+    --surface: rgba(255, 255, 255, 0.78);
+    --surface-solid: #FFFFFF;
+    --surface-muted: rgba(240, 246, 243, 0.75);
+    --surface-glass-heavy: rgba(255, 255, 255, 0.88);
+    --surface-glass-subtle: rgba(255, 255, 255, 0.55);
+    
+    /* 品牌主色：极客翡翠绿 (Emerald) & 青柠绿点缀 (Lime) */
+    --brand: #059669;
+    --brand-light: #10B981;
+    --brand-dark: #047857;
+    --brand-foreground: #FFFFFF;
+    --brand-surface: rgba(5, 150, 105, 0.08);
+    
+    --accent: #65A30D;
+    --accent-light: #84CC16;
+    --accent-foreground: #0F1713;
+    --accent-surface: rgba(101, 163, 13, 0.1);
+
+    /* 文本色系 */
+    --text-primary: #0F1713;
+    --text-secondary: #4A5550;
+    --text-muted: #738079;
+    
+    /* 苹果微质感边框：极细高透光 + 内沿高光 */
+    --border: rgba(15, 23, 19, 0.08);
+    --border-hover: rgba(5, 150, 105, 0.3);
+    --border-glass: rgba(255, 255, 255, 0.8);
+    --glass-specular: inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+
+    /* 多层弥散柔光投影 */
+    --shadow-subtle: 0 4px 16px -2px rgba(15, 23, 19, 0.04), 0 1px 3px 0 rgba(15, 23, 19, 0.02), inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
+    --shadow-card: 0 10px 30px -4px rgba(15, 23, 19, 0.05), 0 4px 12px -2px rgba(15, 23, 19, 0.03), inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
+    --shadow-card-hover: 0 20px 40px -8px rgba(15, 23, 19, 0.08), 0 8px 20px -4px rgba(5, 150, 105, 0.12), inset 0 1px 0 0 rgba(255, 255, 255, 1);
+    --shadow-glow: 0 0 35px -5px rgba(16, 185, 129, 0.28);
+    
     --z-sticky: 50;
     --z-modal: 100;
   }
 
   .dark {
-    --background: #0B0E0C;
-    --foreground: #F2F1EB;
-    --surface: #141916;
-    --surface-muted: #1E2621;
+    /* 苹果温润灵动磨砂玻璃风 (Dark Mode - Deep Obsidian & Emerald Glow) */
+    --background: #080D0A;
+    --background-subtle: #0E1612;
+    --foreground: #F2F6F4;
+    
+    /* 玻璃表面与模糊 */
+    --surface: rgba(18, 27, 22, 0.72);
+    --surface-solid: #121A15;
+    --surface-muted: rgba(26, 38, 31, 0.65);
+    --surface-glass-heavy: rgba(18, 27, 22, 0.88);
+    --surface-glass-subtle: rgba(18, 27, 22, 0.45);
+    
+    /* 品牌主色：发光翡翠绿 (Emerald) & 荧光青柠 (Lime) */
     --brand: #10B981;
-    --brand-foreground: #0B0E0C;
+    --brand-light: #34D399;
+    --brand-dark: #059669;
+    --brand-foreground: #04120A;
+    --brand-surface: rgba(16, 185, 129, 0.12);
+    
     --accent: #A3E635;
-    --accent-foreground: #0B0E0C;
-    --text-primary: #F2F1EB;
-    --text-secondary: #A0AAA4;
-    --border: #2D3A32;
-    --shadow-subtle: 4px 4px 0px 0px #000000;
-    --shadow-card: 6px 6px 0px 0px #000000;
+    --accent-light: #BEF264;
+    --accent-foreground: #080D0A;
+    --accent-surface: rgba(163, 230, 53, 0.12);
+
+    /* 文本色系 */
+    --text-primary: #F2F6F4;
+    --text-secondary: #9AA79F;
+    --text-muted: #6B7970;
+    
+    /* 晶透微边框与高光 */
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(52, 211, 153, 0.4);
+    --border-glass: rgba(255, 255, 255, 0.14);
+    --glass-specular: inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+
+    /* 深色弥散光影 */
+    --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    --shadow-card: 0 12px 36px -8px rgba(0, 0, 0, 0.65), 0 4px 14px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.09);
+    --shadow-card-hover: 0 24px 50px -10px rgba(0, 0, 0, 0.8), 0 0 35px -8px rgba(16, 185, 129, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
+    --shadow-glow: 0 0 45px -5px rgba(16, 185, 129, 0.35);
   }
 
   html {
     scroll-behavior: smooth;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     background-color: var(--background);
     color: var(--text-primary);
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     overflow-x: hidden;
+    position: relative;
+  }
+
+  ::selection {
+    background-color: rgba(16, 185, 129, 0.25);
+    color: var(--text-primary);
   }
 }
 
-/* Neo-Brutalist Bento Grid Utilities */
+/* 苹果风温润毛玻璃卡片与微交互规范 (Apple Glassmorphic Design System) */
+.glass-panel {
+  background: var(--surface);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-subtle);
+  border-radius: 1.5rem;
+}
+
+.glass-card {
+  background: var(--surface);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  border-radius: 1.5rem;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover {
+  background: var(--surface);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  border-radius: 1.5rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* 兼容现有 bento-card 映射至极致柔和毛玻璃 */
 .bento-card {
   background: var(--surface);
-  border: 2px solid var(--border);
-  border-radius: 1.25rem;
-  box-shadow: var(--shadow-subtle);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  border-radius: 1.5rem;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-card-hover {
   background: var(--surface);
-  border: 2px solid var(--border);
-  border-radius: 1.25rem;
-  box-shadow: var(--shadow-subtle);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  border-radius: 1.5rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-card-hover:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: var(--shadow-card);
+  transform: translateY(-3px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-card-hover);
 }
 
-.bento-badge {
+/* 灵动胶囊徽章 (Glass Badge / Pill) */
+.bento-badge, .glass-pill {
   display: inline-flex;
-  items-center: center;
+  align-items: center;
   gap: 0.375rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.25rem 0.75rem;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.8rem;
   border-radius: 9999px;
-  border: 2px solid var(--border);
+  border: 1px solid var(--border);
   background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--text-primary);
-  box-shadow: 2px 2px 0px 0px var(--border);
-}
-
-/* 兼容现有 glass-card 类名，直接重映射至 Bento 高对比度 */
-.glass-card {
-  background: var(--surface);
-  border: 2px solid var(--border);
   box-shadow: var(--shadow-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-card-hover {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+.bento-badge:hover, .glass-pill:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
 }
 
-.glass-card-hover:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: var(--shadow-card);
+/* 灵动发光光晕背景辅助层 */
+.ambient-glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.45;
+  transition: opacity 0.5s ease;
 }
 
+.dark .ambient-glow {
+  opacity: 0.25;
+  filter: blur(100px);
+}
+
+/* 优雅文章阅读排版 */
 .prose-article {
   max-width: 68ch;
   color: var(--text-primary);
-  line-height: 1.8;
+  line-height: 1.85;
 }
 
 .prose-article h1, .prose-article h2, .prose-article h3 {
   color: var(--text-primary);
   font-weight: 800;
-  margin-top: 2rem;
+  letter-spacing: -0.02em;
+  margin-top: 2.25rem;
   margin-bottom: 1rem;
 }
 
 .prose-article p {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.35rem;
   color: var(--text-secondary);
 }
 
 .prose-article code {
   background: var(--surface-muted);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.375rem;
   font-size: 0.875em;
-  font-family: monospace;
+  font-family: ui-monospace, monospace;
+  border: 1px solid var(--border);
 }
 
 .prose-article pre {
-  background: #0f1412;
-  color: #f2f1eb;
-  padding: 1.25rem;
-  border-radius: 0.75rem;
+  background: #090e0b;
+  color: #e6ede8;
+  padding: 1.35rem;
+  border-radius: 1rem;
   overflow-x: auto;
-  margin-bottom: 1.5rem;
-  border: 2px solid var(--border);
+  margin-bottom: 1.75rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+/* 细腻磨砂滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 105, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.4);
 }

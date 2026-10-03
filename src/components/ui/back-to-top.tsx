@@ -31,8 +31,8 @@ export function BackToTop() {
       onClick={scrollToTop}
       aria-label="返回顶部"
       className={cn(
-        "fixed bottom-[calc(70px+env(safe-area-inset-bottom,0px))] sm:bottom-24 right-3.5 sm:right-7 z-40 p-2.5 sm:p-3 rounded-full bg-[var(--brand)] text-[var(--brand-foreground)] shadow-xl transition-all duration-300 hover:scale-110 cursor-pointer border border-[var(--brand-foreground)]/20",
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none"
+        "fixed bottom-[calc(70px+env(safe-area-inset-bottom,0px))] sm:bottom-24 right-3.5 sm:right-7 z-40 p-3 sm:p-3.5 rounded-full bg-[var(--surface)] text-[var(--brand)] backdrop-blur-2xl border border-[var(--border)] shadow-[var(--shadow-card)] transition-all duration-300 hover:border-[var(--brand)] hover:shadow-[0_8px_30px_rgba(16,185,129,0.3)] hover:-translate-y-1 active:translate-y-0 cursor-pointer",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8 pointer-events-none"
       )}
     >
       <ArrowUp size={18} className="sm:w-5 sm:h-5" />

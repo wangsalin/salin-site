@@ -300,15 +300,19 @@ export function HeroSection() {
       onClick={handleGroundClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-[100dvh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-[#c8cbe0] dark:bg-[#12141c] text-[#1c1d24] dark:text-[#f2f1eb] transition-colors cursor-crosshair select-none"
+      className="relative min-h-[100dvh] sm:min-h-screen flex flex-col justify-between overflow-hidden bg-[var(--background)] text-[var(--text-primary)] transition-colors cursor-crosshair select-none"
       style={{
         backgroundImage:
-          "radial-gradient(rgba(32, 33, 40, 0.13) 1.2px, transparent 1.2px)",
-        backgroundSize: "24px 24px",
+          "radial-gradient(var(--border) 1px, transparent 1px)",
+        backgroundSize: "28px 28px",
         perspective: "1200px",
       }}
       title="点击地面任意位置，让狗哥走动"
     >
+      {/* 苹果风柔和弥散发光背景环境层 (Ambient Luminous Emerald Mesh) */}
+      <div className="absolute top-[-10%] right-[10%] w-[55vw] h-[55vw] max-w-[650px] max-h-[650px] rounded-full bg-emerald-500/12 dark:bg-emerald-500/16 blur-[120px] pointer-events-none -z-0" />
+      <div className="absolute bottom-[5%] left-[5%] w-[45vw] h-[45vw] max-w-[500px] max-h-[500px] rounded-full bg-lime-500/10 dark:bg-lime-500/12 blur-[100px] pointer-events-none -z-0" />
+
       {/* 01. Giant Typographic Backdrop: "SALIN" */}
       {/* Desktop (md+) Horizontal Layout: starts cleanly to the right of Introduction (left-[34vw]), with character corridor */}
       <div
@@ -324,7 +328,7 @@ export function HeroSection() {
           className="w-full flex items-center justify-between"
         >
           <h2
-            className="w-full m-0 font-black text-[clamp(90px,16.5vw,320px)] leading-[0.82] text-[#fffdf5] dark:text-white/10 select-none drop-shadow-[0_4px_28px_rgba(90,95,130,0.20)] uppercase tracking-wider flex items-center justify-between"
+            className="w-full m-0 font-black text-[clamp(90px,16.5vw,320px)] leading-[0.82] text-emerald-950/[0.04] dark:text-white/[0.04] select-none uppercase tracking-wider flex items-center justify-between"
             style={{
               fontFamily:
                 'Impact, "Arial Black", "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
@@ -365,7 +369,7 @@ export function HeroSection() {
           className="flex flex-col items-center"
         >
           <h2
-            className="m-0 flex flex-col items-center gap-1 sm:gap-1.5 font-black text-[clamp(42px,11vw,60px)] leading-none text-[#fffdf5]/80 dark:text-white/15 select-none drop-shadow-[0_2px_14px_rgba(100,105,140,0.18)] uppercase tracking-tight"
+            className="m-0 flex flex-col items-center gap-1 sm:gap-1.5 font-black text-[clamp(42px,11vw,60px)] leading-none text-emerald-950/[0.04] dark:text-white/[0.05] select-none uppercase tracking-tight"
             style={{
               fontFamily:
                 'Impact, "Arial Black", "Arial Narrow", "Helvetica Neue", -apple-system, sans-serif',
@@ -390,9 +394,9 @@ export function HeroSection() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.65, ease: "easeOut" }}
             style={{ left: ripple.x, top: ripple.y }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full border-2 border-[#5867d2] pointer-events-none z-10 flex items-center justify-center"
+            className="absolute -translate-x-1/2 -translate-y-1/2 w-10 sm:w-12 h-10 sm:h-12 rounded-full border border-[var(--brand)] pointer-events-none z-10 flex items-center justify-center bg-[var(--brand)]/10"
           >
-            <Footprints size={13} className="text-[#5867d2] opacity-75" />
+            <Footprints size={13} className="text-[var(--brand)] opacity-85" />
           </motion.div>
         ))}
       </AnimatePresence>
@@ -428,14 +432,14 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 15, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.9 }}
-            className="absolute -top-10 sm:-top-16 z-30 px-2.5 py-1 sm:px-4 sm:py-2.5 bg-[#fffefa] text-[#202126] font-black text-[10.5px] sm:text-sm rounded-2xl border-2 border-[#202126] shadow-[3px_3px_0px_#202126] max-w-[170px] sm:max-w-[340px] text-center pointer-events-none right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2"
+            className="absolute -top-10 sm:-top-16 z-30 px-3 py-1.5 sm:px-4 sm:py-2.5 bg-[var(--surface-glass-heavy)] backdrop-blur-2xl text-[var(--text-primary)] font-bold text-[11px] sm:text-sm rounded-2xl border border-[var(--border)] shadow-[var(--shadow-card)] max-w-[180px] sm:max-w-[340px] text-center pointer-events-none right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2"
           >
             <div className="flex items-center justify-center gap-1.5">
-              <MessageSquareQuote size={13} className="text-[#5867d2] shrink-0" />
+              <MessageSquareQuote size={13} className="text-[var(--brand)] shrink-0" />
               <span className="leading-snug">{quoteText}</span>
             </div>
             {/* Speech bubble tail */}
-            <div className="absolute right-6 sm:right-auto sm:left-1/2 -bottom-2 sm:-translate-x-1/2 w-3 h-3 bg-[#fffefa] border-r-2 border-b-2 border-[#202126] rotate-45" />
+            <div className="absolute right-6 sm:right-auto sm:left-1/2 -bottom-1.5 sm:-translate-x-1/2 w-3 h-3 bg-[var(--surface-glass-heavy)] border-r border-b border-[var(--border)] rotate-45" />
           </motion.div>
         )}
 
@@ -546,7 +550,7 @@ export function HeroSection() {
         />
 
         {/* Playful prone status pill */}
-        <span className="absolute -top-4 sm:-top-6 right-3 sm:right-16 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#d5f085] text-[#1c1d24] text-[10px] sm:text-[11px] font-black border border-[#202126] shadow-[2px_2px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] pointer-events-none">
+        <span className="absolute -top-4 sm:-top-6 right-3 sm:right-16 px-3 py-1 rounded-full bg-[var(--surface-elevated)]/90 backdrop-blur-md text-[var(--brand)] text-[10px] sm:text-[11px] font-bold border border-[var(--brand)]/30 shadow-md shadow-emerald-500/10 pointer-events-none">
           趴下查看中 👀
         </span>
       </motion.div>
@@ -554,72 +558,72 @@ export function HeroSection() {
       {/* 03. Left Column: Editorial Headline & Tactile Stickers */}
       <div className="relative z-20 w-full max-w-[55vw] xs:max-w-[56vw] sm:max-w-[50vw] md:max-w-[540px] lg:max-w-[580px] xl:max-w-[620px] pl-3.5 sm:pl-8 lg:pl-16 pt-[84px] sm:pt-[110px] md:pt-28 lg:pt-32 pb-14 sm:pb-16 flex flex-col items-start gap-3 sm:gap-4 lg:gap-5 pointer-events-none">
         {/* Eyebrow badge */}
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/75 dark:bg-black/40 backdrop-blur-xs border border-[#202126]/20 dark:border-white/15 shadow-[1.5px_1.5px_0px_#202126] dark:shadow-none pointer-events-auto">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#5867d2] animate-pulse shrink-0" />
-          <span className="font-mono text-[9px] sm:text-[11px] font-black tracking-[0.16em] sm:tracking-[0.2em] text-[#3c4155] dark:text-[#a0a8c4] uppercase">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--surface)] backdrop-blur-xl border border-[var(--border)] shadow-xs pointer-events-auto">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand)] animate-pulse shrink-0" />
+          <span className="font-mono text-[9px] sm:text-[11px] font-bold tracking-[0.16em] sm:tracking-[0.2em] text-[var(--brand)] uppercase">
             AI APPLICATION & BUSINESS PRACTITIONER
           </span>
         </div>
 
         {/* Big Impact Headline: cleanly structured into two natural unbreakable phrases */}
-        <h1 className="text-[23px] xs:text-2xl sm:text-4xl md:text-[42px] lg:text-[50px] xl:text-[54px] font-black tracking-[-0.035em] text-[#16171d] dark:text-white leading-[1.18] sm:leading-[1.14] pointer-events-auto">
+        <h1 className="text-[23px] xs:text-2xl sm:text-4xl md:text-[42px] lg:text-[50px] xl:text-[54px] font-extrabold tracking-[-0.035em] text-[var(--text-primary)] leading-[1.18] sm:leading-[1.14] pointer-events-auto">
           <span className="block whitespace-nowrap">
-            你好，我是<strong className="text-[#0a0b0e] dark:text-white">狗哥。</strong>
+            你好，我是<strong className="text-[var(--brand)] font-black">狗哥。</strong>
           </span>
-          <span className="block whitespace-nowrap text-[#282a36] dark:text-[#e1e4f0] mt-0.5 sm:mt-1">
+          <span className="block whitespace-nowrap text-[var(--text-primary)] mt-0.5 sm:mt-1 opacity-90">
             欢迎来到我的现场。
           </span>
         </h1>
 
         {/* Subtitle description */}
-        <p className="text-[11.5px] sm:text-[14.5px] lg:text-[15.5px] text-[#343847] dark:text-[#b4bcd0] font-medium leading-[1.65] sm:leading-[1.75] max-w-[480px] pointer-events-auto">
+        <p className="text-[11.5px] sm:text-[14.5px] lg:text-[15.5px] text-[var(--text-secondary)] font-medium leading-[1.65] sm:leading-[1.75] max-w-[480px] pointer-events-auto">
           <span className="hidden sm:inline">用代码与实战经验探索 AI 落地。做过 6 年探店，亲自下场开过餐厅。把十多年摸爬滚打的商业死结，变成真正能跑通的 AI 实战工具。</span>
           <span className="sm:hidden">用代码与实战经验探索 AI 落地，把十多年实体商业摸爬滚打的死结，变成真正能跑通的 AI 实战工具。</span>
         </p>
 
-        {/* Tactile Stickers Stack */}
-        <div className="flex flex-col items-start gap-1.5 sm:gap-2.5 pt-0.5 sm:pt-1 pointer-events-auto" aria-label="狗哥身份与态度标签">
-          {/* Sticker 1: Lime Pill Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#d5f085] text-[#1c1d24] font-black text-[10px] sm:text-xs border-2 border-[#202126] shadow-[2.5px_2.5px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
-            <span className="truncate">身份卡 / 实体老兵 · 临沂</span>
+        {/* Apple-style Frosted Glass Floating Cards Stack */}
+        <div className="flex flex-col items-start gap-2 pt-1 pointer-events-auto" aria-label="狗哥身份与态度标签">
+          {/* Card 1: Emerald Pill Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface)] backdrop-blur-xl text-[var(--text-primary)] font-bold text-[10px] sm:text-xs border border-[var(--border)] shadow-xs hover:border-[var(--brand)] transition-all cursor-default">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand)] animate-pulse shrink-0" />
+            <span className="truncate">身份卡 · 实体创业老兵 · 山东临沂</span>
           </div>
 
-          {/* Sticker 2: White Paper Note (Tilted -1deg) */}
-          <div className="inline-block px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-[11px] sm:text-sm border-2 border-[#202126] shadow-[2.5px_2.5px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] transform -rotate-1 hover:rotate-0 transition-transform cursor-default">
+          {/* Card 2: Glass Note (Tilted -1deg) */}
+          <div className="inline-block px-4 py-2 sm:px-4.5 sm:py-2.5 rounded-2xl bg-[var(--surface)] backdrop-blur-xl text-[var(--text-primary)] font-bold text-[11px] sm:text-sm border border-[var(--border)] shadow-[var(--shadow-subtle)] hover:shadow-[var(--shadow-card)] hover:border-[var(--border-hover)] transform -rotate-1 hover:rotate-0 transition-all cursor-default">
             喜欢把「死磕现场」
-            <em className="not-italic text-[#4f5fc8] font-black underline decoration-[#c7ec73] decoration-2 ml-1">
+            <em className="not-italic text-[var(--brand)] font-extrabold ml-1 underline decoration-[var(--accent)] decoration-2">
               写成真的。
             </em>
           </div>
 
-          {/* Sticker 3: White Paper Note (Tilted +1deg) */}
-          <div className="inline-block px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-md bg-[#fffefa] text-[#202126] font-bold text-[11px] sm:text-sm border-2 border-[#202126] shadow-[2.5px_2.5px_0px_#202126] sm:shadow-[3px_3px_0px_#202126] transform rotate-1 hover:rotate-0 transition-transform cursor-default">
+          {/* Card 3: Glass Note (Tilted +1deg) */}
+          <div className="inline-block px-4 py-2 sm:px-4.5 sm:py-2.5 rounded-2xl bg-[var(--surface)] backdrop-blur-xl text-[var(--text-primary)] font-bold text-[11px] sm:text-sm border border-[var(--border)] shadow-[var(--shadow-subtle)] hover:shadow-[var(--shadow-card)] hover:border-[var(--border-hover)] transform rotate-1 hover:rotate-0 transition-all cursor-default">
             <span className="hidden sm:inline">主导 FoodOps 餐饮连锁 AI 落地，让好点子在现场活下去。</span>
             <span className="sm:hidden">
               主导 FoodOps 餐饮 AI
-              <em className="not-italic text-[#4f5fc8] font-black ml-1">现场落地。</em>
+              <em className="not-italic text-[var(--brand)] font-extrabold ml-1">现场落地。</em>
             </span>
           </div>
         </div>
 
         {/* Primary CTA Button */}
-        <div className="pt-1 sm:pt-2 pointer-events-auto">
+        <div className="pt-2 pointer-events-auto">
           <Link
             href="#projects"
-            className="group inline-flex items-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-6 sm:py-3.5 rounded-full bg-[#202126] hover:bg-[#d5f085] text-[#fffefa] hover:text-[#202126] font-black text-xs sm:text-sm border-2 border-[#202126] shadow-[3.5px_3.5px_0px_rgba(0,0,0,0.25)] hover:shadow-[4.5px_5px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
+            className="group inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3.5 rounded-full bg-[var(--brand)] hover:bg-[var(--brand-dark)] text-[var(--brand-foreground)] font-bold text-xs sm:text-sm shadow-[0_6px_24px_rgba(16,185,129,0.35)] hover:shadow-[0_10px_35px_rgba(16,185,129,0.5)] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer border border-white/20"
           >
             <span>进入我的工作台</span>
             <ArrowUpRight
-              size={14}
+              size={15}
               className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
             />
           </Link>
         </div>
       </div>
 
-      {/* 04. Right Column: Status pill & Interactive Game Hint */}
-      <div className="hidden sm:inline-flex items-center gap-2 absolute right-6 sm:right-12 top-1/2 -translate-y-1/2 z-20 px-3.5 py-1.5 rounded-full bg-white/75 dark:bg-[#1d202b]/80 backdrop-blur border border-[#202126]/30 text-xs font-bold text-[#292c3a] dark:text-white shadow-[2px_2px_0px_rgba(0,0,0,0.15)] pointer-events-auto">
+      {/* 04. Right Column: Status pill */}
+      <div className="hidden sm:inline-flex items-center gap-2.5 absolute right-6 sm:right-12 top-1/2 -translate-y-1/2 z-20 px-4 py-2 rounded-full bg-[var(--surface)] backdrop-blur-2xl border border-[var(--border)] text-xs font-bold text-[var(--text-primary)] shadow-xs pointer-events-auto">
         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
         <span>全国驻场 · 现场交付中</span>
       </div>
@@ -633,7 +637,7 @@ export function HeroSection() {
             setAutoRoam(!autoRoam);
             triggerQuote(autoRoam ? "“收到，那我先在原地站会儿~”" : "“巡店模式开启！四处溜达溜达~”");
           }}
-          className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/90 dark:bg-black/70 backdrop-blur border border-[#202126]/30 text-[10px] sm:text-[11px] font-black text-[#202126] dark:text-white shadow-[2px_2px_0px_#202126] hover:bg-[#d5f085] hover:text-[#202126] transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--surface)] backdrop-blur-xl border border-[var(--border)] text-[10px] sm:text-[11px] font-bold text-[var(--text-primary)] shadow-xs hover:border-[var(--brand)] hover:bg-[var(--surface-muted)] transition-all cursor-pointer"
           title={autoRoam ? "点击暂停自主走动" : "点击开启自主走动"}
         >
           {autoRoam ? (
@@ -651,8 +655,8 @@ export function HeroSection() {
           )}
         </button>
 
-        <div className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 dark:bg-black/40 backdrop-blur border border-[#202126]/20 text-[11px] font-bold text-[#434757] dark:text-[#a5adbf]">
-          <Sparkles size={11} className="text-[#5867d2]" />
+        <div className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--surface)]/70 backdrop-blur-md border border-[var(--border)] text-[11px] font-medium text-[var(--text-secondary)]">
+          <Sparkles size={11} className="text-[var(--brand)]" />
           <span>点击地面唤他走动 · 空格跳跃</span>
         </div>
 
@@ -663,7 +667,7 @@ export function HeroSection() {
             e.preventDefault();
             document.getElementById("credibility")?.scrollIntoView({ behavior: "smooth" });
           }}
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#d5f085] hover:bg-[#c6e86b] text-[#202126] border border-[#202126] text-[11px] font-black shadow-[2px_2px_0px_#202126] hover:-translate-y-0.5 transition-all cursor-pointer"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--surface-solid)] hover:bg-[var(--surface-muted)] text-[var(--brand)] border border-[var(--border)] text-[11px] font-bold shadow-xs hover:-translate-y-0.5 transition-all cursor-pointer"
           title="点击平滑滑动至下一分区"
         >
           <span>滑动进入下一区</span>
@@ -672,10 +676,10 @@ export function HeroSection() {
       </div>
 
       <div className="hidden lg:block absolute right-12 bottom-12 z-20 max-w-[240px] text-right pointer-events-auto">
-        <span className="text-[10px] font-mono font-black tracking-widest text-[#555d77] dark:text-[#8d96b0] uppercase block mb-1">
+        <span className="text-[10px] font-mono font-bold tracking-widest text-[var(--text-muted)] uppercase block mb-1">
           ABOUT THIS SPACE
         </span>
-        <p className="text-xs text-[#3f4559] dark:text-[#b4bccf] font-semibold leading-relaxed">
+        <p className="text-xs text-[var(--text-secondary)] font-medium leading-relaxed">
           七个章节，一点点认识我的经历、实战项目和正在探索的方向。
         </p>
       </div>

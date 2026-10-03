@@ -98,12 +98,12 @@ export function SectionNavigator() {
         aria-label="页面分区交互导航"
       >
         {/* 核心微型交互胶囊面板 */}
-        <div className="flex flex-col items-end gap-1.5 p-2 rounded-2xl bg-white/90 dark:bg-[#1a1d27]/90 backdrop-blur-md border-2 border-[#202126] shadow-[4px_4px_0px_#202126] transition-all">
+        <div className="flex flex-col items-end gap-1.5 p-2 rounded-2xl bg-[var(--surface)] backdrop-blur-2xl border border-[var(--border)] shadow-[var(--shadow-card)] transition-all">
           {/* 顶部：当前分区状态胶囊 */}
-          <div className="flex items-center gap-2 px-2.5 py-1 rounded-xl bg-[#202126] text-[#fffdf5] dark:bg-black text-[11px] font-black w-full justify-between">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[var(--brand)] text-[var(--brand-foreground)] text-[11px] font-bold w-full justify-between shadow-xs">
             <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#d5f085] animate-pulse" />
-              <span className="font-mono text-[10px] text-[#d5f085]">{currentSection.number}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+              <span className="font-mono text-[10px] opacity-90">{currentSection.number}</span>
               <span className="truncate max-w-[85px]">{currentSection.shortName}</span>
             </div>
             <div className="flex items-center gap-0.5">
@@ -111,7 +111,7 @@ export function SectionNavigator() {
                 type="button"
                 onClick={handlePrev}
                 disabled={activeIndex === 0}
-                className="w-5 h-5 rounded hover:bg-white/20 flex items-center justify-center disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed"
+                className="w-5 h-5 rounded hover:bg-white/20 flex items-center justify-center disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
                 title="上一区"
               >
                 <ChevronUp size={12} />
@@ -120,7 +120,7 @@ export function SectionNavigator() {
                 type="button"
                 onClick={handleNext}
                 disabled={activeIndex === SECTIONS.length - 1}
-                className="w-5 h-5 rounded hover:bg-white/20 flex items-center justify-center disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed"
+                className="w-5 h-5 rounded hover:bg-white/20 flex items-center justify-center disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
                 title="下一区"
               >
                 <ChevronDown size={12} />
@@ -129,7 +129,7 @@ export function SectionNavigator() {
           </div>
 
           {/* 章节垂直点选滑动轨 */}
-          <div className="flex flex-col gap-1 py-1 w-full">
+          <div className="flex flex-col gap-0.5 py-1 w-full">
             {SECTIONS.map((sec, idx) => {
               const isActive = sec.id === activeId;
               return (
@@ -138,10 +138,10 @@ export function SectionNavigator() {
                   type="button"
                   onClick={() => scrollToSection(sec.id)}
                   className={cn(
-                    "group relative flex items-center justify-end gap-2 px-2 py-1 rounded-lg text-left transition-all cursor-pointer",
+                    "group relative flex items-center justify-end gap-2 px-2.5 py-1.5 rounded-xl text-left transition-all cursor-pointer",
                     isActive
-                      ? "bg-[#d5f085] text-[#202126] font-black shadow-[1.5px_1.5px_0px_#202126]"
-                      : "hover:bg-black/5 dark:hover:bg-white/5 text-[#555d72] dark:text-[#a0a8be] font-bold"
+                      ? "bg-[var(--surface-solid)] text-[var(--brand)] font-bold shadow-xs border border-[var(--border)]"
+                      : "hover:bg-[var(--surface-muted)] text-[var(--text-secondary)] font-medium"
                   )}
                   title={`滑动至：${sec.number} ${sec.name}`}
                 >
@@ -157,8 +157,8 @@ export function SectionNavigator() {
                     className={cn(
                       "transition-all shrink-0 rounded-full",
                       isActive
-                        ? "w-4 h-1.5 bg-[#202126]"
-                        : "w-1.5 h-1.5 bg-[#202126]/30 dark:bg-white/30 group-hover:scale-125 group-hover:bg-[#202126]"
+                        ? "w-4 h-1.5 bg-[var(--brand)] shadow-[0_0_8px_rgba(16,185,129,0.5)]"
+                        : "w-1.5 h-1.5 bg-[var(--text-muted)]/40 group-hover:scale-125 group-hover:bg-[var(--brand)]"
                     )}
                   />
                 </button>
@@ -167,9 +167,9 @@ export function SectionNavigator() {
           </div>
 
           {/* 底部细滚动进度条 */}
-          <div className="w-full h-1 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
+          <div className="w-full h-1 bg-[var(--surface-muted)] rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#5867d2] transition-all duration-150"
+              className="h-full bg-[var(--brand)] transition-all duration-150"
               style={{ width: `${scrollProgress}%` }}
             />
           </div>
@@ -184,16 +184,16 @@ export function SectionNavigator() {
         )}
         aria-label="移动端分区导航"
       >
-        <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/95 dark:bg-[#161922]/95 backdrop-blur-md border-2 border-[#202126] shadow-[2.5px_2.5px_0px_#202126] text-[#202126] dark:text-white">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#d5f085] animate-pulse" />
-          <span className="font-mono text-[10px] font-black text-[#5867d2]">{currentSection.number}</span>
-          <span className="text-[11px] font-black truncate max-w-[85px]">{currentSection.shortName}</span>
-          <div className="h-3 w-px bg-[#202126]/20 mx-0.5" />
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--surface)] backdrop-blur-2xl border border-[var(--border)] shadow-[var(--shadow-card)] text-[var(--text-primary)]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand)] animate-pulse" />
+          <span className="font-mono text-[10px] font-bold text-[var(--brand)]">{currentSection.number}</span>
+          <span className="text-[11px] font-bold truncate max-w-[85px]">{currentSection.shortName}</span>
+          <div className="h-3 w-px bg-[var(--border)] mx-0.5" />
           <button
             type="button"
             onClick={handlePrev}
             disabled={activeIndex === 0}
-            className="w-5 h-5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center disabled:opacity-20 cursor-pointer"
+            className="w-5 h-5 rounded-full hover:bg-[var(--surface-muted)] flex items-center justify-center disabled:opacity-20 cursor-pointer"
             title="上一区"
           >
             <ChevronUp size={12} />
@@ -202,7 +202,7 @@ export function SectionNavigator() {
             type="button"
             onClick={handleNext}
             disabled={activeIndex === SECTIONS.length - 1}
-            className="w-5 h-5 rounded-full hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center disabled:opacity-20 cursor-pointer"
+            className="w-5 h-5 rounded-full hover:bg-[var(--surface-muted)] flex items-center justify-center disabled:opacity-20 cursor-pointer"
             title="下一区"
           >
             <ChevronDown size={12} />

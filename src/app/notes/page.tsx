@@ -23,28 +23,35 @@ export default function NotesPage() {
   );
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-24">
+    <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-20 md:py-28 overflow-hidden">
+      {/* Ambient background glows */}
+      <div 
+        className="pointer-events-none absolute -top-40 right-20 w-[500px] h-[500px] rounded-full blur-[140px] opacity-25 dark:opacity-15"
+        style={{ background: "radial-gradient(circle, var(--brand), transparent 70%)" }}
+        aria-hidden="true"
+      />
+
       <SectionHeading
         label="实践记录"
         title="写下来的思考，比说出来的更清晰。"
         description="这里记录真实的判断过程、踩坑经验和方法论，不是营销文章，也不是成功学。"
-        className="mb-16"
+        className="mb-14"
       />
 
-      {/* 分类 */}
-      <div className="flex flex-wrap gap-2 mb-12">
-        {noteCategories.map((cat) => (
+      {/* 分类胶囊 */}
+      <div className="flex flex-wrap gap-2.5 mb-14">
+        {noteCategories.map((cat, idx) => (
           <span
             key={cat.value}
-            className="text-sm px-3 py-1.5 rounded-full border border-[var(--border)] flex items-center gap-2"
-            style={{ color: "var(--text-secondary)" }}
+            className={`text-xs sm:text-sm px-4 py-2 rounded-full border transition-all duration-200 flex items-center gap-2 cursor-default ${
+              idx === 0
+                ? "border-[var(--brand)]/40 bg-[var(--brand)]/10 text-[var(--brand)] font-bold shadow-xs"
+                : "border-[var(--border-glass)] bg-[var(--surface-glass)] text-[var(--text-secondary)] backdrop-blur-md hover:border-[var(--brand)]/30 hover:text-[var(--text-primary)]"
+            }`}
           >
-            {cat.label}
+            <span>{cat.label}</span>
             {cat.value !== "all" && categoryCounts[cat.value] !== undefined && (
-              <span
-                className="text-xs w-4 h-4 rounded-full flex items-center justify-center"
-                style={{ background: "var(--surface-muted)" }}
-              >
+              <span className="text-[11px] font-mono px-1.5 py-0.2 rounded-full bg-[var(--surface-elevated)] text-[var(--text-muted)] border border-[var(--border-glass)]">
                 {categoryCounts[cat.value]}
               </span>
             )}
@@ -54,61 +61,51 @@ export default function NotesPage() {
 
       {/* 文章列表 */}
       {notes.length === 0 ? (
-        <div
-          className="py-20 text-center rounded-2xl border border-[var(--border)]"
-          style={{ background: "var(--surface)" }}
-        >
-          <p className="text-lg font-medium mb-2" style={{ color: "var(--text-primary)" }}>
+        <div className="py-20 text-center rounded-3xl border border-[var(--border-glass)] bg-[var(--surface-glass)] backdrop-blur-xl">
+          <p className="text-lg font-bold mb-2 text-[var(--text-primary)]">
             暂无文章
           </p>
-          <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+          <p className="text-sm text-[var(--text-secondary)]">
             内容正在整理中，敬请期待。
           </p>
         </div>
       ) : (
-        <div className="space-y-0">
+        <div className="space-y-4">
           {notes.map((note, i) => (
             <Link
               key={note.slug}
               href={`/notes/${note.slug}`}
-              className="group block py-8 border-b border-[var(--border)] -mx-2 sm:-mx-4 px-2 sm:px-4 rounded-xl hover:bg-[var(--surface-muted)] transition-colors"
+              className="group relative block p-6 sm:p-8 rounded-3xl border border-[var(--border-glass)] bg-[var(--surface-glass)] backdrop-blur-xl hover:border-[var(--brand)]/40 hover:bg-[var(--surface-elevated)]/80 hover:shadow-xl transition-all duration-300"
             >
-              <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+              <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
                 <span
-                  className="text-sm font-mono shrink-0 mt-1 hidden md:block"
-                  style={{ color: "var(--border)" }}
+                  className="text-lg font-mono font-black shrink-0 hidden md:block text-[var(--brand)]/30 group-hover:text-[var(--brand)] transition-colors"
                   aria-hidden="true"
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span
-                      className="text-xs px-2 py-0.5 rounded border border-[var(--border)]"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
+                  <div className="flex flex-wrap items-center gap-3 mb-3">
+                    <span className="text-[11px] font-mono font-semibold px-2.5 py-0.5 rounded-full border border-[var(--brand)]/20 bg-[var(--brand)]/10 text-[var(--brand)]">
                       {note.category}
                     </span>
-                    <span className="flex items-center gap-1 text-xs" style={{ color: "var(--text-secondary)" }}>
-                      <Clock size={11} />
+                    <span className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] font-mono">
+                      <Clock size={12} />
                       {note.readingTime}
                     </span>
-                    <span className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                    <span className="text-xs text-[var(--text-muted)] font-mono">
                       {note.publishedAt}
                     </span>
                   </div>
-                  <h2
-                    className="text-xl font-bold mb-2 group-hover:text-[var(--brand)] transition-colors"
-                    style={{ color: "var(--text-primary)" }}
-                  >
+                  <h2 className="text-lg sm:text-xl font-bold mb-2 text-[var(--text-primary)] group-hover:text-[var(--brand)] transition-colors tracking-tight">
                     {note.title}
                   </h2>
-                  <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)] font-normal line-clamp-2">
                     {note.description}
                   </p>
                 </div>
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1 hidden md:block" style={{ color: "var(--brand)" }}>
-                  <ArrowRight size={18} />
+                <div className="w-10 h-10 rounded-full border border-[var(--border-glass)] bg-[var(--surface)] text-[var(--text-secondary)] group-hover:text-[var(--brand)] group-hover:border-[var(--brand)]/30 group-hover:translate-x-1 flex items-center justify-center shrink-0 transition-all duration-300 hidden md:flex">
+                  <ArrowRight size={16} />
                 </div>
               </div>
             </Link>

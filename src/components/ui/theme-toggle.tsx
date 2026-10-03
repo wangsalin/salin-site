@@ -41,7 +41,7 @@ export function ThemeToggle() {
 
   if (isServer) {
     return (
-      <div className="w-9 h-9 rounded-full" style={{ background: "var(--surface-muted)" }} />
+      <div className="w-9 h-9 rounded-full border border-[var(--border-glass)] bg-[var(--surface-glass)]" />
     );
   }
 
@@ -49,10 +49,9 @@ export function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label={theme === "light" ? "切换到深色模式" : "切换到浅色模式"}
-      className="w-9 h-9 flex items-center justify-center rounded-full transition-colors hover:bg-[var(--surface-muted)]"
-      style={{ color: "var(--text-secondary)" }}
+      className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-glass)] bg-[var(--surface-glass)] backdrop-blur-md text-[var(--text-secondary)] hover:text-[var(--brand)] hover:border-[var(--brand)]/30 hover:bg-[var(--surface-elevated)] transition-all duration-200 shadow-2xs cursor-pointer"
     >
-      {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+      {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
     </button>
   );
 }

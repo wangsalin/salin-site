@@ -24,17 +24,15 @@ export function CopyButton({ text, label = "复制", className }: CopyButtonProp
       onClick={handleCopy}
       aria-label={copied ? "已复制" : `复制 ${label}`}
       className={cn(
-        "inline-flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg transition-all duration-150",
-        "border border-[var(--border)] hover:bg-[var(--surface-muted)]",
-        copied && "border-[var(--accent)] text-[var(--accent-foreground)] bg-[var(--accent)]",
+        "inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all duration-200 cursor-pointer shadow-2xs",
+        copied
+          ? "border border-emerald-500/40 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold"
+          : "border border-[var(--border-glass)] bg-[var(--surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--brand)]/30 hover:bg-[var(--surface-elevated)]",
         className
       )}
-      style={{
-        color: copied ? "var(--accent-foreground)" : "var(--text-secondary)",
-      }}
     >
-      {copied ? <Check size={14} /> : <Copy size={14} />}
-      {copied ? "已复制" : label}
+      {copied ? <Check size={13} className="text-emerald-500" /> : <Copy size={13} />}
+      <span>{copied ? "已复制" : label}</span>
     </button>
   );
 }
