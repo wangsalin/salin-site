@@ -286,7 +286,9 @@ export function ModernFounderHome() {
   // 方案 C: aperture (莱卡级电影机械光圈与镜头拉焦 · 电影导演级)
   // ============================================================
   type OpeningMode = "portal" | "warp" | "aperture";
+  type LetterFont = "monument" | "cinzel" | "extended";
   const [openingMode, setOpeningMode] = useState<OpeningMode>("portal");
+  const [letterFont, setLetterFont] = useState<LetterFont>("monument");
   const [isPlayingOpening, setIsPlayingOpening] = useState(true);
   const [openingStep, setOpeningStep] = useState<number>(0);
   const [warpYear, setWarpYear] = useState("2014");
@@ -297,22 +299,22 @@ export function ModernFounderHome() {
     setOpeningStep(0);
 
     if (mode === "portal") {
-      // 方案 A: 字母视窗穿透推焦 (Apple Portal)
+      // 方案 A: 字母视窗穿透推焦 (Apple Portal · 慢速从容呼吸推轨)
       const t1 = setTimeout(() => {
-        setOpeningStep(1); // 字母浮现与轮廓发光
+        setOpeningStep(1); // 1. SALIN 字母优雅升起点亮，金属光晕呼吸
         const t2 = setTimeout(() => {
-          setOpeningStep(2); // 镜头急剧推入穿透 (scale 1 -> 18, 穿过字母豁然开朗)
+          setOpeningStep(2); // 2. 镜头平缓起步加速穿透 (scale 1 -> 24, 1400ms 丝滑推轨)
           const t3 = setTimeout(() => {
-            setOpeningStep(3); // 巨幕大图完全定格
+            setOpeningStep(3); // 3. 巨幕全景完全定格，背景大图 4K 极锐拉焦
             const t4 = setTimeout(() => {
               setIsPlayingOpening(false);
-            }, 300);
+            }, 400);
             return () => clearTimeout(t4);
-          }, 650);
+          }, 1400);
           return () => clearTimeout(t3);
-        }, 550);
+        }, 1200); // 从容停留 1.2 秒，让用户清晰欣赏雕塑字体与副标题
         return () => clearTimeout(t2);
-      }, 50);
+      }, 60);
       return () => clearTimeout(t1);
     } else if (mode === "warp") {
       // 方案 B: 12 年时空飞梭与冲击波 (12Y Warp)
@@ -624,7 +626,7 @@ export function ModernFounderHome() {
               priority
               sizes="100vw"
               className={`object-cover object-center transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                isPlayingOpening && openingStep < 2 ? "scale-[1.05] blur-[6px] brightness-75" : "scale-100 blur-0 brightness-100"
+                isPlayingOpening && openingStep < 2 ? "scale-[1.06] blur-[8px] brightness-70" : "scale-100 blur-0 brightness-100"
               }`}
             />
             {/* 电影级侧向与底部暗角保护层，保证左侧排版极清阅读，同时右侧工作台与手办清晰透出 */}
@@ -1653,38 +1655,53 @@ export function ModernFounderHome() {
       {/* 🌟 开屏特效实验室 (All 3 Opening Schemes Preview & Studio) */}
       {/* ============================================================ */}
 
-      {/* 方案 A: 字母视窗穿透推焦 (Typographic Portal Dolly-In · Apple Keynote 级) */}
+      {/* 方案 A: 字母视窗穿透推焦 (Typographic Portal Dolly-In · Apple Keynote 慢速从容版) */}
       {openingMode === "portal" && (
         <div
-          className={`fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden transition-opacity duration-700 ${
+          className={`fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${
             openingStep >= 3 ? "opacity-0" : "opacity-100"
           }`}
         >
           {/* 深邃黑夜底衬 (推焦穿透瞬间消融) */}
           <div
-            className={`absolute inset-0 bg-[#040605] transition-opacity duration-700 ease-out ${
+            className={`absolute inset-0 bg-[#040605] transition-opacity duration-1000 ease-out ${
               openingStep >= 2 ? "opacity-0" : "opacity-100"
             }`}
           />
 
-          {/* 穿透中心主体：巨型 SALIN 字母雕塑 */}
+          {/* 穿透中心主体：巨型 SALIN 字母雕塑 (1400ms 电影级慢速推轨穿透) */}
           <div
-            className={`relative z-10 flex flex-col items-center justify-center transition-all duration-800 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            className={`relative z-10 flex flex-col items-center justify-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
               openingStep === 0
-                ? "scale-95 opacity-0"
+                ? "scale-90 opacity-0"
                 : openingStep === 1
                 ? "scale-100 opacity-100"
-                : "scale-[18] opacity-0"
+                : "scale-[24] opacity-0"
             }`}
           >
-            {/* 字母框与辉光轮廓 */}
-            <div className="relative font-black tracking-widest text-[24vw] sm:text-[18vw] leading-none select-none font-mono">
-              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white/80 to-emerald-400/80 drop-shadow-[0_0_80px_rgba(16,185,129,0.8)]">
+            {/* 字母框与辉光轮廓 (根据所选高级字体呈现不同艺术风骨) */}
+            <div
+              className={`relative font-black leading-none select-none uppercase transition-all duration-500 ${
+                letterFont === "monument"
+                  ? "font-monument tracking-[0.16em] text-[22vw] sm:text-[16vw]"
+                  : letterFont === "cinzel"
+                  ? "font-cinzel tracking-[0.24em] text-[20vw] sm:text-[15vw]"
+                  : "font-extended tracking-[0.32em] text-[18vw] sm:text-[14vw]"
+              }`}
+            >
+              {/* 主体光影质感：钛金白 ➔ 冰川翡翠 */}
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-emerald-300 drop-shadow-[0_0_90px_rgba(16,185,129,0.7)]">
                 SALIN
               </span>
+              {/* 高精度金属微光高光轮廓 */}
               <span
                 className="absolute inset-0 text-transparent pointer-events-none"
-                style={{ WebkitTextStroke: "2px rgba(255,255,255,0.9)" }}
+                style={{
+                  WebkitTextStroke:
+                    letterFont === "cinzel"
+                      ? "1.5px rgba(255,255,255,0.95)"
+                      : "2.5px rgba(255,255,255,0.9)",
+                }}
               >
                 SALIN
               </span>
@@ -1692,20 +1709,22 @@ export function ModernFounderHome() {
 
             {/* 字母下方仪式感光标 */}
             <div
-              className={`mt-2 flex items-center gap-3 font-mono text-xs sm:text-sm text-emerald-400 tracking-[0.3em] uppercase transition-all duration-500 ${
-                openingStep === 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              className={`mt-4 sm:mt-6 flex items-center gap-3 sm:gap-4 font-mono text-xs sm:text-sm text-emerald-400 tracking-[0.35em] uppercase transition-all duration-700 ${
+                openingStep === 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
             >
-              <span className="w-8 h-[1px] bg-emerald-400/60" />
-              <span>12Y FOUNDER & BUILDER · ODYSSEY</span>
-              <span className="w-8 h-[1px] bg-emerald-400/60" />
+              <span className="w-10 sm:w-16 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/80 to-transparent" />
+              <span className="font-semibold text-white/90">
+                SALIN // 12-YEAR FOUNDER ODYSSEY
+              </span>
+              <span className="w-10 sm:w-16 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/80 to-transparent" />
             </div>
           </div>
 
           {/* 穿透瞬间的中央透镜光爆 (Aperture Flash) */}
           <div
-            className={`absolute w-[600px] h-[600px] rounded-full bg-radial from-emerald-300/40 via-emerald-500/15 to-transparent blur-3xl transition-all duration-700 ease-out pointer-events-none ${
-              openingStep === 2 ? "scale-150 opacity-100" : "scale-50 opacity-0"
+            className={`absolute w-[700px] h-[700px] rounded-full bg-radial from-emerald-300/40 via-emerald-500/15 to-transparent blur-3xl transition-all duration-1000 ease-out pointer-events-none ${
+              openingStep === 2 ? "scale-175 opacity-100" : "scale-50 opacity-0"
             }`}
           />
         </div>
@@ -1883,6 +1902,46 @@ export function ModernFounderHome() {
             <span>C. 电影光圈</span>
             {openingMode === "aperture" && <span className="text-[10px]">●</span>}
           </button>
+
+          {/* 方案 A 专属：3 款高定艺术字体实时切换 */}
+          {openingMode === "portal" && (
+            <div className="flex items-center gap-1 px-2 border-l border-white/20">
+              <span className="text-[10px] text-white/50 hidden md:inline">字体:</span>
+              <button
+                onClick={() => { setLetterFont("monument"); replayCurrentOpening(); }}
+                className={`px-2 py-1 rounded-lg text-[11px] transition-all cursor-pointer ${
+                  letterFont === "monument"
+                    ? "bg-emerald-400/25 text-emerald-300 font-bold border border-emerald-400/50"
+                    : "text-white/60 hover:text-white"
+                }`}
+                title="现代雕塑体（Syne Monument · 宽宏几何 · 推荐）"
+              >
+                现代雕塑体
+              </button>
+              <button
+                onClick={() => { setLetterFont("cinzel"); replayCurrentOpening(); }}
+                className={`px-2 py-1 rounded-lg text-[11px] transition-all cursor-pointer font-serif ${
+                  letterFont === "cinzel"
+                    ? "bg-emerald-400/25 text-emerald-300 font-bold border border-emerald-400/50"
+                    : "text-white/60 hover:text-white"
+                }`}
+                title="电影罗马碑刻体（Cinzel Serif · 经典锋芒）"
+              >
+                罗马碑刻
+              </button>
+              <button
+                onClick={() => { setLetterFont("extended"); replayCurrentOpening(); }}
+                className={`px-2 py-1 rounded-lg text-[11px] transition-all cursor-pointer ${
+                  letterFont === "extended"
+                    ? "bg-emerald-400/25 text-emerald-300 font-bold border border-emerald-400/50"
+                    : "text-white/60 hover:text-white"
+                }`}
+                title="宽屏先锋机械体（Plus Jakarta · 极宽气场）"
+              >
+                宽屏先锋
+              </button>
+            </div>
+          )}
 
           <button
             onClick={replayCurrentOpening}
