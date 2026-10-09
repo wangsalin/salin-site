@@ -743,298 +743,108 @@ const ServicesSection = () => {
   );
 };
 
-// 【图四优化】：补齐现场交互！换掉花草图片，使用 Salin 真实项目 3D 实景与实时推演器
+// 数字军火库单卡：纯粹、高级的扑克式物理层叠设计
 const Card = ({
   project,
   index,
   totalCards,
 }: {
-  project: any;
+  project: (typeof PROJECTS_DATA)[number];
   index: number;
   totalCards: number;
 }) => {
-  const trackRef = useRef(null);
-  // 精准卡片层叠物理算法：当当前卡片到达粘滞吸附点后，随着向下滚动，在下一张卡片滑上来的过程中顺滑微缩放
+  const cardRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start start", "end start"],
+    target: cardRef,
+    offset: ["start end", "start start"],
   });
 
-  // 当前卡片在后续卡片滑过时从 1 缩放到 0.94，呈现真实的扑克物理叠层效果
+  // 优雅物理层叠微缩放：卡片到达粘滞点后随滚动自然微缩放 (1 -> 0.94)，呈现极佳的空间纵深感
   const scale = useTransform(
     scrollYProgress,
     [0, 1],
-    [1, 1 - (totalCards - 1 - index) * 0.045]
+    [1, 1 - (totalCards - 1 - index) * 0.035]
   );
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.9, 1],
-    [1, 0.9, index === totalCards - 1 ? 1 : 0.6]
-  );
-
-  // 饿狸 AI 模拟交互状态
-  const [activeEliPrompt, setActiveEliPrompt] = useState(0);
-  const [showEliSimulator, setShowEliSimulator] = useState(false);
-
-  // Salin UI 命令复制
-  const [copiedCmd, setCopiedCmd] = useState(false);
-
-  // 狗哥资源库分类选中
-  const [activeGougeCategory, setActiveGougeCategory] = useState(0);
-
-  const handleCopyCommand = () => {
-    if (project.command) {
-      navigator.clipboard.writeText(project.command);
-      setCopiedCmd(true);
-      setTimeout(() => setCopiedCmd(false), 2000);
-    }
-  };
 
   return (
     <div
-      ref={trackRef}
-      className="relative w-full h-[95vh] md:h-[110vh] flex items-start justify-center pb-12 md:pb-24"
+      ref={cardRef}
+      className="sticky h-[80vh] sm:h-[82vh] max-h-[740px] flex items-center justify-center w-full"
+      style={{ top: `${76 + index * 26}px` }}
     >
       <motion.div
-        style={{
-          scale,
-          opacity,
-          top: `${80 + index * 20}px`,
-        }}
-        className="sticky w-full max-w-5xl lg:max-w-6xl h-[70vh] md:h-[72vh] max-h-[640px] bg-[#0C0C0C] rounded-[28px] sm:rounded-[36px] md:rounded-[48px] border-2 border-[#D7E2EA] p-5 sm:p-6 md:p-8 flex flex-col justify-between gap-3 sm:gap-4 shadow-[0_-20px_50px_rgba(0,0,0,0.95)] overflow-hidden z-[10]"
+        style={{ scale }}
+        className="w-full max-w-6xl h-full bg-[#0C0C0C] rounded-[32px] sm:rounded-[44px] md:rounded-[56px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8 flex flex-col justify-between gap-4 md:gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.95)] overflow-hidden"
       >
         {/* 卡片头部 */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-3 shrink-0 border-b border-[#D7E2EA]/15 pb-3">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 sm:gap-4 shrink-0 border-b border-[#D7E2EA]/15 pb-3 sm:pb-4">
           <div className="flex items-center gap-4 sm:gap-6 text-left">
-            <span className="font-black text-[clamp(2.5rem,7vw,90px)] leading-none text-[#D7E2EA] font-mono">
+            <span className="font-black text-[clamp(2.4rem,6.5vw,84px)] leading-none text-[#D7E2EA] font-mono">
               {project.num}
             </span>
             <div className="flex flex-col">
               <span className="font-mono text-[#D7E2EA]/60 uppercase tracking-widest text-xs mb-1">
                 {project.label}
               </span>
-              <h3 className="font-bold text-[#D7E2EA] text-[clamp(1.4rem,2.8vw,2.4rem)] tracking-tight">
+              <h3 className="font-medium text-[#D7E2EA] text-[clamp(1.35rem,2.8vw,2.3rem)] tracking-tight">
                 {project.name}
               </h3>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto justify-between md:justify-end">
-            {/* 饿狸卡片专属交互：直接切换模拟器 */}
-            {project.type === "eli" && (
-              <button
-                onClick={() => setShowEliSimulator(!showEliSimulator)}
-                className="px-3.5 py-1.5 rounded-full border border-emerald-400 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                <span>{showEliSimulator ? "查看 3D 实景多联大图" : "⚡ 现场体验「问问饿狸」AI 决策"}</span>
-              </button>
-            )}
-
-            {/* Salin UI 专属交互：复制 CLI */}
-            {project.command && (
-              <button
-                onClick={handleCopyCommand}
-                className="px-3 py-1.5 rounded-full border border-emerald-400/40 bg-emerald-500/10 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5"
-              >
-                {copiedCmd ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                <span>{copiedCmd ? "已复制命令" : "复制 CLI 命令"}</span>
-              </button>
-            )}
-
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border-2 border-[#D7E2EA] px-5 py-1.5 uppercase tracking-widest text-xs text-[#D7E2EA] transition-all hover:bg-[#D7E2EA] hover:text-[#0C0C0C] font-mono font-bold whitespace-nowrap inline-flex items-center gap-1"
-            >
-              <span>Live Project</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          </div>
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border-2 border-[#D7E2EA] px-6 py-2 uppercase tracking-widest text-xs sm:text-sm text-[#D7E2EA] transition-all hover:bg-[#D7E2EA] hover:text-[#0C0C0C] font-mono font-medium whitespace-nowrap inline-flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+          >
+            <span>Live Project</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
         </div>
 
-        {/* 卡片主视窗：【真实项目大图】 与 【深度交互】 */}
-        {project.type === "eli" && showEliSimulator ? (
-          // 饿狸深度交互：现场「问问饿狸」AI 决策舱
-          <div className="flex-1 flex flex-col justify-between rounded-[24px] sm:rounded-[36px] bg-white/[0.03] border border-emerald-500/40 p-4 sm:p-6 text-left space-y-3.5">
-            <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
-              <span className="font-mono text-xs text-emerald-400 font-bold flex items-center gap-2">
-                <Bot className="w-4 h-4" />
-                现场推演舱 · 实体餐饮 12 年一线实战方法论打包
-              </span>
-              <span className="font-mono text-[11px] text-white/50">用时 0.4s · 真实餐饮解决方案</span>
-            </div>
-
-            {/* 3 个实战问题标签 */}
-            <div className="flex flex-wrap gap-2">
-              {ELI_PROMPTS.map((p, idx) => (
-                <button
-                  key={p.id}
-                  onClick={() => setActiveEliPrompt(idx)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
-                    activeEliPrompt === idx
-                      ? "bg-emerald-500 text-black font-bold shadow-[0_0_15px_rgba(16,185,129,0.5)]"
-                      : "bg-white/[0.06] hover:bg-white/10 text-white/70 hover:text-white border border-white/10"
-                  }`}
-                >
-                  {p.label}
-                </button>
-              ))}
-            </div>
-
-            {/* AI 策略回答卡 */}
-            <div className="p-4 rounded-2xl bg-black/75 border border-emerald-500/30 space-y-2.5 font-sans">
-              <div className="text-xs font-mono text-emerald-400 font-bold">
-                💡 【{ELI_PROMPTS[activeEliPrompt].tag}】实操策略：
-              </div>
-              <div className="text-sm text-white/95 leading-relaxed font-medium">
-                {ELI_PROMPTS[activeEliPrompt].response.strategy}
-              </div>
-              <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 font-mono text-xs text-emerald-300 leading-relaxed whitespace-pre-line">
-                {ELI_PROMPTS[activeEliPrompt].response.copy}
-              </div>
-              <div className="flex flex-wrap items-center justify-between pt-2 border-t border-white/10 font-mono text-xs text-white/60 gap-2">
-                <span>📈 {ELI_PROMPTS[activeEliPrompt].response.metric}</span>
-                <a
-                  href="https://youeli.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-emerald-400 hover:text-emerald-300 font-bold inline-flex items-center gap-1"
-                >
-                  前往 youeli.com 完整体验 ↗
-                </a>
-              </div>
-            </div>
-          </div>
-        ) : (
-          // 真实项目多联实景截图 (彻底清除花草等不相干图片！)
-          <div className="flex flex-col md:flex-row gap-3.5 flex-1 overflow-hidden">
-            <div className="flex flex-col gap-3.5 w-full md:w-[40%] h-full">
-              <div className="relative w-full rounded-[20px] sm:rounded-[30px] md:rounded-[36px] overflow-hidden border border-white/15 h-[140px] sm:h-[180px] md:h-[210px] group">
-                <img
-                  src={project.img1}
-                  alt={`${project.name} 真实截图 1`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                <div className="absolute bottom-2.5 left-3 font-mono text-[10px] text-emerald-300 bg-black/80 px-2 py-0.5 rounded border border-white/10">
-                  {project.type === "eli"
-                    ? "实操工作台"
-                    : project.type === "salin-ui"
-                    ? "组件库交互"
-                    : "商家服务实录"}
-                </div>
-              </div>
-
-              <div className="relative w-full rounded-[20px] sm:rounded-[30px] md:rounded-[36px] overflow-hidden border border-white/15 h-[150px] sm:h-[190px] md:h-[240px] flex-1 group">
-                <img
-                  src={project.img2}
-                  alt={`${project.name} 真实截图 2`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                <div className="absolute bottom-2.5 left-3 font-mono text-[10px] text-emerald-300 bg-black/80 px-2 py-0.5 rounded border border-white/10">
-                  {project.type === "eli"
-                    ? "后厨实战联动"
-                    : project.type === "salin-ui"
-                    ? "开发工作台"
-                    : "同城自媒体资产"}
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full md:w-[60%] h-full relative rounded-[20px] sm:rounded-[30px] md:rounded-[36px] overflow-hidden border border-white/15 min-h-[220px] group">
+        {/* 卡片主视窗：非对称三联真实项目大图 */}
+        <div className="flex flex-col md:flex-row gap-3.5 sm:gap-4 h-full overflow-hidden flex-1 min-h-0">
+          {/* 左侧两联（小图） */}
+          <div className="flex md:flex-col gap-3.5 sm:gap-4 w-full md:w-[42%] h-[42%] md:h-full min-h-0">
+            <div className="w-1/2 md:w-full h-full md:h-[48%] rounded-[20px] sm:rounded-[28px] md:rounded-[36px] overflow-hidden border border-white/10 group bg-neutral-900 min-h-0">
               <img
-                src={project.img3}
-                alt={`${project.name} 全景主图`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                src={project.img1}
+                alt={`${project.name} 场景 1`}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
-
-              {/* 右侧大图内部覆盖的专属高阶交互卡 */}
-              {project.type === "gouge-hub" && (
-                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-2xl bg-black/85 border border-white/15 backdrop-blur-md">
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    {GOUGE_CATEGORIES.map((cat, idx) => (
-                      <button
-                        key={cat.id}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setActiveGougeCategory(idx);
-                        }}
-                        className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
-                          activeGougeCategory === idx
-                            ? "bg-amber-400 text-black font-bold"
-                            : "bg-white/[0.05] text-white/70 hover:text-white"
-                        }`}
-                      >
-                        {cat.label} ({cat.count})
-                      </button>
-                    ))}
-                  </div>
-                  <p className="text-xs text-white/80 font-sans line-clamp-1">
-                    {GOUGE_CATEGORIES[activeGougeCategory].desc}
-                  </p>
-                </div>
-              )}
-
-              {project.type === "salin-ui" && (
-                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-2xl bg-black/85 border border-emerald-500/30 backdrop-blur-md flex items-center justify-between">
-                  <div className="font-mono text-xs text-emerald-300 truncate mr-2">
-                    <span className="text-emerald-500 mr-1.5">$</span>
-                    <code>npx salin-ui add @mcp/server</code>
-                  </div>
-                  <button
-                    onClick={handleCopyCommand}
-                    className="shrink-0 px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-bold text-xs inline-flex items-center gap-1 cursor-pointer transition-colors"
-                  >
-                    {copiedCmd ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                    <span>{copiedCmd ? "已复制" : "复制命令"}</span>
-                  </button>
-                </div>
-              )}
-
-              {project.type === "eli" && (
-                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-2xl bg-black/85 border border-emerald-500/30 backdrop-blur-md flex items-center justify-between">
-                  <div className="text-xs text-white/90 font-medium font-sans">
-                    “餐饮营销没思路，问问饿狸。”
-                  </div>
-                  <button
-                    onClick={() => setShowEliSimulator(true)}
-                    className="shrink-0 px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-bold text-xs inline-flex items-center gap-1 cursor-pointer transition-colors"
-                  >
-                    <Sparkles className="w-3 h-3" />
-                    <span>现场试玩 ↗</span>
-                  </button>
-                </div>
-              )}
+            </div>
+            <div className="w-1/2 md:w-full h-full md:h-[48%] rounded-[20px] sm:rounded-[28px] md:rounded-[36px] overflow-hidden border border-white/10 group bg-neutral-900 min-h-0 flex-1">
+              <img
+                src={project.img2}
+                alt={`${project.name} 场景 2`}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
             </div>
           </div>
-        )}
 
-        {/* 卡片底部简要描述 */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-1 text-left gap-2 border-t border-white/10">
-          <p className="text-xs sm:text-sm text-[#D7E2EA]/75 font-sans max-w-2xl leading-relaxed">
-            {project.desc}
-          </p>
-          <span className="font-mono text-xs text-emerald-400 font-bold shrink-0">
-            [ {project.badge} ]
-          </span>
+          {/* 右侧主宽画幅大图 */}
+          <div className="w-full md:w-[58%] h-[58%] md:h-full min-h-0 rounded-[20px] sm:rounded-[28px] md:rounded-[36px] overflow-hidden border border-white/10 group bg-neutral-900">
+            <img
+              src={project.img3}
+              alt={`${project.name} 全景大图`}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            />
+          </div>
         </div>
       </motion.div>
     </div>
   );
 };
 
-// 数字军火库 (Arsenal)
+// 数字军火库 (Arsenal) - 纯粹、优雅的多卡物理层叠交互
 const ProjectsSection = () => {
   return (
     <section
       id="projects"
-      className="bg-[#0C0C0C] rounded-t-[36px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 relative px-5 sm:px-8 md:px-12 py-20 pb-36 w-full select-none"
+      className="bg-[#0C0C0C] rounded-t-[36px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 relative px-4 sm:px-8 md:px-10 py-20 pb-44 w-full select-none"
     >
-      <h2 className="hero-heading font-black uppercase text-center text-[clamp(2.8rem,11vw,150px)] mb-12 sm:mb-18 md:mb-24 leading-none">
+      <h2 className="hero-heading font-black uppercase text-center text-[clamp(2.8rem,11vw,150px)] mb-16 sm:mb-20 md:mb-28 leading-none">
         Arsenal
       </h2>
 
