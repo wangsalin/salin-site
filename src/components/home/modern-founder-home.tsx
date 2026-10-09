@@ -155,6 +155,7 @@ const ODYSSEY_STAGES = [
     badgeTitle: "2014 饿鱼图腾 · 舌尖上的临沂",
     stamp: "LINYI // 2014.04.01 FOUNDING ODYSSEY",
     accent: "from-amber-400 to-emerald-400",
+    watermark: "2014 ORIGIN",
   },
   {
     id: "2014-2021-service",
@@ -175,6 +176,7 @@ const ODYSSEY_STAGES = [
     badgeTitle: "舌尖上的临沂 · 官方印鉴",
     stamp: "LINYI // 2017.06.18 HOTPOT EXPEDITION",
     accent: "from-emerald-400 to-teal-300",
+    watermark: "2,000+ MERCHANTS",
   },
   {
     id: "2021-2025-practice",
@@ -195,6 +197,7 @@ const ODYSSEY_STAGES = [
     badgeTitle: "一线后厨实操物证",
     stamp: "IN THE TRENCHES // 2021-2025 KITCHEN OPS",
     accent: "from-orange-400 to-amber-300",
+    watermark: "IN THE TRENCHES",
   },
   {
     id: "2026-rebirth",
@@ -215,6 +218,7 @@ const ODYSSEY_STAGES = [
     badgeTitle: "饿狸 ELI · 2026 实体 AI 武器",
     stamp: "COGNITIVE REBIRTH // 2026 AI × MERCHANTS",
     accent: "from-emerald-300 to-cyan-300",
+    watermark: "2026 AI REBIRTH",
   },
 ];
 
@@ -630,10 +634,74 @@ export function ModernFounderHome() {
           id="slide-1"
           className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-between px-6 sm:px-14 lg:px-20 2xl:px-28 pt-18 pb-6 bg-gradient-to-b from-[#050806] via-[#070d09] to-[#050806]"
         >
-          {/* 取景器四角标记 */}
-          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/30 select-none z-20">[02]</div>
-          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/30 select-none z-20">
-            THE 12-YEAR ARCHIVE // 2014—2026
+          {/* ============================================================ */}
+          {/* 背景层次化质感增强：测绘网格 + 命运曲率光弧 + 动态纪元光晕 + 水印 */}
+          {/* ============================================================ */}
+          
+          {/* 1. 80px 极简工程测绘微网格 (避免纯黑空洞) */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.05] z-0 select-none"
+            style={{
+              backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.2) 1px, transparent 1px)`,
+              backgroundSize: "80px 80px",
+            }}
+          />
+
+          {/* 2. 十二年命运曲率轨迹线 (SVG 渐变流动虚线光弧) */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-25 select-none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M -100,550 C 350,180 850,650 1920,220"
+              fill="none"
+              stroke="url(#odyssey-curve-grad)"
+              strokeWidth="1.5"
+              strokeDasharray="6 8"
+            />
+            <defs>
+              <linearGradient id="odyssey-curve-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.4" />
+                <stop offset="30%" stopColor="#10b981" stopOpacity="0.7" />
+                <stop offset="70%" stopColor="#f97316" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#10b981" stopOpacity="0.8" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          {/* 3. 随 4 大纪元联动的环境漫反射氛围光晕 (Ambient Aura) */}
+          <div
+            className={`absolute w-[65vw] h-[50vh] left-[18%] top-[20%] rounded-full blur-[140px] pointer-events-none transition-all duration-700 z-0 ${
+              activeOdysseyStage === 0
+                ? "bg-amber-500/[0.08]"
+                : activeOdysseyStage === 1
+                ? "bg-emerald-500/[0.08]"
+                : activeOdysseyStage === 2
+                ? "bg-orange-500/[0.07]"
+                : "bg-emerald-400/[0.1]"
+            }`}
+          />
+
+          {/* 4. 随当前纪元动态联动的巨型天际线建筑文字水印 (全屏铺开) */}
+          <div className="absolute inset-x-0 top-[6%] sm:top-[7%] z-0 flex items-center justify-start overflow-hidden pointer-events-none select-none pl-6 sm:pl-14 lg:pl-20">
+            <span
+              key={ODYSSEY_STAGES[activeOdysseyStage].id}
+              className="text-[20vw] sm:text-[18vw] font-black text-transparent bg-clip-text bg-gradient-to-r from-white/[0.14] via-white/[0.04] to-transparent whitespace-nowrap font-mono select-none uppercase drop-shadow-sm animate-in fade-in duration-500"
+              style={{
+                WebkitTextStroke: "1px rgba(255, 255, 255, 0.12)",
+                letterSpacing: "0.02em",
+              }}
+            >
+              {ODYSSEY_STAGES[activeOdysseyStage].watermark}
+            </span>
+          </div>
+
+          {/* 5. 边缘测绘十字与档案流水标牌 (dsgnbyhl.com 取景器美学) */}
+          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/30 select-none z-20 flex items-center gap-2">
+            <span>[02]</span>
+            <span className="hidden sm:inline text-white/20">|</span>
+            <span className="hidden sm:inline text-[10px] text-white/30">STREAM // 4,380 DAYS FOUNDING ARCHIVE</span>
+          </div>
+          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/30 select-none z-20 flex items-center gap-2">
+            <span className="hidden sm:inline text-[10px] text-emerald-400/50">PROVENANCE: LINYI · LOCAL COMMERCE</span>
+            <span>THE 12-YEAR ARCHIVE // 2014—2026</span>
           </div>
 
           {/* 顶栏：全屏横向动态穿梭时光轨 (4 大阶段交互药丸切换器) */}
