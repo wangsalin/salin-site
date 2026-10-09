@@ -48,8 +48,8 @@ export function PlanetRender({
           <div
             className="absolute pointer-events-none rounded-full border border-cyan-400/30 border-dashed animate-spin-slow"
             style={{
-              width: size * 1.3,
-              height: size * 1.3,
+              width: size * 1.35,
+              height: size * 1.35,
               transform: "rotate(28deg)",
             }}
           >
@@ -61,7 +61,7 @@ export function PlanetRender({
             </div>
           </div>
 
-          {/* Earth Body (Pure Transparent PNG with Spherical Lighting) */}
+          {/* Earth Body (Pure Transparent PNG with Spherical Lighting & Continuous Axial Spin) */}
           <div
             className="relative rounded-full overflow-hidden flex items-center justify-center filter drop-shadow-[0_0_50px_rgba(56,189,248,0.45)] drop-shadow-[0_0_100px_rgba(14,165,233,0.25)]"
             style={{
@@ -70,20 +70,31 @@ export function PlanetRender({
               ...orbTransformStyle,
             }}
           >
-            {/* Transparent PNG Texture */}
-            <img
-              src="/planets/earth.png"
-              alt="Photorealistic Transparent Earth"
-              className="w-full h-full object-contain select-none pointer-events-none"
-              draggable={false}
+            {/* CONTINUOUSLY ROTATING PLANET TEXTURE */}
+            <div className="w-full h-full rounded-full overflow-hidden animate-planet-spin">
+              <img
+                src="/planets/earth.png"
+                alt="Photorealistic Rotating Earth"
+                className="w-full h-full object-contain scale-105 select-none pointer-events-none"
+                draggable={false}
+              />
+            </div>
+
+            {/* Atmosphere Cloud Sheen Layer (Rotating at Differential Velocity) */}
+            <div
+              className="absolute inset-0 rounded-full pointer-events-none animate-cloud-drift opacity-40 mix-blend-screen"
+              style={{
+                background:
+                  "radial-gradient(circle at 40% 40%, rgba(255,255,255,0.4) 0%, transparent 60%)",
+              }}
             />
 
-            {/* Directional Sunlight Terminator & 3D Spherical Volume */}
+            {/* Directional Sunlight Terminator & 3D Spherical Volume (Fixed relative to light source) */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(circle at 35% 28%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 38%, rgba(0,0,0,0.4) 68%, rgba(2,6,23,0.92) 100%)",
+                  "radial-gradient(circle at 35% 28%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 38%, rgba(0,0,0,0.42) 68%, rgba(2,6,23,0.95) 100%)",
                 boxShadow: "inset -25px -25px 60px rgba(0,0,0,0.92)",
               }}
             />
@@ -116,7 +127,7 @@ export function PlanetRender({
             </div>
           </div>
 
-          {/* Moon Body (Pure Transparent PNG) */}
+          {/* Moon Body (Pure Transparent PNG with Axial Rotation) */}
           <div
             className="relative rounded-full overflow-hidden flex items-center justify-center filter drop-shadow-[0_0_40px_rgba(226,232,240,0.35)] drop-shadow-[0_0_80px_rgba(148,163,184,0.18)]"
             style={{
@@ -125,13 +136,15 @@ export function PlanetRender({
               ...orbTransformStyle,
             }}
           >
-            {/* Transparent PNG Texture */}
-            <img
-              src="/planets/moon.png"
-              alt="Photorealistic Transparent Moon"
-              className="w-full h-full object-contain select-none pointer-events-none"
-              draggable={false}
-            />
+            {/* CONTINUOUSLY ROTATING MOON TEXTURE */}
+            <div className="w-full h-full rounded-full overflow-hidden animate-planet-spin-slow">
+              <img
+                src="/planets/moon.png"
+                alt="Photorealistic Rotating Moon"
+                className="w-full h-full object-contain scale-105 select-none pointer-events-none"
+                draggable={false}
+              />
+            </div>
 
             {/* Stark Solar Terminator Shading */}
             <div
@@ -172,7 +185,7 @@ export function PlanetRender({
             </div>
           </div>
 
-          {/* Mars Body (Pure Transparent PNG) */}
+          {/* Mars Body (Pure Transparent PNG with Axial Rotation) */}
           <div
             className="relative rounded-full overflow-hidden flex items-center justify-center filter drop-shadow-[0_0_50px_rgba(239,68,68,0.45)] drop-shadow-[0_0_110px_rgba(185,28,28,0.25)]"
             style={{
@@ -181,13 +194,15 @@ export function PlanetRender({
               ...orbTransformStyle,
             }}
           >
-            {/* Transparent PNG Texture */}
-            <img
-              src="/planets/mars.png"
-              alt="Photorealistic Transparent Mars"
-              className="w-full h-full object-contain select-none pointer-events-none"
-              draggable={false}
-            />
+            {/* CONTINUOUSLY ROTATING MARS TEXTURE */}
+            <div className="w-full h-full rounded-full overflow-hidden animate-planet-spin">
+              <img
+                src="/planets/mars.png"
+                alt="Photorealistic Rotating Mars"
+                className="w-full h-full object-contain scale-105 select-none pointer-events-none"
+                draggable={false}
+              />
+            </div>
 
             {/* Martian Spherical Shading & Canyons Contrast */}
             <div
@@ -225,7 +240,7 @@ export function PlanetRender({
             <div className="absolute bottom-8 left-8 w-2 h-2 rounded-full bg-sky-200 shadow-[0_0_10px_#bae6fd]" />
           </div>
 
-          {/* Jupiter Body (Pure Transparent PNG) */}
+          {/* Jupiter Body (Pure Transparent PNG with Turbulent Axial Spin) */}
           <div
             className="relative rounded-full overflow-hidden flex items-center justify-center filter drop-shadow-[0_0_60px_rgba(249,115,22,0.45)] drop-shadow-[0_0_130px_rgba(194,65,12,0.22)]"
             style={{
@@ -234,13 +249,15 @@ export function PlanetRender({
               ...orbTransformStyle,
             }}
           >
-            {/* Transparent PNG Texture */}
-            <img
-              src="/planets/jupiter.png"
-              alt="Photorealistic Transparent Jupiter"
-              className="w-full h-full object-contain select-none pointer-events-none"
-              draggable={false}
-            />
+            {/* CONTINUOUSLY ROTATING JUPITER GAS BANDS */}
+            <div className="w-full h-full rounded-full overflow-hidden animate-planet-spin-reverse">
+              <img
+                src="/planets/jupiter.png"
+                alt="Photorealistic Rotating Jupiter"
+                className="w-full h-full object-contain scale-105 select-none pointer-events-none"
+                draggable={false}
+              />
+            </div>
 
             {/* Colossal Gas Giant Spherical Terminator */}
             <div
@@ -279,10 +296,13 @@ export function PlanetRender({
             }}
           />
 
-          {/* Saturn Body with Majestic Rings (Pure Transparent PNG with No Square Background!) */}
+          {/* Saturn Body with Majestic Rings (Pure Transparent PNG with Floating Space Motion) */}
           <div
-            className="relative w-full h-full flex items-center justify-center filter drop-shadow-[0_0_60px_rgba(234,179,8,0.4)] drop-shadow-[0_0_140px_rgba(202,138,4,0.2)]"
-            style={orbTransformStyle}
+            className="relative w-full h-full flex items-center justify-center filter drop-shadow-[0_0_60px_rgba(234,179,8,0.4)] drop-shadow-[0_0_140px_rgba(202,138,4,0.2)] animate-pulse"
+            style={{
+              ...orbTransformStyle,
+              animationDuration: "8s",
+            }}
           >
             {/* Transparent PNG Texture (Planet Globe + Tilted Rings Floating in Transparent Space!) */}
             <img
@@ -326,18 +346,20 @@ export function PlanetRender({
             }}
           />
 
-          {/* Black Hole Singularity Core (Pure Transparent PNG with Accretion Glow Floating in Space!) */}
+          {/* Black Hole Singularity Core (CONTINUOUS RELATIVISTIC ACCRETION VORTEX SPIN!) */}
           <div
-            className="relative w-full h-full flex items-center justify-center filter drop-shadow-[0_0_80px_rgba(245,158,11,0.7)] drop-shadow-[0_0_180px_rgba(180,83,9,0.4)]"
+            className="relative w-full h-full flex items-center justify-center filter drop-shadow-[0_0_90px_rgba(245,158,11,0.75)] drop-shadow-[0_0_200px_rgba(180,83,9,0.45)]"
             style={orbTransformStyle}
           >
-            {/* Transparent PNG Texture */}
-            <img
-              src="/planets/blackhole.png"
-              alt="Supermassive Black Hole Transparent"
-              className="w-full h-full object-contain select-none pointer-events-none animate-accretion"
-              draggable={false}
-            />
+            {/* Transparent PNG Texture Swirling in Relativistic Vortex */}
+            <div className="w-full h-full flex items-center justify-center animate-blackhole-vortex">
+              <img
+                src="/planets/blackhole.png"
+                alt="Supermassive Black Hole Transparent Vortex"
+                className="w-full h-full object-contain select-none pointer-events-none"
+                draggable={false}
+              />
+            </div>
 
             {/* Central Event Horizon Singularity (Total Light Trapping Core) */}
             <div

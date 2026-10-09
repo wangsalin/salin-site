@@ -14,29 +14,47 @@ import {
   Mail,
   RotateCcw,
   Zap,
-  Gauge,
-  Compass,
+  Radio,
+  Crosshair,
+  ShieldAlert,
+  Play,
 } from "lucide-react";
 
-const CELESTIAL_STATIONS = [
+interface CelestialStation {
+  id: string;
+  type: PlanetType;
+  name: string;
+  au: number;
+  kicker: string;
+  title: string;
+  subtitle: string;
+  tags: string[];
+  ctaLabel: string;
+  // Unique spatial approach vector (不确定从哪里出来)
+  approachVector: { enterX: number; enterY: number; exitX: number; exitY: number };
+  projectDetail: ProjectDetail;
+}
+
+const CELESTIAL_STATIONS: CelestialStation[] = [
   {
     id: "earth",
-    type: "earth" as PlanetType,
-    name: "地球 (EARTH // 母港)",
+    type: "earth",
+    name: "地球 (EARTH // 空间母港)",
     au: 0.0,
-    kicker: "MISSION LAUNCH // 启航坐标",
+    kicker: "MISSION LAUNCH // 空间母港",
     title: "汪狗哥 (Wang Salin)",
-    subtitle: "做过实体商业，踩过开店的坑，写过生产级代码。现在专注用 AI 架构赋能真实商业落地。",
-    tags: ["实体商业操盘", "AI 架构落地", "全栈交付"],
-    ctaLabel: "查阅个人坐标",
+    subtitle: "线下实体商业操盘 × 生产级系统架构。用 AI 架构赋能真实商业落地，交付客户愿意买单的生产力。",
+    tags: ["实体商业操盘", "AI 架构落地", "全栈工程交付"],
+    ctaLabel: "检阅个人坐标档案",
+    approachVector: { enterX: 0, enterY: 0, exitX: -240, exitY: -160 },
     projectDetail: {
       id: "salin-origin",
-      planetName: "地球母港",
+      planetName: "地球母港空间站",
       badge: "ORIGIN · 商业与 AI 操盘手",
       title: "汪狗哥 (Wang Salin)",
       tagline: "实体商业 x 技术研发 x AI 生产力落地",
       description:
-        "这里是星际航程的母港。我是汪狗哥，具有线下实体开店经验和多年全栈架构能力。不聊空洞概念，只做能落地交付的商业产品，帮助企业与创业者用 AI 实现真正降本增效。",
+        "这里是星际穿梭舰的母港。我是汪狗哥，具备多年线下实体开店操盘实战与全栈技术架构能力。不聊空洞虚无的概念，只做能落地交付的商业产品，帮助企业与创业者用 AI 实现真实降本增效。",
       highlights: [
         "10+ 年商业与技术实操经验",
         "餐饮供应链实操操盘手",
@@ -55,14 +73,15 @@ const CELESTIAL_STATIONS = [
   },
   {
     id: "moon",
-    type: "moon" as PlanetType,
+    type: "moon",
     name: "月球 (MOON // 界面弹药库)",
     au: 0.0026,
-    kicker: "0.0026 AU // 近地 AI 界面军械库",
+    kicker: "0.0026 AU // 近地轨道界面军械库",
     title: "Salin UI",
     subtitle: "专为 Cursor / Claude / v0 打造的现代界面弹药库。252+ 资产组件，单文件 TSX 零依赖，原生 MCP 协议直连。",
-    tags: ["252+ 优质组件", "MCP 原生直连", "零依赖单文件复制"],
+    tags: ["252+ 资产组件", "MCP 原生直连", "零依赖单文件复制"],
     ctaLabel: "检阅 Salin UI 军械库",
+    approachVector: { enterX: 220, enterY: -140, exitX: 180, exitY: 200 },
     projectDetail: {
       id: "salin-ui",
       planetName: "月球界面基地",
@@ -89,14 +108,15 @@ const CELESTIAL_STATIONS = [
   },
   {
     id: "mars",
-    type: "mars" as PlanetType,
+    type: "mars",
     name: "火星 (MARS // 实体数字化)",
     au: 0.52,
-    kicker: "0.52 AU // 实体数字化实战",
+    kicker: "0.52 AU // 实体数字化实战基地",
     title: "FoodOps 餐饮数字化系统",
     subtitle: "下场开店、踩坑亏钱、自研系统。把真实的餐饮供应链痛点转化为可落地的降本增效系统。",
     tags: ["供应链降本 18%", "后厨效率 +35%", "多门店实时看板"],
     ctaLabel: "查看实战全案",
+    approachVector: { enterX: -260, enterY: 130, exitX: -160, exitY: -180 },
     projectDetail: {
       id: "foodops",
       planetName: "火星开拓基地",
@@ -122,7 +142,7 @@ const CELESTIAL_STATIONS = [
   },
   {
     id: "jupiter",
-    type: "jupiter" as PlanetType,
+    type: "jupiter",
     name: "木星 (JUPITER // 知识引力场)",
     au: 4.2,
     kicker: "4.2 AU // 实体商业沉淀与实操引力",
@@ -130,6 +150,7 @@ const CELESTIAL_STATIONS = [
     subtitle: "聚集真实商业与创业实战资料。从 0 到 1 开店 SOP、本地生活全域获客与高性价比 AI 提效工具。",
     tags: ["40+ 实操手册", "私域全域打通", "持续高频收录"],
     ctaLabel: "调取知识档案",
+    approachVector: { enterX: 240, enterY: 90, exitX: 160, exitY: -220 },
     projectDetail: {
       id: "gouge-hub",
       planetName: "木星引力枢纽",
@@ -155,7 +176,7 @@ const CELESTIAL_STATIONS = [
   },
   {
     id: "saturn",
-    type: "saturn" as PlanetType,
+    type: "saturn",
     name: "土星 (SATURN // 思考光环)",
     au: 9.5,
     kicker: "9.5 AU // 商业落地复盘笔记",
@@ -163,6 +184,7 @@ const CELESTIAL_STATIONS = [
     subtitle: "记录从实体商业到 AI 架构的心得。拆解为什么大多数 AI 工具没人用，以及什么样的应用能产生商业现金流。",
     tags: ["10+ 篇深度长文", "100% 真实复盘", "商业现金流导向"],
     ctaLabel: "查阅全部手记",
+    approachVector: { enterX: -200, enterY: -150, exitX: -90, exitY: 220 },
     projectDetail: {
       id: "notes",
       planetName: "土星思考光环",
@@ -188,7 +210,7 @@ const CELESTIAL_STATIONS = [
   },
   {
     id: "blackhole",
-    type: "blackhole" as PlanetType,
+    type: "blackhole",
     name: "终极奇点 · 黑洞 (BLACK HOLE // 终点站)",
     au: 15.0,
     kicker: "15.0 AU // 宇宙引力奇点 · 视界边缘",
@@ -196,6 +218,7 @@ const CELESTIAL_STATIONS = [
     subtitle: "所有星际航程的终极引力汇聚点。从概念到落地，从技术到商业变现。在此打破维度壁垒，开启深度商业合作、企业 AI 定制与项目共创。",
     tags: ["无限引力吸积", "企业 AI 全案交付", "Salin UI 商业化", "项目共创深度合作"],
     ctaLabel: "进入奇点引力场",
+    approachVector: { enterX: 0, enterY: 0, exitX: 0, exitY: 0 },
     projectDetail: {
       id: "blackhole-singularity",
       planetName: "终极奇点 · 黑洞",
@@ -233,7 +256,7 @@ export function CosmicJourney() {
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
   const [stereo3D, setStereo3D] = useState(false);
 
-  // Selected project for modal detail inspection
+  // Modal inspection states
   const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
   const [showWechatModal, setShowWechatModal] = useState(false);
 
@@ -273,7 +296,7 @@ export function CosmicJourney() {
       const now = Date.now();
       const dt = Math.max(16, now - lastTime);
       const dy = Math.abs(scrollTop - lastScrollTop);
-      const velocity = dy / dt; // px per ms
+      const velocity = dy / dt;
       const warp = Math.min(1, velocity * 0.5);
       setWarpMultiplier(warp);
 
@@ -303,19 +326,16 @@ export function CosmicJourney() {
   }, [calculatedAU]);
 
   // Interstellar Warp Transition Zone:
-  // When segmentFraction is between 0.18 and 0.82, we are in FULL INTERSTELLAR WARP FLIGHT!
   const isWarpFlight =
     isManualWarping ||
-    (segmentFraction > 0.16 && segmentFraction < 0.84 && exactStationPos < totalSegments);
+    (segmentFraction > 0.15 && segmentFraction < 0.85 && exactStationPos < totalSegments);
 
-  // Warp intensity curve (peaks at midpoint fraction = 0.5)
   const warpIntensity = isManualWarping
     ? 1.0
     : isWarpFlight
-    ? Math.sin(((segmentFraction - 0.16) / (0.84 - 0.16)) * Math.PI)
+    ? Math.sin(((segmentFraction - 0.15) / (0.85 - 0.15)) * Math.PI)
     : 0;
 
-  // Active Station indicator for HUD (closest station)
   const activeHudIndex = Math.min(
     CELESTIAL_STATIONS.length - 1,
     Math.round(exactStationPos)
@@ -324,20 +344,21 @@ export function CosmicJourney() {
   const currentStation = CELESTIAL_STATIONS[baseStationIdx];
   const nextStation = CELESTIAL_STATIONS[baseStationIdx + 1] || currentStation;
 
-  // Origin planet scale & opacity during departure
-  const originScale = 1.0 + segmentFraction * 2.2;
-  const originOpacity = Math.max(0, 1.0 - segmentFraction * 2.6);
-  const originTranslateZ = segmentFraction * 400;
+  // Spatial vector offsets: planets approach and exit from different quadrants!
+  const originExitX = currentStation.approachVector.exitX * segmentFraction;
+  const originExitY = currentStation.approachVector.exitY * segmentFraction;
+  const originScale = 1.0 + segmentFraction * 1.8;
+  const originOpacity = Math.max(0, 1.0 - segmentFraction * 2.5);
 
-  // Destination planet scale & opacity during arrival
-  const destEmergence = Math.max(0, (segmentFraction - 0.42) / 0.58); // 0 to 1
-  const destScale = 0.18 + destEmergence * 0.82;
-  const destOpacity = Math.min(1.0, destEmergence * 1.5);
-  const destTranslateZ = -500 + destEmergence * 500;
+  const destEmergence = Math.max(0, (segmentFraction - 0.38) / 0.62); // 0 to 1
+  const destEnterX = nextStation.approachVector.enterX * (1 - destEmergence);
+  const destEnterY = nextStation.approachVector.enterY * (1 - destEmergence);
+  const destScale = 0.2 + destEmergence * 0.8;
+  const destOpacity = Math.min(1.0, destEmergence * 1.6);
 
-  // Card opacity and blur during warp
-  const cardOpacity = Math.max(0, 1.0 - warpIntensity * 1.4);
-  const cardBlur = warpIntensity * 12;
+  // Holographic card opacity & blur
+  const cardOpacity = Math.max(0, 1.0 - warpIntensity * 1.5);
+  const cardBlur = warpIntensity * 10;
 
   // Near black hole singularity flag
   const isNearBlackHole = exactStationPos >= 4.2;
@@ -362,8 +383,8 @@ export function CosmicJourney() {
   };
 
   return (
-    <div className="relative bg-slate-950 text-white min-h-screen selection:bg-cyan-500 selection:text-slate-950">
-      {/* 3D Cosmic Canvas (Starfield, warp streaks, gravitational lensing, 3D anaglyph) */}
+    <div className="relative bg-slate-950 text-white min-h-screen selection:bg-cyan-500 selection:text-slate-950 font-sans">
+      {/* 3D Cosmic Canvas (Nebulae, starfield, warp streaks, gravitational lensing, 3D anaglyph) */}
       <CosmicCanvas
         warpSpeed={Math.max(warpMultiplier, warpIntensity * 0.85)}
         mouseOffset={mouseOffset}
@@ -382,13 +403,38 @@ export function CosmicJourney() {
         onWarpTo={handleWarpTo}
       />
 
-      {/* Scroll Odyssey Track (600vh for luxurious smooth warp travel) */}
+      {/* =========================================================================
+          SPACESHIP COCKPIT CANOPY FRAME & HUD FLIGHT RETICLE (穿梭舰座舱前风挡)
+          ========================================================================= */}
+      <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden">
+        {/* Subtle Cockpit Canopy Frame Corner Struts */}
+        <div className="absolute top-0 left-0 w-36 h-36 border-t-2 border-l-2 border-cyan-500/20 rounded-tl-3xl opacity-60 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-36 h-36 border-t-2 border-r-2 border-cyan-500/20 rounded-tr-3xl opacity-60 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-36 h-36 border-b-2 border-l-2 border-cyan-500/20 rounded-bl-3xl opacity-60 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-36 h-36 border-b-2 border-r-2 border-cyan-500/20 rounded-br-3xl opacity-60 pointer-events-none" />
+
+        {/* Center Flight Crosshair (shifts slightly with mouse for flight feeling) */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-30 transition-transform duration-75 pointer-events-none"
+          style={{
+            transform: `translate(calc(-50% + ${mouseOffset.x * 25}px), calc(-50% + ${mouseOffset.y * 25}px))`,
+          }}
+        >
+          <div className="w-10 h-10 border border-cyan-400/40 rounded-full flex items-center justify-center">
+            <div className="w-2 h-2 bg-cyan-400/60 rounded-full" />
+          </div>
+          <div className="absolute w-16 h-[1px] bg-cyan-400/30" />
+          <div className="absolute h-16 w-[1px] bg-cyan-400/30" />
+        </div>
+      </div>
+
+      {/* Scroll Odyssey Track (680vh for luxurious smooth warp travel) */}
       <div ref={containerRef} className="relative h-[680vh] w-full">
         {/* Sticky 3D Space Viewport */}
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4 sm:px-8">
-          {/* Subtle Ambient Cosmic Glow tailored to current sector */}
+          {/* Ambient Cosmic Sector Glow */}
           <div
-            className={`absolute w-[680px] h-[680px] rounded-full blur-[180px] pointer-events-none transition-all duration-1000 ${
+            className={`absolute w-[720px] h-[720px] rounded-full blur-[200px] pointer-events-none transition-all duration-1000 ${
               isNearBlackHole
                 ? "bg-amber-500/25"
                 : isWarpFlight
@@ -404,6 +450,42 @@ export function CosmicJourney() {
                 : "bg-yellow-500/15"
             }`}
           />
+
+          {/* =========================================================================
+              FIRST SCREEN: SPACE CAPSULE BOARDING DECK (登录太空舱 / 启航第一幕)
+              ========================================================================= */}
+          {scrollProgress < 0.06 && (
+            <div className="absolute top-16 sm:top-20 z-35 flex flex-col items-center text-center pointer-events-auto px-4 max-w-xl mx-auto space-y-3 animate-fade-in">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-cyan-500/40 text-cyan-300 font-mono text-[11px] font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+                <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                <span>SALIN-01 // 太空舱已加压锁闭 · 就绪</span>
+              </div>
+
+              <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight drop-shadow-lg">
+                汪狗哥 · 星际穿梭旗舰
+              </h1>
+
+              <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                坐上星际穿梭舰，穿越太阳系前往终极引力黑洞。每一个星球都是一个实战落地项目。
+              </p>
+
+              <div className="pt-2 flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => handleWarpTo(0.18)}
+                  className="px-6 py-2.5 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-[0_0_25px_rgba(34,211,238,0.5)] flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
+                >
+                  <Play className="w-3.5 h-3.5 fill-current" />
+                  <span>启动引擎 · 启航深空</span>
+                </button>
+
+                <div className="text-[11px] font-mono text-cyan-400/80 flex items-center gap-1">
+                  <span>向下滚动推杆</span>
+                  <ChevronDown className="w-4 h-4 animate-bounce" />
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* =========================================================================
               INTERSTELLAR HYPERSPACE WARP TUNNEL OVERLAY (星际曲率穿梭隧道特效)
@@ -430,7 +512,7 @@ export function CosmicJourney() {
                 className="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 z-30 font-mono text-center space-y-1.5 transition-all duration-300 pointer-events-none"
                 style={{ opacity: Math.min(1, warpIntensity * 1.5) }}
               >
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-950/85 border border-cyan-400/60 text-cyan-300 text-[11px] font-bold shadow-[0_0_25px_rgba(6,182,212,0.5)]">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-950/90 border border-cyan-400/60 text-cyan-300 text-[11px] font-bold shadow-[0_0_25px_rgba(6,182,212,0.5)]">
                   <Zap className="w-3.5 h-3.5 text-cyan-400 animate-bounce" />
                   <span>WARP 9.8 // 星际超空间跃迁中</span>
                 </div>
@@ -447,119 +529,133 @@ export function CosmicJourney() {
           )}
 
           {/* =========================================================================
-              CENTRAL CELESTIAL STAGE (Dynamic Planet Transitions + Tactical Card)
+              CENTRAL CELESTIAL STAGE (Dynamic Trajectory Approaches + Holographic Console)
               ========================================================================= */}
-          <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14">
-            {/* Left: 3D Celestial Body Stage with Continuous Warp Flight Morphing */}
+          <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14 pt-8 sm:pt-0">
+            {/* Left: 3D Celestial Body Stage (Unique Spatial Vectors & Continuous Spinning) */}
             <div className="flex-1 flex items-center justify-center py-4 relative min-h-[380px] sm:min-h-[460px]">
-              {/* Origin Planet (Fading out & zooming past into warp) */}
+              {/* Origin Planet (Exit trajectory along unique spatial vector) */}
               {originOpacity > 0.02 && (
                 <div
                   className="absolute inset-0 flex items-center justify-center transition-transform duration-75"
                   style={{
                     opacity: originOpacity,
-                    transform: `scale(${originScale}) translateZ(${originTranslateZ}px)`,
+                    transform: `translate3d(${originExitX}px, ${originExitY}px, 0px) scale(${originScale})`,
                     pointerEvents: originOpacity > 0.4 ? "auto" : "none",
                   }}
                 >
-                  <PlanetRender
-                    type={currentStation.type}
-                    size={
-                      typeof window !== "undefined" && window.innerWidth < 640
-                        ? 260
-                        : currentStation.id === "saturn"
-                        ? 440
-                        : currentStation.id === "blackhole"
-                        ? 420
-                        : 350
-                    }
-                    mouseOffset={mouseOffset}
-                    stereo3D={stereo3D}
-                    warpFactor={warpIntensity}
-                  />
+                  {/* Tactical Target Lock Reticle around planet */}
+                  <div className="relative">
+                    <div className="absolute -inset-4 border border-cyan-400/20 border-dashed rounded-full animate-spin-slow pointer-events-none" />
+                    <PlanetRender
+                      type={currentStation.type}
+                      size={
+                        typeof window !== "undefined" && window.innerWidth < 640
+                          ? 250
+                          : currentStation.id === "saturn"
+                          ? 440
+                          : currentStation.id === "blackhole"
+                          ? 420
+                          : 350
+                      }
+                      mouseOffset={mouseOffset}
+                      stereo3D={stereo3D}
+                      warpFactor={warpIntensity}
+                    />
+                  </div>
                 </div>
               )}
 
-              {/* Destination Planet (Emerging from deep space during warp deceleration) */}
-              {segmentFraction > 0.4 && destOpacity > 0.02 && (
+              {/* Destination Planet (Approaching along unique spatial vector from deep space) */}
+              {segmentFraction > 0.35 && destOpacity > 0.02 && (
                 <div
                   className="absolute inset-0 flex items-center justify-center transition-transform duration-75"
                   style={{
                     opacity: destOpacity,
-                    transform: `scale(${destScale}) translateZ(${destTranslateZ}px)`,
+                    transform: `translate3d(${destEnterX}px, ${destEnterY}px, 0px) scale(${destScale})`,
                     pointerEvents: destOpacity > 0.4 ? "auto" : "none",
                   }}
                 >
-                  <PlanetRender
-                    type={nextStation.type}
-                    size={
-                      typeof window !== "undefined" && window.innerWidth < 640
-                        ? 260
-                        : nextStation.id === "saturn"
-                        ? 440
-                        : nextStation.id === "blackhole"
-                        ? 420
-                        : 350
-                    }
-                    mouseOffset={mouseOffset}
-                    stereo3D={stereo3D}
-                    warpFactor={warpIntensity}
-                  />
+                  <div className="relative">
+                    <div className="absolute -inset-4 border border-cyan-400/20 border-dashed rounded-full animate-spin-slow pointer-events-none" />
+                    <PlanetRender
+                      type={nextStation.type}
+                      size={
+                        typeof window !== "undefined" && window.innerWidth < 640
+                          ? 250
+                          : nextStation.id === "saturn"
+                          ? 440
+                          : nextStation.id === "blackhole"
+                          ? 420
+                          : 350
+                      }
+                      mouseOffset={mouseOffset}
+                      stereo3D={stereo3D}
+                      warpFactor={warpIntensity}
+                    />
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Right: Holographic Tactical Station Card (Docks into view in orbit) */}
+            {/* Right: Holographic Flight Console Project Screen (全息战术控制台) */}
             <div
-              className={`flex-1 w-full max-w-xl bg-slate-950/85 backdrop-blur-2xl rounded-3xl p-6 sm:p-9 border border-cyan-500/30 shadow-[0_24px_80px_rgba(0,0,0,0.9)] transition-all duration-300 ${
-                stereo3D ? "stereo-3d-active border-rose-500/40" : ""
+              className={`flex-1 w-full max-w-xl holo-console rounded-2xl p-6 sm:p-8 transition-all duration-300 font-mono ${
+                stereo3D ? "stereo-3d-active border-rose-500/50" : ""
               }`}
               style={{
                 opacity: isWarpFlight ? cardOpacity : 1,
                 filter: isWarpFlight ? `blur(${cardBlur}px)` : "none",
-                transform: `perspective(1000px) rotateY(${mouseOffset.x * 6}deg) rotateX(${-mouseOffset.y * 6}deg) translateZ(40px)`,
+                transform: `perspective(1000px) rotateY(${mouseOffset.x * 5}deg) rotateX(${-mouseOffset.y * 5}deg) translateZ(40px)`,
                 pointerEvents: cardOpacity > 0.4 ? "auto" : "none",
               }}
             >
+              {/* Sci-Fi Corner Brackets */}
+              <div className="absolute top-2 left-2 text-[10px] text-cyan-400/50 select-none">┌</div>
+              <div className="absolute top-2 right-2 text-[10px] text-cyan-400/50 select-none">┐</div>
+              <div className="absolute bottom-2 left-2 text-[10px] text-cyan-400/50 select-none">└</div>
+              <div className="absolute bottom-2 right-2 text-[10px] text-cyan-400/50 select-none">┘</div>
+
               {/* Station Kicker & Telemetry Coordinates */}
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="text-[11px] font-mono font-bold tracking-widest text-cyan-400 uppercase">
-                  {(segmentFraction > 0.5 ? nextStation : currentStation).kicker}
-                </span>
-                <span className="text-[10px] font-mono text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10">
-                  STATION {activeHudIndex + 1} / 6
+              <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-cyan-500/20">
+                <div className="flex items-center gap-1.5 text-[11px] text-cyan-400 font-bold uppercase tracking-widest">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                  <span>{(segmentFraction > 0.5 ? nextStation : currentStation).kicker}</span>
+                </div>
+                <span className="text-[10px] text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">
+                  NAV-LOG #{activeHudIndex + 1}
                 </span>
               </div>
 
               {/* Station Planet Name */}
-              <div className="text-xs font-mono text-slate-400 mb-1 tracking-wider uppercase">
+              <div className="text-[11px] text-slate-400 mb-1 tracking-wider uppercase">
                 {(segmentFraction > 0.5 ? nextStation : currentStation).name}
               </div>
 
               {/* Title */}
-              <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight mb-3">
+              <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight mb-2 font-sans">
                 {(segmentFraction > 0.5 ? nextStation : currentStation).title}
-              </h1>
+              </h2>
 
               {/* Subtitle */}
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-5">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4 font-sans">
                 {(segmentFraction > 0.5 ? nextStation : currentStation).subtitle}
               </p>
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-6">
+              <div className="flex flex-wrap gap-1.5 mb-5">
                 {(segmentFraction > 0.5 ? nextStation : currentStation).tags.map((tag, i) => (
                   <span
                     key={i}
-                    className="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-[10px] sm:text-[11px] font-mono text-cyan-300"
+                    className="px-2.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-[10px] sm:text-[11px] text-cyan-300"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              {/* Actions */}
-              <div className="flex flex-wrap items-center gap-3">
+              {/* Tactical Actions */}
+              <div className="flex flex-wrap items-center gap-2.5 pt-2 border-t border-cyan-500/20">
                 <button
                   type="button"
                   onClick={() =>
@@ -567,20 +663,20 @@ export function CosmicJourney() {
                       (segmentFraction > 0.5 ? nextStation : currentStation).projectDetail
                     )
                   }
-                  className={`px-5 py-2.5 rounded-full font-black text-xs sm:text-sm transition-all shadow-lg flex items-center gap-1.5 cursor-pointer ${
+                  className={`px-4 py-2 rounded-lg font-black text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer ${
                     (segmentFraction > 0.5 ? nextStation : currentStation).id === "blackhole"
                       ? "bg-gradient-to-r from-amber-400 to-rose-400 hover:from-amber-300 hover:to-rose-300 text-slate-950 shadow-amber-400/30"
-                      : "bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-cyan-400/25 hover:-translate-y-0.5 active:translate-y-0"
+                      : "bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-cyan-400/25"
                   }`}
                 >
                   <span>{(segmentFraction > 0.5 ? nextStation : currentStation).ctaLabel}</span>
-                  <ArrowUpRight className="w-4 h-4" />
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </button>
 
                 {(segmentFraction > 0.5 ? nextStation : currentStation).id === "moon" && (
                   <Link
                     href="/ui/"
-                    className="px-4 py-2.5 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/30 font-bold text-xs sm:text-sm transition-all flex items-center gap-1 cursor-pointer"
+                    className="px-3.5 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 font-bold text-xs transition-all flex items-center gap-1 cursor-pointer"
                   >
                     <span>直达弹药库 ↗</span>
                   </Link>
@@ -590,58 +686,51 @@ export function CosmicJourney() {
                   <button
                     type="button"
                     onClick={() => setShowWechatModal(true)}
-                    className="px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-lg shadow-emerald-500/25"
+                    className="px-3.5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all flex items-center gap-1 cursor-pointer shadow-md shadow-emerald-500/25"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     <span>微信直联</span>
                   </button>
                 )}
 
-                <div className="text-[10px] font-mono text-slate-400 ml-auto hidden sm:block">
-                  {exactStationPos < 4.8 ? "滑动曲率穿梭至下个星球 ↓" : "已抵终极奇点 ✦"}
+                <div className="text-[10px] text-slate-500 ml-auto hidden sm:block">
+                  {exactStationPos < 4.8 ? "推进推杆继续穿梭 ↓" : "抵达奇点 ✦"}
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Scroll Down Guidance Prompt on Earth */}
-          {scrollProgress < 0.05 && (
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center gap-2 text-xs font-mono text-cyan-400/80 animate-bounce">
-              <span>向下滚动 · 启动曲率引擎前往月球</span>
-              <ChevronDown className="w-4 h-4" />
-            </div>
-          )}
         </div>
       </div>
 
-      {/* Event Horizon Final Terminal / Black Hole Singularity Landing Base */}
+      {/* =========================================================================
+          TERMINAL BASE: EVENT HORIZON SINGULARITY COMMAND (终极奇点 · 商业指挥部)
+          ========================================================================= */}
       <section
         id="terminal-base"
         className="relative z-30 bg-slate-950 border-t border-amber-500/30 py-24 px-4 sm:px-6 lg:px-8 text-white overflow-hidden"
       >
-        {/* Background Singularity Accretion Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/10 rounded-full blur-[180px] pointer-events-none" />
 
-        <div className="max-w-4xl mx-auto text-center space-y-10 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-rose-500/20 border border-amber-400/40 text-amber-300 font-mono text-xs font-bold">
+        <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10 font-sans">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-rose-500/20 border border-amber-400/40 text-amber-300 font-mono text-xs font-bold">
             <Sparkles className="w-4 h-4 animate-spin-slow text-amber-400" />
             <span>15.0 AU · 终极奇点引力场已完全激活</span>
           </div>
 
-          <h2 className="text-3xl sm:text-6xl font-black text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
             引力奇点 · 商业与未来共创指挥部
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed font-sans">
             从地球母港的商业启航，经历月球 Salin UI 界面军械库、火星 FoodOps 餐饮实操数字化、木星实战知识库、土星商业手记，最终抵达时空终极黑洞奇点。
             把技术与真实商业闭环深度融合，只交付客户愿意买单的高价值成果。
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 font-mono">
             <button
               type="button"
               onClick={() => setShowWechatModal(true)}
-              className="px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm transition-all shadow-lg shadow-emerald-500/30 flex items-center gap-2 cursor-pointer"
+              className="px-6 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-lg shadow-emerald-500/30 flex items-center gap-2 cursor-pointer"
             >
               <MessageSquare className="w-4 h-4" />
               <span>微信直接沟通需求</span>
@@ -649,14 +738,14 @@ export function CosmicJourney() {
 
             <Link
               href="/ui/"
-              className="px-6 py-3 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-sm transition-all shadow-lg shadow-cyan-400/25 flex items-center gap-2 cursor-pointer"
+              className="px-6 py-2.5 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-lg shadow-cyan-400/25 flex items-center gap-2 cursor-pointer"
             >
               <span>检阅 Salin UI 弹药库 ↗</span>
             </Link>
 
             <Link
               href="/contact"
-              className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
+              className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs sm:text-sm border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
             >
               <Mail className="w-4 h-4" />
               <span>提交商务合作需求</span>
@@ -665,14 +754,13 @@ export function CosmicJourney() {
             <button
               type="button"
               onClick={() => handleWarpTo(0)}
-              className="px-6 py-3 rounded-full bg-slate-900 hover:bg-slate-800 text-cyan-300 font-mono text-xs sm:text-sm border border-cyan-500/30 transition-all flex items-center gap-2 cursor-pointer"
+              className="px-6 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 text-cyan-300 font-mono text-xs transition-all flex items-center gap-1.5 cursor-pointer border border-cyan-500/30"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-3.5 h-3.5" />
               <span>重返地球母港再次启航 ↺</span>
             </button>
           </div>
 
-          {/* Terminal Footer */}
           <div className="pt-16 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 font-mono gap-4">
             <div>© {new Date().getFullYear()} WANG SALIN · ALL RIGHTS RESERVED.</div>
             <div className="flex items-center gap-4">
@@ -704,13 +792,13 @@ export function CosmicJourney() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-amber-500/40 max-w-sm w-full text-center space-y-4 shadow-[0_24px_80px_rgba(245,158,11,0.25)]"
+            className="p-6 sm:p-8 rounded-2xl bg-slate-900 border border-amber-500/40 max-w-sm w-full text-center space-y-4 shadow-[0_24px_80px_rgba(245,158,11,0.25)] font-mono"
           >
-            <h4 className="text-xl font-black text-white">添加汪狗哥微信</h4>
-            <p className="text-xs text-slate-300">
+            <h4 className="text-lg font-black text-white font-sans">添加汪狗哥微信</h4>
+            <p className="text-xs text-slate-300 font-sans">
               请备注来意（如：AI 工具定制 / 餐饮数字化 / Salin UI 商业合作）
             </p>
-            <div className="relative w-56 h-56 mx-auto rounded-2xl overflow-hidden border border-white/15 bg-white p-2">
+            <div className="relative w-52 h-52 mx-auto rounded-xl overflow-hidden border border-white/15 bg-white p-2">
               <img
                 src="/images/wechat-qr.jpg"
                 alt="汪狗哥微信二维码"
@@ -720,7 +808,7 @@ export function CosmicJourney() {
             <button
               type="button"
               onClick={() => setShowWechatModal(false)}
-              className="w-full py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold cursor-pointer"
+              className="w-full py-2.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold cursor-pointer"
             >
               关闭
             </button>
