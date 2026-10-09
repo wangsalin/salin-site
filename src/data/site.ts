@@ -23,6 +23,7 @@ export const siteConfig = {
   nowUpdatedAt: "2026 年 10 月",
   nowStatus: "主导‘饿狸’实体商家 AI 获客工具研发，让 AI 真正解决餐饮商家内容与营销痛点。",
   heroTags: ["12 年创业者", "服务 2000+ 餐饮", "亲自开店 4 年", "饿狸 AI 获客", "Salin UI 弹药库"],
+  eliUrl: "https://youeli.com",
   ziliaokuUrl: "https://zl.eyu.ink",
   ziliaokuBackupUrl: "https://ziliaoku.fun",
   navLinks: [
