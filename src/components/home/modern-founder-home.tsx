@@ -1200,129 +1200,261 @@ export function ModernFounderHome() {
         {/* ============================================================ */}
         <section
           id="slide-3"
-          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8 bg-gradient-to-b from-[#050806] via-[#090e0b] to-[#050806]"
+          className="w-full h-screen min-h-[700px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-10 lg:px-16 2xl:px-24 pt-14 pb-6 bg-[#040605]"
         >
-          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">[04]</div>
-          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">
-            DUAL ARSENAL // UI & RESOURCES
+          {/* 双色动态全景背光：左侧翡翠代码光晕 + 右侧琥珀商业资产光晕 */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-1/4 -left-1/4 w-[75vw] h-[75vw] max-w-[750px] max-h-[750px] rounded-full bg-emerald-500/10 blur-[140px]" />
+            <div className="absolute -bottom-1/4 -right-1/4 w-[75vw] h-[75vw] max-w-[750px] max-h-[750px] rounded-full bg-amber-500/10 blur-[140px]" />
+            {/* 微点阵背景纹理 */}
+            <div
+              className="absolute inset-0 opacity-[0.035]"
+              style={{
+                backgroundImage: "radial-gradient(#10b981 1px, transparent 1px)",
+                backgroundSize: "28px 28px",
+              }}
+            />
           </div>
 
-          <div className="w-full px-6 sm:px-14 lg:px-20 2xl:px-28 space-y-5">
-            <div className="text-center max-w-3xl mx-auto space-y-1">
-              <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs">
-                <Database className="w-3.5 h-3.5" />
-                BUILDER ECOSYSTEM // 开发者与实体商业双核弹药
+          {/* 巨幅建筑字体水印 ARSENAL // 2500+ (天际线延展 · 宏大品牌气势) */}
+          <div className="absolute inset-x-0 top-[2%] sm:top-[3.5%] z-0 flex items-center justify-start overflow-hidden pointer-events-none select-none pl-6 sm:pl-14 lg:pl-20">
+            <span
+              className="text-[18vw] sm:text-[17vw] font-black text-transparent bg-clip-text bg-gradient-to-r from-white/[0.12] via-white/[0.04] to-transparent whitespace-nowrap font-mono select-none uppercase tracking-wider font-monument"
+              style={{
+                WebkitTextStroke: "1px rgba(255, 255, 255, 0.14)",
+                letterSpacing: "0.03em",
+              }}
+            >
+              ARSENAL // 2500+
+            </span>
+          </div>
+
+          {/* HUD 取景器标记 */}
+          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/30 select-none z-10">
+            [04] // DUAL ARSENAL MATRIX
+          </div>
+          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/30 select-none z-10 hidden sm:block">
+            DEV CODEBASE × REAL COMMERCE ASSETS · 2024—2026
+          </div>
+          <div className="absolute bottom-16 left-6 sm:left-12 font-mono text-xs text-white/20 select-none z-10">+</div>
+          <div className="absolute bottom-16 right-6 sm:right-12 font-mono text-xs text-white/20 select-none z-10">+</div>
+
+          {/* 全屏铺开战备阵列容器 */}
+          <div className="w-full relative z-10 space-y-4">
+            {/* 顶层非对称左对齐排版 (铺开！不居中！) */}
+            <div className="space-y-1.5 text-left max-w-4xl">
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs backdrop-blur-sm">
+                  <Database className="w-3.5 h-3.5" />
+                  BUILDER ECOSYSTEM // 开发者与实体商业双核军火库
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/10 bg-black/60 text-white/70 font-mono text-[11px] backdrop-blur-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  双核弹药 · 全网免费开放
+                </div>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                前端纯净代码库，与两千份落地商业资产。
+
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+                代码纯净如水，
+                <span className="text-emerald-400 font-serif italic">商业落地如铁。</span>
               </h2>
+
+              <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-sans">
+                一边是专为 AI 编程打造的前端 252+ 原生 MCP 纯净骨架，一边是 12 年沉淀的 2,400+ 份真实落地商业资产。双核弹药，开箱即用。
+              </p>
             </div>
 
-            {/* 双大卡横向对比布局 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch pt-1">
-              {/* 卡片 A: Salin UI */}
-              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5 flex flex-col justify-between hover:border-emerald-500/40 transition-all group">
+            {/* 双战备舱左右并排大图阵列 */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 items-stretch">
+              {/* 战备舱 A: Salin UI 代码军火库 */}
+              <div className="rounded-2xl border border-emerald-500/30 bg-black/60 p-4 sm:p-5 flex flex-col justify-between hover:border-emerald-500/60 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.5)] group backdrop-blur-md">
                 <div className="space-y-3">
-                  <div className="relative w-full aspect-[16/9] max-h-[28vh] rounded-xl overflow-hidden border border-white/10 bg-black">
+                  {/* 大图视窗 (带悬浮 HUD 遥测芯片) */}
+                  <div className="relative w-full aspect-[16/9.5] max-h-[29vh] rounded-xl overflow-hidden border border-emerald-500/30 bg-black group-hover:border-emerald-500/50 transition-colors">
                     <Image
                       src="/images/showcase/project-salin-ui.jpg"
                       alt="Salin UI 开发者组件弹药库大图"
                       fill
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 border border-white/10 font-mono text-[10px] text-emerald-400">
-                      252+ TSX COMPONENTS
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+
+                    {/* 顶部悬浮芯片 */}
+                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between font-mono text-[10px] pointer-events-none">
+                      <span className="px-2 py-0.5 rounded-md bg-black/80 border border-emerald-500/40 text-emerald-300 font-bold backdrop-blur-md flex items-center gap-1.5 shadow-md">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        252+ TSX COMPONENTS
+                      </span>
+                      <span className="px-2 py-0.5 rounded-md bg-black/80 border border-white/15 text-white/80 backdrop-blur-md hidden sm:block">
+                        REACT 19 · TAILWIND V4
+                      </span>
+                    </div>
+
+                    {/* 底部悬浮芯片 */}
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between font-mono text-[10px] pointer-events-none">
+                      <span className="text-emerald-400 font-bold">
+                        [ 原生 MCP 协议支持 ]
+                      </span>
+                      <span className="text-white/60">
+                        salin.wang/ui
+                      </span>
                     </div>
                   </div>
 
+                  {/* 标题与定位 */}
                   <div>
                     <div className="flex items-center justify-between font-mono text-xs text-emerald-400 mb-1">
-                      <span className="font-bold">SALIN UI // 前端设计军火库</span>
-                      <span className="text-white/40">REACT 19 & TAILWIND V4</span>
+                      <span className="font-bold text-sm text-white flex items-center gap-1.5">
+                        <Code2 className="w-4 h-4 text-emerald-400" />
+                        SALIN UI // 开发者前端军火库
+                      </span>
+                      <span className="text-emerald-400 font-bold">salin.wang/ui</span>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed font-sans">
-                      专为 Cursor、Claude、Antigravity 调教极致优雅的前端骨架。零冗余三方包、纯净 TSX，原生 MCP 协议支持。
+                    <p className="text-xs text-white/75 leading-relaxed font-sans">
+                      专为 Cursor、Claude、Antigravity 调教的高美学纯净前端骨架。零冗余三方依赖、复制即用纯 TSX，原生 MCP 协议支持。
                     </p>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-black/80 border border-white/10 font-mono text-xs flex items-center justify-between">
-                    <code className="text-emerald-300 text-[11px] truncate">
-                      npx salin-ui add @mcp/server
-                    </code>
+                  {/* 极速 CLI 交互安装终端 */}
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 font-mono text-xs flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-emerald-300 text-[11px] truncate">
+                      <span className="text-emerald-500">$</span>
+                      <code className="truncate">npx salin-ui add @mcp/server</code>
+                    </div>
                     <button
                       onClick={handleCopyMcp}
-                      className="px-2 py-1 rounded bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-[10px] inline-flex items-center gap-1 cursor-pointer"
+                      className="shrink-0 px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-[10px] inline-flex items-center gap-1 transition-colors cursor-pointer shadow-sm"
                     >
                       {copiedMcp ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                      <span>{copiedMcp ? "已复制" : "复制"}</span>
+                      <span>{copiedMcp ? "已复制命令" : "复制命令"}</span>
                     </button>
                   </div>
                 </div>
 
-                <div className="pt-3 flex items-center justify-between border-t border-white/10 font-mono text-xs">
-                  <span className="text-white/40 text-[11px]">文档: salin.wang/ui</span>
+                {/* 底部行动栏 */}
+                <div className="pt-3 flex items-center justify-between border-t border-white/10 font-mono text-xs mt-3">
+                  <Link
+                    href="/projects/salin-ui"
+                    className="text-white/60 hover:text-white text-[11px] transition-colors inline-flex items-center gap-1"
+                  >
+                    <span>查看架构复盘</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </Link>
                   <a
                     href="https://salin.wang/ui"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.15] text-white font-bold inline-flex items-center gap-1 transition-colors"
+                    className="px-4 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold inline-flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all cursor-pointer"
                   >
-                    <span>体验 Salin UI ↗</span>
+                    <span>进入 Salin UI 官网 ↗</span>
                   </a>
                 </div>
               </div>
 
-              {/* 卡片 B: 狗哥资源站 (Gouge Hub) */}
-              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5 flex flex-col justify-between hover:border-emerald-500/40 transition-all group">
+              {/* 战备舱 B: 狗哥资源库 商业弹药库 */}
+              <div className="rounded-2xl border border-amber-500/30 bg-black/60 p-4 sm:p-5 flex flex-col justify-between hover:border-amber-500/60 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.5)] group backdrop-blur-md">
                 <div className="space-y-3">
-                  <div className="relative w-full aspect-[16/9] max-h-[28vh] rounded-xl overflow-hidden border border-white/10 bg-black">
+                  {/* 大图视窗 (带悬浮 HUD 遥测芯片) */}
+                  <div className="relative w-full aspect-[16/9.5] max-h-[29vh] rounded-xl overflow-hidden border border-amber-500/30 bg-black group-hover:border-amber-500/50 transition-colors">
                     <Image
                       src="/images/showcase/project-gouge-hub.jpg"
                       alt="狗哥资源库 2400+ 免费商业资产大图"
                       fill
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/80 border border-white/10 font-mono text-[10px] text-emerald-400">
-                      2,400+ 免费商业与 AI 资产
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+
+                    {/* 顶部悬浮芯片 */}
+                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between font-mono text-[10px] pointer-events-none">
+                      <span className="px-2 py-0.5 rounded-md bg-black/80 border border-amber-500/40 text-amber-300 font-bold backdrop-blur-md flex items-center gap-1.5 shadow-md">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                        2,400+ 商业与 AI 资产
+                      </span>
+                      <span className="px-2 py-0.5 rounded-md bg-black/80 border border-emerald-500/40 text-emerald-300 font-bold backdrop-blur-md">
+                        100% 永久免费
+                      </span>
+                    </div>
+
+                    {/* 底部悬浮芯片 */}
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between font-mono text-[10px] pointer-events-none">
+                      <span className="text-amber-400 font-bold">
+                        [ 夸克/百度网盘免密直存 ]
+                      </span>
+                      <span className="text-white/60">
+                        zl.eyu.ink · ziliaoku.fun
+                      </span>
                     </div>
                   </div>
 
+                  {/* 标题与定位 */}
                   <div>
-                    <div className="flex items-center justify-between font-mono text-xs text-emerald-400 mb-1">
-                      <span className="font-bold">狗哥资源库 // GOUGE HUB</span>
-                      <span className="text-white/40">zl.eyu.ink · 免费开放</span>
+                    <div className="flex items-center justify-between font-mono text-xs text-amber-400 mb-1">
+                      <span className="font-bold text-sm text-white flex items-center gap-1.5">
+                        <Database className="w-4 h-4 text-amber-400" />
+                        狗哥资源库 // GOUGE HUB
+                      </span>
+                      <span className="text-amber-400 font-bold">zl.eyu.ink</span>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed font-sans">
-                      汇集 12 年沉淀的餐饮营销策划、自媒体运营模版、实战 Prompt 词库与商业闭环 SOP，永久免费开放给全国创业者与开发者。
+                    <p className="text-xs text-white/75 leading-relaxed font-sans">
+                      汇聚 12 年一线实战经验的餐饮营销策划、自媒体运营模版、实战 Prompt 词库与高阶商业闭环 SOP，永久免费开放给全网创业者。
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 font-mono text-[11px] text-center">
-                    <div className="p-1.5 rounded bg-white/[0.03] border border-white/5 text-white/80">
-                      2400+ 资产
+                  {/* 4 大实操分类矩阵胶囊 */}
+                  <div className="grid grid-cols-2 gap-1.5 font-mono text-[11px]">
+                    <div className="px-2.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/10 text-white/80 flex items-center gap-1.5 truncate">
+                      <span className="text-amber-400 text-xs">●</span>
+                      <span className="truncate">实体餐饮开店全套 SOP</span>
                     </div>
-                    <div className="p-1.5 rounded bg-white/[0.03] border border-white/5 text-white/80">
-                      实体店策划
+                    <div className="px-2.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/10 text-white/80 flex items-center gap-1.5 truncate">
+                      <span className="text-amber-400 text-xs">●</span>
+                      <span className="truncate">大众点评/小红书探店脚本</span>
                     </div>
-                    <div className="p-1.5 rounded bg-white/[0.03] border border-white/5 text-emerald-400">
-                      永久免费
+                    <div className="px-2.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/10 text-white/80 flex items-center gap-1.5 truncate">
+                      <span className="text-amber-400 text-xs">●</span>
+                      <span className="truncate">主理人高阶 AI Prompt 词库</span>
+                    </div>
+                    <div className="px-2.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/10 text-white/80 flex items-center gap-1.5 truncate">
+                      <span className="text-amber-400 text-xs">●</span>
+                      <span className="truncate">淡季引流与外卖毛利核算</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-3 flex items-center justify-between border-t border-white/10 font-mono text-xs">
-                  <span className="text-white/40 text-[11px]">备用: ziliaoku.fun</span>
+                {/* 底部行动栏 */}
+                <div className="pt-3 flex items-center justify-between border-t border-white/10 font-mono text-xs mt-3">
+                  <span className="text-white/40 text-[11px]">备用域名: ziliaoku.fun</span>
                   <a
                     href="https://zl.eyu.ink"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold inline-flex items-center gap-1 transition-colors"
+                    className="px-4 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold inline-flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.4)] transition-all cursor-pointer"
                   >
                     <span>进入狗哥资源库 ↗</span>
                   </a>
                 </div>
+              </div>
+            </div>
+
+            {/* 底部全景军火库遥测指标带 */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 font-mono text-xs pt-1">
+              <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.02] border border-white/10 flex items-center justify-between">
+                <span className="text-white/50 text-[11px]">纯净前端骨架</span>
+                <span className="font-bold text-emerald-400">252+ TSX</span>
+              </div>
+              <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.02] border border-white/10 flex items-center justify-between">
+                <span className="text-white/50 text-[11px]">商业落地真迹</span>
+                <span className="font-bold text-amber-400">2,400+ 份</span>
+              </div>
+              <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.02] border border-white/10 flex items-center justify-between">
+                <span className="text-white/50 text-[11px]">全网获取门槛</span>
+                <span className="font-bold text-emerald-400">100% 永久免费</span>
+              </div>
+              <div className="p-2 sm:p-2.5 rounded-xl bg-white/[0.02] border border-white/10 flex items-center justify-between">
+                <span className="text-white/50 text-[11px]">一线沉淀周期</span>
+                <span className="font-bold text-white">12 YEARS</span>
               </div>
             </div>
           </div>
