@@ -366,11 +366,21 @@ export function ModernFounderHome() {
           <div className="absolute bottom-6 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">+</div>
           <div className="absolute bottom-6 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">+</div>
 
-          {/* 背景巨型建筑字体水印 */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-[0.03]">
-            <span className="text-[22vw] font-black tracking-tighter text-white whitespace-nowrap select-none font-mono">
-              SALIN
-            </span>
+          {/* 背景巨型建筑字体水印 SALIN (高质感镂空描边 + 微光渐变底色) */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0 select-none">
+            {/* 氛围绿色极弱光晕 */}
+            <div className="absolute w-[70vw] h-[35vh] top-[18%] rounded-full bg-emerald-500/[0.05] blur-[100px]" />
+            <div className="relative flex items-center justify-center -translate-y-4 sm:-translate-y-8">
+              <span
+                className="text-[24vw] sm:text-[22vw] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/[0.18] via-white/[0.07] to-transparent whitespace-nowrap font-mono select-none"
+                style={{
+                  WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.16)",
+                  letterSpacing: "-0.04em",
+                }}
+              >
+                SALIN
+              </span>
+            </div>
           </div>
 
           {/* 顶部居中宣言栏 */}
