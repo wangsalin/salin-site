@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import { BackToTop } from "@/components/ui/back-to-top";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
 import { siteConfig } from "@/data/site";
-import { SoundDock } from "@/components/ui/sound-dock";
-import { WeChatShare } from "@/components/ui/wechat-share";
+import { LayoutChrome } from "@/components/layout/layout-chrome";
 
 export const metadata: Metadata = {
   title: {
@@ -42,9 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="h-full" suppressHydrationWarning>
+    <html lang="zh-CN" className="h-full dark" suppressHydrationWarning>
       <head>
-        {/* 微信与全平台社交分享卡片 (OpenGraph & WeChat Share Card) */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={siteConfig.url} />
         <meta property="og:title" content={siteConfig.title} />
@@ -57,23 +52,9 @@ export default function RootLayout({
         <meta name="twitter:title" content={siteConfig.title} />
         <meta name="twitter:description" content={siteConfig.description} />
         <meta name="twitter:image" content={siteConfig.ogImage} />
-        {/* QQ 与 微信生态 Microdata 标题与封面抓取规范 */}
         <meta itemProp="name" content={siteConfig.title} />
         <meta itemProp="description" content={siteConfig.description} />
         <meta itemProp="image" content={siteConfig.wechatThumb} />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                var theme = localStorage.getItem('theme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && prefersDark)) {
-                  document.documentElement.classList.add('dark');
-                }
-              } catch(e) {}
-            `,
-          }}
-        />
         <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js" defer />
         <link
           rel="alternate"
@@ -82,26 +63,10 @@ export default function RootLayout({
           href="/feed.xml"
         />
       </head>
-      <body className="min-h-full flex flex-col antialiased relative">
-        {/* 微信内置浏览器抓取 300x300 首图兜底 (WeChat Share Card Fallback) */}
-        <div style={{ display: "none" }} aria-hidden="true">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://salin.wang/images/wechat-share-300.jpg"
-            alt="狗哥 微信分享卡片封面"
-            width={300}
-            height={300}
-          />
-        </div>
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
-        <BackToTop />
-        <SoundDock />
-        <WeChatShare />
+      <body className="min-h-full flex flex-col antialiased bg-slate-950 text-white selection:bg-emerald-500 selection:text-slate-950">
+        <LayoutChrome>{children}</LayoutChrome>
         <Analytics />
       </body>
     </html>
   );
 }
-
