@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -8,205 +8,107 @@ import {
   Sparkles,
   Code2,
   Terminal,
-  BookOpen,
   Mail,
   Copy,
   Check,
   ExternalLink,
   Clock,
   Scan,
-  ChevronRight,
-  Send,
-  Eye,
+  ChevronDown,
+  ChevronUp,
   X,
-  Heart,
-  Smile,
+  Eye,
+  Store,
   Compass,
-  Sword,
-  Bot,
   Zap,
   Flame,
-  Store,
-  Share2,
-  Layers,
   Award,
+  Layers,
+  Bot,
+  MapPin,
+  TrendingUp,
+  Cpu,
+  Coffee,
 } from "lucide-react";
 import { siteConfig } from "@/data/site";
 
-// 真实手记长文精选
-const FEATURED_NOTES = [
-  {
-    slug: "ten-years-from-local-food-to-ai",
-    title: "从 2014《舌尖上的临沂》到 2026 饿狸：十二年餐饮摸爬滚打的生存哲学",
-    category: "创业随笔",
-    date: "2026-03",
-    readTime: "12 分钟",
-    summary: "2014年愚人节起步，服务过2000+餐饮，亲自开店4年。从服务者到从业者再回到服务者，聊聊这十二年用真金白银换来的真认知。",
-  },
-  {
-    slug: "ai-products-not-from-features",
-    title: "AI 产品不是功能堆出来的：聊聊实体商家为什么真正愿意买单",
-    category: "商业复盘",
-    date: "2026-03",
-    readTime: "8 分钟",
-    summary: "技术自嗨解决不了餐饮痛点。从实体店老板每天的房租、员工、食材损耗与客流焦虑出发，剖析商家真正需要什么样的 AI 工具。",
-  },
-  {
-    slug: "ai-real-business",
-    title: "为什么很多 AI 项目赚不到钱：技术狂欢与商业现金流的鸿沟",
-    category: "实战心得",
-    date: "2026-02",
-    readTime: "10 分钟",
-    summary: "脱离业务场景的 AI 无论多炫目都会死于续费率。拆解从 Demo 到商业现金流必须跨越的三个死穴。",
-  },
-  {
-    slug: "salin-ui-architecture-for-ai",
-    title: "面向 AI 编程的 UI 架构范式：为什么我们放弃了重型组件库",
-    category: "技术架构",
-    date: "2026-02",
-    readTime: "6 分钟",
-    summary: "为什么 AntD / MUI 在 AI 编程时代变得笨重？单文件 TSX 零幽灵依赖为什么是 Cursor 时代的终极答案。",
-  },
-];
-
-// 精选桌面手办与灵感物件 (somehowliving 风格)
+// 桌面手办与灵感物件 (somehowliving 风格)
 const DESK_TOYS = [
   {
-    id: "eli-mascot",
-    name: "饿狸 · 3D 吉祥物",
-    sub: "ELI MASCOT · 餐饮营销问饿狸",
-    tag: "主项目担当",
-    desc: "打着绿色三角领巾的小浣熊。‘餐饮营销没思路，问问饿狸’。代表着高效、靠谱与解决商家真实获客难题的亲和力。",
-    image: "/images/brand/eli-mascot.jpg",
-    badge: "实体 AI 伙伴",
-  },
-  {
-    id: "eyu-origin",
-    name: "饿鱼 · 2014-2021 经典图腾",
-    sub: "EYU 2014 · 舌尖上的临沂",
-    tag: "2000+ 餐饮服务图腾",
-    desc: "大口嚼着包子的萌趣绿鳄鱼。服务过超 2000 家餐饮门店，见证了临沂餐饮的风风雨雨，如今传承为 zl.eyu.ink。",
-    image: "/images/brand/eyu-logo.png",
-    badge: "经典图腾",
-  },
-  {
     id: "luffy",
-    name: "海贼王 · 蒙奇·D·路飞",
-    sub: "ONE PIECE · LUFFY",
-    tag: "桌面精神图腾",
-    desc: "认准了要当海贼王，就绝不回头。写代码和创业一样，十二年来经历起伏，永远保持出海冒险的热血与少年气。",
+    name: "路飞手办",
+    series: "海贼王 · 出海少年",
+    desc: "认准了当海贼王就绝不回头。永远保持出海冒险的少年热血与坚韧。",
     image: "/images/toys/luffy-figure.jpg",
-    badge: "冒险与出海",
+    tag: "ONE PIECE // LUFFY",
   },
   {
     id: "genji",
-    name: "守望先锋 · 源氏",
-    sub: "OVERWATCH · GENJI",
-    tag: "机械身，人类心",
-    desc: "身虽为机械，心犹是人魂。AI 是最锋利的数字忍刀，但解决真实问题的核心永远是对人性和商业本质的洞察。",
+    name: "源氏手办",
+    series: "守望先锋 · 机械游侠",
+    desc: "身虽为机械，心犹是人魂。AI 是最锋利的刀，真实的业务洞察是灵魂。",
     image: "/images/toys/overwatch-figure.jpg",
-    badge: "人机协同",
+    tag: "OVERWATCH // GENJI",
+  },
+  {
+    id: "dog",
+    name: "狗哥柴犬",
+    series: "图腾 · 真实皮实",
+    desc: "接地气、不装逼、皮实耐造。十几年只认一条死理：做点有趣且真实的事。",
+    image: "/images/toys/dog-mascot.jpg",
+    tag: "MASCOT // SHIBA",
+  },
+  {
+    id: "eyu",
+    name: "饿鱼 2014",
+    series: "图腾 · 2000+ 餐饮服务",
+    desc: "2014-2021《舌尖上的临沂》官方徽章。吃包子的鳄鱼，记录 2000 多家小店的烟火气。",
+    image: "/images/brand/eyu-logo.png",
+    tag: "EYU // 2014 VINTAGE",
   },
 ];
 
-// 核心大图项目展厅 (突出主项目“饿狸” + Salin UI + Gouge Hub + 狗哥资源库)
-const SELECTED_PROJECTS = [
+// 英雄大图交互热点
+const HERO_HOTSPOTS = [
   {
     id: "eli",
-    num: "01",
-    title: "饿狸 (Eli) · 专为实体商家打造的 AI 获客工具",
-    enTitle: "AI MARKETING & OPERATIONS AGENT FOR LOCAL BUSINESSES",
-    category: "AI Local Commerce & Content Agent",
-    year: "2026",
-    tag: "当前核心主项目 · 带着完全认知回归",
-    image: "/images/brand/eli-brand-full.png",
-    summary:
-      "餐饮营销没思路，问问饿狸！专为实体商家研发的 AI 智能工作台。深度解决商家的内容生产困境（一键出小红书/抖音/大众点评爆款文案与营销日历）、多维经营数据分析与节日引流活动策划难题。",
-    specs: [
-      { label: "产品定位", val: "实体商家 AI 获客工具" },
-      { label: "核心口号", val: "找客流 · 做活动 · 写文案" },
-      { label: "解决痛点", val: "内容生产困境 / 数据分析" },
-      { label: "创始底气", val: "2000+ 餐饮服务 × 4年亲自开店" },
-    ],
-    primaryLink: "/projects/eli",
-    primaryLabel: "查看饿狸详情复盘 ↗",
-    secondaryAction: "wechat-consult",
+    title: "01 // 饿狸 AI 获客系统",
+    desc: "2026 主导项目：针对实体门店内容生产困难与活动引流乏力的自研 AI 武器库。",
+    coords: "left-[48%] top-[45%]",
   },
   {
-    id: "salin-ui",
-    num: "02",
-    title: "Salin UI · 开发者 AI 界面弹药库",
-    enTitle: "DEVELOPER AI UI ARSENAL & DESIGN SYSTEM",
-    category: "AI Developer Tooling & Framework",
-    year: "2026",
-    tag: "持续高频迭代 · v5.2",
-    image: "/images/showcase/project-salin-ui.jpg",
-    summary:
-      "专为 Cursor、Claude Code、v0 打造的现代 Web 资产枢纽。收录 252+ 单文件纯净 TSX 组件，彻底告别 NPM 重型依赖包缠绕，原生支持 MCP 协议直连，3 次点击把高质量 UI 投喂给 AI。",
-    specs: [
-      { label: "组件收录", val: "252+ 纯净 TSX" },
-      { label: "依赖架构", val: "0 幽灵依赖" },
-      { label: "投喂效率", val: "3-Click Ingest" },
-      { label: "协议支持", val: "Native MCP 2.0" },
-    ],
-    primaryLink: "/ui/",
-    primaryLabel: "检阅弹药库 /ui/ ↗",
-    secondaryAction: "copy-mcp",
+    id: "offline",
+    title: "02 // 实体店压粉锤与票据",
+    desc: "4年亲历开店、管店的实战物证。每天算损耗、搞品控，深知实体生意的血与泪。",
+    coords: "left-[68%] top-[60%]",
   },
   {
-    id: "gouge-hub",
-    num: "03",
-    title: "Gouge Hub · 全域内容中枢与 AI 自动化集群",
-    enTitle: "OMNI-CHANNEL CONTENT AUTOMATION & AGENT COCKPIT",
-    category: "Multi-Agent Swarms & Distribution",
-    year: "2026",
-    tag: "团队自用生产环境",
-    image: "/images/showcase/project-gouge-hub.jpg",
-    summary:
-      "狗哥团队自用的全域内容智能分发中枢。多 Agent 自动追踪行业热点、生成多平台长文草稿、多端自动化分发与微信生态私域线索打标，构建 7×24 小时不间断的数字内容资产系统。",
-    specs: [
-      { label: "底层模型", val: "Claude / DeepSeek" },
-      { label: "分发通道", val: "微信 / 知乎 / 独立站" },
-      { label: "线索沉淀", val: "私域自动化打标" },
-      { label: "能效提升", val: "提升 600% 输出效率" },
-    ],
-    primaryLink: "/projects",
-    primaryLabel: "查看项目矩阵 ↗",
-    secondaryAction: "learn-more",
+    id: "salinui",
+    title: "03 // Salin UI 军火库",
+    desc: "252+ 纯净 TSX 组件库，专为 Cursor、Claude 与 Agent 打造的高颜值代码系统。",
+    coords: "left-[32%] top-[65%]",
   },
   {
-    id: "ziliaoku",
-    num: "04",
-    title: "狗哥资源库 (zl.eyu.ink) · 延续“饿鱼”十年的实操手册",
-    enTitle: "ENTREPRENEURIAL FIELD KNOWLEDGE REPOSITORY",
-    category: "Knowledge Base & Local Commerce",
-    year: "2014—2026",
-    tag: "传承饿鱼 IP · 持续更新",
-    image: "/images/projects/ziliaoku-cover.jpg",
-    summary:
-      "承接 2014 年“饿鱼 / 舌尖上的临沂”创业基因，沉淀十二年一线实战经验的独立知识库。收录实体获客、本地流量逻辑、AI 工具落地操作手册与踩坑血泪经验。",
-    specs: [
-      { label: "知识收录", val: "数百篇精选实操" },
-      { label: "源起品牌", val: "舌尖上的临沂 · 饿鱼" },
-      { label: "访问域名", val: "zl.eyu.ink" },
-      { label: "服务对象", val: "创业者 / 实体老板" },
-    ],
-    primaryLink: "https://zl.eyu.ink",
-    primaryLabel: "打开狗哥资源库 ↗",
-    secondaryAction: "external",
+    id: "eyulogo",
+    title: "04 // 2014 饿鱼图腾",
+    desc: "12年前从愚人节起步，服务超2000家餐饮。初心不改，始终站在实体经营者身旁。",
+    coords: "left-[50%] top-[78%]",
   },
 ];
 
 export function ModernFounderHome() {
-  const [timeStr, setTimeStr] = useState<string>("");
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [timeStr, setTimeStr] = useState("");
   const [copiedWechat, setCopiedWechat] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedMcp, setCopiedMcp] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
   const [showQrModal, setShowQrModal] = useState(false);
-  const [filmGrain, setFilmGrain] = useState(false);
-  const [activeToy, setActiveToy] = useState<string | null>(null);
+  const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // 临沂真实城市时钟
+  const totalSlides = 5;
+
+  // 实时时钟更新
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -220,14 +122,60 @@ export function ModernFounderHome() {
       );
     };
     updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
   }, []);
+
+  // 监听容器滚动，计算当前 Slide 索引
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    const { scrollTop, clientHeight } = containerRef.current;
+    const index = Math.round(scrollTop / clientHeight);
+    if (index !== activeSlide && index >= 0 && index < totalSlides) {
+      setActiveSlide(index);
+    }
+  };
+
+  // 跳转到指定 Slide
+  const scrollToSlide = (index: number) => {
+    if (!containerRef.current) return;
+    const targetY = index * containerRef.current.clientHeight;
+    containerRef.current.scrollTo({
+      top: targetY,
+      behavior: "smooth",
+    });
+    setActiveSlide(index);
+  };
+
+  // 键盘快捷键监听 (上/下方向键)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown" || e.key === "PageDown") {
+        e.preventDefault();
+        if (activeSlide < totalSlides - 1) {
+          scrollToSlide(activeSlide + 1);
+        }
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        if (activeSlide > 0) {
+          scrollToSlide(activeSlide - 1);
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeSlide]);
 
   const handleCopyWechat = () => {
     navigator.clipboard.writeText(siteConfig.wechat);
     setCopiedWechat(true);
     setTimeout(() => setCopiedWechat(false), 2000);
+  };
+
+  const handleCopyMcp = () => {
+    navigator.clipboard.writeText("npx salin-ui add @mcp/server");
+    setCopiedMcp(true);
+    setTimeout(() => setCopiedMcp(false), 2000);
   };
 
   const handleCopyEmail = () => {
@@ -236,801 +184,795 @@ export function ModernFounderHome() {
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
-  const handleCopyMcp = () => {
-    const config = `{
-  "mcpServers": {
-    "salin-ui": {
-      "command": "npx",
-      "args": ["-y", "salin-ui@latest", "mcp"]
-    }
-  }
-}`;
-    navigator.clipboard.writeText(config);
-    setCopiedMcp(true);
-    setTimeout(() => setCopiedMcp(false), 2000);
-  };
-
   return (
-    <div className={`relative min-h-screen bg-[#FBFBFA] dark:bg-[#0B0E0C] text-[#131714] dark:text-[#E8ECE6] transition-colors duration-300 ${filmGrain ? "grain-active" : ""}`}>
-      {/* 胶片颗粒质感层 (dsgnbyhl 风格) */}
-      {filmGrain && (
-        <div
-          className="pointer-events-none fixed inset-0 z-50 opacity-[0.04] mix-blend-overlay"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          }}
-        />
-      )}
-
-      {/* ========================================================
-          HUD 顶部取景器与实时状态栏 (Calissa / dsgnbyhl 灵感)
-          ======================================================== */}
-      <section className="border-b border-[#E3E7E0] dark:border-[#1E2520] bg-white/70 dark:bg-[#101512]/70 backdrop-blur-md sticky top-16 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between text-xs font-mono text-[#626B64] dark:text-[#8D968F] gap-3">
-          {/* 左侧：城市、时间、状态 */}
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              ONLINE
+    <div className="relative w-screen h-screen overflow-hidden bg-[#060907] text-[#E1E8E3] select-none font-sans">
+      {/* 顶部悬浮取景器 HUD (dsgnbyhl.com & arbatov.dev 极简风格) */}
+      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none px-4 sm:px-8 py-3.5 flex items-center justify-between border-b border-white/[0.07] bg-[#060907]/80 backdrop-blur-md">
+        {/* 左侧：品牌与坐标 */}
+        <div className="pointer-events-auto flex items-center gap-3">
+          <button
+            onClick={() => scrollToSlide(0)}
+            className="flex items-center gap-2 group text-left cursor-pointer"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse" />
+            <span className="font-mono text-xs sm:text-sm font-bold tracking-wider text-white group-hover:text-emerald-400 transition-colors">
+              WANG SALIN // 汪狗哥
             </span>
-            <span className="tracking-wide">
-              SHANDONG · LINYI <span className="text-[#141815] dark:text-white font-semibold">{timeStr || "20:55:00"}</span> CST
+          </button>
+          <span className="hidden md:inline text-white/30 text-xs font-mono">|</span>
+          <div className="hidden lg:flex items-center gap-2 font-mono text-[11px] text-white/60">
+            <span>LINYI [35.1041° N, 118.3561° E]</span>
+            <span className="text-white/30">·</span>
+            <span className="text-emerald-400 font-semibold">{timeStr || "20:55:00"} CST</span>
+            <span className="text-white/30">·</span>
+            <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-[10px]">
+              12Y FOUNDER
             </span>
-            <span className="hidden md:inline text-neutral-300 dark:text-neutral-700">|</span>
-            <span className="hidden md:inline text-[11px]">35.1041° N, 118.3564° E</span>
-          </div>
-
-          {/* 右侧：历程标线与颗粒切换 */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] opacity-85 text-emerald-800 dark:text-emerald-300 font-medium">
-              [ 2014.04.01 创业起步 → 2026 饿狸 ELI × SALIN UI ]
-            </span>
-            <button
-              onClick={() => setFilmGrain(!filmGrain)}
-              className={`text-[11px] px-2 py-0.5 rounded border transition-all ${
-                filmGrain
-                  ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-700 dark:text-emerald-300"
-                  : "border-[#DDE2D9] dark:border-[#27302A] hover:bg-neutral-100 dark:hover:bg-neutral-800"
-              }`}
-              title="切换胶片微噪点质感"
-            >
-              [ GRAIN: {filmGrain ? "ON" : "OFF"} ]
-            </button>
-            <button
-              onClick={() => setShowQrModal(true)}
-              className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-medium hover:underline"
-            >
-              微信扫码 ↗
-            </button>
           </div>
         </div>
-      </section>
 
-      {/* ========================================================
-          HERO SECTION: 巨幅 Typography + 真实大图展台 (CHI, QUÁCH + SOURAV BERA)
-          ======================================================== */}
-      <section className="relative pt-12 pb-16 sm:pt-20 sm:pb-24 overflow-hidden">
-        {/* 背景柔和呼吸光影 */}
-        <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-b from-emerald-500/10 via-emerald-500/5 to-transparent blur-3xl rounded-full" />
+        {/* 中间：全屏画卷 5 大页快速切换器 */}
+        <nav className="pointer-events-auto hidden md:flex items-center gap-1 bg-white/[0.04] p-1 rounded-full border border-white/[0.08] shadow-inner font-mono text-xs">
+          {[
+            { id: 0, label: "01 封面画卷" },
+            { id: 1, label: "02 十二年历程" },
+            { id: 2, label: "03 饿狸 ELI" },
+            { id: 3, label: "04 SALIN UI" },
+            { id: 4, label: "05 生活与连接" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => scrollToSlide(tab.id)}
+              className={`px-3 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+                activeSlide === tab.id
+                  ? "bg-emerald-500 text-black font-semibold shadow-[0_0_12px_rgba(16,185,129,0.5)]"
+                  : "text-white/70 hover:text-white hover:bg-white/[0.06]"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          {/* 上半部分：极简大字排版 */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-12 sm:mb-16">
-            {/* 左侧：巨幅姓名与真实双重定位 */}
-            <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/5 text-emerald-800 dark:text-emerald-300 text-xs font-mono tracking-wider">
-                <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                2014.04.01 FOUNDER · 12 YEARS IN F&B TO AI ARCHITECTURE
-              </div>
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#0F1410] dark:text-[#F3F5F2] font-serif leading-[1.05]">
-                WANG SALIN<br />
-                <span className="font-sans text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-neutral-800 dark:text-neutral-200">
-                  汪狗哥
-                </span>
-              </h1>
-              <div className="space-y-2 text-[#4A534D] dark:text-[#A1ABA4] max-w-2xl text-base sm:text-lg leading-relaxed">
-                <p className="font-medium text-[#141815] dark:text-[#E8ECE6]">
-                  “从餐饮服务者，到餐饮从业者，再回到餐饮服务者。”
-                </p>
-                <p className="text-sm sm:text-base">
-                  2014 年 4 月 1 日，创业就像一个天大的愚人节玩笑。
-                  7 年自媒体服务过 2000+ 餐饮商家，4 年亲自下场开店摸爬滚打。
-                  2026 年再次回归服务者，这一次带着对餐饮完全的实战认知——让 AI 工具「饿狸」真正解决商家的痛点。
-                </p>
+        {/* 右侧：触达与页码指示 */}
+        <div className="pointer-events-auto flex items-center gap-2 sm:gap-3 font-mono text-xs">
+          <button
+            onClick={handleCopyWechat}
+            className="px-2.5 py-1 rounded-lg border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-medium inline-flex items-center gap-1.5 transition-colors cursor-pointer text-[11px] sm:text-xs"
+          >
+            {copiedWechat ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+            <span>{copiedWechat ? "已复制微信" : `微信号: ${siteConfig.wechat}`}</span>
+          </button>
+          <button
+            onClick={() => setShowQrModal(true)}
+            className="hidden sm:inline-flex px-2.5 py-1 rounded-lg border border-white/10 hover:border-white/20 bg-white/[0.04] text-white/80 hover:text-white transition-colors cursor-pointer text-[11px]"
+          >
+            <Scan className="w-3 h-3 mr-1 text-emerald-400" />
+            二维码
+          </button>
+          <div className="px-2 py-1 rounded bg-white/[0.06] border border-white/10 text-white font-mono text-[11px] font-bold">
+            [{String(activeSlide + 1).padStart(2, "0")} / 05]
+          </div>
+        </div>
+      </header>
+
+      {/* 右侧垂直滑动导轨与指示器 */}
+      <div className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col items-center gap-3">
+        <button
+          onClick={() => activeSlide > 0 && scrollToSlide(activeSlide - 1)}
+          disabled={activeSlide === 0}
+          className="p-1.5 rounded-full border border-white/10 bg-black/40 hover:bg-white/10 disabled:opacity-20 text-white/70 hover:text-white transition-all cursor-pointer"
+          title="上一页 (Arrow Up)"
+        >
+          <ChevronUp className="w-4 h-4" />
+        </button>
+
+        <div className="flex flex-col gap-2 py-2">
+          {[0, 1, 2, 3, 4].map((idx) => (
+            <button
+              key={idx}
+              onClick={() => scrollToSlide(idx)}
+              className="group relative flex items-center justify-center p-1 cursor-pointer"
+              title={`跳转到第 ${idx + 1} 页`}
+            >
+              <span
+                className={`transition-all duration-300 rounded-full ${
+                  activeSlide === idx
+                    ? "w-2.5 h-6 bg-emerald-400 shadow-[0_0_10px_#10b981]"
+                    : "w-2 h-2 bg-white/20 group-hover:bg-white/50"
+                }`}
+              />
+              <span className="absolute right-6 px-2 py-0.5 rounded bg-black/80 border border-white/10 text-[10px] font-mono text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                0{idx + 1}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={() => activeSlide < totalSlides - 1 && scrollToSlide(activeSlide + 1)}
+          disabled={activeSlide === totalSlides - 1}
+          className="p-1.5 rounded-full border border-white/10 bg-black/40 hover:bg-white/10 disabled:opacity-20 text-white/70 hover:text-white transition-all cursor-pointer"
+          title="下一页 (Arrow Down)"
+        >
+          <ChevronDown className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* 全屏滑动主体容器 (Snap Scrolling 100vh) */}
+      <div
+        ref={containerRef}
+        onScroll={handleScroll}
+        className="w-full h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth no-scrollbar"
+        style={{ scrollBehavior: "smooth" }}
+      >
+        {/* ============================================================ */}
+        {/* SLIDE 01: 封面画卷 (THE FOUNDER CANVAS // 大图视觉) */}
+        {/* ============================================================ */}
+        <section
+          id="slide-0"
+          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8"
+        >
+          {/* 取景器四角十字标记 (dsgnbyhl.com 标志性元素) */}
+          <div className="absolute top-20 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">+</div>
+          <div className="absolute top-20 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">+</div>
+          <div className="absolute bottom-8 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">+</div>
+          <div className="absolute bottom-8 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">+</div>
+
+          {/* 背景巨型建筑字体水印 */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-[0.04]">
+            <span className="text-[22vw] font-black tracking-tighter text-white whitespace-nowrap select-none font-mono">
+              WANG SALIN
+            </span>
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* 左侧：巨幅核心物证大图 (CHI, QUÁCH & dsgnbyhl 风格) */}
+            <div className="lg:col-span-7 flex flex-col items-center justify-center">
+              <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] max-h-[55vh] rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] bg-gradient-to-b from-white/[0.05] to-transparent p-2 group">
+                <div className="relative w-full h-full rounded-xl overflow-hidden">
+                  <Image
+                    src="/images/showcase/hero-editorial-curated.jpg"
+                    alt="汪狗哥创作者核心装备与物证"
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  {/* 暗调渐变保护 */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                  {/* 交互热点探针 */}
+                  {HERO_HOTSPOTS.map((spot) => (
+                    <div
+                      key={spot.id}
+                      className={`absolute ${spot.coords} -translate-x-1/2 -translate-y-1/2 z-20`}
+                    >
+                      <button
+                        onClick={() => setActiveHotspot(activeHotspot === spot.id ? null : spot.id)}
+                        className="relative flex items-center justify-center w-7 h-7 rounded-full bg-black/60 border border-emerald-400/80 text-emerald-300 hover:scale-125 transition-all shadow-[0_0_12px_rgba(16,185,129,0.5)] cursor-pointer"
+                        title={spot.title}
+                      >
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping absolute" />
+                        <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      </button>
+
+                      {/* 弹出式微型标签卡 */}
+                      {activeHotspot === spot.id && (
+                        <div className="absolute left-1/2 bottom-9 -translate-x-1/2 w-64 p-3 rounded-xl bg-black/95 border border-emerald-500/50 backdrop-blur-xl shadow-2xl z-30 font-sans text-left">
+                          <div className="font-mono text-[11px] text-emerald-400 font-bold mb-1">
+                            {spot.title}
+                          </div>
+                          <p className="text-xs text-white/80 leading-relaxed">
+                            {spot.desc}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+
+                  {/* 底部悬浮参数 */}
+                  <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/60">
+                    <span className="px-2 py-0.5 rounded bg-black/60 border border-white/10">
+                      [ ARTIFACT 01 // FOUNDER TOTE & SPECIMENS ]
+                    </span>
+                    <span className="text-emerald-400 hidden sm:inline">
+                      ● 点击发光探针检视物证
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* 右侧：纵向极简导航目录 (CHI, QUÁCH 侧边目录) */}
-            <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-[#E2E6DF] dark:border-[#222A24] pt-4 lg:pt-0 lg:pl-8 space-y-3 font-mono text-xs text-[#525B54] dark:text-[#9AA39C]">
-              <div
-                className="flex justify-between items-center group cursor-pointer"
-                onClick={() => document.getElementById("works")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                <span className="tracking-wider">01 // ELI (饿狸)</span>
-                <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
-                  主项目：商家 AI 获客 ↗
-                </span>
-              </div>
-              <div
-                className="flex justify-between items-center group cursor-pointer"
-                onClick={() => document.getElementById("works")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                <span className="tracking-wider">02 // SALIN UI</span>
-                <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
-                  开发者界面弹药库 ↗
-                </span>
-              </div>
-              <div
-                className="flex justify-between items-center group cursor-pointer"
-                onClick={() => document.getElementById("journey")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                <span className="tracking-wider">03 // STORY</span>
-                <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
-                  12 年餐饮三次蜕变 ↗
-                </span>
-              </div>
-              <div
-                className="flex justify-between items-center group cursor-pointer"
-                onClick={() => document.getElementById("toys")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                <span className="tracking-wider">04 // TOYS</span>
-                <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
-                  手办与玩物精神 ↗
-                </span>
+            {/* 右侧：宣言与核心主张 */}
+            <div className="lg:col-span-5 flex flex-col justify-center space-y-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs w-fit">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                2014.04.01 — 2026 // 12-YEAR ODYSSEY
               </div>
 
-              <div className="pt-3 flex gap-2">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.15] text-white">
+                从实体餐饮 <span className="text-emerald-400 font-serif italic">2000+</span> 商家服务，
+                <br />
+                到自研 AI 商业化落地。
+              </h1>
+
+              <p className="text-sm sm:text-base text-white/70 leading-relaxed font-sans">
+                我是<strong className="text-white font-semibold">狗哥 (Wang Salin)</strong>。
+                2014 年愚人节以《舌尖上的临沂》起步，经历了 7 年自媒体餐饮服务，又亲自下场开了 4 年实体店。
+                2026 年，带着对实体商业刀刀见血的理解重返服务者行列，用自研 AI 为商家斩断获客困境。
+              </p>
+
+              {/* 三大硬核指标 */}
+              <div className="grid grid-cols-3 gap-3 pt-2 font-mono border-y border-white/10 py-3 text-left">
+                <div>
+                  <div className="text-xs text-white/40">ORIGIN</div>
+                  <div className="text-lg sm:text-xl font-bold text-white">2014.04.01</div>
+                  <div className="text-[10px] text-white/60">愚人节开局</div>
+                </div>
+                <div>
+                  <div className="text-xs text-white/40">RESTAURANTS</div>
+                  <div className="text-lg sm:text-xl font-bold text-emerald-400">2,000+</div>
+                  <div className="text-[10px] text-white/60">深度服务商家</div>
+                </div>
+                <div>
+                  <div className="text-xs text-white/40">DEV ARSENAL</div>
+                  <div className="text-lg sm:text-xl font-bold text-white">252+ TSX</div>
+                  <div className="text-[10px] text-white/60">Salin UI 弹药</div>
+                </div>
+              </div>
+
+              {/* 行动按钮 */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button
+                  onClick={() => scrollToSlide(2)}
+                  className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs sm:text-sm inline-flex items-center gap-2 shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  体验旗舰：饿狸 AI 获客
+                </button>
+                <button
+                  onClick={() => scrollToSlide(1)}
+                  className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-white/40 bg-white/[0.05] text-white font-mono text-xs sm:text-sm inline-flex items-center gap-2 transition-all cursor-pointer"
+                >
+                  <span>滑动检阅 12 年史诗</span>
+                  <ChevronDown className="w-4 h-4 text-emerald-400 animate-bounce" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* 底部滚动引导 */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 font-mono text-[10px] text-white/40 tracking-widest hidden sm:flex items-center gap-2">
+            <span>SCROLL DOWN // 滑动滚轮或按下方向键探索</span>
+            <ChevronDown className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+          </div>
+        </section>
+
+        {/* ============================================================ */}
+        {/* SLIDE 02: 十二年餐饮摸爬滚打史诗 (12-YEAR ODYSSEY // 大图实拍) */}
+        {/* ============================================================ */}
+        <section
+          id="slide-1"
+          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8 bg-gradient-to-b from-[#060907] via-[#090e0b] to-[#060907]"
+        >
+          {/* 四角标记 */}
+          <div className="absolute top-20 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">[02]</div>
+          <div className="absolute top-20 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">
+            ARCHIVE // 2014—2026
+          </div>
+
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* 左侧：超大 2017 实拍老照片 + 饿鱼徽章 (真实大图) */}
+            <div className="lg:col-span-6 flex flex-col items-center">
+              <div className="relative w-full aspect-[4/3] sm:aspect-[16/11] max-h-[56vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
+                <Image
+                  src="/images/portrait/salin-2017-food.png"
+                  alt="2017年舌尖上的临沂热气腾腾的实拍现场"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+
+                {/* 饿鱼 2014 正版 Logo 烙印贴纸 */}
+                <div className="absolute top-4 left-4 flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-black/85 border border-emerald-500/40 backdrop-blur-md shadow-xl">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white/10 p-0.5">
+                    <Image
+                      src="/images/brand/eyu-logo.png"
+                      alt="2014 饿鱼官方Logo"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <div>
+                    <div className="font-mono text-xs font-bold text-white flex items-center gap-1">
+                      <span>饿鱼 · EYU</span>
+                      <span className="text-[10px] text-emerald-400">2014</span>
+                    </div>
+                    <div className="text-[10px] text-white/60">《舌尖上的临沂》官方图腾</div>
+                  </div>
+                </div>
+
+                {/* 照片底部参数 */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/70">
+                  <span className="px-2 py-0.5 rounded bg-black/70 border border-white/10">
+                    [ EXPOSURE // 2017.06.18 LINYI HOTPOT ]
+                  </span>
+                  <span className="text-emerald-400">
+                    实战记录 · 真实烟火
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* 右侧：4阶段跌宕起伏的历程卡片 */}
+            <div className="lg:col-span-6 flex flex-col justify-center space-y-4">
+              <div>
+                <div className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wider mb-1">
+                  <Clock className="w-3.5 h-3.5" />
+                  THE 12-YEAR FOUNDER ODYSSEY
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                  创业开了一个愚人节玩笑，
+                  <br />
+                  我用十二年把它变成对实体商业的敬畏。
+                </h2>
+              </div>
+
+              <div className="space-y-3 font-sans">
+                {/* 阶段 1 */}
+                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 transition-colors">
+                  <div className="flex items-center justify-between font-mono text-xs text-emerald-400 mb-1">
+                    <span className="font-bold">2014.04.01 · 创业的愚人节</span>
+                    <span className="text-white/40">STAGE 01</span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                    创业就像开了一个天大的愚人节玩笑。从 0 到 1 创立《舌尖上的临沂》，投身地方自媒体浪潮。
+                  </p>
+                </div>
+
+                {/* 阶段 2 */}
+                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 transition-colors">
+                  <div className="flex items-center justify-between font-mono text-xs text-emerald-400 mb-1">
+                    <span className="font-bold">2014 — 2021 · 餐饮服务者 (7年)</span>
+                    <span className="text-white/40">2,000+ RESTAURANTS</span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                    自媒体公众号矩阵累计服务超 2000 家餐饮，见证了无数小店的火爆与落幕，深谙实体获客痛点。
+                  </p>
+                </div>
+
+                {/* 阶段 3 */}
+                <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 transition-colors">
+                  <div className="flex items-center justify-between font-mono text-xs text-amber-400 mb-1">
+                    <span className="font-bold">2021 — 2025 · 餐饮从业者 (4年躬身开店)</span>
+                    <span className="text-white/40">IN THE TRENCHES</span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                    从岸上的服务者下场变成水里的店老板。算毛利、抠损耗、顶房租，真实体会开店经营之苦。
+                  </p>
+                </div>
+
+                {/* 阶段 4 */}
+                <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/40 hover:border-emerald-500/60 transition-colors">
+                  <div className="flex items-center justify-between font-mono text-xs text-emerald-300 mb-1">
+                    <span className="font-bold">2026 · 认知觉醒，重返服务者</span>
+                    <span className="text-emerald-400">AI × MERCHANTS</span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed">
+                    带着对实体商业刻骨铭心的认知与全栈 AI 能力再次出发。打造「饿狸」，让 AI 真正解决餐饮痛点！
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-1 flex items-center justify-between font-mono text-xs text-white/50">
+                <span>“只有自己亏过、赚过、管过店，做出的 AI 才不飘。”</span>
+                <button
+                  onClick={() => scrollToSlide(2)}
+                  className="text-emerald-400 hover:text-emerald-300 font-bold inline-flex items-center gap-1 cursor-pointer"
+                >
+                  检阅饿狸产品 →
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ============================================================ */}
+        {/* SLIDE 03: 旗舰项目 · 饿狸 ELI (专为实体商家打造的 AI 获客武器) */}
+        {/* ============================================================ */}
+        <section
+          id="slide-2"
+          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8 bg-gradient-to-b from-[#060907] via-[#08120d] to-[#060907]"
+        >
+          {/* 四角标记 */}
+          <div className="absolute top-20 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">[03]</div>
+          <div className="absolute top-20 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">
+            FLAGSHIP // 饿狸 ELI
+          </div>
+
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* 左侧：饿狸 3D 官方品牌大图 (1024x1024 独立大图) */}
+            <div className="lg:col-span-6 flex flex-col items-center">
+              <div className="relative w-full aspect-square max-w-[480px] max-h-[54vh] rounded-3xl overflow-hidden border border-emerald-500/30 shadow-[0_0_50px_rgba(16,185,129,0.2)] bg-gradient-to-b from-emerald-950/40 to-black p-2 group">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden bg-black">
+                  <Image
+                    src="/images/brand/eli-brand-full.png"
+                    alt="饿狸 ELI - 实体商家 AI 获客武器"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/60">
+                    <span className="px-2 py-0.5 rounded bg-black/80 border border-emerald-500/30 text-emerald-400">
+                      [ 饿狸 ELI · 3D 吉祥物与品牌大标 ]
+                    </span>
+                    <span className="text-white/50">专为实体商家研发</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 右侧：核心标语与三大痛点解决方案 */}
+            <div className="lg:col-span-6 flex flex-col justify-center space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs">
+                  <Bot className="w-3.5 h-3.5" />
+                  FLAGSHIP PRODUCT // 实体商家 AI 获客
+                </div>
+
+                {/* 用户钦定主副标语 */}
+                <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                  “餐饮营销没思路，
+                  <br />
+                  <span className="text-emerald-400 font-serif italic">问问饿狸。”</span>
+                </h2>
+
+                <div className="text-base sm:text-xl font-bold font-mono text-emerald-300 tracking-wide">
+                  找客流 | 做活动 | 写文案，问问饿狸。
+                </div>
+              </div>
+
+              <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-sans">
+                实体老板不是大厂高管，不需要假大空的报表。饿狸把复杂的 AI Agent 包装成极简工具，解决小店最头疼的“怎么发小红书、怎么做营销活动、怎么把客人招揽进门”。
+              </p>
+
+              {/* 三大实战功能 */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 font-sans pt-1">
+                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 hover:border-emerald-500/40 transition-colors">
+                  <div className="font-mono text-xs font-bold text-emerald-400 mb-1">
+                    01 // 爆款内容日历
+                  </div>
+                  <p className="text-[11px] text-white/70 leading-relaxed">
+                    大众点评、小红书、抖音探店笔记一键生成，解决老板不会写、员工不愿拍。
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 hover:border-emerald-500/40 transition-colors">
+                  <div className="font-mono text-xs font-bold text-emerald-400 mb-1">
+                    02 // 引流活动策划
+                  </div>
+                  <p className="text-[11px] text-white/70 leading-relaxed">
+                    工作日淡季、开业周年庆引流方案智能推演，核算成本毛利，拒绝瞎打折。
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 hover:border-emerald-500/40 transition-colors">
+                  <div className="font-mono text-xs font-bold text-emerald-400 mb-1">
+                    03 // 差评公关诊断
+                  </div>
+                  <p className="text-[11px] text-white/70 leading-relaxed">
+                    智能解析差评核心根因，输出高情商公关回复，把脉门店复购率与客单价。
+                  </p>
+                </div>
+              </div>
+
+              {/* 行动按钮 */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <a
+                  href="https://eli.eyu.ink"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs sm:text-sm inline-flex items-center gap-2 shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  立即体验饿狸 (eli.eyu.ink) ↗
+                </a>
                 <button
                   onClick={() => setShowQrModal(true)}
-                  className="flex-1 py-2 px-3 rounded bg-[#0F1410] dark:bg-[#F3F5F2] text-white dark:text-[#0F1410] font-sans font-medium text-xs text-center transition-opacity hover:opacity-90"
+                  className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-white/40 bg-white/[0.05] text-white font-mono text-xs sm:text-sm inline-flex items-center gap-2 transition-all cursor-pointer"
                 >
-                  加狗哥微信
+                  <Scan className="w-4 h-4 text-emerald-400" />
+                  预约门店 AI 诊断
                 </button>
-                <Link
-                  href="/projects/eli"
-                  className="py-2 px-3 rounded border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 font-sans font-medium text-xs hover:bg-emerald-500/20 transition-colors text-center"
-                >
-                  了解饿狸
-                </Link>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* ========================================================
-              下半部分：核心“大图双幕展台” (真实生活照 + 2017 创业对比物证)
-              ======================================================== */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            {/* 左侧 8 列：2025 主大图 (山谷公路比耶照片，真实自信) */}
-            <div className="lg:col-span-8 rounded-2xl sm:rounded-3xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] overflow-hidden shadow-xl sm:shadow-2xl relative group flex flex-col justify-between">
-              {/* 取景器角标 */}
-              <div className="absolute top-4 left-4 z-20 font-mono text-[11px] text-[#8C968F] dark:text-[#6E7870] flex items-center gap-1.5 select-none bg-black/40 backdrop-blur-md text-white px-2.5 py-1 rounded-md">
-                <span className="text-emerald-400 font-bold">+</span>
-                <span>2025 // EXPEDITION · WANG SALIN (汪狗哥)</span>
+        {/* ============================================================ */}
+        {/* SLIDE 04: SALIN UI 开发者军火库 (252+ TSX AI UI 弹药库大图) */}
+        {/* ============================================================ */}
+        <section
+          id="slide-3"
+          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8 bg-gradient-to-b from-[#060907] via-[#090d0b] to-[#060907]"
+        >
+          {/* 四角标记 */}
+          <div className="absolute top-20 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">[04]</div>
+          <div className="absolute top-20 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">
+            DEV ARSENAL // SALIN UI
+          </div>
+
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* 左侧：Salin UI 16:9 巨幅设计系统大图 */}
+            <div className="lg:col-span-7 flex flex-col items-center">
+              <div className="relative w-full aspect-[16/10] max-h-[55vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
+                <Image
+                  src="/images/showcase/project-salin-ui.jpg"
+                  alt="Salin UI 开发者组件弹药库高保真设计图"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
+                {/* 底部悬浮参数 */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/70">
+                  <span className="px-2 py-0.5 rounded bg-black/70 border border-white/10">
+                    [ 252+ CLEAN TSX ARSENAL · TAILWIND V4 ]
+                  </span>
+                  <span className="text-emerald-400">
+                    原生 MCP 协议支持
+                  </span>
+                </div>
               </div>
-              <div className="absolute top-4 right-4 z-20 font-mono text-[11px] select-none bg-black/40 backdrop-blur-md text-white px-2.5 py-1 rounded-md flex items-center gap-2">
-                <span>LINYI, SHANDONG</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            </div>
+
+            {/* 右侧：开发者特性与一键终端命令 */}
+            <div className="lg:col-span-5 flex flex-col justify-center space-y-4">
+              <div className="space-y-1.5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs">
+                  <Code2 className="w-3.5 h-3.5" />
+                  DESIGN SYSTEM // 开发者弹药库
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                  Salin UI · 专为 AI Agent
+                  <br />
+                  打造的纯净前端军火库。
+                </h2>
               </div>
 
-              {/* 核心真实照片大图 */}
-              <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-neutral-900 overflow-hidden">
+              <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-sans">
+                为 Cursor、Claude、Antigravity 调教极致优雅的前端骨架。无冗余三方包、纯净 TSX、Tailwind CSS v4，随拷随用。
+              </p>
+
+              {/* 终端 MCP 协议一键复制 */}
+              <div className="p-3.5 rounded-xl bg-black/80 border border-emerald-500/30 shadow-inner font-mono text-xs space-y-2">
+                <div className="flex items-center justify-between text-white/40 text-[10px]">
+                  <span>TERMINAL // MCP PROTOCOL</span>
+                  <span className="text-emerald-400">READY</span>
+                </div>
+                <div className="flex items-center justify-between bg-white/[0.04] p-2 rounded-lg border border-white/10">
+                  <code className="text-emerald-300 font-semibold text-xs sm:text-sm">
+                    npx salin-ui add @mcp/server
+                  </code>
+                  <button
+                    onClick={handleCopyMcp}
+                    className="px-2 py-1 rounded bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-[11px] inline-flex items-center gap-1 cursor-pointer transition-colors"
+                  >
+                    {copiedMcp ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedMcp ? "已复制" : "复制"}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* 核心特性 */}
+              <div className="grid grid-cols-2 gap-2 font-mono text-xs">
+                <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
+                  <div className="text-white/40 text-[10px]">COMPONENTS</div>
+                  <div className="text-base font-bold text-white">252+ 独立TSX</div>
+                </div>
+                <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/10">
+                  <div className="text-white/40 text-[10px]">FRAMEWORK</div>
+                  <div className="text-base font-bold text-emerald-400">React 19 & V4</div>
+                </div>
+              </div>
+
+              {/* 外链 */}
+              <div className="flex items-center gap-3 pt-1 font-mono text-xs">
+                <a
+                  href="https://ui.eyu.ink"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] border border-white/20 text-white font-bold inline-flex items-center gap-1.5 transition-colors"
+                >
+                  <span>访问 Salin UI 文档 (ui.eyu.ink)</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-emerald-400" />
+                </a>
+                <a
+                  href="https://github.com/wangsalin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/60 hover:text-white inline-flex items-center gap-1 transition-colors"
+                >
+                  <span>GitHub</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ============================================================ */}
+        {/* SLIDE 05: 真实生活、手办与直接触达 (LIFE, TOYS & CONNECT // 大图实拍) */}
+        {/* ============================================================ */}
+        <section
+          id="slide-4"
+          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8 bg-gradient-to-b from-[#060907] via-[#0a0f0d] to-[#040605]"
+        >
+          {/* 四角标记 */}
+          <div className="absolute top-20 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">[05]</div>
+          <div className="absolute top-20 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">
+            LIFE & CONTACT // 真实触达
+          </div>
+
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* 左侧：日常桌面手办灵感网格 (somehowliving.tech 风格) */}
+            <div className="lg:col-span-7 flex flex-col justify-center space-y-4">
+              <div>
+                <div className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wider mb-1">
+                  <Coffee className="w-3.5 h-3.5" />
+                  DESK ARTIFACTS & PERSONAL PASSIONS
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                  来聊聊吧，做点有趣且真实的事。
+                </h2>
+                <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-sans pt-1">
+                  生活里爱收集手办公仔，写代码时认准坚韧出海。无论是门店 AI 获客合作、前端设计系统交流，还是聊聊创业路上的坑，随时打个招呼。
+                </p>
+              </div>
+
+              {/* 4 大手办与图腾大图卡片 */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 font-sans">
+                {DESK_TOYS.map((toy) => (
+                  <div
+                    key={toy.id}
+                    className="p-2 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/40 transition-all group flex flex-col justify-between"
+                  >
+                    <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-black/60 mb-2">
+                      <Image
+                        src={toy.image}
+                        alt={toy.name}
+                        fill
+                        sizes="(max-width: 640px) 45vw, 15vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+                      />
+                    </div>
+                    <div>
+                      <div className="font-mono text-xs font-bold text-white group-hover:text-emerald-400 transition-colors flex items-center justify-between">
+                        <span>{toy.name}</span>
+                      </div>
+                      <div className="text-[10px] text-emerald-400 font-mono mb-1">{toy.series}</div>
+                      <p className="text-[10px] text-white/60 leading-tight line-clamp-2">
+                        {toy.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* 直接联系动作栏 */}
+              <div className="pt-2 flex flex-wrap items-center gap-2.5 font-mono text-xs">
+                <button
+                  onClick={handleCopyWechat}
+                  className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold inline-flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.3)] cursor-pointer transition-colors"
+                >
+                  {copiedWechat ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copiedWechat ? "已复制微信" : `复制微信: ${siteConfig.wechat}`}</span>
+                </button>
+                <button
+                  onClick={() => setShowQrModal(true)}
+                  className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-white/40 bg-white/[0.05] text-white font-medium inline-flex items-center gap-2 cursor-pointer transition-colors"
+                >
+                  <Scan className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>扫微信二维码</span>
+                </button>
+                <button
+                  onClick={handleCopyEmail}
+                  className="px-3.5 py-2.5 rounded-xl border border-white/10 hover:border-white/20 text-white/80 hover:text-white inline-flex items-center gap-1.5 cursor-pointer transition-colors text-[11px]"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>{copiedEmail ? "已复制邮箱" : siteConfig.email}</span>
+                </button>
+              </div>
+
+              {/* 阵地外链矩阵 */}
+              <div className="pt-1 flex flex-wrap items-center gap-4 font-mono text-[11px] text-white/50">
+                <a href="https://github.com/wangsalin" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">
+                  GitHub: wangsalin ↗
+                </a>
+                <a href="https://x.com/EyuSalin" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">
+                  X (Twitter): @EyuSalin ↗
+                </a>
+                <a href="https://z1.eyu.ink" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">
+                  智库: z1.eyu.ink ↗
+                </a>
+                <span>公众号: 狗哥的胡思乱想</span>
+              </div>
+            </div>
+
+            {/* 右侧：超大 2025 实拍人物大图 (山路实拍探索) */}
+            <div className="lg:col-span-5 flex flex-col items-center">
+              <div className="relative w-full aspect-[3/4] max-h-[58vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
                 <Image
                   src="/images/portrait/salin-2025.jpg"
-                  alt="汪狗哥 (Wang Salin) 2025 年近照"
+                  alt="2025年狗哥在山路上的实拍照片"
                   fill
-                  priority
-                  className="object-cover object-center group-hover:scale-[1.015] transition-transform duration-700"
-                  sizes="(max-width: 1024px) 100vw, 800px"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
-                {/* 底部渐变半透明注解 */}
-                <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/85 via-black/40 to-transparent text-white">
-                  <div className="font-mono text-xs text-emerald-400 font-semibold mb-1">
-                    [ 2025 · 依然热血，步履不停 ]
-                  </div>
-                  <p className="text-sm text-neutral-200 max-w-xl">
-                    经历过自媒体的黄金时代，也扛过实体开店的风雨。眼神里的笃定和探索欲丝毫未减——12 年创业长跑，我们才刚刚开始。
-                  </p>
-                </div>
-              </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-              {/* 底部 4 维核心实战标尺 */}
-              <div className="border-t border-[#E5E8E2] dark:border-[#202822] bg-[#FAFBF9] dark:bg-[#131915] px-6 py-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left font-mono">
-                <div>
-                  <div className="text-lg sm:text-xl font-bold text-[#141815] dark:text-[#EFF2EE]">
-                    12 年
-                  </div>
-                  <div className="text-xs text-[#6C766F] dark:text-[#8E9790]">
-                    2014.04.01 至今创业历程
-                  </div>
-                </div>
-                <div>
-                  <div className="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400">
-                    2000+
-                  </div>
-                  <div className="text-xs text-[#6C766F] dark:text-[#8E9790]">
-                    深度服务过的餐饮门店
-                  </div>
-                </div>
-                <div>
-                  <div className="text-lg sm:text-xl font-bold text-[#141815] dark:text-[#EFF2EE]">
-                    4 年
-                  </div>
-                  <div className="text-xs text-[#6C766F] dark:text-[#8E9790]">
-                    亲自开店从业实战经验
-                  </div>
-                </div>
-                <div>
-                  <div className="text-lg sm:text-xl font-bold text-[#141815] dark:text-[#EFF2EE]">
-                    饿狸 ELI
-                  </div>
-                  <div className="text-xs text-[#6C766F] dark:text-[#8E9790]">
-                    2026 AI 解决餐饮痛点
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 右侧 4 列：2017 经典火锅扯面生活照与官方饿鱼 Logo */}
-            <div className="lg:col-span-4 flex flex-col gap-6 justify-between">
-              {/* 2017 火锅扯面生活照 (极具感染力与真实感) */}
-              <div className="rounded-2xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-4 shadow-lg group relative overflow-hidden flex-1 flex flex-col justify-between">
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 mb-3">
-                  <Image
-                    src="/images/portrait/salin-2017-food.png"
-                    alt="2017 舌尖上的临沂 火锅扯面"
-                    fill
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    sizes="400px"
-                  />
-                  <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-black/60 text-white font-mono text-[10px]">
-                    2017 · 舌尖上的临沂
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-serif font-bold text-base text-[#141815] dark:text-[#EFF2EE] mb-1">
-                    从一碗热气腾腾的面开始
-                  </h3>
-                  <p className="text-xs text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                    走遍大街小巷，用镜头记录临沂的味道。服务过 2000+ 家餐厅，深知实体商家的不容易与对客流的渴望。
-                  </p>
-                </div>
-              </div>
-
-              {/* 2014-2021 饿鱼官方 Logo */}
-              <div className="rounded-2xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-4 shadow-lg flex items-center gap-4">
-                <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-amber-400/20 shrink-0 border border-amber-500/30 p-1">
-                  <Image
-                    src="/images/brand/eyu-logo.png"
-                    alt="饿鱼官方 logo"
-                    fill
-                    className="object-contain p-0.5"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <div className="font-mono text-xs font-bold text-amber-700 dark:text-amber-400">
-                    ORIGIN // 饿鱼 (2014—2021)
-                  </div>
-                  <div className="text-xs text-[#525B54] dark:text-[#9AA39C]">
-                    服务 2000+ 餐饮的经典吉祥物。如今带着完全认知，进化为 AI 获客工具 <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">「饿狸 ELI」</span>。
-                  </div>
+                {/* 底部悬浮标签 */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/70">
+                  <span className="px-2 py-0.5 rounded bg-black/70 border border-white/10">
+                    [ 2025 SALIN // MOUNTAIN ROAD EXPEDITION ]
+                  </span>
+                  <span className="text-emerald-400">
+                    KEEP REAL
+                  </span>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ========================================================
-          SECTION 01: SELECTED WORKS · 大图旗舰展厅 (主推“饿狸” + Salin UI)
-          ======================================================== */}
-      <section id="works" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-4">
-            <div>
-              <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wider mb-2">
-                // 01 · SELECTED WORKS · 旗舰作品展厅
-              </div>
-              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight font-serif">
-                大图实证：只展示正在交付的核心系统
-              </h2>
-            </div>
-            <p className="text-sm text-[#5A645D] dark:text-[#9AA39C] max-w-md font-sans">
-              一手托起实体商家的 AI 获客工具（饿狸），一手锻造属于极客开发者的界面弹药库（Salin UI）。
-            </p>
+          {/* 极简底部版权标记 */}
+          <div className="absolute bottom-2 left-0 right-0 text-center font-mono text-[10px] text-white/30">
+            © 2014—2026 WANG SALIN. ALL RIGHTS RESERVED. 35.1041° N, 118.3561° E.
           </div>
+        </section>
+      </div>
 
-          {/* 旗舰大图列表 */}
-          <div className="space-y-16 sm:space-y-24">
-            {SELECTED_PROJECTS.map((proj) => (
-              <div
-                key={proj.id}
-                className="rounded-2xl sm:rounded-3xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group"
-              >
-                {/* 顶部元数据标尺 */}
-                <div className="border-b border-[#EAEFE7] dark:border-[#1E2520] px-6 py-3.5 bg-[#FAFBF9] dark:bg-[#131915] flex flex-wrap items-center justify-between text-xs font-mono text-[#6A736C] dark:text-[#8D968F] gap-2">
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-[#141815] dark:text-white">
-                      [{proj.num}]
-                    </span>
-                    <span className="uppercase tracking-wider">
-                      {proj.category}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold">
-                      {proj.tag}
-                    </span>
-                    <span>{proj.year}</span>
-                  </div>
-                </div>
-
-                {/* 核心巨幅实景截图 (大图！) */}
-                <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-neutral-100 dark:bg-neutral-900 overflow-hidden cursor-pointer">
-                  <Image
-                    src={proj.image}
-                    alt={proj.title}
-                    fill
-                    className="object-contain md:object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 p-2 md:p-0"
-                    sizes="(max-width: 1280px) 100vw, 1280px"
-                  />
-                  {/* 取景器悬浮标签 */}
-                  <div className="absolute bottom-4 right-4 z-10 px-3 py-1.5 rounded-lg bg-black/70 backdrop-blur-md text-white font-mono text-xs flex items-center gap-2">
-                    <Eye className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>VIEW LIVE ARTIFACT</span>
-                  </div>
-                </div>
-
-                {/* 下半部分：项目说明与技术规格指标 */}
-                <div className="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                  <div className="lg:col-span-7 space-y-3">
-                    <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold">
-                      {proj.enTitle}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#141815] dark:text-[#EFF2EE]">
-                      {proj.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-[#4E5650] dark:text-[#99A29B] leading-relaxed">
-                      {proj.summary}
-                    </p>
-                    <div className="pt-3 flex flex-wrap gap-3">
-                      {proj.secondaryAction === "external" ? (
-                        <a
-                          href={proj.primaryLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F1410] dark:bg-[#F3F5F2] text-white dark:text-[#0F1410] font-sans font-medium text-xs tracking-wide hover:opacity-90 transition-opacity"
-                        >
-                          {proj.primaryLabel}
-                        </a>
-                      ) : (
-                        <Link
-                          href={proj.primaryLink}
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F1410] dark:bg-[#F3F5F2] text-white dark:text-[#0F1410] font-sans font-medium text-xs tracking-wide hover:opacity-90 transition-opacity"
-                        >
-                          {proj.primaryLabel}
-                        </Link>
-                      )}
-
-                      {proj.secondaryAction === "wechat-consult" && (
-                        <button
-                          onClick={() => setShowQrModal(true)}
-                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 text-xs font-mono font-medium hover:bg-emerald-500/20 transition-colors"
-                        >
-                          <Scan className="w-3.5 h-3.5" />
-                          申请接入饿狸内测
-                        </button>
-                      )}
-
-                      {proj.secondaryAction === "copy-mcp" && (
-                        <button
-                          onClick={handleCopyMcp}
-                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#D5DDD2] dark:border-[#2C372F] text-xs font-mono font-medium hover:border-emerald-500/50 transition-colors"
-                        >
-                          {copiedMcp ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                          {copiedMcp ? "已复制 MCP 协议配置" : "复制 MCP 协议配置"}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* 右侧：规格指标列表 (dsgnbyhl 标尺) */}
-                  <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-[#EAEFE7] dark:border-[#1E2520] pt-4 lg:pt-0 lg:pl-8 grid grid-cols-2 gap-4 font-mono">
-                    {proj.specs.map((sp, idx) => (
-                      <div key={idx} className="p-3 rounded-lg bg-[#FAFBF9] dark:bg-[#131915] border border-[#EAEFE7] dark:border-[#1F2620]">
-                        <div className="text-[11px] text-[#717A73] dark:text-[#8D968F] mb-1">
-                          {sp.label}
-                        </div>
-                        <div className="text-sm font-bold text-[#141815] dark:text-[#E8EAE6]">
-                          {sp.val}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================
-          SECTION 02: THE 12-YEAR JOURNEY · 餐饮十二年三次蜕变 (致敬 somehowliving.tech)
-          ======================================================== */}
-      <section id="journey" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621] bg-[#F7F9F6] dark:bg-[#0E1310]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wider mb-2">
-                // 02 · THE 12-YEAR ODYSSEY · 十二年餐饮三次蜕变
-              </div>
-              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight font-serif">
-                从服务者到从业者，再回到服务者
-              </h2>
-            </div>
-            <p className="text-sm text-[#5A645D] dark:text-[#9AA39C] max-w-md font-sans">
-              只有真金白银肉身下场亏过钱、算过账，才能真正做出击中餐饮商家命脉的 AI 工具。
-            </p>
-          </div>
-
-          {/* 时间轴里程碑 (根据用户自述定制 4 阶段) */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 font-mono">
-            {/* Stage 1 */}
-            <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
-              <div>
-                <div className="text-xs text-amber-700 dark:text-amber-400 font-bold mb-2">
-                  2014.04.01 // 愚人节的起点
-                </div>
-                <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  开一个天大的玩笑
-                </h3>
-                <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  2014 年 4 月 1 日正式迈出创业第一步。像一个愚人节的玩笑，却开启了整整十二年的餐饮长跑。
-                </p>
-              </div>
-              <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                身份: 初心初创 · 少年意气
-              </div>
-            </div>
-
-            {/* Stage 2 */}
-            <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
-              <div>
-                <div className="text-xs text-blue-700 dark:text-blue-400 font-bold mb-2">
-                  2014—2021 // 餐饮服务者 (7年)
-                </div>
-                <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  舌尖上的临沂 · 服务2000+餐饮
-                </h3>
-                <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  深耕自媒体公众号《舌尖上的临沂》（吉祥物饿鱼）。累计服务超 2000 家餐饮品牌，第一次从外部摸透了流量与营销。
-                </p>
-              </div>
-              <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                身份: 餐饮服务者 · 外部视角
-              </div>
-            </div>
-
-            {/* Stage 3 */}
-            <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
-              <div>
-                <div className="text-xs text-rose-700 dark:text-rose-400 font-bold mb-2">
-                  2021—2025 // 餐饮从业者 (4年)
-                </div>
-                <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  肉身下场开店 · 换骨蜕变
-                </h3>
-                <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  不再只是指点江山，真金白银自己开店！抗房租、盯后厨、管员工、算每克原料损耗。真正体会到开店的辛酸与困境。
-                </p>
-              </div>
-              <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                身份: 餐饮从业者 · 敬畏现实
-              </div>
-            </div>
-
-            {/* Stage 4 */}
-            <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
-              <div>
-                <div className="text-xs text-emerald-700 dark:text-emerald-400 font-bold mb-2">
-                  2026 // 重回服务者 · 饿狸诞生
-                </div>
-                <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  完全认知 · 让 AI 解决痛点
-                </h3>
-                <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  带着从业 4 年的深刻认知，再次回到服务者行列。自研「饿狸」AI 获客工具，让 AI 真正解决商家内容困境与营销难题。
-                </p>
-              </div>
-              <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                身份: 完全认知服务者 · AI 赋能
-              </div>
-            </div>
-          </div>
-
-          {/* 建造者闭环 (The Loop，致敬 somehowliving.tech) */}
-          <div className="mt-12 p-8 rounded-2xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] text-center font-mono">
-            <div className="text-xs text-[#7A837C] dark:text-[#8D968F] mb-4">
-              // THE 12-YEAR CONSCIOUSNESS LOOP · 狗哥的核心壁垒
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-sm font-bold text-[#141815] dark:text-[#E8ECE6]">
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">2000+ 餐饮服务经验</span>
-              <span className="text-emerald-500">→</span>
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">4 年真实肉身开店</span>
-              <span className="text-emerald-500">→</span>
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">形成完全商业认知</span>
-              <span className="text-emerald-500">→</span>
-              <span className="px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">造出‘饿狸’AI工具</span>
-              <span className="text-emerald-500">→</span>
-              <span className="font-serif italic text-emerald-600 dark:text-emerald-400 text-lg">repeat.</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================
-          SECTION 03: DESK TOYS · 桌面手办与日常爱好 (致敬 somehowliving.tech)
-          ======================================================== */}
-      <section id="toys" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wider mb-2">
-                // 03 · DESK TOYS & INSPIRATIONS · 桌面手办与玩物
-              </div>
-              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight font-serif">
-                代码和生意之外，是手办和少年气
-              </h2>
-            </div>
-            <p className="text-sm text-[#5A645D] dark:text-[#9AA39C] max-w-md font-sans">
-              桌面上的公仔不仅是摆件，也是随时提醒自己保持热血、保持好奇心、不忘初心的精神图腾。
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {DESK_TOYS.map((toy) => (
-              <div
-                key={toy.id}
-                className="rounded-2xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-5 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between cursor-pointer"
-                onMouseEnter={() => setActiveToy(toy.id)}
-                onMouseLeave={() => setActiveToy(null)}
-              >
-                <div>
-                  {/* 手办图片展台 */}
-                  <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-neutral-50 dark:bg-neutral-900 mb-4 p-2">
-                    <Image
-                      src={toy.image}
-                      alt={toy.name}
-                      fill
-                      className="object-contain group-hover:scale-105 transition-transform duration-500"
-                      sizes="(max-width: 640px) 100vw, 300px"
-                    />
-                    <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
-                      {toy.badge}
-                    </div>
-                  </div>
-
-                  <div className="font-mono text-[11px] text-[#717A73] dark:text-[#8D968F] mb-1">
-                    {toy.sub}
-                  </div>
-                  <h3 className="font-serif font-bold text-lg text-[#141815] dark:text-[#E8ECE6] mb-2">
-                    {toy.name}
-                  </h3>
-                  <p className="text-xs text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                    {toy.desc}
-                  </p>
-                </div>
-
-                <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] font-mono text-[11px] text-emerald-700 dark:text-emerald-400 flex items-center justify-between">
-                  <span>{toy.tag}</span>
-                  <Sparkles className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================
-          SECTION 04: WRITING · 实战手记 (致敬 arbatov.dev)
-          ======================================================== */}
-      <section id="writing" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621] bg-[#F7F9F6] dark:bg-[#0E1310]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-            <div>
-              <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wider mb-2">
-                // 04 · WRITING · 一线真实长文手记
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight font-serif">
-                商业与技术复盘：未经滤镜的思考
-              </h2>
-            </div>
-            <Link
-              href="/notes"
-              className="text-xs font-mono text-emerald-700 dark:text-emerald-400 font-medium hover:underline inline-flex items-center gap-1 self-start md:self-end"
-            >
-              浏览全部 10+ 篇复盘 <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          <div className="border border-[#DFE3DC] dark:border-[#222A23] rounded-2xl bg-white dark:bg-[#121814] divide-y divide-[#EEF2EB] dark:divide-[#1F2621] overflow-hidden shadow-sm">
-            {FEATURED_NOTES.map((note, idx) => (
-              <Link
-                key={note.slug}
-                href={`/notes/${note.slug}`}
-                className="p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#F9FAF8] dark:hover:bg-[#151D17] transition-colors group"
-              >
-                <div className="space-y-1.5 flex-1">
-                  <div className="flex items-center gap-3 font-mono text-xs text-[#717A73] dark:text-[#8D968F]">
-                    <span className="text-emerald-700 dark:text-emerald-400 font-bold">
-                      0{idx + 1}
-                    </span>
-                    <span className="px-2 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-[#4E5650] dark:text-[#99A29B]">
-                      {note.category}
-                    </span>
-                    <span>{note.date}</span>
-                    <span className="hidden sm:inline">· {note.readTime}</span>
-                  </div>
-                  <h3 className="text-base sm:text-lg font-bold font-serif text-[#141815] dark:text-[#E8EAE6] group-hover:text-emerald-600 transition-colors">
-                    {note.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#5B645E] dark:text-[#949E97] line-clamp-1">
-                    {note.summary}
-                  </p>
-                </div>
-                <div className="font-mono text-xs text-[#717A73] dark:text-[#8D968F] group-hover:text-emerald-600 dark:group-hover:text-emerald-400 flex items-center gap-1 self-end md:self-center transition-colors">
-                  <span>阅读全文</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================
-          SECTION 05: LET'S TALK & ELSEWHERE · 即时联络 (致敬 somehowliving.tech & arbatov)
-          ======================================================== */}
-      <section id="contact" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621] bg-[#F7F9F6] dark:bg-[#0E1310]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl sm:rounded-3xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-8 sm:p-12 shadow-xl relative overflow-hidden">
-            {/* 取景器角标 */}
-            <div className="absolute top-4 left-4 font-mono text-[11px] text-[#8C968F] dark:text-[#6E7870] select-none">
-              [ + ] CHANNEL: DIRECT_ACCESS
-            </div>
-            <div className="absolute top-4 right-4 font-mono text-[11px] text-[#8C968F] dark:text-[#6E7870] select-none">
-              REF: SALIN-2026
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-4">
-              <div className="lg:col-span-7 space-y-4">
-                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/5 text-emerald-800 dark:text-emerald-300 text-xs font-mono">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  LET'S TALK // OPEN TO DIALOGUE
-                </div>
-                <h2 className="text-3xl sm:text-5xl font-bold font-serif tracking-tight text-[#0F1410] dark:text-[#F3F5F2]">
-                  来聊聊吧，<br />
-                  做点有趣且真实的事。
-                </h2>
-                <p className="text-sm sm:text-base text-[#4A534D] dark:text-[#A1ABA4] leading-relaxed max-w-xl">
-                  无论你是想让门店接入「饿狸」AI 获客工具，还是讨论「Salin UI」前端设计系统与 Agent 自动化工作流，随时欢迎直接与狗哥打个招呼。
-                </p>
-
-                <div className="pt-2 flex flex-wrap gap-3 font-mono text-xs">
-                  <button
-                    onClick={handleCopyWechat}
-                    className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium inline-flex items-center gap-2 transition-all shadow-sm"
-                  >
-                    {copiedWechat ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                    {copiedWechat ? "已复制微信号" : `复制微信: ${siteConfig.wechat}`}
-                  </button>
-                  <button
-                    onClick={() => setShowQrModal(true)}
-                    className="px-4 py-2.5 rounded-xl border border-[#D5DDD2] dark:border-[#2C372F] font-medium inline-flex items-center gap-2 hover:border-emerald-500/50 transition-colors"
-                  >
-                    <Scan className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    扫微信二维码
-                  </button>
-                  <button
-                    onClick={handleCopyEmail}
-                    className="px-4 py-2.5 rounded-xl border border-[#D5DDD2] dark:border-[#2C372F] font-medium inline-flex items-center gap-2 hover:border-emerald-500/50 transition-colors"
-                  >
-                    {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Mail className="w-3.5 h-3.5" />}
-                    {copiedEmail ? "已复制邮箱" : siteConfig.email}
-                  </button>
-                </div>
-              </div>
-
-              {/* 右侧：全网矩阵 */}
-              <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-[#EAEFE7] dark:border-[#1E2520] pt-6 lg:pt-0 lg:pl-10 space-y-4 font-mono text-xs">
-                <div className="text-[#7A837C] dark:text-[#8D968F] font-bold tracking-wider">
-                  // ELSEWHERE · 全网矩阵
-                </div>
-                <div className="space-y-2.5">
-                  <a
-                    href="/projects/eli"
-                    className="flex justify-between items-center p-3 rounded-lg bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors"
-                  >
-                    <span className="font-bold">旗舰主项目: 饿狸 (ELI) 获客工具</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                  <a
-                    href={siteConfig.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex justify-between items-center p-3 rounded-lg bg-[#FAFBF9] dark:bg-[#141B16] hover:bg-emerald-500/10 hover:text-emerald-600 transition-colors"
-                  >
-                    <span>GitHub: wangsalin</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                  <a
-                    href={siteConfig.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex justify-between items-center p-3 rounded-lg bg-[#FAFBF9] dark:bg-[#141B16] hover:bg-emerald-500/10 hover:text-emerald-600 transition-colors"
-                  >
-                    <span>X (Twitter): @EyuSalin</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                  <a
-                    href={siteConfig.ziliaokuUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex justify-between items-center p-3 rounded-lg bg-[#FAFBF9] dark:bg-[#141B16] hover:bg-emerald-500/10 hover:text-emerald-600 transition-colors"
-                  >
-                    <span>狗哥资源库: zl.eyu.ink</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                  <div className="flex justify-between items-center p-3 rounded-lg bg-[#FAFBF9] dark:bg-[#141B16]">
-                    <span>微信公众号: {siteConfig.gongzhonghao}</span>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">+关注</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 微信二维码弹窗 Modal */}
+      {/* 微信二维码弹窗 (高保真大图弹窗) */}
       {showQrModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setShowQrModal(false)}
-        >
-          <div
-            className="relative w-full max-w-sm rounded-2xl bg-white dark:bg-[#141A16] border border-neutral-200 dark:border-neutral-800 p-6 shadow-2xl text-center"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative w-full max-w-sm rounded-2xl bg-[#0d1410] border border-emerald-500/40 p-6 text-center shadow-2xl space-y-4">
             <button
               onClick={() => setShowQrModal(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-500"
+              className="absolute top-4 right-4 p-1 rounded-full text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
-            <div className="font-mono text-xs text-emerald-600 dark:text-emerald-400 font-semibold mb-1">
-              WECHAT // DIRECT CONTACT
+
+            <div className="space-y-1">
+              <div className="font-mono text-xs text-emerald-400 font-bold tracking-wider">
+                WECHAT DIRECT // 微信直接沟通
+              </div>
+              <h3 className="text-xl font-bold text-white">扫描二维码添加狗哥微信</h3>
+              <p className="text-xs text-white/60">
+                微信号: <code className="text-emerald-400 font-mono font-bold">{siteConfig.wechat}</code>
+              </p>
             </div>
-            <h3 className="text-lg font-bold font-serif mb-4">
-              微信直接扫码加好友
-            </h3>
-            <div className="relative w-56 h-56 mx-auto rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-50 p-2 mb-4">
+
+            <div className="relative w-56 h-56 mx-auto rounded-xl overflow-hidden border-2 border-emerald-500/50 bg-white p-2 shadow-inner">
               <Image
                 src="/images/wechat-qr.jpg"
                 alt="狗哥微信二维码"
                 fill
-                className="object-contain"
+                className="object-contain p-1"
               />
             </div>
-            <div className="text-xs text-neutral-500 font-mono mb-4">
-              微信号: <span className="text-neutral-900 dark:text-white font-bold">{siteConfig.wechat}</span>
+
+            <div className="pt-1">
+              <button
+                onClick={handleCopyWechat}
+                className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs inline-flex items-center justify-center gap-2 cursor-pointer transition-colors"
+              >
+                {copiedWechat ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                <span>{copiedWechat ? "微信号已成功复制" : "复制微信号 50219067"}</span>
+              </button>
             </div>
-            <button
-              onClick={handleCopyWechat}
-              className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs flex items-center justify-center gap-2 transition-colors"
-            >
-              {copiedWechat ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              {copiedWechat ? "微信号已复制！" : "一键复制微信号"}
-            </button>
           </div>
         </div>
       )}
