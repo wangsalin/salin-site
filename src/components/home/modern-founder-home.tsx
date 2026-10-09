@@ -818,9 +818,9 @@ export function ModernFounderHome() {
                 </div>
 
                 <div className="pt-3 flex items-center justify-between border-t border-white/10 font-mono text-xs">
-                  <span className="text-white/40 text-[11px]">文档: ui.eyu.ink</span>
+                  <span className="text-white/40 text-[11px]">文档: salin.wang/ui</span>
                   <a
-                    href="https://ui.eyu.ink"
+                    href="https://salin.wang/ui"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-3 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.15] text-white font-bold inline-flex items-center gap-1 transition-colors"

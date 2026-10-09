@@ -11,7 +11,7 @@ export const siteConfig = {
     "Salin（身边朋友大多叫我狗哥）的个人独立站。2014年4月1日创业，2014-2021年运营自媒体《舌尖上的临沂》服务超2000家餐饮；2021-2025年亲自下场开店做餐饮；2026年带着对餐饮完全的认知再次回归，用 AI 工具‘饿狸 (youeli.com)’与‘Salin UI’解决实体真实痛点。",
   url: "https://salin.wang",
   eliUrl: "https://youeli.com",
-  salinUiUrl: "https://ui.eyu.ink",
+  salinUiUrl: "https://salin.wang/ui",
   ziliaokuUrl: "https://zl.eyu.ink",
   ziliaokuBackupUrl: "https://ziliaoku.fun",
   location: "山东 · 临沂",
@@ -31,7 +31,7 @@ export const siteConfig = {
   navLinks: [
     { label: "首页", href: "/" },
     { label: "饿狸 AI 获客", href: "https://youeli.com" },
-    { label: "Salin UI 弹药库", href: "https://ui.eyu.ink" },
+    { label: "Salin UI 弹药库", href: "https://salin.wang/ui" },
     { label: "狗哥资源库 ↗", href: "https://zl.eyu.ink" },
   ],
   socialLinks: {
