@@ -102,7 +102,7 @@ const HERO_HOTSPOTS = [
   },
 ];
 
-// 饿狸实战 3D 场景切换配置 (图三、四、五修改整合)
+// 饿狸实战 3D 场景切换配置 (图三、四、五修改整合 · 带实时遥测数据卡片)
 const ELI_SCENES = [
   {
     id: "kitchen",
@@ -110,6 +110,8 @@ const ELI_SCENES = [
     sub: "菜品成本与毛利率精细核算",
     image: "/images/projects/eli/eli-scene-kitchen.jpg",
     desc: "实时把脉招牌菜与低效菜品，精准把控食材毛利与出品品质。",
+    telemetryTop: "🔥 招牌菜食材毛利 68.4% · 动态追踪",
+    telemetryBottom: "⚠️ 预警剔除 2 款低效菜品，止损降本",
   },
   {
     id: "meeting",
@@ -117,6 +119,8 @@ const ELI_SCENES = [
     sub: "门店营业额与翻台率推演",
     image: "/images/projects/eli/eli-scene-meeting.jpg",
     desc: "推演淡季引流套餐与客流复购，让每一次营销活动都有据可依。",
+    telemetryTop: "📈 淡季午市翻台率推演 +34.8%",
+    telemetryBottom: "🎯 晚市客单价提升预测 +¥18.5",
   },
   {
     id: "desk",
@@ -124,6 +128,45 @@ const ELI_SCENES = [
     sub: "小红书/点评文案与内容日历",
     image: "/images/projects/eli/eli-scene-desk.jpg",
     desc: "一键生成探店文案与爆款笔记，彻底告别老板不会写、员工不愿拍。",
+    telemetryTop: "⚡ 小红书爆款笔记生成 · 1.8 秒输出",
+    telemetryBottom: "📱 微信朋友圈/大众点评日历已排期",
+  },
+];
+
+// 饿狸现场“问问饿狸”AI 真实推演模拟问题集 (小店真实痛点)
+const ELI_PROMPTS = [
+  {
+    id: "traffic",
+    label: "📢 周三写字楼没客流？",
+    question: "周边写字楼周三中午没客人，怎么做低成本引流？",
+    tag: "引流获客",
+    response: {
+      strategy: "策划「周三打工人能量充电日」限量特惠，以高毛利饮品搭售爆款主食。",
+      copy: "【小红书/朋友圈爆款文案】\n‘周三过半，打工人急需回血！今天中午凭工牌到店，招牌炙烤牛肉饭立减 ¥8，再送生椰冷萃一杯！午休1小时，先把肚子喂饱～’",
+      metric: "毛利率维持 68.4% · 预计提升午市翻台率 35%+",
+    },
+  },
+  {
+    id: "review",
+    label: "💬 2星差评嫌上菜慢？",
+    question: "大众点评被打了 2 星差评，抱怨上菜慢且态度冷淡，怎么高情商回复？",
+    tag: "差评公关",
+    response: {
+      strategy: "真诚道歉 + 归因出餐动线整改 + 赋予主厨诚意赔付方案，转化潜在流失老客。",
+      copy: "【大众点评商家回复】\n‘非常抱歉给您的用餐带来了糟糕体验！我是主厨 Salin，今天高峰期出餐协同确实出现了延误，已在店内复盘优化出品动线。诚挚邀请您凭此回复再次到店，我亲自为您下厨并加赠手作招牌甜品一份，请给我们一次弥补的机会！’",
+      metric: "公关挽回率预估 78% · 消除潜在到店顾客疑虑",
+    },
+  },
+  {
+    id: "newstore",
+    label: "✍️ 新店开业爆款文案？",
+    question: "新店试营业第 1 周，小红书和朋友圈文案怎么写吸引年轻人自发打卡？",
+    tag: "爆款文案",
+    response: {
+      strategy: "打造「本地宝藏新店」首发情绪共鸣 + 前 100 桌到店实体周边福利锚点。",
+      copy: "【小红书种草笔记】\n‘谁懂啊！临沂这家新开的藏宝餐厅终于被我挖到了！工业风出片率 100%，招牌现熬浓汤直接香迷糊了…人均 35 吃撑！试营业前 100 桌还送饿狸限定贴纸！速冲！’",
+      metric: "探店互动率预估 4.2x · 自发拍照打卡率提升 60%",
+    },
   },
 ];
 
@@ -234,6 +277,7 @@ export function ModernFounderHome() {
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
   const [selectedToy, setSelectedToy] = useState<typeof DESK_TOYS[0]>(DESK_TOYS[0]);
   const [activeEliScene, setActiveEliScene] = useState<typeof ELI_SCENES[0]>(ELI_SCENES[0]);
+  const [activeEliPrompt, setActiveEliPrompt] = useState(0);
   const [activeOdysseyStage, setActiveOdysseyStage] = useState(0);
   // 电影级原位破晓开幕光效状态 (In-Situ Cinematic Dawn Reveal · 无黑屏·零等待·眼前一亮)
   const [isDawnRevealing, setIsDawnRevealing] = useState(true);
@@ -908,23 +952,63 @@ export function ModernFounderHome() {
           </div>
         </section>
 
+        {/* ============================================================ */}
+        {/* SLIDE 03: 饿狸 (旗舰案例 · 实体餐饮 AI 解决方案 · youeli.com) */}
+        {/* ============================================================ */}
         <section
           id="slide-2"
-          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8 bg-gradient-to-b from-[#050806] via-[#08120d] to-[#050806]"
+          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-10 lg:px-16 2xl:px-24 pt-14 pb-6 bg-[#040705]"
         >
-          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">[03]</div>
-          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">
-            FLAGSHIP // youeli.com
+          {/* 动态全景背光光晕：随当前场景平滑切换环境色温 */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-1/4 -right-1/4 w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] rounded-full bg-emerald-500/10 blur-[140px] transition-all duration-1000" />
+            <div className="absolute -bottom-1/4 -left-1/4 w-[70vw] h-[70vw] max-w-[700px] max-h-[700px] rounded-full bg-teal-500/10 blur-[130px] transition-all duration-1000" />
+            {/* 微点阵背景纹理 */}
+            <div
+              className="absolute inset-0 opacity-[0.035]"
+              style={{
+                backgroundImage: "radial-gradient(#10b981 1px, transparent 1px)",
+                backgroundSize: "28px 28px",
+              }}
+            />
           </div>
 
-          <div className="w-full px-6 sm:px-14 lg:px-20 2xl:px-28 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-            {/* 左侧 (52%)：标语、官方网址与三大实战解法 */}
-            <div className="lg:col-span-6 flex flex-col justify-center space-y-4">
+          {/* 巨幅建筑字体水印 YOUELI.COM (天际线延展 · 宏大品牌气势) */}
+          <div className="absolute inset-x-0 top-[2%] sm:top-[3.5%] z-0 flex items-center justify-start overflow-hidden pointer-events-none select-none pl-6 sm:pl-14 lg:pl-20">
+            <span
+              className="text-[18vw] sm:text-[17vw] font-black text-transparent bg-clip-text bg-gradient-to-r from-white/[0.14] via-white/[0.04] to-transparent whitespace-nowrap font-mono select-none uppercase tracking-wider"
+              style={{
+                WebkitTextStroke: "1px rgba(255, 255, 255, 0.16)",
+                letterSpacing: "0.03em",
+              }}
+            >
+              YOUELI.COM
+            </span>
+          </div>
+
+          {/* HUD 取景器标记 */}
+          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/30 select-none z-10">
+            [03] // FLAGSHIP AI PRODUCT
+          </div>
+          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/30 select-none z-10 hidden sm:block">
+            AI AGENT FOR LOCAL COMMERCE · youeli.com
+          </div>
+          <div className="absolute bottom-16 left-6 sm:left-12 font-mono text-xs text-white/20 select-none z-10">+</div>
+          <div className="absolute bottom-16 right-6 sm:right-12 font-mono text-xs text-white/20 select-none z-10">+</div>
+
+          {/* 全屏铺开 50/50 网格主体 */}
+          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 xl:gap-14 items-center relative z-10">
+            {/* 左侧 (50%)：主标语 + 饿狸吉祥物 + 现场实时“问问饿狸”AI 体验器 */}
+            <div className="lg:col-span-6 flex flex-col justify-center space-y-3.5 text-left">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs backdrop-blur-sm">
                     <Bot className="w-3.5 h-3.5" />
                     FLAGSHIP // 实体商家 AI 获客武器
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-emerald-500/20 bg-black/60 text-emerald-300 font-mono text-[11px] backdrop-blur-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    饿狸 AI 正在线 · 随时提问
                   </div>
                   <a
                     href="https://youeli.com"
@@ -932,7 +1016,7 @@ export function ModernFounderHome() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 bg-white/[0.06] hover:bg-white/[0.12] text-white font-mono text-xs transition-colors"
                   >
-                    <span>官方网址: youeli.com</span>
+                    <span>youeli.com</span>
                     <ArrowUpRight className="w-3 h-3 text-emerald-400" />
                   </a>
                 </div>
@@ -944,78 +1028,104 @@ export function ModernFounderHome() {
                   <span className="text-emerald-400 font-serif italic">问问饿狸。”</span>
                 </h2>
 
-                <div className="text-base sm:text-xl font-bold font-mono text-emerald-300 tracking-wide">
+                <div className="text-sm sm:text-lg font-bold font-mono text-emerald-300 tracking-wide">
                   找客流 | 做活动 | 写文案，问问饿狸。
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-sans">
-                实体老板不需要假大空的数字化报表。饿狸把复杂的 AI Agent 包装成极简工具，解决小店最头疼的“怎么发小红书、怎么做营销活动、怎么把客人招揽进门”。
-              </p>
-
-              {/* 三大实战功能卡片 */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 font-sans pt-1">
-                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 hover:border-emerald-500/40 transition-colors">
-                  <div className="font-mono text-xs font-bold text-emerald-400 mb-1">
-                    01 // 爆款内容日历
-                  </div>
-                  <p className="text-[11px] text-white/70 leading-relaxed">
-                    大众点评、小红书、抖音探店文案一键产出，解决老板不会写、员工不愿拍。
-                  </p>
+              {/* 现场实时体验舱：真实餐饮场景 AI 推演交互 */}
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.03] border border-emerald-500/30 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)] space-y-2.5">
+                <div className="flex items-center justify-between text-xs font-mono text-white/60 border-b border-white/10 pb-2">
+                  <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                    现场体验「问问饿狸」AI 决策
+                  </span>
+                  <span className="text-[10px] text-white/40">点击下方痛点 · 实时推演</span>
                 </div>
 
-                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 hover:border-emerald-500/40 transition-colors">
-                  <div className="font-mono text-xs font-bold text-emerald-400 mb-1">
-                    02 // 引流活动策划
-                  </div>
-                  <p className="text-[11px] text-white/70 leading-relaxed">
-                    工作日淡季、开业周年庆引流方案智能推演，核算真实毛利，拒绝瞎打折。
-                  </p>
+                {/* 3 个实战问题标签 */}
+                <div className="flex flex-wrap gap-1.5">
+                  {ELI_PROMPTS.map((p, idx) => (
+                    <button
+                      key={p.id}
+                      onClick={() => setActiveEliPrompt(idx)}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
+                        activeEliPrompt === idx
+                          ? "bg-emerald-500 text-black font-bold shadow-[0_0_12px_rgba(16,185,129,0.5)]"
+                          : "bg-white/[0.05] hover:bg-white/10 text-white/70 hover:text-white border border-white/10"
+                      }`}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
                 </div>
 
-                <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 hover:border-emerald-500/40 transition-colors">
-                  <div className="font-mono text-xs font-bold text-emerald-400 mb-1">
-                    03 // 差评公关诊断
+                {/* 动态回复卡片 */}
+                <div className="p-3 rounded-xl bg-black/60 border border-emerald-500/20 space-y-2 text-xs font-sans">
+                  <div className="flex items-center justify-between text-[11px] font-mono text-emerald-400/80">
+                    <span>💡 【{ELI_PROMPTS[activeEliPrompt].tag}】实操策略：</span>
+                    <span className="text-[10px] text-white/40">用时 0.4s · 真实餐饮实战方案</span>
                   </div>
-                  <p className="text-[11px] text-white/70 leading-relaxed">
-                    深度解析差评根因，智能输出高情商回复，把脉门店复购率与客单价。
-                  </p>
+                  <div className="text-white/90 text-[12px] font-medium leading-relaxed">
+                    {ELI_PROMPTS[activeEliPrompt].response.strategy}
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 font-mono text-[11px] text-emerald-300/90 whitespace-pre-line leading-relaxed">
+                    {ELI_PROMPTS[activeEliPrompt].response.copy}
+                  </div>
+                  <div className="flex items-center justify-between pt-1 border-t border-white/5 font-mono text-[10px] text-white/50">
+                    <span>📈 预估成效：{ELI_PROMPTS[activeEliPrompt].response.metric}</span>
+                    <a
+                      href="https://youeli.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1 font-bold"
+                    >
+                      在 youeli.com 完整生成 ↗
+                    </a>
+                  </div>
                 </div>
               </div>
 
               {/* 行动按钮 */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-1">
                 <a
                   href="https://youeli.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs sm:text-sm inline-flex items-center gap-2 shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs sm:text-sm inline-flex items-center gap-2 shadow-[0_0_25px_rgba(16,185,129,0.45)] transition-all cursor-pointer group"
                 >
-                  <Sparkles className="w-4 h-4" />
-                  立即访问 youeli.com ↗
+                  <Sparkles className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+                  立即访问 youeli.com 官网 ↗
                 </a>
+                <Link
+                  href="/projects/eli"
+                  className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-emerald-500/50 bg-white/[0.05] hover:bg-white/[0.08] text-white font-mono text-xs sm:text-sm inline-flex items-center gap-2 transition-all cursor-pointer"
+                >
+                  <Layers className="w-4 h-4 text-emerald-400" />
+                  查看案例复盘
+                </Link>
                 <button
                   onClick={() => setShowQrModal(true)}
                   className="px-4 py-2.5 rounded-xl border border-white/20 hover:border-white/40 bg-white/[0.05] text-white font-mono text-xs sm:text-sm inline-flex items-center gap-2 transition-all cursor-pointer"
                 >
                   <Scan className="w-4 h-4 text-emerald-400" />
-                  预约门店 AI 方案
+                  预约门店方案
                 </button>
               </div>
             </div>
 
-            {/* 右侧 (48%)：饿狸 3D 真实实战场景画卷 (支持 3 场景交互切换) */}
-            <div className="lg:col-span-6 flex flex-col items-center space-y-2.5">
-              {/* 场景切换药丸 */}
-              <div className="flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/10 font-mono text-[11px]">
+            {/* 右侧 (50%)：饿狸 3D 真实实战场景画卷 + 浮动数据 HUD 遥测芯片 */}
+            <div className="lg:col-span-6 flex flex-col items-center space-y-2.5 w-full">
+              {/* 场景切换药丸导航 */}
+              <div className="flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/10 font-mono text-[11px] w-full max-w-lg justify-between">
                 {ELI_SCENES.map((scene) => (
                   <button
                     key={scene.id}
                     onClick={() => setActiveEliScene(scene)}
-                    className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
+                    className={`flex-1 py-1.5 px-2 rounded-full transition-all cursor-pointer text-center text-xs ${
                       activeEliScene.id === scene.id
-                        ? "bg-emerald-500 text-black font-bold shadow-[0_0_10px_rgba(16,185,129,0.5)]"
-                        : "text-white/70 hover:text-white"
+                        ? "bg-emerald-500 text-black font-bold shadow-[0_0_15px_rgba(16,185,129,0.5)]"
+                        : "text-white/70 hover:text-white hover:bg-white/[0.05]"
                     }`}
                   >
                     {scene.label}
@@ -1023,34 +1133,60 @@ export function ModernFounderHome() {
                 ))}
               </div>
 
-              {/* 大图容器 */}
-              <div className="relative w-full aspect-[16/10] max-h-[50vh] rounded-2xl overflow-hidden border border-emerald-500/40 shadow-[0_0_50px_rgba(16,185,129,0.2)] bg-black group">
+              {/* 大图容器 (带浮动 HUD 数据卡片) */}
+              <div className="relative w-full aspect-[16/10] max-h-[50vh] rounded-2xl overflow-hidden border border-emerald-500/40 shadow-[0_0_60px_rgba(16,185,129,0.25)] bg-black group">
                 <Image
                   src={activeEliScene.image}
                   alt={activeEliScene.label}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
+                {/* 景深暗角与渐变过渡 */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/30 pointer-events-none" />
 
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between font-mono text-[11px] text-white/80">
-                  <span className="px-2 py-0.5 rounded bg-black/80 border border-emerald-500/30 text-emerald-300">
-                    [ {activeEliScene.label} // {activeEliScene.sub} ]
-                  </span>
+                {/* 浮动 HUD 遥测芯片 (顶部) */}
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                  <div className="px-2.5 py-1 rounded-lg bg-black/80 border border-emerald-500/40 backdrop-blur-md font-mono text-[11px] text-emerald-300 flex items-center gap-1.5 shadow-lg">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                    {activeEliScene.telemetryTop}
+                  </div>
+                  <div className="px-2.5 py-1 rounded-lg bg-black/80 border border-white/15 backdrop-blur-md font-mono text-[10px] text-white/70 hidden sm:block">
+                    LIVE PRODUCTION SCENE
+                  </div>
+                </div>
+
+                {/* 浮动 HUD 遥测芯片 (底部信息卡) */}
+                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-black/85 border border-white/15 backdrop-blur-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                  <div className="space-y-0.5 text-left">
+                    <div className="font-mono text-xs text-emerald-400 font-bold flex items-center gap-1.5">
+                      <span>[ {activeEliScene.label} // {activeEliScene.sub} ]</span>
+                    </div>
+                    <div className="text-[11px] text-white/80 line-clamp-1">
+                      {activeEliScene.desc}
+                    </div>
+                  </div>
                   <a
                     href="https://youeli.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-emerald-400 font-bold transition-colors"
+                    className="shrink-0 px-3 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 hover:text-white font-mono text-[11px] font-bold transition-colors inline-flex items-center gap-1"
                   >
-                    youeli.com ↗
+                    <span>youeli.com</span>
+                    <ArrowUpRight className="w-3 h-3" />
                   </a>
                 </div>
+              </div>
+
+              {/* 场景简要说明条 */}
+              <div className="w-full max-w-lg flex items-center justify-between text-[11px] font-mono text-white/40 px-2">
+                <span>📍 12年实体餐饮一线方法论打包</span>
+                <span className="text-emerald-400/80 font-bold">已服务 2000+ 家门店</span>
               </div>
             </div>
           </div>
         </section>
+
 
         {/* ============================================================ */}
         {/* SLIDE 04: 双核开发者与商业军火库 (Salin UI + 狗哥资源库) */}

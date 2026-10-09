@@ -259,7 +259,7 @@ export const projects: Project[] = [
   {
     name: "饿狸 (Eli)",
     slug: "eli",
-    subtitle: "专注于餐饮 AI 服务的商家智能工作台与知识资产平台",
+    subtitle: "“餐饮营销没思路，问问饿狸” · 专注于餐饮 AI 获客与内容增长的智能工作台",
     summary:
       "专为餐饮商家打造的 AI 服务平台（以萌趣小浣熊‘饿狸’为品牌吉祥物）。整合商家知识库、AI 内容自动化、小红书/抖音营销日历与私域复购引擎。",
     description:
@@ -302,7 +302,7 @@ export const projects: Project[] = [
     ],
     technologies: ["Next.js", "React", "TypeScript", "LangChain", "VectorDB", "Tailwind CSS"],
     lastUpdated: "2025-07",
-    externalUrl: "",
+    externalUrl: "https://youeli.com",
     githubUrl: siteConfig.github,
   },
   {
