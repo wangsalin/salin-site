@@ -6,7 +6,17 @@ import { CosmicCanvas } from "./cosmic-canvas";
 import { PlanetRender, PlanetType } from "./planet-render";
 import { CosmicHUD, WAYPOINTS } from "./cosmic-hud";
 import { PlanetModal, ProjectDetail } from "./planet-modal";
-import { ArrowUpRight, Sparkles, ChevronDown, MessageSquare, Mail, RotateCcw, Glasses } from "lucide-react";
+import {
+  ArrowUpRight,
+  Sparkles,
+  ChevronDown,
+  MessageSquare,
+  Mail,
+  RotateCcw,
+  Zap,
+  Gauge,
+  Compass,
+} from "lucide-react";
 
 const CELESTIAL_STATIONS = [
   {
@@ -216,8 +226,8 @@ export function CosmicJourney() {
 
   const [scrollProgress, setScrollProgress] = useState(0); // 0 to 1
   const [currentAU, setCurrentAU] = useState(0);
-  const [activeStationIndex, setActiveStationIndex] = useState(0);
   const [warpMultiplier, setWarpMultiplier] = useState(0);
+  const [isManualWarping, setIsManualWarping] = useState(false);
 
   // 3D Parallax & Stereoscopic Glasses states
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
@@ -239,6 +249,7 @@ export function CosmicJourney() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  // Continuous Scroll Flight Computation
   useEffect(() => {
     let lastScrollTop = 0;
     let lastTime = Date.now();
@@ -263,30 +274,11 @@ export function CosmicJourney() {
       const dt = Math.max(16, now - lastTime);
       const dy = Math.abs(scrollTop - lastScrollTop);
       const velocity = dy / dt; // px per ms
-      const warp = Math.min(1, velocity * 0.45);
+      const warp = Math.min(1, velocity * 0.5);
       setWarpMultiplier(warp);
 
       lastScrollTop = scrollTop;
       lastTime = now;
-
-      // Map progress to distance in AU (0 to 15 AU)
-      const au = p * 15.0;
-      setCurrentAU(au);
-
-      // Determine active station based on scroll thresholds
-      if (p < 0.12) {
-        setActiveStationIndex(0); // Earth
-      } else if (p < 0.32) {
-        setActiveStationIndex(1); // Moon
-      } else if (p < 0.52) {
-        setActiveStationIndex(2); // Mars
-      } else if (p < 0.72) {
-        setActiveStationIndex(3); // Jupiter
-      } else if (p < 0.88) {
-        setActiveStationIndex(4); // Saturn
-      } else {
-        setActiveStationIndex(5); // Black Hole
-      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -295,7 +287,63 @@ export function CosmicJourney() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // 5 Corridors between 6 stations
+  const totalSegments = CELESTIAL_STATIONS.length - 1; // 5
+  const exactStationPos = scrollProgress * totalSegments; // 0.0 to 5.0
+  const baseStationIdx = Math.min(totalSegments - 1, Math.floor(exactStationPos));
+  const segmentFraction = exactStationPos - baseStationIdx; // 0.0 to 1.0
+
+  // Calculate dynamic AU distance
+  const currentStationAu = CELESTIAL_STATIONS[baseStationIdx].au;
+  const nextStationAu = CELESTIAL_STATIONS[baseStationIdx + 1]?.au ?? 15.0;
+  const calculatedAU = currentStationAu + (nextStationAu - currentStationAu) * segmentFraction;
+
+  useEffect(() => {
+    setCurrentAU(calculatedAU);
+  }, [calculatedAU]);
+
+  // Interstellar Warp Transition Zone:
+  // When segmentFraction is between 0.18 and 0.82, we are in FULL INTERSTELLAR WARP FLIGHT!
+  const isWarpFlight =
+    isManualWarping ||
+    (segmentFraction > 0.16 && segmentFraction < 0.84 && exactStationPos < totalSegments);
+
+  // Warp intensity curve (peaks at midpoint fraction = 0.5)
+  const warpIntensity = isManualWarping
+    ? 1.0
+    : isWarpFlight
+    ? Math.sin(((segmentFraction - 0.16) / (0.84 - 0.16)) * Math.PI)
+    : 0;
+
+  // Active Station indicator for HUD (closest station)
+  const activeHudIndex = Math.min(
+    CELESTIAL_STATIONS.length - 1,
+    Math.round(exactStationPos)
+  );
+
+  const currentStation = CELESTIAL_STATIONS[baseStationIdx];
+  const nextStation = CELESTIAL_STATIONS[baseStationIdx + 1] || currentStation;
+
+  // Origin planet scale & opacity during departure
+  const originScale = 1.0 + segmentFraction * 2.2;
+  const originOpacity = Math.max(0, 1.0 - segmentFraction * 2.6);
+  const originTranslateZ = segmentFraction * 400;
+
+  // Destination planet scale & opacity during arrival
+  const destEmergence = Math.max(0, (segmentFraction - 0.42) / 0.58); // 0 to 1
+  const destScale = 0.18 + destEmergence * 0.82;
+  const destOpacity = Math.min(1.0, destEmergence * 1.5);
+  const destTranslateZ = -500 + destEmergence * 500;
+
+  // Card opacity and blur during warp
+  const cardOpacity = Math.max(0, 1.0 - warpIntensity * 1.4);
+  const cardBlur = warpIntensity * 12;
+
+  // Near black hole singularity flag
+  const isNearBlackHole = exactStationPos >= 4.2;
+
   const handleWarpTo = (targetProgress: number) => {
+    setIsManualWarping(true);
     const container = containerRef.current;
     if (!container) return;
     const containerHeight = container.offsetHeight;
@@ -307,39 +355,45 @@ export function CosmicJourney() {
       top: targetTop,
       behavior: "smooth",
     });
-  };
 
-  const currentStation = CELESTIAL_STATIONS[activeStationIndex] || CELESTIAL_STATIONS[0];
-  const isNearBlackHole = scrollProgress > 0.84;
+    setTimeout(() => {
+      setIsManualWarping(false);
+    }, 1100);
+  };
 
   return (
     <div className="relative bg-slate-950 text-white min-h-screen selection:bg-cyan-500 selection:text-slate-950">
       {/* 3D Cosmic Canvas (Starfield, warp streaks, gravitational lensing, 3D anaglyph) */}
       <CosmicCanvas
-        warpSpeed={warpMultiplier}
+        warpSpeed={Math.max(warpMultiplier, warpIntensity * 0.85)}
         mouseOffset={mouseOffset}
         stereo3D={stereo3D}
         isNearBlackHole={isNearBlackHole}
+        isWarpFlight={isWarpFlight}
       />
 
       {/* Cosmic HUD Telemetry & Interplanetary Waypoint Rail */}
       <CosmicHUD
         currentAU={currentAU}
-        activeWaypointIndex={activeStationIndex}
-        warpMultiplier={warpMultiplier}
+        activeWaypointIndex={activeHudIndex}
+        warpMultiplier={Math.max(warpMultiplier, warpIntensity)}
         stereo3D={stereo3D}
         onToggleStereo3D={() => setStereo3D((prev) => !prev)}
         onWarpTo={handleWarpTo}
       />
 
-      {/* Scroll Odyssey Track (6 viewport heights for smooth planet warping) */}
-      <div ref={containerRef} className="relative h-[640vh] w-full">
+      {/* Scroll Odyssey Track (600vh for luxurious smooth warp travel) */}
+      <div ref={containerRef} className="relative h-[680vh] w-full">
         {/* Sticky 3D Space Viewport */}
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4 sm:px-8">
-          {/* Subtle Ambient Cosmic Glow tailored to current planet */}
+          {/* Subtle Ambient Cosmic Glow tailored to current sector */}
           <div
-            className={`absolute w-[600px] h-[600px] rounded-full blur-[160px] pointer-events-none transition-all duration-1000 ${
-              currentStation.id === "earth"
+            className={`absolute w-[680px] h-[680px] rounded-full blur-[180px] pointer-events-none transition-all duration-1000 ${
+              isNearBlackHole
+                ? "bg-amber-500/25"
+                : isWarpFlight
+                ? "bg-cyan-500/20"
+                : currentStation.id === "earth"
                 ? "bg-sky-500/15"
                 : currentStation.id === "moon"
                 ? "bg-slate-400/15"
@@ -347,70 +401,154 @@ export function CosmicJourney() {
                 ? "bg-rose-500/15"
                 : currentStation.id === "jupiter"
                 ? "bg-amber-500/15"
-                : currentStation.id === "saturn"
-                ? "bg-yellow-500/15"
-                : "bg-amber-500/25"
+                : "bg-yellow-500/15"
             }`}
           />
 
-          {/* Central Celestial Stage (Planet + Tactical Data Card) */}
-          <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14">
-            {/* Left: 3D Photorealistic Celestial Body */}
-            <div className="flex-1 flex items-center justify-center py-4">
-              <PlanetRender
-                type={currentStation.type}
-                size={
-                  typeof window !== "undefined" && window.innerWidth < 640
-                    ? 250
-                    : currentStation.id === "saturn"
-                    ? 440
-                    : currentStation.id === "blackhole"
-                    ? 400
-                    : 340
-                }
-                mouseOffset={mouseOffset}
-                stereo3D={stereo3D}
+          {/* =========================================================================
+              INTERSTELLAR HYPERSPACE WARP TUNNEL OVERLAY (星际曲率穿梭隧道特效)
+              ========================================================================= */}
+          {isWarpFlight && (
+            <div className="absolute inset-0 pointer-events-none z-20 flex items-center justify-center overflow-hidden">
+              {/* Concentric Warp Tunnel Rings Rushing Toward Camera */}
+              <div className="absolute w-72 h-72 rounded-full border-2 border-cyan-400/70 animate-warp-ring-1" />
+              <div className="absolute w-72 h-72 rounded-full border-2 border-sky-300/60 animate-warp-ring-2" />
+              <div className="absolute w-72 h-72 rounded-full border-2 border-purple-400/60 animate-warp-ring-3" />
+              <div className="absolute w-72 h-72 rounded-full border-2 border-cyan-200/80 animate-warp-ring-4" />
+
+              {/* Hyperspace Light Flash */}
+              <div
+                className="absolute inset-0 bg-gradient-radial from-cyan-400/15 via-transparent to-transparent pointer-events-none"
+                style={{ opacity: warpIntensity }}
               />
+
+              {/* Center Warp Horizon Vanishing Spark */}
+              <div className="w-16 h-16 rounded-full bg-cyan-300/40 blur-xl animate-ping" />
+
+              {/* Warp Telemetry Banner (曲率航行矢量仪表) */}
+              <div
+                className="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 z-30 font-mono text-center space-y-1.5 transition-all duration-300 pointer-events-none"
+                style={{ opacity: Math.min(1, warpIntensity * 1.5) }}
+              >
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-950/85 border border-cyan-400/60 text-cyan-300 text-[11px] font-bold shadow-[0_0_25px_rgba(6,182,212,0.5)]">
+                  <Zap className="w-3.5 h-3.5 text-cyan-400 animate-bounce" />
+                  <span>WARP 9.8 // 星际超空间跃迁中</span>
+                </div>
+                <div className="text-[11px] text-slate-300 flex items-center justify-center gap-2 font-semibold">
+                  <span>{currentStation.name.split(" ")[0]}</span>
+                  <span className="text-cyan-400 font-bold tracking-widest">━━━━▶</span>
+                  <span className="text-cyan-300">{nextStation.name.split(" ")[0]}</span>
+                  <span className="text-[10px] text-slate-400 ml-1">
+                    ({calculatedAU.toFixed(2)} AU)
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* =========================================================================
+              CENTRAL CELESTIAL STAGE (Dynamic Planet Transitions + Tactical Card)
+              ========================================================================= */}
+          <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14">
+            {/* Left: 3D Celestial Body Stage with Continuous Warp Flight Morphing */}
+            <div className="flex-1 flex items-center justify-center py-4 relative min-h-[380px] sm:min-h-[460px]">
+              {/* Origin Planet (Fading out & zooming past into warp) */}
+              {originOpacity > 0.02 && (
+                <div
+                  className="absolute inset-0 flex items-center justify-center transition-transform duration-75"
+                  style={{
+                    opacity: originOpacity,
+                    transform: `scale(${originScale}) translateZ(${originTranslateZ}px)`,
+                    pointerEvents: originOpacity > 0.4 ? "auto" : "none",
+                  }}
+                >
+                  <PlanetRender
+                    type={currentStation.type}
+                    size={
+                      typeof window !== "undefined" && window.innerWidth < 640
+                        ? 260
+                        : currentStation.id === "saturn"
+                        ? 440
+                        : currentStation.id === "blackhole"
+                        ? 420
+                        : 350
+                    }
+                    mouseOffset={mouseOffset}
+                    stereo3D={stereo3D}
+                    warpFactor={warpIntensity}
+                  />
+                </div>
+              )}
+
+              {/* Destination Planet (Emerging from deep space during warp deceleration) */}
+              {segmentFraction > 0.4 && destOpacity > 0.02 && (
+                <div
+                  className="absolute inset-0 flex items-center justify-center transition-transform duration-75"
+                  style={{
+                    opacity: destOpacity,
+                    transform: `scale(${destScale}) translateZ(${destTranslateZ}px)`,
+                    pointerEvents: destOpacity > 0.4 ? "auto" : "none",
+                  }}
+                >
+                  <PlanetRender
+                    type={nextStation.type}
+                    size={
+                      typeof window !== "undefined" && window.innerWidth < 640
+                        ? 260
+                        : nextStation.id === "saturn"
+                        ? 440
+                        : nextStation.id === "blackhole"
+                        ? 420
+                        : 350
+                    }
+                    mouseOffset={mouseOffset}
+                    stereo3D={stereo3D}
+                    warpFactor={warpIntensity}
+                  />
+                </div>
+              )}
             </div>
 
-            {/* Right: Holographic Tactical Station Card */}
+            {/* Right: Holographic Tactical Station Card (Docks into view in orbit) */}
             <div
-              className={`flex-1 w-full max-w-xl bg-slate-950/80 backdrop-blur-2xl rounded-3xl p-6 sm:p-9 border border-cyan-500/30 shadow-[0_24px_80px_rgba(0,0,0,0.9)] transition-all duration-500 ${
+              className={`flex-1 w-full max-w-xl bg-slate-950/85 backdrop-blur-2xl rounded-3xl p-6 sm:p-9 border border-cyan-500/30 shadow-[0_24px_80px_rgba(0,0,0,0.9)] transition-all duration-300 ${
                 stereo3D ? "stereo-3d-active border-rose-500/40" : ""
               }`}
               style={{
+                opacity: isWarpFlight ? cardOpacity : 1,
+                filter: isWarpFlight ? `blur(${cardBlur}px)` : "none",
                 transform: `perspective(1000px) rotateY(${mouseOffset.x * 6}deg) rotateX(${-mouseOffset.y * 6}deg) translateZ(40px)`,
-                transition: "transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+                pointerEvents: cardOpacity > 0.4 ? "auto" : "none",
               }}
             >
               {/* Station Kicker & Telemetry Coordinates */}
               <div className="flex items-center justify-between gap-2 mb-3">
                 <span className="text-[11px] font-mono font-bold tracking-widest text-cyan-400 uppercase">
-                  {currentStation.kicker}
+                  {(segmentFraction > 0.5 ? nextStation : currentStation).kicker}
                 </span>
                 <span className="text-[10px] font-mono text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10">
-                  STATION {activeStationIndex + 1} / 6
+                  STATION {activeHudIndex + 1} / 6
                 </span>
               </div>
 
               {/* Station Planet Name */}
               <div className="text-xs font-mono text-slate-400 mb-1 tracking-wider uppercase">
-                {currentStation.name}
+                {(segmentFraction > 0.5 ? nextStation : currentStation).name}
               </div>
 
               {/* Title */}
               <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight mb-3">
-                {currentStation.title}
+                {(segmentFraction > 0.5 ? nextStation : currentStation).title}
               </h1>
 
               {/* Subtitle */}
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-5">
-                {currentStation.subtitle}
+                {(segmentFraction > 0.5 ? nextStation : currentStation).subtitle}
               </p>
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-6">
-                {currentStation.tags.map((tag, i) => (
+                {(segmentFraction > 0.5 ? nextStation : currentStation).tags.map((tag, i) => (
                   <span
                     key={i}
                     className="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/25 text-[10px] sm:text-[11px] font-mono text-cyan-300"
@@ -424,18 +562,22 @@ export function CosmicJourney() {
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
-                  onClick={() => setSelectedProject(currentStation.projectDetail)}
+                  onClick={() =>
+                    setSelectedProject(
+                      (segmentFraction > 0.5 ? nextStation : currentStation).projectDetail
+                    )
+                  }
                   className={`px-5 py-2.5 rounded-full font-black text-xs sm:text-sm transition-all shadow-lg flex items-center gap-1.5 cursor-pointer ${
-                    currentStation.id === "blackhole"
+                    (segmentFraction > 0.5 ? nextStation : currentStation).id === "blackhole"
                       ? "bg-gradient-to-r from-amber-400 to-rose-400 hover:from-amber-300 hover:to-rose-300 text-slate-950 shadow-amber-400/30"
                       : "bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-cyan-400/25 hover:-translate-y-0.5 active:translate-y-0"
                   }`}
                 >
-                  <span>{currentStation.ctaLabel}</span>
+                  <span>{(segmentFraction > 0.5 ? nextStation : currentStation).ctaLabel}</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </button>
 
-                {currentStation.id === "moon" && (
+                {(segmentFraction > 0.5 ? nextStation : currentStation).id === "moon" && (
                   <Link
                     href="/ui/"
                     className="px-4 py-2.5 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/30 font-bold text-xs sm:text-sm transition-all flex items-center gap-1 cursor-pointer"
@@ -444,7 +586,7 @@ export function CosmicJourney() {
                   </Link>
                 )}
 
-                {currentStation.id === "blackhole" && (
+                {(segmentFraction > 0.5 ? nextStation : currentStation).id === "blackhole" && (
                   <button
                     type="button"
                     onClick={() => setShowWechatModal(true)}
@@ -456,14 +598,14 @@ export function CosmicJourney() {
                 )}
 
                 <div className="text-[10px] font-mono text-slate-400 ml-auto hidden sm:block">
-                  {activeStationIndex < 5 ? "滑动前往下一个星球 ↓" : "已抵达终极奇点 ✦"}
+                  {exactStationPos < 4.8 ? "滑动曲率穿梭至下个星球 ↓" : "已抵终极奇点 ✦"}
                 </div>
               </div>
             </div>
           </div>
 
           {/* Scroll Down Guidance Prompt on Earth */}
-          {scrollProgress < 0.08 && (
+          {scrollProgress < 0.05 && (
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none flex items-center gap-2 text-xs font-mono text-cyan-400/80 animate-bounce">
               <span>向下滚动 · 启动曲率引擎前往月球</span>
               <ChevronDown className="w-4 h-4" />

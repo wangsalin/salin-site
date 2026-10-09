@@ -345,3 +345,56 @@
 .stereo-3d-intense {
   filter: drop-shadow(-6px 0 0 rgba(255, 20, 80, 0.7)) drop-shadow(6px 0 0 rgba(0, 235, 255, 0.7));
 }
+
+
+/* ==========================================================================
+   HYPERSPACE WARP TUNNEL & INTERSTELLAR FLIGHT STYLES
+   ========================================================================== */
+
+@keyframes warp-ring-fly {
+  0% {
+    transform: scale(0.08) rotate(0deg);
+    opacity: 0;
+    border-color: rgba(34, 211, 238, 0.2);
+  }
+  25% {
+    opacity: 0.85;
+    border-color: rgba(34, 211, 238, 0.9);
+    box-shadow: 0 0 40px rgba(34, 211, 238, 0.8), inset 0 0 20px rgba(34, 211, 238, 0.6);
+  }
+  85% {
+    opacity: 0.6;
+    border-color: rgba(168, 85, 247, 0.8);
+  }
+  100% {
+    transform: scale(3.8) rotate(120deg);
+    opacity: 0;
+    border-color: rgba(244, 63, 94, 0);
+  }
+}
+
+.animate-warp-ring-1 {
+  animation: warp-ring-fly 1.2s cubic-bezier(0.12, 0.8, 0.32, 1) infinite;
+}
+
+.animate-warp-ring-2 {
+  animation: warp-ring-fly 1.2s cubic-bezier(0.12, 0.8, 0.32, 1) infinite 0.3s;
+}
+
+.animate-warp-ring-3 {
+  animation: warp-ring-fly 1.2s cubic-bezier(0.12, 0.8, 0.32, 1) infinite 0.6s;
+}
+
+.animate-warp-ring-4 {
+  animation: warp-ring-fly 1.2s cubic-bezier(0.12, 0.8, 0.32, 1) infinite 0.9s;
+}
+
+@keyframes engine-streak {
+  0% { transform: scaleX(0.2); opacity: 0; }
+  50% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1.8); opacity: 0; }
+}
+
+.animate-engine-streak {
+  animation: engine-streak 0.8s ease-out infinite;
+}

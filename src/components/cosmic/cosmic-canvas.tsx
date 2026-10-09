@@ -7,6 +7,7 @@ interface CanvasProps {
   mouseOffset?: { x: number; y: number }; // normalized -1 to 1
   stereo3D?: boolean; // 3D glasses anaglyph split mode
   isNearBlackHole?: boolean; // Gravitational lensing distortion
+  isWarpFlight?: boolean; // In interstellar transit phase
 }
 
 export function CosmicCanvas({
@@ -14,13 +15,14 @@ export function CosmicCanvas({
   mouseOffset = { x: 0, y: 0 },
   stereo3D = false,
   isNearBlackHole = false,
+  isWarpFlight = false,
 }: CanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Store mouse and stereo state in refs for smooth 60fps canvas loop
   const mouseRef = useRef(mouseOffset);
   const stereoRef = useRef(stereo3D);
   const blackHoleRef = useRef(isNearBlackHole);
+  const warpFlightRef = useRef(isWarpFlight);
 
   useEffect(() => {
     mouseRef.current = mouseOffset;
@@ -33,6 +35,10 @@ export function CosmicCanvas({
   useEffect(() => {
     blackHoleRef.current = isNearBlackHole;
   }, [isNearBlackHole]);
+
+  useEffect(() => {
+    warpFlightRef.current = isWarpFlight;
+  }, [isWarpFlight]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -51,7 +57,7 @@ export function CosmicCanvas({
     };
     window.addEventListener("resize", handleResize);
 
-    const numStars = 240;
+    const numStars = 280;
     interface Star {
       x: number;
       y: number;
@@ -69,15 +75,15 @@ export function CosmicCanvas({
       "#bae6fd",
       "#fef08a",
       "#a7f3d0",
-      "#fed7aa",
-      "#fbcfe8",
+      "#c084fc",
+      "#f472b6",
     ];
 
     const stars: Star[] = Array.from({ length: numStars }, () => ({
-      x: (Math.random() - 0.5) * width * 2.2,
-      y: (Math.random() - 0.5) * height * 2.2,
+      x: (Math.random() - 0.5) * width * 2.4,
+      y: (Math.random() - 0.5) * height * 2.4,
       z: Math.random() * 1000 + 1,
-      size: Math.random() * 1.8 + 0.6,
+      size: Math.random() * 2.0 + 0.6,
       color: starColors[Math.floor(Math.random() * starColors.length)],
       baseAlpha: Math.random() * 0.7 + 0.3,
       twinkleSpeed: Math.random() * 0.04 + 0.01,
@@ -97,8 +103,8 @@ export function CosmicCanvas({
     const shoot: ShootingStar = {
       x: 0,
       y: 0,
-      length: 140,
-      speed: 22,
+      length: 160,
+      speed: 26,
       angle: Math.PI / 4,
       opacity: 0,
       active: false,
@@ -111,13 +117,13 @@ export function CosmicCanvas({
       shoot.active = true;
     };
 
-    let frameCount = 0;
-
     const render = () => {
-      frameCount++;
+      const isFlight = warpFlightRef.current;
+      const effectiveWarp = isFlight ? Math.max(warpSpeed, 0.75) : warpSpeed;
 
-      // Deep space black backdrop with subtle persistence for motion trails
-      ctx.fillStyle = "rgba(2, 6, 23, 0.45)";
+      // Dark space background: with hyperspace trail blur
+      const trailAlpha = effectiveWarp > 0.4 ? 0.3 : 0.48;
+      ctx.fillStyle = `rgba(2, 6, 23, ${trailAlpha})`;
       ctx.fillRect(0, 0, width, height);
 
       // Camera center with mouse 3D parallax offset
@@ -128,15 +134,17 @@ export function CosmicCanvas({
       const cx = width / 2 + (mouse?.x || 0) * 35;
       const cy = height / 2 + (mouse?.y || 0) * 35;
 
-      // Warp speed acceleration
-      const speed = 1.2 + warpSpeed * 32;
+      // Speed increases drastically in warp flight!
+      const speed = isFlight
+        ? 18 + effectiveWarp * 55
+        : 1.2 + effectiveWarp * 35;
 
       stars.forEach((star) => {
         star.z -= speed;
         if (star.z <= 0) {
           star.z = 1000;
-          star.x = (Math.random() - 0.5) * width * 2.2;
-          star.y = (Math.random() - 0.5) * height * 2.2;
+          star.x = (Math.random() - 0.5) * width * 2.4;
+          star.y = (Math.random() - 0.5) * height * 2.4;
         }
 
         // 3D Perspective projection
@@ -144,20 +152,22 @@ export function CosmicCanvas({
         let px = star.x * k + cx;
         let py = star.y * k + cy;
 
-        // Gravitational lensing distortion near Black Hole
+        // Gravitational vortex distortion near Black Hole
         if (isBlackHole) {
           const dx = px - cx;
           const dy = py - cy;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist > 30 && dist < 420) {
-            // Gravitational light deflection formula
-            const deflection = (180 / (dist + 40)) * 2.2;
-            px += (dx / dist) * deflection;
-            py += (dy / dist) * deflection;
+          if (dist > 30 && dist < 450) {
+            const deflection = (220 / (dist + 30)) * 2.5;
+            // Tangential spiral deflection for vortex
+            const angle = Math.atan2(dy, dx) + 0.04;
+            const newDist = dist - deflection * 0.3;
+            px = cx + Math.cos(angle) * newDist;
+            py = cy + Math.sin(angle) * newDist;
           }
         }
 
-        if (px >= -20 && px <= width + 20 && py >= -20 && py <= height + 20) {
+        if (px >= -30 && px <= width + 30 && py >= -30 && py <= height + 30) {
           const size = Math.max(0.6, star.size * k * 0.85);
 
           // Twinkle pulse
@@ -165,36 +175,49 @@ export function CosmicCanvas({
           const twinkle = 0.8 + 0.2 * Math.sin(star.twinklePhase);
           const alpha = Math.min(
             1,
-            (1 - star.z / 1000) * star.baseAlpha * twinkle * (1 + warpSpeed * 0.4)
+            (1 - star.z / 1000) * star.baseAlpha * twinkle * (1 + effectiveWarp * 0.5)
           );
 
-          if (warpSpeed > 0.15) {
-            // Hyperspace warp streak
-            const prevK = 260 / (star.z + speed * 4);
+          if (effectiveWarp > 0.15) {
+            // Relativistic Hyperdrive Warp Light Beams
+            const streakFactor = isFlight ? 9 : 4.5;
+            const prevK = 260 / (star.z + speed * streakFactor);
             const prevX = star.x * prevK + cx;
             const prevY = star.y * prevK + cy;
 
-            ctx.strokeStyle = star.color;
+            // Gradient hyperdrive laser streak
+            const grad = ctx.createLinearGradient(prevX, prevY, px, py);
+            grad.addColorStop(0, "rgba(255, 255, 255, 0)");
+            if (isBlackHole) {
+              grad.addColorStop(0.7, "rgba(245, 158, 11, 0.7)");
+              grad.addColorStop(1, "#fef08a");
+            } else if (isFlight) {
+              grad.addColorStop(0.6, "rgba(56, 189, 248, 0.8)");
+              grad.addColorStop(1, "#ffffff");
+            } else {
+              grad.addColorStop(1, star.color);
+            }
+
+            ctx.strokeStyle = grad;
             ctx.globalAlpha = alpha;
-            ctx.lineWidth = Math.min(2.8, size * 0.8);
+            ctx.lineWidth = Math.min(3.5, size * 1.2);
             ctx.beginPath();
             ctx.moveTo(prevX, prevY);
             ctx.lineTo(px, py);
             ctx.stroke();
           } else if (isStereo) {
-            // TRUE 3D GLASSES ANAGLYPH STEREO MODE:
-            // Displace red & cyan horizontally based on 3D depth (closer = bigger pop)
-            const stereoShift = Math.max(1, (1 - star.z / 1000) * 4.5);
+            // 3D GLASSES ANAGLYPH STEREO MODE
+            const stereoShift = Math.max(1, (1 - star.z / 1000) * 5.0);
 
             // Red channel (left eye)
-            ctx.fillStyle = "rgba(255, 30, 80, 0.75)";
+            ctx.fillStyle = "rgba(255, 30, 80, 0.8)";
             ctx.globalAlpha = alpha * 0.85;
             ctx.beginPath();
             ctx.arc(px - stereoShift, py, size, 0, Math.PI * 2);
             ctx.fill();
 
             // Cyan channel (right eye)
-            ctx.fillStyle = "rgba(0, 230, 255, 0.75)";
+            ctx.fillStyle = "rgba(0, 230, 255, 0.8)";
             ctx.globalAlpha = alpha * 0.85;
             ctx.beginPath();
             ctx.arc(px + stereoShift, py, size, 0, Math.PI * 2);
@@ -211,14 +234,14 @@ export function CosmicCanvas({
       });
 
       // Shooting stars
-      if (Math.random() < 0.006 && !shoot.active) {
+      if (Math.random() < 0.007 && !shoot.active && !isFlight) {
         triggerShootingStar();
       }
 
-      if (shoot.active) {
+      if (shoot.active && !isFlight) {
         shoot.x += Math.cos(shoot.angle) * shoot.speed;
         shoot.y += Math.sin(shoot.angle) * shoot.speed;
-        shoot.opacity -= 0.018;
+        shoot.opacity -= 0.016;
 
         if (shoot.opacity <= 0) {
           shoot.active = false;
