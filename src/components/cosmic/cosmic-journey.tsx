@@ -15,9 +15,11 @@ import {
   RotateCcw,
   Zap,
   Radio,
-  Crosshair,
-  ShieldAlert,
   Play,
+  Atom,
+  Clock,
+  Flame,
+  Maximize2,
 } from "lucide-react";
 
 interface CelestialStation {
@@ -30,7 +32,6 @@ interface CelestialStation {
   subtitle: string;
   tags: string[];
   ctaLabel: string;
-  // Unique spatial approach vector (不确定从哪里出来)
   approachVector: { enterX: number; enterY: number; exitX: number; exitY: number };
   projectDetail: ProjectDetail;
 }
@@ -244,6 +245,50 @@ const CELESTIAL_STATIONS: CelestialStation[] = [
   },
 ];
 
+// Physical & Business Attributes of the Supermassive Black Hole
+const BLACK_HOLE_ATTRIBUTES = [
+  {
+    id: "horizon",
+    title: "事件视界 (Event Horizon)",
+    subtitle: "史瓦西单向边界 · Rs = 2GM/c²",
+    icon: Atom,
+    physics: "光线无法逃逸的单向因果曲面，跨过视界即绝对闭合。",
+    business: "【确定性闭环交付】不玩半成品或虚假概念，只交付 100% 生产级上线系统。",
+    tag: "不可逆交付",
+    color: "border-amber-400/40 text-amber-300",
+  },
+  {
+    id: "dilation",
+    title: "引力时间膨胀 (Time Dilation)",
+    subtitle: "相对论时空弯曲 · Γ → ∞",
+    icon: Clock,
+    physics: "极端引力场使本地时间相对外界陷入停滞（1小时等同外界数年）。",
+    business: "【帮客户节省 80% 试错时间】高维成熟架构降维落地，数天完成团队数月的摸索周期。",
+    tag: "试错成本压缩",
+    color: "border-rose-400/40 text-rose-300",
+  },
+  {
+    id: "accretion",
+    title: "相对论吸积盘 (Accretion Disk)",
+    subtitle: "超高温等离子流 · T > 10⁷ K",
+    icon: Flame,
+    physics: "物质高速公转摩擦释放出宇宙中最狂暴的能量与耀眼光芒。",
+    business: "【汪狗哥全域业务引力场】企业 AI Agent、餐饮供应链数字化、Salin UI 私有化商业部署。",
+    tag: "全案业务承接",
+    color: "border-cyan-400/40 text-cyan-300",
+  },
+  {
+    id: "singularity",
+    title: "终极引力奇点 (Singularity Core)",
+    subtitle: "无限密度中心 · ρ → ∞",
+    icon: Sparkles,
+    physics: "时空曲率与能量密度收敛至无穷大的几何核心点。",
+    business: "【商业现金流与真实 ROI】剥离一切概念泡沫，唯一考核客户真实买单意愿与现金流回报。",
+    tag: "核心商业价值",
+    color: "border-emerald-400/40 text-emerald-300",
+  },
+];
+
 export function CosmicJourney() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -325,7 +370,10 @@ export function CosmicJourney() {
     setCurrentAU(calculatedAU);
   }, [calculatedAU]);
 
-  // Interstellar Warp Transition Zone:
+  // Is at Black Hole (station 5)
+  const isAtBlackHole = exactStationPos >= 4.3;
+
+  // Interstellar Warp Transition Zone (between planets):
   const isWarpFlight =
     isManualWarping ||
     (segmentFraction > 0.15 && segmentFraction < 0.85 && exactStationPos < totalSegments);
@@ -360,9 +408,6 @@ export function CosmicJourney() {
   const cardOpacity = Math.max(0, 1.0 - warpIntensity * 1.5);
   const cardBlur = warpIntensity * 10;
 
-  // Near black hole singularity flag
-  const isNearBlackHole = exactStationPos >= 4.2;
-
   const handleWarpTo = (targetProgress: number) => {
     setIsManualWarping(true);
     const container = containerRef.current;
@@ -389,7 +434,7 @@ export function CosmicJourney() {
         warpSpeed={Math.max(warpMultiplier, warpIntensity * 0.85)}
         mouseOffset={mouseOffset}
         stereo3D={stereo3D}
-        isNearBlackHole={isNearBlackHole}
+        isNearBlackHole={isAtBlackHole}
         isWarpFlight={isWarpFlight}
       />
 
@@ -413,7 +458,7 @@ export function CosmicJourney() {
         <div className="absolute bottom-0 left-0 w-36 h-36 border-b-2 border-l-2 border-cyan-500/20 rounded-bl-3xl opacity-60 pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-36 h-36 border-b-2 border-r-2 border-cyan-500/20 rounded-br-3xl opacity-60 pointer-events-none" />
 
-        {/* Center Flight Crosshair (shifts slightly with mouse for flight feeling) */}
+        {/* Center Flight Crosshair */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-30 transition-transform duration-75 pointer-events-none"
           style={{
@@ -434,9 +479,9 @@ export function CosmicJourney() {
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4 sm:px-8">
           {/* Ambient Cosmic Sector Glow */}
           <div
-            className={`absolute w-[720px] h-[720px] rounded-full blur-[200px] pointer-events-none transition-all duration-1000 ${
-              isNearBlackHole
-                ? "bg-amber-500/25"
+            className={`absolute w-[760px] h-[760px] rounded-full blur-[220px] pointer-events-none transition-all duration-1000 ${
+              isAtBlackHole
+                ? "bg-amber-500/30"
                 : isWarpFlight
                 ? "bg-cyan-500/20"
                 : currentStation.id === "earth"
@@ -454,7 +499,7 @@ export function CosmicJourney() {
           {/* =========================================================================
               FIRST SCREEN: SPACE CAPSULE BOARDING DECK (登录太空舱 / 启航第一幕)
               ========================================================================= */}
-          {scrollProgress < 0.06 && (
+          {scrollProgress < 0.05 && (
             <div className="absolute top-16 sm:top-20 z-35 flex flex-col items-center text-center pointer-events-auto px-4 max-w-xl mx-auto space-y-3 animate-fade-in">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-cyan-500/40 text-cyan-300 font-mono text-[11px] font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)]">
                 <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
@@ -490,24 +535,20 @@ export function CosmicJourney() {
           {/* =========================================================================
               INTERSTELLAR HYPERSPACE WARP TUNNEL OVERLAY (星际曲率穿梭隧道特效)
               ========================================================================= */}
-          {isWarpFlight && (
+          {isWarpFlight && !isAtBlackHole && (
             <div className="absolute inset-0 pointer-events-none z-20 flex items-center justify-center overflow-hidden">
-              {/* Concentric Warp Tunnel Rings Rushing Toward Camera */}
               <div className="absolute w-72 h-72 rounded-full border-2 border-cyan-400/70 animate-warp-ring-1" />
               <div className="absolute w-72 h-72 rounded-full border-2 border-sky-300/60 animate-warp-ring-2" />
               <div className="absolute w-72 h-72 rounded-full border-2 border-purple-400/60 animate-warp-ring-3" />
               <div className="absolute w-72 h-72 rounded-full border-2 border-cyan-200/80 animate-warp-ring-4" />
 
-              {/* Hyperspace Light Flash */}
               <div
                 className="absolute inset-0 bg-gradient-radial from-cyan-400/15 via-transparent to-transparent pointer-events-none"
                 style={{ opacity: warpIntensity }}
               />
 
-              {/* Center Warp Horizon Vanishing Spark */}
               <div className="w-16 h-16 rounded-full bg-cyan-300/40 blur-xl animate-ping" />
 
-              {/* Warp Telemetry Banner (曲率航行矢量仪表) */}
               <div
                 className="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 z-30 font-mono text-center space-y-1.5 transition-all duration-300 pointer-events-none"
                 style={{ opacity: Math.min(1, warpIntensity * 1.5) }}
@@ -529,176 +570,253 @@ export function CosmicJourney() {
           )}
 
           {/* =========================================================================
-              CENTRAL CELESTIAL STAGE (Dynamic Trajectory Approaches + Holographic Console)
+              CASE A: SUPERMASSIVE BLACK HOLE COLOSSAL CENTERSTAGE (巨型黑洞置于屏幕中央)
               ========================================================================= */}
-          <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14 pt-8 sm:pt-0">
-            {/* Left: 3D Celestial Body Stage (Unique Spatial Vectors & Continuous Spinning) */}
-            <div className="flex-1 flex items-center justify-center py-4 relative min-h-[380px] sm:min-h-[460px]">
-              {/* Origin Planet (Exit trajectory along unique spatial vector) */}
-              {originOpacity > 0.02 && (
-                <div
-                  className="absolute inset-0 flex items-center justify-center transition-transform duration-75"
-                  style={{
-                    opacity: originOpacity,
-                    transform: `translate3d(${originExitX}px, ${originExitY}px, 0px) scale(${originScale})`,
-                    pointerEvents: originOpacity > 0.4 ? "auto" : "none",
-                  }}
-                >
-                  {/* Tactical Target Lock Reticle around planet */}
-                  <div className="relative">
-                    <div className="absolute -inset-4 border border-cyan-400/20 border-dashed rounded-full animate-spin-slow pointer-events-none" />
-                    <PlanetRender
-                      type={currentStation.type}
-                      size={
-                        typeof window !== "undefined" && window.innerWidth < 640
-                          ? 250
-                          : currentStation.id === "saturn"
-                          ? 440
-                          : currentStation.id === "blackhole"
-                          ? 420
-                          : 350
-                      }
-                      mouseOffset={mouseOffset}
-                      stereo3D={stereo3D}
-                      warpFactor={warpIntensity}
-                    />
-                  </div>
+          {isAtBlackHole ? (
+            <div className="relative z-10 w-full h-full flex flex-col items-center justify-center text-center">
+              {/* Colossal Center Black Hole (Dominates the entire screen center) */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="relative">
+                  <PlanetRender
+                    type="blackhole"
+                    size={
+                      typeof window !== "undefined" && window.innerWidth < 640
+                        ? 380
+                        : typeof window !== "undefined" && window.innerWidth < 1024
+                        ? 600
+                        : 820
+                    }
+                    mouseOffset={mouseOffset}
+                    stereo3D={stereo3D}
+                  />
                 </div>
-              )}
-
-              {/* Destination Planet (Approaching along unique spatial vector from deep space) */}
-              {segmentFraction > 0.35 && destOpacity > 0.02 && (
-                <div
-                  className="absolute inset-0 flex items-center justify-center transition-transform duration-75"
-                  style={{
-                    opacity: destOpacity,
-                    transform: `translate3d(${destEnterX}px, ${destEnterY}px, 0px) scale(${destScale})`,
-                    pointerEvents: destOpacity > 0.4 ? "auto" : "none",
-                  }}
-                >
-                  <div className="relative">
-                    <div className="absolute -inset-4 border border-cyan-400/20 border-dashed rounded-full animate-spin-slow pointer-events-none" />
-                    <PlanetRender
-                      type={nextStation.type}
-                      size={
-                        typeof window !== "undefined" && window.innerWidth < 640
-                          ? 250
-                          : nextStation.id === "saturn"
-                          ? 440
-                          : nextStation.id === "blackhole"
-                          ? 420
-                          : 350
-                      }
-                      mouseOffset={mouseOffset}
-                      stereo3D={stereo3D}
-                      warpFactor={warpIntensity}
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Right: Holographic Flight Console Project Screen (全息战术控制台) */}
-            <div
-              className={`flex-1 w-full max-w-xl holo-console rounded-2xl p-6 sm:p-8 transition-all duration-300 font-mono ${
-                stereo3D ? "stereo-3d-active border-rose-500/50" : ""
-              }`}
-              style={{
-                opacity: isWarpFlight ? cardOpacity : 1,
-                filter: isWarpFlight ? `blur(${cardBlur}px)` : "none",
-                transform: `perspective(1000px) rotateY(${mouseOffset.x * 5}deg) rotateX(${-mouseOffset.y * 5}deg) translateZ(40px)`,
-                pointerEvents: cardOpacity > 0.4 ? "auto" : "none",
-              }}
-            >
-              {/* Sci-Fi Corner Brackets */}
-              <div className="absolute top-2 left-2 text-[10px] text-cyan-400/50 select-none">┌</div>
-              <div className="absolute top-2 right-2 text-[10px] text-cyan-400/50 select-none">┐</div>
-              <div className="absolute bottom-2 left-2 text-[10px] text-cyan-400/50 select-none">└</div>
-              <div className="absolute bottom-2 right-2 text-[10px] text-cyan-400/50 select-none">┘</div>
-
-              {/* Station Kicker & Telemetry Coordinates */}
-              <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-cyan-500/20">
-                <div className="flex items-center gap-1.5 text-[11px] text-cyan-400 font-bold uppercase tracking-widest">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-                  <span>{(segmentFraction > 0.5 ? nextStation : currentStation).kicker}</span>
-                </div>
-                <span className="text-[10px] text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">
-                  NAV-LOG #{activeHudIndex + 1}
-                </span>
               </div>
 
-              {/* Station Planet Name */}
-              <div className="text-[11px] text-slate-400 mb-1 tracking-wider uppercase">
-                {(segmentFraction > 0.5 ? nextStation : currentStation).name}
-              </div>
+              {/* Centered Holographic Black Hole Attributes & Telemetry Console */}
+              <div className="relative z-20 max-w-4xl w-full mx-auto px-4 mt-auto sm:mb-8 font-mono">
+                {/* Header Tag */}
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950/90 border border-amber-400/60 text-amber-300 text-xs font-bold shadow-[0_0_30px_rgba(245,158,11,0.5)] mb-3">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-spin-slow" />
+                  <span>15.00 AU · 终极引力奇点 · 事件视界核心</span>
+                </div>
 
-              {/* Title */}
-              <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight mb-2 font-sans">
-                {(segmentFraction > 0.5 ? nextStation : currentStation).title}
-              </h2>
+                <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-xl mb-4 font-sans">
+                  终极黑洞奇点 · 商业与未来共创指挥部
+                </h2>
 
-              {/* Subtitle */}
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4 font-sans">
-                {(segmentFraction > 0.5 ? nextStation : currentStation).subtitle}
-              </p>
+                {/* The 4 Distinct Scientific & Business Attributes Grid (明确黑洞的属性) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-left mb-5">
+                  {BLACK_HOLE_ATTRIBUTES.map((attr) => {
+                    const IconComp = attr.icon;
+                    return (
+                      <div
+                        key={attr.id}
+                        className={`holo-console rounded-xl p-3 border ${attr.color} shadow-lg transition-all duration-300 hover:border-amber-400`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <IconComp className="w-4 h-4 text-amber-400" />
+                          <span className="text-[9px] px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">
+                            {attr.tag}
+                          </span>
+                        </div>
+                        <div className="text-xs font-bold text-white tracking-wide">
+                          {attr.title}
+                        </div>
+                        <div className="text-[10px] text-amber-400/80 mb-1.5 font-medium">
+                          {attr.subtitle}
+                        </div>
+                        <div className="text-[10px] text-slate-300 leading-snug font-sans">
+                          {attr.business}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1.5 mb-5">
-                {(segmentFraction > 0.5 ? nextStation : currentStation).tags.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="px-2.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-[10px] sm:text-[11px] text-cyan-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Tactical Actions */}
-              <div className="flex flex-wrap items-center gap-2.5 pt-2 border-t border-cyan-500/20">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setSelectedProject(
-                      (segmentFraction > 0.5 ? nextStation : currentStation).projectDetail
-                    )
-                  }
-                  className={`px-4 py-2 rounded-lg font-black text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer ${
-                    (segmentFraction > 0.5 ? nextStation : currentStation).id === "blackhole"
-                      ? "bg-gradient-to-r from-amber-400 to-rose-400 hover:from-amber-300 hover:to-rose-300 text-slate-950 shadow-amber-400/30"
-                      : "bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-cyan-400/25"
-                  }`}
-                >
-                  <span>{(segmentFraction > 0.5 ? nextStation : currentStation).ctaLabel}</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
-
-                {(segmentFraction > 0.5 ? nextStation : currentStation).id === "moon" && (
-                  <Link
-                    href="/ui/"
-                    className="px-3.5 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 font-bold text-xs transition-all flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>直达弹药库 ↗</span>
-                  </Link>
-                )}
-
-                {(segmentFraction > 0.5 ? nextStation : currentStation).id === "blackhole" && (
+                {/* Tactical Actions */}
+                <div className="flex flex-wrap items-center justify-center gap-3">
                   <button
                     type="button"
                     onClick={() => setShowWechatModal(true)}
-                    className="px-3.5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all flex items-center gap-1 cursor-pointer shadow-md shadow-emerald-500/25"
+                    className="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-400 via-rose-500 to-amber-400 hover:from-amber-300 hover:to-amber-300 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-[0_0_30px_rgba(245,158,11,0.6)] flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
                   >
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    <span>微信直联</span>
+                    <MessageSquare className="w-4 h-4 fill-current" />
+                    <span>微信直联创始人 (对接全案)</span>
                   </button>
-                )}
 
-                <div className="text-[10px] text-slate-500 ml-auto hidden sm:block">
-                  {exactStationPos < 4.8 ? "推进推杆继续穿梭 ↓" : "抵达奇点 ✦"}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedProject(CELESTIAL_STATIONS[5].projectDetail)}
+                    className="px-5 py-2.5 rounded-full bg-slate-900/90 hover:bg-slate-800 text-amber-300 border border-amber-400/40 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <span>调取终极全案清单</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleWarpTo(0)}
+                    className="px-4 py-2.5 rounded-full bg-slate-950/80 hover:bg-slate-900 text-slate-400 hover:text-white border border-white/10 text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>重返地球母港再次航行 ↺</span>
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
+          ) : (
+            /* =========================================================================
+               CASE B: PLANETARY STATIONS (EARTH, MOON, MARS, JUPITER, SATURN)
+               ========================================================================= */
+            <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14 pt-8 sm:pt-0">
+              {/* Left: 3D Celestial Body Stage (Unique Spatial Vectors & Continuous Spinning) */}
+              <div className="flex-1 flex items-center justify-center py-4 relative min-h-[380px] sm:min-h-[460px]">
+                {/* Origin Planet (Exit trajectory along unique spatial vector) */}
+                {originOpacity > 0.02 && (
+                  <div
+                    className="absolute inset-0 flex items-center justify-center transition-transform duration-75"
+                    style={{
+                      opacity: originOpacity,
+                      transform: `translate3d(${originExitX}px, ${originExitY}px, 0px) scale(${originScale})`,
+                      pointerEvents: originOpacity > 0.4 ? "auto" : "none",
+                    }}
+                  >
+                    <div className="relative">
+                      <div className="absolute -inset-4 border border-cyan-400/20 border-dashed rounded-full animate-spin-slow pointer-events-none" />
+                      <PlanetRender
+                        type={currentStation.type}
+                        size={
+                          typeof window !== "undefined" && window.innerWidth < 640
+                            ? 250
+                            : currentStation.id === "saturn"
+                            ? 440
+                            : 350
+                        }
+                        mouseOffset={mouseOffset}
+                        stereo3D={stereo3D}
+                        warpFactor={warpIntensity}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Destination Planet (Approaching along unique spatial vector from deep space) */}
+                {segmentFraction > 0.35 && destOpacity > 0.02 && (
+                  <div
+                    className="absolute inset-0 flex items-center justify-center transition-transform duration-75"
+                    style={{
+                      opacity: destOpacity,
+                      transform: `translate3d(${destEnterX}px, ${destEnterY}px, 0px) scale(${destScale})`,
+                      pointerEvents: destOpacity > 0.4 ? "auto" : "none",
+                    }}
+                  >
+                    <div className="relative">
+                      <div className="absolute -inset-4 border border-cyan-400/20 border-dashed rounded-full animate-spin-slow pointer-events-none" />
+                      <PlanetRender
+                        type={nextStation.type}
+                        size={
+                          typeof window !== "undefined" && window.innerWidth < 640
+                            ? 250
+                            : nextStation.id === "saturn"
+                            ? 440
+                            : 350
+                        }
+                        mouseOffset={mouseOffset}
+                        stereo3D={stereo3D}
+                        warpFactor={warpIntensity}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Right: Holographic Flight Console Project Screen (全息战术控制台) */}
+              <div
+                className={`flex-1 w-full max-w-xl holo-console rounded-2xl p-6 sm:p-8 transition-all duration-300 font-mono ${
+                  stereo3D ? "stereo-3d-active border-rose-500/50" : ""
+                }`}
+                style={{
+                  opacity: isWarpFlight ? cardOpacity : 1,
+                  filter: isWarpFlight ? `blur(${cardBlur}px)` : "none",
+                  transform: `perspective(1000px) rotateY(${mouseOffset.x * 5}deg) rotateX(${-mouseOffset.y * 5}deg) translateZ(40px)`,
+                  pointerEvents: cardOpacity > 0.4 ? "auto" : "none",
+                }}
+              >
+                {/* Sci-Fi Corner Brackets */}
+                <div className="absolute top-2 left-2 text-[10px] text-cyan-400/50 select-none">┌</div>
+                <div className="absolute top-2 right-2 text-[10px] text-cyan-400/50 select-none">┐</div>
+                <div className="absolute bottom-2 left-2 text-[10px] text-cyan-400/50 select-none">└</div>
+                <div className="absolute bottom-2 right-2 text-[10px] text-cyan-400/50 select-none">┘</div>
+
+                {/* Station Kicker & Telemetry Coordinates */}
+                <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-cyan-500/20">
+                  <div className="flex items-center gap-1.5 text-[11px] text-cyan-400 font-bold uppercase tracking-widest">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                    <span>{(segmentFraction > 0.5 ? nextStation : currentStation).kicker}</span>
+                  </div>
+                  <span className="text-[10px] text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">
+                    NAV-LOG #{activeHudIndex + 1}
+                  </span>
+                </div>
+
+                {/* Station Planet Name */}
+                <div className="text-[11px] text-slate-400 mb-1 tracking-wider uppercase">
+                  {(segmentFraction > 0.5 ? nextStation : currentStation).name}
+                </div>
+
+                {/* Title */}
+                <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight mb-2 font-sans">
+                  {(segmentFraction > 0.5 ? nextStation : currentStation).title}
+                </h2>
+
+                {/* Subtitle */}
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4 font-sans">
+                  {(segmentFraction > 0.5 ? nextStation : currentStation).subtitle}
+                </p>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {(segmentFraction > 0.5 ? nextStation : currentStation).tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="px-2.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-500/30 text-[10px] sm:text-[11px] text-cyan-300"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Tactical Actions */}
+                <div className="flex flex-wrap items-center gap-2.5 pt-2 border-t border-cyan-500/20">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setSelectedProject(
+                        (segmentFraction > 0.5 ? nextStation : currentStation).projectDetail
+                      )
+                    }
+                    className="px-4 py-2 rounded-lg font-black text-xs transition-all shadow-md flex items-center gap-1.5 cursor-pointer bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-cyan-400/25"
+                  >
+                    <span>{(segmentFraction > 0.5 ? nextStation : currentStation).ctaLabel}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+
+                  {(segmentFraction > 0.5 ? nextStation : currentStation).id === "moon" && (
+                    <Link
+                      href="/ui/"
+                      className="px-3.5 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 font-bold text-xs transition-all flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>直达弹药库 ↗</span>
+                    </Link>
+                  )}
+
+                  <div className="text-[10px] text-slate-500 ml-auto hidden sm:block">
+                    推进推杆继续穿梭 ↓
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

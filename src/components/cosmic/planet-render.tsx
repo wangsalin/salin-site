@@ -80,7 +80,7 @@ export function PlanetRender({
               />
             </div>
 
-            {/* Atmosphere Cloud Sheen Layer (Rotating at Differential Velocity) */}
+            {/* Atmosphere Cloud Sheen Layer */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none animate-cloud-drift opacity-40 mix-blend-screen"
               style={{
@@ -89,7 +89,7 @@ export function PlanetRender({
               }}
             />
 
-            {/* Directional Sunlight Terminator & 3D Spherical Volume (Fixed relative to light source) */}
+            {/* Directional Sunlight Terminator & 3D Spherical Volume */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none"
               style={{
@@ -136,7 +136,6 @@ export function PlanetRender({
               ...orbTransformStyle,
             }}
           >
-            {/* CONTINUOUSLY ROTATING MOON TEXTURE */}
             <div className="w-full h-full rounded-full overflow-hidden animate-planet-spin-slow">
               <img
                 src="/planets/moon.png"
@@ -194,7 +193,6 @@ export function PlanetRender({
               ...orbTransformStyle,
             }}
           >
-            {/* CONTINUOUSLY ROTATING MARS TEXTURE */}
             <div className="w-full h-full rounded-full overflow-hidden animate-planet-spin">
               <img
                 src="/planets/mars.png"
@@ -249,7 +247,6 @@ export function PlanetRender({
               ...orbTransformStyle,
             }}
           >
-            {/* CONTINUOUSLY ROTATING JUPITER GAS BANDS */}
             <div className="w-full h-full rounded-full overflow-hidden animate-planet-spin-reverse">
               <img
                 src="/planets/jupiter.png"
@@ -304,7 +301,6 @@ export function PlanetRender({
               animationDuration: "8s",
             }}
           >
-            {/* Transparent PNG Texture (Planet Globe + Tilted Rings Floating in Transparent Space!) */}
             <img
               src="/planets/saturn.png"
               alt="Photorealistic Transparent Saturn with Rings"
@@ -320,42 +316,46 @@ export function PlanetRender({
         <div
           className={`relative flex items-center justify-center select-none ${stereo3D ? "stereo-3d-active" : ""}`}
           style={{
-            width: size * 1.4,
-            height: size * 1.4,
-            perspective: 1400,
+            width: size,
+            height: size,
+            perspective: 1600,
             transformStyle: "preserve-3d",
           }}
         >
-          {/* Spacetime Gravitational Wave Expansions (Expanding Ripples) */}
+          {/* Spacetime Gravitational Waves (Multiple Expanding Ripples) */}
           <div
-            className="absolute pointer-events-none rounded-full border-2 border-amber-500/30 animate-gravity-wave"
-            style={{ width: size * 1.5, height: size * 1.5 }}
+            className="absolute pointer-events-none rounded-full border-2 border-amber-500/35 animate-gravity-wave"
+            style={{ width: size * 1.15, height: size * 1.15 }}
+          />
+          <div
+            className="absolute pointer-events-none rounded-full border border-amber-400/25 animate-gravity-wave"
+            style={{ width: size * 1.35, height: size * 1.35, animationDelay: "1.2s" }}
           />
           <div
             className="absolute pointer-events-none rounded-full border border-cyan-400/20 animate-gravity-wave"
-            style={{ width: size * 1.8, height: size * 1.8, animationDelay: "1.8s" }}
+            style={{ width: size * 1.55, height: size * 1.55, animationDelay: "2.4s" }}
           />
 
-          {/* Relativistic Accretion Ring Halo (Luminous Plasma Disk) */}
+          {/* Relativistic Accretion Halo (Huge Blazing Glow Field) */}
           <div
-            className="absolute rounded-full border-4 border-amber-400/40 shadow-[0_0_80px_rgba(245,158,11,0.7),0_0_160px_rgba(217,119,6,0.5)] animate-spin-slow pointer-events-none"
+            className="absolute rounded-full border-4 border-amber-400/40 shadow-[0_0_120px_rgba(245,158,11,0.8),0_0_240px_rgba(217,119,6,0.5)] animate-spin-slow pointer-events-none"
             style={{
-              width: size * 1.25,
-              height: size * 1.25,
+              width: size * 0.95,
+              height: size * 0.95,
               transform: "rotate(15deg)",
             }}
           />
 
-          {/* Black Hole Singularity Core (CONTINUOUS RELATIVISTIC ACCRETION VORTEX SPIN!) */}
+          {/* Supermassive Black Hole Master Body (Accretion Disk Vortex Spin) */}
           <div
-            className="relative w-full h-full flex items-center justify-center filter drop-shadow-[0_0_90px_rgba(245,158,11,0.75)] drop-shadow-[0_0_200px_rgba(180,83,9,0.45)]"
+            className="relative w-full h-full flex items-center justify-center filter drop-shadow-[0_0_100px_rgba(245,158,11,0.85)] drop-shadow-[0_0_220px_rgba(180,83,9,0.5)]"
             style={orbTransformStyle}
           >
-            {/* Transparent PNG Texture Swirling in Relativistic Vortex */}
+            {/* Accretion Disk Swirling Vortex */}
             <div className="w-full h-full flex items-center justify-center animate-blackhole-vortex">
               <img
                 src="/planets/blackhole.png"
-                alt="Supermassive Black Hole Transparent Vortex"
+                alt="Colossal Supermassive Black Hole Accretion Disk"
                 className="w-full h-full object-contain select-none pointer-events-none"
                 draggable={false}
               />
@@ -363,23 +363,15 @@ export function PlanetRender({
 
             {/* Central Event Horizon Singularity (Total Light Trapping Core) */}
             <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black pointer-events-none shadow-[0_0_40px_#000]"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black pointer-events-none"
               style={{
                 width: size * 0.32,
                 height: size * 0.32,
-                boxShadow: "0 0 25px rgba(0,0,0,1), inset 0 0 15px rgba(0,0,0,1)",
+                boxShadow: "0 0 30px rgba(0,0,0,1), inset 0 0 20px rgba(0,0,0,1)",
               }}
             >
               {/* Einstein Photon Ring Razor Edge */}
-              <div className="absolute inset-0 rounded-full ring-2 ring-amber-300/80 shadow-[0_0_20px_rgba(252,211,77,0.9)]" />
-            </div>
-          </div>
-
-          {/* Telemetry Indicator */}
-          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap bg-slate-950/90 border border-amber-500/50 px-3 py-1 rounded-full text-center shadow-lg pointer-events-none">
-            <div className="text-[10px] font-mono font-bold text-amber-300 tracking-wider flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-              <span>EVENT HORIZON // 终极引力奇点</span>
+              <div className="absolute inset-0 rounded-full ring-2 ring-amber-300 shadow-[0_0_25px_rgba(252,211,77,0.95)]" />
             </div>
           </div>
         </div>
