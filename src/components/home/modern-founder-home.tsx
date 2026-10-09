@@ -358,102 +358,111 @@ export function ModernFounderHome() {
         {/* ============================================================ */}
         <section
           id="slide-0"
-          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-between px-4 sm:px-12 lg:px-20 pt-18 pb-6"
+          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-between"
         >
-          {/* 取景器四角十字标记 */}
-          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">+</div>
-          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">+</div>
-          <div className="absolute bottom-6 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">+</div>
-          <div className="absolute bottom-6 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">+</div>
-
-          {/* 背景巨型建筑字体水印 SALIN (高质感镂空描边 + 微光渐变底色) */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0 select-none">
-            {/* 氛围绿色极弱光晕 */}
-            <div className="absolute w-[70vw] h-[35vh] top-[18%] rounded-full bg-emerald-500/[0.05] blur-[100px]" />
-            <div className="relative flex items-center justify-center -translate-y-4 sm:-translate-y-8">
-              <span
-                className="text-[24vw] sm:text-[22vw] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/[0.18] via-white/[0.07] to-transparent whitespace-nowrap font-mono select-none"
-                style={{
-                  WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.16)",
-                  letterSpacing: "-0.04em",
-                }}
-              >
-                SALIN
-              </span>
-            </div>
+          {/* 100vh 全屏巨幕铺满：实战创作者与开店工作台大图 (全屏铺开！) */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/showcase/salin-hero-workbench.jpg"
+              alt="Salin 真实创作者与开店实操工作台全屏大图"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center scale-100"
+            />
+            {/* 电影级侧向与底部暗角保护层，保证左侧排版极清阅读，同时右侧工作台与手办清晰透出 */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#050806] via-[#050806]/75 to-[#050806]/20 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050806] via-transparent to-[#050806]/80 z-10" />
+            <div className="absolute inset-0 bg-radial from-transparent via-[#050806]/20 to-[#050806]/60 z-10" />
           </div>
 
-          {/* 顶部居中宣言栏 */}
-          <div className="relative z-10 text-center max-w-4xl mx-auto pt-2 space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          {/* 取景器四角十字标记 */}
+          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/30 select-none z-20">+</div>
+          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/30 select-none z-20">+</div>
+          <div className="absolute bottom-16 left-6 sm:left-12 font-mono text-xs text-white/30 select-none z-20">+</div>
+          <div className="absolute bottom-16 right-6 sm:right-12 font-mono text-xs text-white/30 select-none z-20">+</div>
+
+          {/* 巨幅建筑字体水印 SALIN 铺开至全屏跨度 (左对齐，气势恢宏) */}
+          <div className="absolute inset-x-0 top-[12%] z-10 flex items-center justify-start overflow-hidden pointer-events-none select-none pl-6 sm:pl-14 lg:pl-20">
+            <span
+              className="text-[26vw] sm:text-[24vw] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white/[0.18] via-white/[0.08] to-transparent whitespace-nowrap font-mono select-none"
+              style={{
+                WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.16)",
+                letterSpacing: "-0.04em",
+              }}
+            >
+              SALIN
+            </span>
+          </div>
+
+          {/* 全屏交互探针：直接锚定在全屏实景物体上 */}
+          {HERO_HOTSPOTS.map((spot) => (
+            <div
+              key={spot.id}
+              className={`absolute ${spot.coords} -translate-x-1/2 -translate-y-1/2 z-30`}
+            >
+              <button
+                onClick={() => setActiveHotspot(activeHotspot === spot.id ? null : spot.id)}
+                className="relative flex items-center justify-center w-8 h-8 rounded-full bg-black/70 border border-emerald-400/90 text-emerald-300 hover:scale-125 transition-all shadow-[0_0_15px_rgba(16,185,129,0.7)] cursor-pointer"
+                title={spot.title}
+              >
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping absolute" />
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              </button>
+
+              {activeHotspot === spot.id && (
+                <div className="absolute left-1/2 bottom-10 -translate-x-1/2 w-72 p-3.5 rounded-xl bg-black/95 border border-emerald-500/60 backdrop-blur-xl shadow-2xl z-40 font-sans text-left">
+                  <div className="font-mono text-xs text-emerald-400 font-bold mb-1">
+                    {spot.title}
+                  </div>
+                  <p className="text-xs text-white/85 leading-relaxed">
+                    {spot.desc}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {/* 核心排版：左侧铺开！左对齐！不要居中！ */}
+          <div className="relative z-20 flex-1 flex flex-col justify-center px-6 sm:px-14 lg:px-20 pt-20 sm:pt-24 max-w-4xl space-y-5 text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 font-mono text-xs w-fit backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
               SALIN // 2014.04.01 — 2026 ODYSSEY
             </div>
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white">
-              从实体餐饮 <span className="text-emerald-400 font-serif italic">2000+</span> 商家服务，到自研 AI 商业化落地。
+
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] text-white drop-shadow-xl">
+              从实体餐饮 <span className="text-emerald-400 font-serif italic">2000+</span> 商家服务，
+              <br />
+              到自研 AI 商业化落地。
             </h1>
-            <p className="text-xs sm:text-sm text-white/70 max-w-2xl mx-auto font-sans">
-              我是 <strong className="text-white font-semibold">Salin</strong>（身边朋友大多叫我<span className="text-emerald-400 font-semibold">狗哥</span>）。12年真实摸爬滚打 · 实体店创业者 · 全栈独立开发者 · 饿狸 (youeli.com) 创始人
+
+            <p className="text-sm sm:text-base text-white/85 leading-relaxed max-w-2xl drop-shadow font-sans">
+              我是 <strong className="text-white font-semibold">Salin</strong>（身边朋友大多叫我<span className="text-emerald-400 font-semibold">狗哥</span>）。12年真实摸爬滚打 · 实体店创业者 · 全栈独立开发者 · 饿狸 (youeli.com) 创始人。
             </p>
-          </div>
 
-          {/* 中间核心：实战创作者工作台 16:9 巨幅画卷大图 */}
-          <div className="relative z-10 max-w-5xl mx-auto w-full flex-1 max-h-[50vh] min-h-[260px] my-2">
-            <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] bg-black group">
-              <Image
-                src="/images/showcase/salin-hero-workbench.jpg"
-                alt="Salin 真实创作者与开店实操工作台大图"
-                fill
-                priority
-                sizes="(max-width: 1280px) 100vw, 1200px"
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-
-              {/* 交互探针 */}
-              {HERO_HOTSPOTS.map((spot) => (
-                <div
-                  key={spot.id}
-                  className={`absolute ${spot.coords} -translate-x-1/2 -translate-y-1/2 z-20`}
-                >
-                  <button
-                    onClick={() => setActiveHotspot(activeHotspot === spot.id ? null : spot.id)}
-                    className="relative flex items-center justify-center w-7 h-7 rounded-full bg-black/70 border border-emerald-400/80 text-emerald-300 hover:scale-125 transition-all shadow-[0_0_12px_rgba(16,185,129,0.6)] cursor-pointer"
-                    title={spot.title}
-                  >
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping absolute" />
-                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  </button>
-
-                  {/* 弹出式微型卡片 */}
-                  {activeHotspot === spot.id && (
-                    <div className="absolute left-1/2 bottom-9 -translate-x-1/2 w-64 p-3 rounded-xl bg-black/95 border border-emerald-500/50 backdrop-blur-xl shadow-2xl z-30 font-sans text-left">
-                      <div className="font-mono text-[11px] text-emerald-400 font-bold mb-1">
-                        {spot.title}
-                      </div>
-                      <p className="text-xs text-white/80 leading-relaxed">
-                        {spot.desc}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              {/* 展柜底部参数标签 */}
-              <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/60">
-                <span className="px-2 py-0.5 rounded bg-black/70 border border-white/10">
-                  [ ARTIFACT // SALIN'S FOUNDER WORKBENCH ]
-                </span>
-                <span className="text-emerald-400 hidden sm:inline">
-                  ● 点击发光探针检视开店物证、手办与 AI 看板
-                </span>
-              </div>
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <a
+                href="https://youeli.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs sm:text-sm inline-flex items-center gap-2 shadow-[0_0_25px_rgba(16,185,129,0.5)] transition-all cursor-pointer hover:scale-105"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>体验旗舰：饿狸 (youeli.com) ↗</span>
+              </a>
+              <button
+                onClick={() => scrollToSlide(1)}
+                className="px-5 py-3 rounded-xl border border-white/20 hover:border-white/50 bg-white/[0.08] hover:bg-white/[0.15] text-white font-mono text-xs sm:text-sm inline-flex items-center gap-2 transition-all cursor-pointer backdrop-blur-md"
+              >
+                <span>下滑检阅 12 年史诗</span>
+                <ChevronDown className="w-4 h-4 text-emerald-400 animate-bounce" />
+              </button>
             </div>
           </div>
 
-          {/* 底部：三大核心数据与行动胶囊 */}
-          <div className="relative z-10 max-w-5xl mx-auto w-full grid grid-cols-1 sm:grid-cols-12 gap-3 items-center pt-1 border-t border-white/10 font-mono text-xs">
-            <div className="sm:col-span-8 flex flex-wrap items-center gap-4 sm:gap-6 text-left">
+          {/* 底部全宽铺开参数台：从最左铺到最右，不限宽！ */}
+          <div className="relative z-20 w-full px-6 sm:px-14 lg:px-20 py-3.5 flex flex-wrap items-center justify-between border-t border-white/10 bg-[#050806]/85 backdrop-blur-md font-mono text-xs">
+            <div className="flex flex-wrap items-center gap-6 sm:gap-10 text-left">
               <div>
                 <span className="text-white/40 text-[10px] block">ORIGIN</span>
                 <span className="text-white font-bold">2014.04.01 愚人节</span>
@@ -468,30 +477,17 @@ export function ModernFounderHome() {
               </div>
             </div>
 
-            <div className="sm:col-span-4 flex items-center justify-end gap-2.5">
-              <a
-                href="https://youeli.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs inline-flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all cursor-pointer"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>饿狸 (youeli.com) ↗</span>
-              </a>
-              <button
-                onClick={() => scrollToSlide(1)}
-                className="p-2 rounded-xl border border-white/20 hover:border-white/40 bg-white/[0.05] text-white transition-all cursor-pointer"
-                title="检阅 12 年史诗"
-              >
-                <ChevronDown className="w-4 h-4 text-emerald-400 animate-bounce" />
-              </button>
+            <div className="hidden lg:flex items-center gap-2 text-white/60 text-[11px]">
+              <span className="text-emerald-400">●</span>
+              <span>全屏实景物证：点击右侧发光探针检视开店物证、手办与 AI 仪表盘</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-white/50 text-[11px]">
+              <span>[ 01 / 05 // THE FOUNDER CANVAS ]</span>
             </div>
           </div>
         </section>
 
-        {/* ============================================================ */}
-        {/* SLIDE 02: 十二年餐饮摸爬滚打史诗 (左实拍胶片带官方饿鱼标，右阶梯纵向轴) */}
-        {/* ============================================================ */}
         <section
           id="slide-1"
           className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8 bg-gradient-to-b from-[#050806] via-[#080d09] to-[#050806]"
@@ -501,7 +497,7 @@ export function ModernFounderHome() {
             ARCHIVE // 2014—2026
           </div>
 
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="w-full px-6 sm:px-14 lg:px-20 2xl:px-28 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             {/* 左侧 (45%)：2017 实拍热气腾腾大照片 + 官方高保真饿鱼 Logo (X盘源文件) */}
             <div className="lg:col-span-5 flex flex-col items-center">
               <div className="relative w-full aspect-[4/5] max-h-[58vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
@@ -627,7 +623,7 @@ export function ModernFounderHome() {
             FLAGSHIP // youeli.com
           </div>
 
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="w-full px-6 sm:px-14 lg:px-20 2xl:px-28 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             {/* 左侧 (52%)：标语、官方网址与三大实战解法 */}
             <div className="lg:col-span-6 flex flex-col justify-center space-y-4">
               <div className="space-y-2">
@@ -774,7 +770,7 @@ export function ModernFounderHome() {
             DUAL ARSENAL // UI & RESOURCES
           </div>
 
-          <div className="max-w-7xl mx-auto w-full space-y-4">
+          <div className="w-full px-6 sm:px-14 lg:px-20 2xl:px-28 space-y-5">
             <div className="text-center max-w-3xl mx-auto space-y-1">
               <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs">
                 <Database className="w-3.5 h-3.5" />
@@ -907,7 +903,7 @@ export function ModernFounderHome() {
             STUDIO & CONNECT // 真实与触达
           </div>
 
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div className="w-full px-6 sm:px-14 lg:px-20 2xl:px-28 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* 栏 1 (左 28%)：2025 山路人物实拍大图 */}
             <div className="lg:col-span-3 hidden lg:flex flex-col items-center">
               <div className="relative w-full aspect-[3/4] max-h-[56vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
