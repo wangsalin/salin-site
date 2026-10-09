@@ -1,32 +1,31 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // Docker 部署：standalone 模式只打包运行时必需文件，显著减小镜像体积
-  output: "standalone",
+  output: 'standalone',
+  skipTrailingSlashRedirect: true,
   images: {
-    formats: ["image/avif", "image/webp"],
+    formats: ['image/avif', 'image/webp'],
   },
   experimental: {
     mdxRs: false,
   },
-  async redirects() {
-    return [
-      {
-        source: "/ui",
-        destination: "/ui/",
-        permanent: true,
-      },
-    ];
-  },
   async rewrites() {
     return [
       {
-        source: "/ui/",
-        destination: "https://ui.eyucn.com/",
+        source: '/ui',
+        destination: 'https://ui.eyucn.com/',
       },
       {
-        source: "/ui/:path*",
-        destination: "https://ui.eyucn.com/:path*",
+        source: '/ui/',
+        destination: 'https://ui.eyucn.com/',
+      },
+      {
+        source: '/ui/:path*',
+        destination: 'https://ui.eyucn.com/:path*',
+      },
+      {
+        source: '/assets/:path*',
+        destination: 'https://ui.eyucn.com/assets/:path*',
       },
     ];
   },
