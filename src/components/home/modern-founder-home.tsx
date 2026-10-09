@@ -26,66 +26,204 @@ import {
   ExternalLink,
   Cpu,
   RotateCcw,
+  Utensils,
+  Gamepad2,
+  Tv,
 } from "lucide-react";
 import { siteConfig } from "@/data/site";
 
 // ==========================================
-// 1. DATA ASSETS (真实定制资产库)
+// 1. DATA ASSETS (Salin 本人真实项目与物料矩阵)
 // ==========================================
 
-const MARQUEE_IMAGES = [
-  "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
-  "https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif",
-  "https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif",
-  "https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif",
-  "https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif",
-  "https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif",
-  "https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif",
-  "https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif",
-  "https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif",
-  "https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif",
-  "https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif",
-  "https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif",
-  "https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
-  "https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif",
-  "https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif",
-  "https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
-  "https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif",
-  "https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif",
-  "https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif",
-  "https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif",
-  "https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif",
+// 图二：完全替换为 Salin 自己的项目、网站、物证与品牌资产 (双向滚动画廊)
+const SALIN_SHOWCASE_ROW1 = [
+  {
+    id: "eli-main",
+    title: "饿狸 youeli.com",
+    tag: "FLAGSHIP AI",
+    desc: "餐饮营销没思路，问问饿狸 · 0.4s 实战策略生成",
+    image: "/images/projects/eli/eli-scene-kitchen.jpg",
+    link: "https://youeli.com",
+  },
+  {
+    id: "salin-ui",
+    title: "Salin UI 前端军火库",
+    tag: "DEV ARSENAL",
+    desc: "252+ 纯净 TSX 组件 · React 19 · 原生 MCP 协议",
+    image: "/images/showcase/project-salin-ui.jpg",
+    link: "https://salin.wang/ui",
+  },
+  {
+    id: "gouge-hub",
+    title: "狗哥资源库 Gouge Hub",
+    tag: "2400+ ASSETS",
+    desc: "12年真实落地商业资产 · 终身免费开放下载",
+    image: "/images/showcase/project-gouge-hub.jpg",
+    link: "https://zl.eyu.ink",
+  },
+  {
+    id: "shejian-14",
+    title: "《舌尖上的临沂》印鉴",
+    tag: "2014 ORIGIN",
+    desc: "地方自媒体萌芽时代拓荒 · 饿鱼吃包子官方图腾",
+    image: "/images/brand/shejian-official-hi-res.png",
+    link: "#about",
+  },
+  {
+    id: "foodops-ai",
+    title: "FoodOps 餐饮智能决策",
+    tag: "CATERING SAAS",
+    desc: "实体餐饮外卖毛利核算与客流翻台率算法引擎",
+    image: "/images/showcase/project-foodops.jpg",
+    link: "https://youeli.com",
+  },
+  {
+    id: "eli-desk",
+    title: "饿狸 AI 智能文案舱",
+    tag: "VIRAL COPY",
+    desc: "大众点评与小红书沉浸五感探店爆款文案生成",
+    image: "/images/projects/eli/eli-scene-desk.jpg",
+    link: "https://youeli.com",
+  },
+  {
+    id: "workbench-26",
+    title: "2026 实操开发工作台",
+    tag: "BUILDER WORKBENCH",
+    desc: "咖啡手柄、iPad 看板与深夜全栈 AI 终端",
+    image: "/images/showcase/salin-hero-workbench.jpg",
+    link: "#projects",
+  },
 ];
 
-// 「问问饿狸」现场实时推演题库 (保留高互动灵魂)
+const SALIN_SHOWCASE_ROW2 = [
+  {
+    id: "salin-mcp",
+    title: "Salin UI 开发者终端",
+    tag: "MCP PROTOCOL",
+    desc: "$ npx salin-ui add @mcp/server 极速开箱即用",
+    image: "/images/evidence/ai-dashboard.png",
+    link: "https://salin.wang/ui",
+  },
+  {
+    id: "flag-17",
+    title: "2017 探店大旗物证",
+    tag: "4380 DAYS EVIDENCE",
+    desc: "吃遍临沂大街小巷 · 旗帜与相机实拍原件",
+    image: "/images/portrait/salin-2017-flag-full.jpg",
+    link: "#about",
+  },
+  {
+    id: "hotpot-17",
+    title: "2017 探店千人火锅",
+    tag: "2000+ MERCHANTS",
+    desc: "见证 2000 多家小店的排队火爆与深夜坚守",
+    image: "/images/portrait/salin-2017-food.png",
+    link: "#about",
+  },
+  {
+    id: "eli-meeting",
+    title: "饿狸 商家增长罗盘",
+    tag: "LOCAL COMMERCE",
+    desc: "找客流 | 做活动 | 写文案，实体餐饮专属",
+    image: "/images/projects/eli/eli-scene-meeting.jpg",
+    link: "https://youeli.com",
+  },
+  {
+    id: "kitchen-frontline",
+    title: "实体后厨深水区一线",
+    tag: "STORE OWNER",
+    desc: "亲自下场开店管店四年 · 从岸上变成店老板",
+    image: "/images/evidence/kitchen-frontline.png",
+    link: "#about",
+  },
+  {
+    id: "local-matrix",
+    title: "本地生活自媒体矩阵",
+    tag: "COMMERCE ENGINE",
+    desc: "百万级同城流量矩阵从 0 到 1 商业变现实战",
+    image: "/images/evidence/local-life.png",
+    link: "#services",
+  },
+  {
+    id: "salin-2025-road",
+    title: "2025 山路实拍纪实",
+    tag: "SALIN 狗哥",
+    desc: "认准了就走到底，不装逼，做点有趣且真实的事",
+    image: "/images/portrait/salin-2025.jpg",
+    link: "#contact",
+  },
+];
+
+// 图三：重新设计的 4 大桌面精神饰件 (奶茶 / 小吃 / 手办 / 游戏)
+const DESK_TOTEMS = [
+  {
+    id: "milktea",
+    name: "奶茶 · 本地生活",
+    subtitle: "MILK TEA // LOCAL BEVERAGE",
+    desc: "走街串巷吃遍临沂，探店两千家实体餐饮的烟火记忆。",
+    image: "/images/assets/3d-milktea.png",
+    pos: "top-[4%] left-[2%] sm:left-[3%]",
+    tag: "餐饮烟火",
+  },
+  {
+    id: "snack",
+    name: "小吃 · 2000+ 门店",
+    subtitle: "STREET FOOD // MERCHANTS",
+    desc: "后厨滋滋作响的热气，见证无数小店老板的坚韧奋斗。",
+    image: "/images/assets/3d-snack.png",
+    pos: "top-[4%] right-[2%] sm:right-[3%]",
+    tag: "深耕实战",
+  },
+  {
+    id: "figure",
+    name: "手办 · 初心热血",
+    subtitle: "ANIME HERO // LUFFY FIGURE",
+    desc: "桌面常伴的草帽海贼王：认准了航向就一往无前走到底。",
+    image: "/images/assets/3d-figure.png",
+    pos: "bottom-[6%] left-[2%] sm:left-[4%]",
+    tag: "少年纯粹",
+  },
+  {
+    id: "game",
+    name: "游戏 · 极客之魂",
+    subtitle: "CYBER GAMING // GENJI & PAD",
+    desc: "深夜敲代码与手柄对决，保持极客专注与极限操作。",
+    image: "/images/assets/3d-game.png",
+    pos: "bottom-[6%] right-[2%] sm:right-[4%]",
+    tag: "硬核探索",
+  },
+];
+
+// 饿狸 AI 3 大实战推演题库
 const ELI_PROMPTS = [
   {
     id: "traffic",
-    label: "🔥 新店开业没客流",
-    tag: "3公里客流引爆",
-    prompt: "我是临沂新开的一家社区火锅店，开业前三天怎么利用社群与短视频引爆周边 3 公里客流？",
+    label: "🔥 3公里客流引爆",
+    tag: "开业裂变打法",
+    question: "新开社区火锅店，开业前三天怎么利用社群与短视频引爆周边 3 公里客流？",
     response: {
       strategy: "【饿狸 3 公里透雨打法】：锁定周边 25 个成熟小区物业群，实施『邻里抢鲜内测券』+ 抖音同城 50 位本地达人阶梯佣金爆破。",
-      copy: "“临沂街坊邻居，我们把后厨底料熬透了！凭本条视频到店，首锅毛肚直接由老板请客，不限量送完即止。”",
+      copy: "“临沂街坊邻居，我们把后厨底料熬透了！凭本条视频到店，首锅鲜切牛肉直接由老板请客，不限量送完即止。”",
       metric: "预期首周引流 1,200+ 堂食桌次 · 真实获客成本降低 62%",
     },
   },
   {
     id: "campaign",
-    label: "❄️ 周二中午太冷清",
-    tag: "淡季毛利核算",
-    prompt: "周二中午上座率不到 30%，如何设计不伤毛利的限时引流活动？",
+    label: "❄️ 周二淡季裂变",
+    tag: "午市毛利优化",
+    question: "周二中午上座率不到 30%，如何设计不伤毛利的限时引流活动？",
     response: {
-      strategy: "【饿狸 阶梯毛利拼团】：针对周边写字楼推出『双人午市元气包』，主打出餐在 8 分钟以内的预制高毛利组合，绑定下周晚餐抵扣券锁定复购。",
+      strategy: "【饿狸 阶梯毛利拼团】：针对周边写字楼推出『双人午市元气包』，主打出餐 8 分钟以内的预制高毛利组合，绑定下周晚餐抵扣券锁定复购。",
       copy: "“打工人的周二不该吃对付的盒饭！热气腾腾的招牌小锅仅限午市 11:30-13:30，吃完再送 20 元深夜食堂券。”",
       metric: "午市翻台率提升 45% · 晚餐二阶段复购转化率达 28%",
     },
   },
   {
     id: "copy",
-    label: "✍️ 想写爆款探店脚本",
-    tag: "小红书与大众点评",
-    prompt: "想在大众点评和小红书发打卡笔记，如何写出既真实自然又能过审的爆款推文？",
+    label: "✍️ 爆款探店推文",
+    tag: "沉浸五感文案",
+    question: "想在大众点评和小红书发打卡笔记，如何写出既真实自然又能过审的爆款推文？",
     response: {
       strategy: "【饿狸 沉浸五感文案算法】：抛弃死板推销词，从『深夜厨房的锅气声』『红油翻滚的气味』切入，以本地食客第一人称对话展开。",
       copy: "“在临沂挖到这家藏在巷子深处的宝藏小馆！刚掀开帘子就被满屋热腾腾的牛骨香治愈了，老板亲自掌勺 10 年，第一口汤就鲜掉眉毛…”",
@@ -94,7 +232,36 @@ const ELI_PROMPTS = [
   },
 ];
 
-const PROJECTS = [
+// 狗哥资源库 4 大核心分类交互
+const GOUGE_CATEGORIES = [
+  {
+    id: "catering",
+    label: "实体餐饮全案",
+    count: "1,500+ 份",
+    desc: "从选址评估、开业筹备到淡旺季引流套餐方案完整打法。",
+  },
+  {
+    id: "sop",
+    label: "连锁运营 SOP",
+    count: "380+ 套",
+    desc: "后厨出品标准、前厅服务流程与店长每日巡店考核表。",
+  },
+  {
+    id: "scripts",
+    label: "爆款营销话术",
+    count: "820+ 篇",
+    desc: "朋友圈私域促单、大众点评好评引导与会员储值活动脚本。",
+  },
+  {
+    id: "video",
+    label: "探店短视频脚本",
+    count: "560+ 个",
+    desc: "同城探店达人拍摄镜头脚本、黄金前三秒吸睛文案范式。",
+  },
+];
+
+// 图四：真正换成我们自己的 3 大项目真实多联实景截图！
+const PROJECTS_DATA = [
   {
     num: "01",
     label: "Flagship AI · 实体商家 AI 获客武器",
@@ -102,10 +269,11 @@ const PROJECTS = [
     link: "https://youeli.com",
     desc: "餐饮营销没思路，问问饿狸。找客流 | 做活动 | 写文案，0.4 秒生成真实餐饮实战方案，后厨毛利动态追踪。",
     badge: "12年实体餐饮一线方法论打包",
-    img1: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
-    img2: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
-    img3: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85",
-    hasSimulator: true,
+    // 真实饿狸 3D 实战多联大图
+    img1: "/images/projects/eli/eli-scene-desk.jpg",
+    img2: "/images/projects/eli/eli-scene-kitchen.jpg",
+    img3: "/images/projects/eli/eli-scene-meeting.jpg",
+    type: "eli",
   },
   {
     num: "02",
@@ -115,10 +283,11 @@ const PROJECTS = [
     desc: "专为 Cursor、Claude、Antigravity 调教的高美学纯净前端骨架。零冗余三方依赖、复制即用纯 TSX，原生 MCP 协议支持。",
     badge: "React 19 · Tailwind v4 · 纯净 TSX",
     command: "npx salin-ui add @mcp/server",
-    img1: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
-    img2: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
-    img3: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85",
-    hasSimulator: false,
+    // 真实 Salin UI 实景多联图
+    img1: "/images/evidence/ai-dashboard.png",
+    img2: "/images/showcase/salin-hero-workbench.jpg",
+    img3: "/images/showcase/project-salin-ui.jpg",
+    type: "salin-ui",
   },
   {
     num: "03",
@@ -127,11 +296,11 @@ const PROJECTS = [
     link: "https://zl.eyu.ink",
     desc: "12 年摸爬滚打沉淀的商业资产枢纽。涵盖实体餐饮全案策划、连锁运营规范手册、爆款营销话术库与探店短视频脚本。",
     badge: "2400+ 免费资产 · 终身免费开放",
-    chips: ["实体餐饮全案", "连锁管理规范", "爆款营销话术", "探店短视频脚本"],
-    img1: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
-    img2: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
-    img3: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85",
-    hasSimulator: false,
+    // 真实狗哥资源库多联图
+    img1: "/images/evidence/merchant-service.png",
+    img2: "/images/evidence/local-life.png",
+    img3: "/images/showcase/project-gouge-hub.jpg",
+    type: "gouge-hub",
   },
 ];
 
@@ -164,87 +333,10 @@ const SERVICES = [
 ];
 
 // ==========================================
-// 2. INTERACTIVE SUB-COMPONENTS
+// 2. SECTIONS
 // ==========================================
 
-// 鼠标悬停动力学磁吸组件 (Desktop 增强，移动端优雅降级)
-const Magnet = ({ children, padding = 150, strength = 3, className = "" }: any) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return;
-    const { left, top, width, height } = ref.current.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    const distanceX = e.clientX - centerX;
-    const distanceY = e.clientY - centerY;
-
-    if (Math.abs(distanceX) < padding && Math.abs(distanceY) < padding) {
-      x.set(distanceX / strength);
-      y.set(distanceY / strength);
-    } else {
-      x.set(0);
-      y.set(0);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={className}
-      animate={{ x: x.get(), y: y.get() }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
-    >
-      {children}
-    </motion.div>
-  );
-};
-
-const ContactButton = ({
-  text = "Contact",
-  onClick,
-  href,
-}: {
-  text?: string;
-  onClick?: () => void;
-  href?: string;
-}) => {
-  if (href) {
-    return (
-      <a
-        href={href}
-        className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#D7E2EA]/30 bg-transparent px-6 py-3 text-[#D7E2EA] transition-all hover:border-[#D7E2EA] hover:bg-[#D7E2EA] hover:text-[#0C0C0C] cursor-pointer"
-      >
-        <span className="font-medium uppercase tracking-widest text-sm">{text}</span>
-        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-      </a>
-    );
-  }
-  return (
-    <button
-      onClick={onClick}
-      className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#D7E2EA]/30 bg-transparent px-6 py-3 text-[#D7E2EA] transition-all hover:border-[#D7E2EA] hover:bg-[#D7E2EA] hover:text-[#0C0C0C] cursor-pointer"
-    >
-      <span className="font-medium uppercase tracking-widest text-sm">{text}</span>
-      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-    </button>
-  );
-};
-
-// ==========================================
-// 3. SECTIONS
-// ==========================================
-
-// HERO 首屏
+// 【图一优化】：全屏指针跟随 3D 头像 + 新生成的 Salin 本人 3D 肖像
 const HeroSection = ({
   onOpenQr,
   onReplayOpening,
@@ -252,8 +344,36 @@ const HeroSection = ({
   onOpenQr: () => void;
   onReplayOpening: () => void;
 }) => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // 顺滑弹簧物理系统：全屏范围内平滑转头并微移
+  const springConfig = { stiffness: 90, damping: 18, mass: 0.12 };
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-24, 24]), springConfig);
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [18, -18]), springConfig);
+  const moveX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-35, 35]), springConfig);
+  const moveY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-25, 25]), springConfig);
+
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      // 归一化指针坐标（以窗口中心为 0, -0.5 到 +0.5）
+      const normX = e.clientX / window.innerWidth - 0.5;
+      const normY = e.clientY / window.innerHeight - 0.5;
+      mouseX.set(normX);
+      mouseY.set(normY);
+    };
+
+    window.addEventListener("mousemove", handleGlobalMouseMove);
+    return () => window.removeEventListener("mousemove", handleGlobalMouseMove);
+  }, [mouseX, mouseY]);
+
   return (
-    <section className="relative flex min-h-screen w-full flex-col justify-between overflow-x-clip px-5 sm:px-8 md:px-12 pt-4 pb-8">
+    <section
+      ref={heroRef}
+      className="relative flex min-h-screen w-full flex-col justify-between overflow-x-clip px-5 sm:px-8 md:px-12 pt-4 pb-8"
+      style={{ perspective: 1200 }}
+    >
       {/* 极简顶栏导航 */}
       <motion.nav
         initial={{ y: -20, opacity: 0 }}
@@ -285,7 +405,7 @@ const HeroSection = ({
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={onReplayOpening}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 hover:border-emerald-500/40 bg-white/[0.04] hover:bg-emerald-500/10 text-white/70 hover:text-emerald-300 font-mono text-xs transition-colors cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/10 hover:border-emerald-500/40 bg-white/[0.04] hover:bg-emerald-500/10 text-white/70 hover:text-emerald-300 font-mono text-xs transition-colors cursor-pointer"
             title="重播电影开幕光效"
           >
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
@@ -293,7 +413,7 @@ const HeroSection = ({
           </button>
           <button
             onClick={onOpenQr}
-            className="px-3.5 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+            className="px-3.5 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.2)]"
           >
             <Scan className="w-3.5 h-3.5" />
             <span>微信 {siteConfig.wechat}</span>
@@ -301,7 +421,7 @@ const HeroSection = ({
         </div>
       </motion.nav>
 
-      {/* 巨幅背景英文字体：Hi, i'm salin */}
+      {/* 巨幅背景字：HI, I'M SALIN */}
       <div className="flex-1 flex flex-col items-center justify-center -mt-6 sm:-mt-10 relative z-0">
         <div className="overflow-hidden w-full text-center">
           <motion.h1
@@ -315,21 +435,26 @@ const HeroSection = ({
         </div>
       </div>
 
-      {/* 核心中层：Salin 本人镂空实拍人像 + 鼠标物理磁吸 */}
-      <Magnet
-        padding={150}
-        strength={3}
-        className="absolute left-1/2 -translate-x-1/2 z-10 w-[260px] sm:w-[360px] md:w-[440px] lg:w-[520px] top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 pointer-events-none sm:pointer-events-auto"
+      {/* 【核心重磅更新】：根据 Salin 真人照片重新生成的 3D 肖像 + 随鼠标全局全视角注视跟随 */}
+      <motion.div
+        style={{
+          rotateX,
+          rotateY,
+          x: moveX,
+          y: moveY,
+          transformStyle: "preserve-3d",
+        }}
+        className="absolute left-1/2 -translate-x-1/2 z-10 w-[270px] sm:w-[370px] md:w-[460px] lg:w-[530px] top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 pointer-events-none drop-shadow-[0_25px_60px_rgba(0,0,0,0.85)] select-none"
       >
         <motion.img
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          src="https://xgdzyqfalbibzelpdpvr.supabase.co/storage/v1/object/sign/restyle-media/57c4ddb3-054a-479a-a9df-792883a91fa0/07296545-7a4c-4018-966c-932fe2c41458.png?token=eyJraWQiOiIwZDIyMTA2Yi1iMThmLTRhMzMtYTQzMi1jODQxN2Y0ZTE2YmIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJyZXN0eWxlLW1lZGlhLzU3YzRkZGIzLTA1NGEtNDc5YS1hOWRmLTc5Mjg4M2E5MWZhMC8wNzI5NjU0NS03YTRjLTQwMTgtOTY2Yy05MzJmZTJjNDE0NTgucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTU1ODQzOCwiZXhwIjoyMTA2OTE4NDM4fQ.Zt4uaunQPWg90yyAWXHQ0k50CJqgkpGkVfCclotCZ0k"
-          alt="Salin 狗哥"
-          className="w-full h-auto object-contain pointer-events-none drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+          transition={{ delay: 0.35, duration: 0.8 }}
+          src="/images/portrait/salin_avatar_3d.png"
+          alt="Salin 狗哥 3D 肖像 (注视指针)"
+          className="w-full h-auto object-contain select-none"
         />
-      </Magnet>
+      </motion.div>
 
       {/* 底部全宽信息栏 */}
       <div className="flex w-full items-end justify-between pb-4 sm:pb-6 md:pb-8 relative z-20">
@@ -353,55 +478,110 @@ const HeroSection = ({
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.6 }}
         >
-          <ContactButton text="Get In Touch" onClick={onOpenQr} />
+          <button
+            onClick={onOpenQr}
+            className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#D7E2EA]/30 bg-transparent px-6 py-3 text-[#D7E2EA] transition-all hover:border-[#D7E2EA] hover:bg-[#D7E2EA] hover:text-[#0C0C0C] cursor-pointer"
+          >
+            <span className="font-medium uppercase tracking-widest text-sm">Get In Touch</span>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </button>
         </motion.div>
       </div>
     </section>
   );
 };
 
-// 双向滚动视差项目画廊 (21 组动效项目 GIF)
+// 【图二优化】：换成 Salin 本人的 14 组真实作品、网站、品牌与纪实大图！
 const MarqueeSection = () => {
   const { scrollY } = useScroll();
 
-  const x1 = useTransform(scrollY, (v) => v * 0.3 - 200);
-  const x2 = useTransform(scrollY, (v) => -(v * 0.3) + 200);
+  const x1 = useTransform(scrollY, (v) => v * 0.28 - 150);
+  const x2 = useTransform(scrollY, (v) => -(v * 0.28) + 150);
 
-  const row1 = MARQUEE_IMAGES.slice(0, 11);
-  const row2 = MARQUEE_IMAGES.slice(11, 21);
-
-  const seamlessRow1 = [...row1, ...row1, ...row1];
-  const seamlessRow2 = [...row2, ...row2, ...row2];
+  const seamlessRow1 = [...SALIN_SHOWCASE_ROW1, ...SALIN_SHOWCASE_ROW1, ...SALIN_SHOWCASE_ROW1];
+  const seamlessRow2 = [...SALIN_SHOWCASE_ROW2, ...SALIN_SHOWCASE_ROW2, ...SALIN_SHOWCASE_ROW2];
 
   return (
-    <section className="bg-[#0C0C0C] pt-16 sm:pt-24 md:pt-32 pb-10 overflow-hidden w-full flex flex-col gap-3.5 select-none">
-      <motion.div style={{ x: x1, willChange: "transform" }} className="flex gap-3.5 whitespace-nowrap min-w-max">
-        {seamlessRow1.map((src, i) => (
-          <img
+    <section className="bg-[#0C0C0C] pt-16 sm:pt-24 md:pt-32 pb-10 overflow-hidden w-full flex flex-col gap-4 select-none">
+      {/* 轨道 1：向右移动 */}
+      <motion.div style={{ x: x1, willChange: "transform" }} className="flex gap-4 whitespace-nowrap min-w-max">
+        {seamlessRow1.map((item, i) => (
+          <a
             key={`r1-${i}`}
-            src={src}
-            alt="Project Demo"
-            loading="lazy"
-            className="w-[300px] sm:w-[380px] md:w-[420px] h-[190px] sm:h-[240px] md:h-[270px] rounded-2xl object-cover border border-white/10"
-          />
+            href={item.link}
+            target={item.link.startsWith("http") ? "_blank" : undefined}
+            rel="noreferrer"
+            className="group relative w-[320px] sm:w-[400px] md:w-[440px] h-[200px] sm:h-[250px] md:h-[280px] rounded-2xl overflow-hidden border border-white/10 bg-black/60 shrink-0 transition-transform hover:scale-[1.02]"
+          >
+            <img
+              src={item.image}
+              alt={item.title}
+              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-black/10" />
+
+            {/* 顶部标签 */}
+            <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/80 border border-emerald-500/40 font-mono text-[10px] text-emerald-300 font-bold backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              {item.tag}
+            </div>
+
+            {/* 底部信息 */}
+            <div className="absolute bottom-3 left-3 right-3 text-left">
+              <div className="font-bold text-sm sm:text-base text-white tracking-tight flex items-center justify-between">
+                <span>{item.title}</span>
+                <ExternalLink className="w-3.5 h-3.5 text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <div className="text-[11px] sm:text-xs text-white/70 line-clamp-1 pt-0.5">
+                {item.desc}
+              </div>
+            </div>
+          </a>
         ))}
       </motion.div>
-      <motion.div style={{ x: x2, willChange: "transform" }} className="flex gap-3.5 whitespace-nowrap min-w-max">
-        {seamlessRow2.map((src, i) => (
-          <img
+
+      {/* 轨道 2：向左移动 */}
+      <motion.div style={{ x: x2, willChange: "transform" }} className="flex gap-4 whitespace-nowrap min-w-max">
+        {seamlessRow2.map((item, i) => (
+          <a
             key={`r2-${i}`}
-            src={src}
-            alt="Project Demo"
-            loading="lazy"
-            className="w-[300px] sm:w-[380px] md:w-[420px] h-[190px] sm:h-[240px] md:h-[270px] rounded-2xl object-cover border border-white/10"
-          />
+            href={item.link}
+            target={item.link.startsWith("http") ? "_blank" : undefined}
+            rel="noreferrer"
+            className="group relative w-[320px] sm:w-[400px] md:w-[440px] h-[200px] sm:h-[250px] md:h-[280px] rounded-2xl overflow-hidden border border-white/10 bg-black/60 shrink-0 transition-transform hover:scale-[1.02]"
+          >
+            <img
+              src={item.image}
+              alt={item.title}
+              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-black/10" />
+
+            {/* 顶部标签 */}
+            <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/80 border border-white/20 font-mono text-[10px] text-white/80 font-bold backdrop-blur-md">
+              {item.tag}
+            </div>
+
+            {/* 底部信息 */}
+            <div className="absolute bottom-3 left-3 right-3 text-left">
+              <div className="font-bold text-sm sm:text-base text-white tracking-tight flex items-center justify-between">
+                <span>{item.title}</span>
+                <ExternalLink className="w-3.5 h-3.5 text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <div className="text-[11px] sm:text-xs text-white/70 line-clamp-1 pt-0.5">
+                {item.desc}
+              </div>
+            </div>
+          </a>
         ))}
       </motion.div>
     </section>
   );
 };
 
-// 十二年历程 (12Y Odyssey 逐字点亮叙事 + 四角 3D 悬浮物证)
+// 【图三优化】：重新设计的 4 大桌面精神饰件 (奶茶 / 小吃 / 手办 / 游戏)
 const AboutSection = ({ onOpenQr }: { onOpenQr: () => void }) => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -418,43 +598,35 @@ const AboutSection = ({ onOpenQr }: { onOpenQr: () => void }) => {
       id="about"
       className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 md:px-12 py-24 bg-[#0C0C0C] overflow-hidden w-full text-center"
     >
-      {/* 4 大角落悬浮 3D 物证饰件 */}
-      <motion.img
-        initial={{ x: -60, opacity: 0 }}
-        whileInView={{ x: 0, opacity: 1 }}
-        transition={{ delay: 0.1, duration: 0.8 }}
-        viewport={{ once: true }}
-        src="https://xgdzyqfalbibzelpdpvr.supabase.co/storage/v1/object/sign/restyle-media/57c4ddb3-054a-479a-a9df-792883a91fa0/90104c16-b68d-426d-9bdd-5b53c33db591.png?token=eyJraWQiOiIwZDIyMTA2Yi1iMThmLTRhMzMtYTQzMi1jODQxN2Y0ZTE2YmIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJyZXN0eWxlLW1lZGlhLzU3YzRkZGIzLTA1NGEtNDc5YS1hOWRmLTc5Mjg4M2E5MWZhMC85MDEwNGMxNi1iNjhkLTQyNmQtOWJkZC01YjUzYzMzZGI1OTEucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTU1ODQzNSwiZXhwIjoyMTA2OTE4NDM1fQ.NtWKk9CKIeGG45QeFeoxW1YfC0qR_x5UKPhNIWIn4Dc"
-        alt="Moon Icon"
-        className="absolute top-[4%] left-[2%] sm:left-[3%] w-[100px] sm:w-[150px] md:w-[200px] object-contain pointer-events-none drop-shadow-xl"
-      />
-      <motion.img
-        initial={{ x: 60, opacity: 0 }}
-        whileInView={{ x: 0, opacity: 1 }}
-        transition={{ delay: 0.15, duration: 0.8 }}
-        viewport={{ once: true }}
-        src="https://xgdzyqfalbibzelpdpvr.supabase.co/storage/v1/object/sign/restyle-media/57c4ddb3-054a-479a-a9df-792883a91fa0/9cf10f8f-6736-46a1-8e69-38d995170605.png?token=eyJraWQiOiIwZDIyMTA2Yi1iMThmLTRhMzMtYTQzMi1jODQxN2Y0ZTE2YmIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJyZXN0eWxlLW1lZGlhLzU3YzRkZGIzLTA1NGEtNDc5YS1hOWRmLTc5Mjg4M2E5MWZhMC85Y2YxMGY4Zi02NzM2LTQ2YTEtOGU2OS0zOGQ5OTUxNzA2MDUucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTU1ODQzNCwiZXhwIjoyMTA2OTE4NDM0fQ.98QJjf8pt-xmqCs0Ua7_0S2yA5IPeOWVWfjrIMGcJMI"
-        alt="Lego Icon"
-        className="absolute top-[4%] right-[2%] sm:right-[3%] w-[100px] sm:w-[150px] md:w-[200px] object-contain pointer-events-none drop-shadow-xl"
-      />
-      <motion.img
-        initial={{ x: -60, opacity: 0 }}
-        whileInView={{ x: 0, opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.8 }}
-        viewport={{ once: true }}
-        src="https://xgdzyqfalbibzelpdpvr.supabase.co/storage/v1/object/sign/restyle-media/57c4ddb3-054a-479a-a9df-792883a91fa0/a09baedb-6f79-493e-8936-fcb451b39627.png?token=eyJraWQiOiIwZDIyMTA2Yi1iMThmLTRhMzMtYTQzMi1jODQxN2Y0ZTE2YmIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJyZXN0eWxlLW1lZGlhLzU3YzRkZGIzLTA1NGEtNDc5YS1hOWRmLTc5Mjg4M2E5MWZhMC9hMDliYWVkYi02Zjc5LTQ5M2UtODkzNi1mY2I0NTFiMzk2MjcucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTU1ODQzNCwiZXhwIjoyMTA2OTE4NDM0fQ.-cMI7cuBbYxN0OgGs27ZIlEiBSMhShxYLEylnmMe580"
-        alt="3D Object"
-        className="absolute bottom-[6%] left-[2%] sm:left-[4%] w-[90px] sm:w-[130px] md:w-[170px] object-contain pointer-events-none drop-shadow-xl"
-      />
-      <motion.img
-        initial={{ x: 60, opacity: 0 }}
-        whileInView={{ x: 0, opacity: 1 }}
-        transition={{ delay: 0.25, duration: 0.8 }}
-        viewport={{ once: true }}
-        src="https://xgdzyqfalbibzelpdpvr.supabase.co/storage/v1/object/sign/restyle-media/57c4ddb3-054a-479a-a9df-792883a91fa0/80ea13ac-2482-4a5f-ab4d-c5540f90910f.png?token=eyJraWQiOiIwZDIyMTA2Yi1iMThmLTRhMzMtYTQzMi1jODQxN2Y0ZTE2YmIiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJyZXN0eWxlLW1lZGlhLzU3YzRkZGIzLTA1NGEtNDc5YS1hOWRmLTc5Mjg4M2E5MWZhMC84MGVhMTNhYy0yNDgyLTRhNWYtYWI0ZC1jNTU0MGY5MDkxMGYucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc5MTU1ODQzMSwiZXhwIjoyMTA2OTE4NDMxfQ.wQBqeOEnwmTDGGrQXTJWNEohPb1wrlSRl3vett1bybc"
-        alt="3D Group"
-        className="absolute bottom-[6%] right-[2%] sm:right-[4%] w-[110px] sm:w-[150px] md:w-[200px] object-contain pointer-events-none drop-shadow-xl"
-      />
+      {/* 4 大全新定制桌面精神物证饰件 (奶茶 / 小吃 / 手办 / 游戏) */}
+      {DESK_TOTEMS.map((totem, i) => (
+        <motion.div
+          key={totem.id}
+          initial={{ scale: 0.8, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.1 * i, duration: 0.8 }}
+          viewport={{ once: true }}
+          className={`absolute ${totem.pos} z-10 group cursor-pointer flex flex-col items-center`}
+        >
+          <motion.div
+            animate={{ y: [0, i % 2 === 0 ? -12 : 12, 0] }}
+            transition={{ repeat: Infinity, duration: 4 + i, ease: "easeInOut" }}
+            className="relative w-[110px] sm:w-[160px] md:w-[210px] aspect-square transition-transform group-hover:scale-110 drop-shadow-[0_15px_35px_rgba(0,0,0,0.8)]"
+          >
+            <img
+              src={totem.image}
+              alt={totem.name}
+              className="w-full h-full object-contain pointer-events-none"
+            />
+          </motion.div>
+
+          {/* 悬停说明卡片 */}
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none mt-1 px-3 py-1.5 rounded-xl bg-black/90 border border-emerald-500/40 text-left font-mono text-[11px] shadow-2xl backdrop-blur-md">
+            <span className="text-emerald-400 font-bold block">{totem.name}</span>
+            <span className="text-white/70 text-[10px] block">{totem.desc}</span>
+          </div>
+        </motion.div>
+      ))}
 
       {/* 巨幅主标题 */}
       <motion.h2
@@ -507,7 +679,13 @@ const AboutSection = ({ onOpenQr }: { onOpenQr: () => void }) => {
           </div>
         </div>
 
-        <ContactButton text="与 Salin 聊聊历程" onClick={onOpenQr} />
+        <button
+          onClick={onOpenQr}
+          className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#D7E2EA]/30 bg-transparent px-6 py-3 text-[#D7E2EA] transition-all hover:border-[#D7E2EA] hover:bg-[#D7E2EA] hover:text-[#0C0C0C] cursor-pointer"
+        >
+          <span className="font-medium uppercase tracking-widest text-sm">与 Salin 聊聊历程</span>
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </button>
       </div>
     </section>
   );
@@ -552,7 +730,7 @@ const ServicesSection = () => {
   );
 };
 
-// 叠层物理卡片 (Sticky Stacking Card + 饿狸实时 AI 决策模拟舱)
+// 【图四优化】：补齐现场交互！换掉花草图片，使用 Salin 真实项目 3D 实景与实时推演器
 const Card = ({
   project,
   index,
@@ -571,9 +749,14 @@ const Card = ({
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1 - (totalCards - 1 - index) * 0.03]);
 
   // 饿狸 AI 模拟交互状态
-  const [activePrompt, setActivePrompt] = useState(0);
-  const [showSimulator, setShowSimulator] = useState(false);
+  const [activeEliPrompt, setActiveEliPrompt] = useState(0);
+  const [showEliSimulator, setShowEliSimulator] = useState(false);
+
+  // Salin UI 命令复制
   const [copiedCmd, setCopiedCmd] = useState(false);
+
+  // 狗哥资源库分类选中
+  const [activeGougeCategory, setActiveGougeCategory] = useState(0);
 
   const handleCopyCommand = () => {
     if (project.command) {
@@ -591,10 +774,10 @@ const Card = ({
     >
       <motion.div
         style={{ scale }}
-        className="w-full max-w-6xl min-h-[560px] md:h-full md:max-h-[820px] bg-[#0C0C0C] rounded-[28px] sm:rounded-[44px] md:rounded-[56px] border-2 border-[#D7E2EA] p-5 sm:p-7 md:p-9 flex flex-col justify-between gap-5 shadow-2xl relative overflow-hidden"
+        className="w-full max-w-6xl min-h-[580px] md:h-full md:max-h-[820px] bg-[#0C0C0C] rounded-[28px] sm:rounded-[44px] md:rounded-[56px] border-2 border-[#D7E2EA] p-5 sm:p-7 md:p-8 flex flex-col justify-between gap-4 shadow-2xl relative overflow-hidden"
       >
         {/* 卡片头部 */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 shrink-0 border-b border-[#D7E2EA]/15 pb-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-3 shrink-0 border-b border-[#D7E2EA]/15 pb-3">
           <div className="flex items-center gap-4 sm:gap-6 text-left">
             <span className="font-black text-[clamp(2.5rem,7vw,90px)] leading-none text-[#D7E2EA] font-mono">
               {project.num}
@@ -609,24 +792,26 @@ const Card = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 w-full md:w-auto justify-between md:justify-end">
-            {project.hasSimulator && (
+          <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto justify-between md:justify-end">
+            {/* 饿狸卡片专属交互：直接切换模拟器 */}
+            {project.type === "eli" && (
               <button
-                onClick={() => setShowSimulator(!showSimulator)}
-                className="px-3.5 py-1.5 rounded-full border border-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5"
+                onClick={() => setShowEliSimulator(!showEliSimulator)}
+                className="px-3.5 py-1.5 rounded-full border border-emerald-400 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>{showSimulator ? "查看实景大图" : "切换「问问饿狸」AI 推演"}</span>
+                <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                <span>{showEliSimulator ? "查看 3D 实景多联大图" : "⚡ 现场体验「问问饿狸」AI 决策"}</span>
               </button>
             )}
 
+            {/* Salin UI 专属交互：复制 CLI */}
             {project.command && (
               <button
                 onClick={handleCopyCommand}
                 className="px-3 py-1.5 rounded-full border border-emerald-400/40 bg-emerald-500/10 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5"
               >
-                {copiedCmd ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                <span>{copiedCmd ? "已复制命令" : "复制 CLI"}</span>
+                {copiedCmd ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                <span>{copiedCmd ? "已复制命令" : "复制 CLI 命令"}</span>
               </button>
             )}
 
@@ -642,15 +827,16 @@ const Card = ({
           </div>
         </div>
 
-        {/* 卡片主视窗：非对称三联大图 OR 现场 AI 决策推演舱 */}
-        {showSimulator && project.hasSimulator ? (
-          <div className="flex-1 flex flex-col justify-center rounded-[24px] sm:rounded-[36px] bg-white/[0.03] border border-emerald-500/40 p-4 sm:p-6 text-left space-y-4">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+        {/* 卡片主视窗：【真实项目大图】 与 【深度交互】 */}
+        {project.type === "eli" && showEliSimulator ? (
+          // 饿狸深度交互：现场「问问饿狸」AI 决策舱
+          <div className="flex-1 flex flex-col justify-between rounded-[24px] sm:rounded-[36px] bg-white/[0.03] border border-emerald-500/40 p-4 sm:p-6 text-left space-y-3.5">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
               <span className="font-mono text-xs text-emerald-400 font-bold flex items-center gap-2">
                 <Bot className="w-4 h-4" />
-                「问问饿狸」现场推演舱 · 实体餐饮 12 年方法论打包
+                现场推演舱 · 实体餐饮 12 年一线实战方法论打包
               </span>
-              <span className="font-mono text-[11px] text-white/50">用时 0.4s · 真实餐饮实战方案</span>
+              <span className="font-mono text-[11px] text-white/50">用时 0.4s · 真实餐饮解决方案</span>
             </div>
 
             {/* 3 个实战问题标签 */}
@@ -658,9 +844,9 @@ const Card = ({
               {ELI_PROMPTS.map((p, idx) => (
                 <button
                   key={p.id}
-                  onClick={() => setActivePrompt(idx)}
+                  onClick={() => setActiveEliPrompt(idx)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all cursor-pointer ${
-                    activePrompt === idx
+                    activeEliPrompt === idx
                       ? "bg-emerald-500 text-black font-bold shadow-[0_0_15px_rgba(16,185,129,0.5)]"
                       : "bg-white/[0.06] hover:bg-white/10 text-white/70 hover:text-white border border-white/10"
                   }`}
@@ -671,55 +857,137 @@ const Card = ({
             </div>
 
             {/* AI 策略回答卡 */}
-            <div className="p-4 rounded-2xl bg-black/70 border border-emerald-500/30 space-y-3 font-sans">
+            <div className="p-4 rounded-2xl bg-black/75 border border-emerald-500/30 space-y-2.5 font-sans">
               <div className="text-xs font-mono text-emerald-400 font-bold">
-                💡 【{ELI_PROMPTS[activePrompt].tag}】实操策略：
+                💡 【{ELI_PROMPTS[activeEliPrompt].tag}】实操策略：
               </div>
               <div className="text-sm text-white/95 leading-relaxed font-medium">
-                {ELI_PROMPTS[activePrompt].response.strategy}
+                {ELI_PROMPTS[activeEliPrompt].response.strategy}
               </div>
               <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 font-mono text-xs text-emerald-300 leading-relaxed whitespace-pre-line">
-                {ELI_PROMPTS[activePrompt].response.copy}
+                {ELI_PROMPTS[activeEliPrompt].response.copy}
               </div>
               <div className="flex flex-wrap items-center justify-between pt-2 border-t border-white/10 font-mono text-xs text-white/60 gap-2">
-                <span>📈 {ELI_PROMPTS[activePrompt].response.metric}</span>
+                <span>📈 {ELI_PROMPTS[activeEliPrompt].response.metric}</span>
                 <a
                   href="https://youeli.com"
                   target="_blank"
                   rel="noreferrer"
                   className="text-emerald-400 hover:text-emerald-300 font-bold inline-flex items-center gap-1"
                 >
-                  在 youeli.com 完整生成 ↗
+                  前往 youeli.com 完整体验 ↗
                 </a>
               </div>
             </div>
           </div>
         ) : (
-          <div className="flex flex-col md:flex-row gap-4 flex-1 overflow-hidden">
-            <div className="flex flex-col gap-4 w-full md:w-[40%] h-full">
-              <img
-                src={project.img1}
-                alt={`${project.name} 预览 1`}
-                className="w-full object-cover rounded-[20px] sm:rounded-[32px] md:rounded-[40px] h-[140px] sm:h-[180px] md:h-[220px] border border-white/10"
-              />
-              <img
-                src={project.img2}
-                alt={`${project.name} 预览 2`}
-                className="w-full object-cover rounded-[20px] sm:rounded-[32px] md:rounded-[40px] h-[160px] sm:h-[200px] md:h-[260px] flex-1 border border-white/10"
-              />
+          // 真实项目多联实景截图 (彻底清除花草等不相干图片！)
+          <div className="flex flex-col md:flex-row gap-3.5 flex-1 overflow-hidden">
+            <div className="flex flex-col gap-3.5 w-full md:w-[40%] h-full">
+              <div className="relative w-full rounded-[20px] sm:rounded-[30px] md:rounded-[36px] overflow-hidden border border-white/15 h-[140px] sm:h-[180px] md:h-[210px] group">
+                <img
+                  src={project.img1}
+                  alt={`${project.name} 真实截图 1`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute bottom-2.5 left-3 font-mono text-[10px] text-emerald-300 bg-black/80 px-2 py-0.5 rounded border border-white/10">
+                  {project.type === "eli"
+                    ? "实操工作台"
+                    : project.type === "salin-ui"
+                    ? "组件库交互"
+                    : "商家服务实录"}
+                </div>
+              </div>
+
+              <div className="relative w-full rounded-[20px] sm:rounded-[30px] md:rounded-[36px] overflow-hidden border border-white/15 h-[150px] sm:h-[190px] md:h-[240px] flex-1 group">
+                <img
+                  src={project.img2}
+                  alt={`${project.name} 真实截图 2`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute bottom-2.5 left-3 font-mono text-[10px] text-emerald-300 bg-black/80 px-2 py-0.5 rounded border border-white/10">
+                  {project.type === "eli"
+                    ? "后厨实战联动"
+                    : project.type === "salin-ui"
+                    ? "开发工作台"
+                    : "同城自媒体资产"}
+                </div>
+              </div>
             </div>
-            <div className="w-full md:w-[60%] h-full">
+
+            <div className="w-full md:w-[60%] h-full relative rounded-[20px] sm:rounded-[30px] md:rounded-[36px] overflow-hidden border border-white/15 min-h-[220px] group">
               <img
                 src={project.img3}
-                alt={`${project.name} 预览 3`}
-                className="w-full h-full object-cover rounded-[20px] sm:rounded-[32px] md:rounded-[40px] min-h-[220px] border border-white/10"
+                alt={`${project.name} 全景主图`}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+
+              {/* 右侧大图内部覆盖的专属高阶交互卡 */}
+              {project.type === "gouge-hub" && (
+                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-2xl bg-black/85 border border-white/15 backdrop-blur-md">
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {GOUGE_CATEGORIES.map((cat, idx) => (
+                      <button
+                        key={cat.id}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setActiveGougeCategory(idx);
+                        }}
+                        className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
+                          activeGougeCategory === idx
+                            ? "bg-amber-400 text-black font-bold"
+                            : "bg-white/[0.05] text-white/70 hover:text-white"
+                        }`}
+                      >
+                        {cat.label} ({cat.count})
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-xs text-white/80 font-sans line-clamp-1">
+                    {GOUGE_CATEGORIES[activeGougeCategory].desc}
+                  </p>
+                </div>
+              )}
+
+              {project.type === "salin-ui" && (
+                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-2xl bg-black/85 border border-emerald-500/30 backdrop-blur-md flex items-center justify-between">
+                  <div className="font-mono text-xs text-emerald-300 truncate mr-2">
+                    <span className="text-emerald-500 mr-1.5">$</span>
+                    <code>npx salin-ui add @mcp/server</code>
+                  </div>
+                  <button
+                    onClick={handleCopyCommand}
+                    className="shrink-0 px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-bold text-xs inline-flex items-center gap-1 cursor-pointer transition-colors"
+                  >
+                    {copiedCmd ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedCmd ? "已复制" : "复制命令"}</span>
+                  </button>
+                </div>
+              )}
+
+              {project.type === "eli" && (
+                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-2xl bg-black/85 border border-emerald-500/30 backdrop-blur-md flex items-center justify-between">
+                  <div className="text-xs text-white/90 font-medium font-sans">
+                    “餐饮营销没思路，问问饿狸。”
+                  </div>
+                  <button
+                    onClick={() => setShowEliSimulator(true)}
+                    className="shrink-0 px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-bold text-xs inline-flex items-center gap-1 cursor-pointer transition-colors"
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    <span>现场试玩 ↗</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
 
         {/* 卡片底部简要描述 */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-2 text-left gap-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-1 text-left gap-2 border-t border-white/10">
           <p className="text-xs sm:text-sm text-[#D7E2EA]/75 font-sans max-w-2xl leading-relaxed">
             {project.desc}
           </p>
@@ -744,8 +1012,8 @@ const ProjectsSection = () => {
       </h2>
 
       <div className="flex flex-col">
-        {PROJECTS.map((proj, i) => (
-          <Card key={i} project={proj} index={i} totalCards={PROJECTS.length} />
+        {PROJECTS_DATA.map((proj, i) => (
+          <Card key={i} project={proj} index={i} totalCards={PROJECTS_DATA.length} />
         ))}
       </div>
     </section>
@@ -767,7 +1035,13 @@ const Footer = ({ onOpenQr }: { onOpenQr: () => void }) => {
       id="contact"
       className="w-full bg-[#D7E2EA] text-[#0C0C0C] py-18 px-6 flex flex-col items-center justify-center gap-7 text-center select-none"
     >
-      <ContactButton text="Get In Touch" onClick={onOpenQr} />
+      <button
+        onClick={onOpenQr}
+        className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#0C0C0C]/30 bg-transparent px-6 py-3 text-[#0C0C0C] transition-all hover:border-[#0C0C0C] hover:bg-[#0C0C0C] hover:text-[#D7E2EA] cursor-pointer"
+      >
+        <span className="font-medium uppercase tracking-widest text-sm">Get In Touch</span>
+        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+      </button>
 
       <div className="flex flex-wrap items-center justify-center gap-3 font-mono text-xs sm:text-sm text-[#0C0C0C]/80 mt-2">
         <span>微信号 {siteConfig.wechat} · {siteConfig.email}</span>
@@ -815,7 +1089,7 @@ const Footer = ({ onOpenQr }: { onOpenQr: () => void }) => {
 };
 
 // ==========================================
-// 4. MAIN APP EXPORT
+// 3. MAIN APP EXPORT
 // ==========================================
 
 export function ModernFounderHome() {
