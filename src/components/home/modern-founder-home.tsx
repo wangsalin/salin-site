@@ -382,21 +382,32 @@ const HeroSection = ({
         className="flex w-full items-center justify-between pt-4 md:pt-6 z-20"
       >
         <div className="flex items-center gap-4 sm:gap-6">
+          {/* 网站品牌名称 Logo */}
+          <a
+            href="#"
+            className="flex items-center gap-2 group text-left cursor-pointer"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse" />
+            <span className="font-mono text-sm sm:text-base md:text-lg font-black tracking-wider text-white group-hover:text-emerald-400 transition-colors uppercase">
+              SALIN
+            </span>
+          </a>
+          <span className="text-white/20 font-mono text-xs hidden sm:inline">|</span>
           <a
             href="#about"
-            className="text-xs sm:text-base md:text-lg font-mono font-medium uppercase tracking-wider text-[#D7E2EA] transition-opacity hover:opacity-70"
+            className="text-xs sm:text-sm md:text-base font-mono font-medium uppercase tracking-wider text-[#D7E2EA] transition-opacity hover:opacity-70"
           >
             Odyssey
           </a>
           <a
             href="#services"
-            className="text-xs sm:text-base md:text-lg font-mono font-medium uppercase tracking-wider text-[#D7E2EA] transition-opacity hover:opacity-70"
+            className="text-xs sm:text-sm md:text-base font-mono font-medium uppercase tracking-wider text-[#D7E2EA] transition-opacity hover:opacity-70"
           >
             饿狸 AI
           </a>
           <a
             href="#projects"
-            className="text-xs sm:text-base md:text-lg font-mono font-medium uppercase tracking-wider text-[#D7E2EA] transition-opacity hover:opacity-70"
+            className="text-xs sm:text-sm md:text-base font-mono font-medium uppercase tracking-wider text-[#D7E2EA] transition-opacity hover:opacity-70"
           >
             Arsenal
           </a>

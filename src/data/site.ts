@@ -5,7 +5,7 @@ export const siteConfig = {
   englishTag: "SALIN",
   nickname: "狗哥",
   role: "12年创业者 / 饿狸主理人 / 前实体店老板",
-  title: "Salin · 12年创业者与独立开发者",
+  title: "Salin",
   heroTitle: "从餐饮服务者，到餐饮从业者，再回到餐饮服务者。",
   description:
     "Salin（身边朋友大多叫我狗哥）的个人独立站。2014年4月1日创业，2014-2021年运营自媒体《舌尖上的临沂》服务超2000家餐饮；2021-2025年亲自下场开店做餐饮；2026年带着对餐饮完全的认知再次回归，用 AI 工具‘饿狸 (youeli.com)’与‘Salin UI’解决实体真实痛点。",
