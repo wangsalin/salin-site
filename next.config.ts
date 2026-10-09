@@ -9,6 +9,27 @@ const nextConfig: NextConfig = {
   experimental: {
     mdxRs: false,
   },
+  async redirects() {
+    return [
+      {
+        source: "/ui",
+        destination: "/ui/",
+        permanent: true,
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/ui/",
+        destination: "https://ui.eyucn.com/",
+      },
+      {
+        source: "/ui/:path*",
+        destination: "https://ui.eyucn.com/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

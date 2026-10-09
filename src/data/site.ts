@@ -28,6 +28,7 @@ export const siteConfig = {
   navLinks: [
     { label: "首页", href: "/" },
     { label: "FoodOps 旗舰", href: "/projects/foodops" },
+    { label: "Salin UI 弹药库 ↗", href: "/ui/" },
     { label: "代表项目", href: "/projects" },
     { label: "狗哥资源库 ↗", href: "https://zl.eyu.ink" },
     { label: "技能包下载", href: "/skills" },

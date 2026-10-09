@@ -3,6 +3,63 @@ import { siteConfig } from "@/data/site";
 
 export const projects: Project[] = [
   {
+    name: "Salin UI (AI 界面弹药库)",
+    slug: "salin-ui",
+    subtitle: "专为开发者打造的 AI UI 资产中心，提供 252+ 项全栈组件、风格系统与 App 案例复刻",
+    summary:
+      "面向 AI 辅助编程（Cursor / Claude / v0）的专业 UI 弹药库。收录 252+ 项全栈界面资产，覆盖 68 核心组件、88 交互动效、40 骨架布局、31 风格系统与 24 数据图表。支持单文件 TSX 源码复制、全景商业样板间一键复刻、多框架在线 Playground 调试与原生 MCP 协议直连。",
+    description:
+      `在 AI 编程大模型普及的时代，开发者往往苦于生成的界面同质化、缺乏质感、缺乏高阶动效与状态健壮性。Salin UI 致力于解决这一痛点：通过“不加死板限制，给方向指引”的 4 幕 7 步敏捷工作流，为开发者提供开箱即用的高保真 UI 资产。提供实战级商业样板间（如 Anna Cheng 跳伞网站、Linear 敏捷看板、Stripe 收银台），支持 Cursor 原生 MCP 服务、一键导出 .cursorrules 与 llms.txt，真正做到 3 次点击把高质量 UI 投喂给 AI 落地生产。`,
+    category: "ai-product",
+    status: "持续迭代",
+    year: "2025",
+    role: ["产品架构", "设计系统研发", "动效体系研发", "MCP 协议直连"],
+    cover: "/images/projects/salin-ui-cover.jpg",
+    featured: true,
+    technologies: ["React 19", "TypeScript", "TailwindCSS", "Framer Motion", "MCP Protocol", "Vite"],
+    problem: [
+      "AI 生成代码常常陷入基础默认样式（如生硬的纯蓝红绿配色），缺乏高级视觉层级与微交互",
+      "市面上组件库多为零碎小控件，缺乏完整实战级商业网页与真实移动 App 的整页高保真架构",
+      "开发者需要频繁手动调整 AI 提示词与规范，无法通过标准协议（如 MCP）与 Cursor / Claude 深度协同"
+    ],
+    insight: [
+      "给方向不设限，已有成熟资产为标杆参考。优质的 UI 弹药库不是条条框框，而是提供高保真标杆让 AI 自由延伸",
+      "一套完整的高频组件、微交互动效与 31 套主题设计系统，能在秒级内为 AI 提供清晰的契约代码",
+      "通过 MCP 协议让 IDE 原生具备资产库检索与装配能力，彻底重塑 AI 时代的前端交付流水线"
+    ],
+    solution: [
+      "252 项全栈成熟资产：68 核心组件 / 88 交互动效 / 40 骨架布局 / 31 风格系统 / 24 数据图表 / 1 敏捷工作流",
+      "行业完整网页 & 移动 App UI 案例复刻中心：全景独立运行体验，支持一键复刻整页 Prompt 与单文件源码",
+      "原生 MCP 直连与脚手架生态：支持 Cursor、Claude Desktop、Windsurf 标准协议接入与离线单文件资产包",
+      "Theme Studio 调色实验室：毫秒级实时联动验光墙，一键导出 Tailwind / CSS / Figma Tokens"
+    ],
+    modules: [
+      {
+        title: "全景商业实战样板间",
+        description: "大模型对决竞技场、量化交易操盘台、DevSecOps 态势驾驶舱等企业旗舰整页工程方案",
+      },
+      {
+        title: "案例复刻中心 (Case Hub)",
+        description: "完整端到端应用页面与 App 架构，覆盖 Web 独立站与高保真移动端社区",
+      },
+      {
+        title: "开发者生态 (MCP & Rules)",
+        description: "支持 Cursor / Claude 原生 stdio 协议直连，一键导出项目级 .cursorrules 与 llms.txt",
+      },
+      {
+        title: "多框架实时 Playground",
+        description: "支持 React / Vue 3 / 原生 HTML 实时热重载调试与单文件独立离线导出",
+      }
+    ],
+    progress: "已上线运营，收录 252 项资产并实现 MCP 协议全面直连",
+    learnings: [
+      "AI 时代的组件库不是用来人手敲代码的，而是专为 AI 消化与投喂设计的契约规范库",
+      "视觉审美与微动效的细节直接决定了产品的商业说服力与客户转化率"
+    ],
+    externalUrl: "/ui/",
+    lastUpdated: "2026-10",
+  },
+  {
     name: "狗哥资源库 (Gouge Hub)",
     slug: "gouge-hub",
     subtitle: "优质夸克与百度网盘资源精选下载站，前沿 AI 工具与商业效率资产平台",
