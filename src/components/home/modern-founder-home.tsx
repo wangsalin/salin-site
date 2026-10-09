@@ -280,120 +280,41 @@ export function ModernFounderHome() {
   const [activeEliPrompt, setActiveEliPrompt] = useState(0);
   const [activeOdysseyStage, setActiveOdysseyStage] = useState(0);
     // ============================================================
-  // 开屏动效实验室状态管理 (3 种顶级开屏方案并存切换)
-  // 方案 A: portal (字母视窗穿透推焦 · Apple 苹果发布会级)
-  // 方案 B: warp   (12 年时空飞梭与冲击波 · Interstellar / 极客叙事级)
-  // 方案 C: aperture (莱卡级电影机械光圈与镜头拉焦 · 电影导演级)
+  // 电影级大片开幕：SALIN 雕塑字母视窗穿透推焦 (Typographic Portal Dolly-In)
+  // 采用慢速从容呼吸节奏 (1.2s 留白展示 + 1.4s 电影推轨穿透)
   // ============================================================
-  type OpeningMode = "portal" | "warp" | "aperture";
-  type LetterFont = "monument" | "cinzel" | "extended";
-  const [openingMode, setOpeningMode] = useState<OpeningMode>("portal");
-  const [letterFont, setLetterFont] = useState<LetterFont>("monument");
   const [isPlayingOpening, setIsPlayingOpening] = useState(true);
   const [openingStep, setOpeningStep] = useState<number>(0);
-  const [warpYear, setWarpYear] = useState("2014");
-  const [warpTag, setWarpTag] = useState("实体开店起步 · 堂食初探");
 
-  const playOpening = useCallback((mode: OpeningMode) => {
+  const triggerOpening = useCallback(() => {
     setIsPlayingOpening(true);
     setOpeningStep(0);
 
-    if (mode === "portal") {
-      // 方案 A: 字母视窗穿透推焦 (Apple Portal · 慢速从容呼吸推轨)
-      const t1 = setTimeout(() => {
-        setOpeningStep(1); // 1. SALIN 字母优雅升起点亮，金属光晕呼吸
-        const t2 = setTimeout(() => {
-          setOpeningStep(2); // 2. 镜头平缓起步加速穿透 (scale 1 -> 24, 1400ms 丝滑推轨)
-          const t3 = setTimeout(() => {
-            setOpeningStep(3); // 3. 巨幕全景完全定格，背景大图 4K 极锐拉焦
-            const t4 = setTimeout(() => {
-              setIsPlayingOpening(false);
-            }, 400);
-            return () => clearTimeout(t4);
-          }, 1400);
-          return () => clearTimeout(t3);
-        }, 1200); // 从容停留 1.2 秒，让用户清晰欣赏雕塑字体与副标题
-        return () => clearTimeout(t2);
-      }, 60);
-      return () => clearTimeout(t1);
-    } else if (mode === "warp") {
-      // 方案 B: 12 年时空飞梭与冲击波 (12Y Warp)
-      setWarpYear("2014");
-      setWarpTag("实体开店起步 · 堂食初探");
-      setOpeningStep(1);
-
-      const tYear1 = setTimeout(() => {
-        setWarpYear("2017");
-        setWarpTag("舌尖上的临沂 · 本地生活自媒体");
-      }, 160);
-
-      const tYear2 = setTimeout(() => {
-        setWarpYear("2021");
-        setWarpTag("一线后厨实操 · 毛利与损耗");
-      }, 320);
-
-      const tYear3 = setTimeout(() => {
-        setWarpYear("2024");
-        setWarpTag("实体 AI 探索 · 饿狸研发启动");
-      }, 480);
-
-      const tYear4 = setTimeout(() => {
-        setWarpYear("2026");
-        setWarpTag("AI × 实体商业 · 认知觉醒");
-        setOpeningStep(2); // 2026 定格 + 高能冲击波环爆发
-        const tSettle = setTimeout(() => {
-          setOpeningStep(3);
-          const tEnd = setTimeout(() => {
+    const t1 = setTimeout(() => {
+      setOpeningStep(1); // 1. SALIN 现代雕塑字母优雅升起点亮，金属光晕呼吸
+      const t2 = setTimeout(() => {
+        setOpeningStep(2); // 2. 镜头平缓起步加速穿透 (scale 1 -> 24, 1400ms 丝滑推轨)
+        const t3 = setTimeout(() => {
+          setOpeningStep(3); // 3. 巨幕全景完全定格，背景大图 4K 极锐拉焦
+          const t4 = setTimeout(() => {
             setIsPlayingOpening(false);
-          }, 300);
-          return () => clearTimeout(tEnd);
-        }, 550);
-        return () => clearTimeout(tSettle);
-      }, 640);
-
-      return () => {
-        clearTimeout(tYear1);
-        clearTimeout(tYear2);
-        clearTimeout(tYear3);
-        clearTimeout(tYear4);
-      };
-    } else if (mode === "aperture") {
-      // 方案 C: 莱卡级电影机械光圈与镜头拉焦 (Cinema Aperture)
-      const t1 = setTimeout(() => {
-        setOpeningStep(1); // 机械叶片取景就绪，十字准心呼吸
-        const t2 = setTimeout(() => {
-          setOpeningStep(2); // 叶片平滑滑开，宽银幕横向高光扫视，镜头瞬间变焦
-          const t3 = setTimeout(() => {
-            setOpeningStep(3); // 准心移至四角
-            const t4 = setTimeout(() => {
-              setIsPlayingOpening(false);
-            }, 300);
-            return () => clearTimeout(t4);
-          }, 650);
-          return () => clearTimeout(t3);
-        }, 450);
-        return () => clearTimeout(t2);
-      }, 50);
-      return () => clearTimeout(t1);
-    }
+          }, 400);
+          return () => clearTimeout(t4);
+        }, 1400);
+        return () => clearTimeout(t3);
+      }, 1200); // 从容停留 1.2 秒，让用户清晰欣赏雕塑字体与副标题
+      return () => clearTimeout(t2);
+    }, 60);
+    return () => clearTimeout(t1);
   }, []);
 
-  const switchOpeningMode = useCallback((mode: OpeningMode) => {
-    setOpeningMode(mode);
-    playOpening(mode);
-  }, [playOpening]);
-
-  const replayCurrentOpening = useCallback(() => {
-    playOpening(openingMode);
-  }, [openingMode, playOpening]);
-
-  // 页面首屏自动播放方案 A (用户可随时切换测试)
+  // 页面首屏自动播放大片级开幕
   useEffect(() => {
-    const cleanup = playOpening("portal");
+    const cleanup = triggerOpening();
     return () => {
       if (cleanup) cleanup();
     };
-  }, [playOpening]);
+  }, [triggerOpening]);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const totalSlides = 5;
@@ -547,12 +468,12 @@ export function ModernFounderHome() {
             二维码
           </button>
           <button
-            onClick={replayCurrentOpening}
-            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/25 border border-emerald-500/30 hover:border-emerald-500/60 text-emerald-300 font-mono text-[11px] transition-all cursor-pointer"
-            title="重播当前所选开屏动画"
+            onClick={triggerOpening}
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/[0.04] hover:bg-emerald-500/20 border border-white/10 hover:border-emerald-500/40 text-white/70 hover:text-emerald-300 font-mono text-[11px] transition-all cursor-pointer"
+            title="重播电影级字母穿透开幕光效"
           >
-            <Sparkles className="w-3 h-3 text-emerald-400 animate-pulse" />
-            ↺ 重播当前开屏
+            <Sparkles className="w-3 h-3 text-emerald-400" />
+            电影开幕
           </button>
           <div className="px-2 py-1 rounded bg-white/[0.06] border border-white/10 text-white font-mono text-[11px] font-bold">
             [{String(activeSlide + 1).padStart(2, "0")} / 05]
@@ -1652,305 +1573,67 @@ export function ModernFounderHome() {
     
       {/* ============================================================ */}
             {/* ============================================================ */}
-      {/* 🌟 开屏特效实验室 (All 3 Opening Schemes Preview & Studio) */}
+      {/* 电影级大片开幕：SALIN 雕塑字母视窗穿透推焦 (Typographic Portal Dolly-In) */}
       {/* ============================================================ */}
-
-      {/* 方案 A: 字母视窗穿透推焦 (Typographic Portal Dolly-In · Apple Keynote 慢速从容版) */}
-      {openingMode === "portal" && (
+      <div
+        className={`fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${
+          openingStep >= 3 ? "opacity-0" : "opacity-100"
+        }`}
+      >
+        {/* 深邃黑夜底衬 (推焦穿透瞬间消融) */}
         <div
-          className={`fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden transition-opacity duration-1000 ${
-            openingStep >= 3 ? "opacity-0" : "opacity-100"
+          className={`absolute inset-0 bg-[#040605] transition-opacity duration-1000 ease-out ${
+            openingStep >= 2 ? "opacity-0" : "opacity-100"
+          }`}
+        />
+
+        {/* 穿透中心主体：巨型 SALIN 字母雕塑 (1400ms 电影级慢速推轨穿透) */}
+        <div
+          className={`relative z-10 flex flex-col items-center justify-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            openingStep === 0
+              ? "scale-90 opacity-0"
+              : openingStep === 1
+              ? "scale-100 opacity-100"
+              : "scale-[24] opacity-0"
           }`}
         >
-          {/* 深邃黑夜底衬 (推焦穿透瞬间消融) */}
-          <div
-            className={`absolute inset-0 bg-[#040605] transition-opacity duration-1000 ease-out ${
-              openingStep >= 2 ? "opacity-0" : "opacity-100"
-            }`}
-          />
-
-          {/* 穿透中心主体：巨型 SALIN 字母雕塑 (1400ms 电影级慢速推轨穿透) */}
-          <div
-            className={`relative z-10 flex flex-col items-center justify-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              openingStep === 0
-                ? "scale-90 opacity-0"
-                : openingStep === 1
-                ? "scale-100 opacity-100"
-                : "scale-[24] opacity-0"
-            }`}
-          >
-            {/* 字母框与辉光轮廓 (根据所选高级字体呈现不同艺术风骨) */}
-            <div
-              className={`relative font-black leading-none select-none uppercase transition-all duration-500 ${
-                letterFont === "monument"
-                  ? "font-monument tracking-[0.16em] text-[22vw] sm:text-[16vw]"
-                  : letterFont === "cinzel"
-                  ? "font-cinzel tracking-[0.24em] text-[20vw] sm:text-[15vw]"
-                  : "font-extended tracking-[0.32em] text-[18vw] sm:text-[14vw]"
-              }`}
+          {/* 字母框与辉光轮廓 (现代雕塑体 Syne Monument) */}
+          <div className="relative font-black leading-none select-none uppercase font-monument tracking-[0.16em] text-[22vw] sm:text-[16vw]">
+            {/* 主体光影质感：钛金白 ➔ 冰川翡翠 */}
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-emerald-300 drop-shadow-[0_0_90px_rgba(16,185,129,0.7)]">
+              SALIN
+            </span>
+            {/* 高精度金属微光高光轮廓 */}
+            <span
+              className="absolute inset-0 text-transparent pointer-events-none"
+              style={{
+                WebkitTextStroke: "2.5px rgba(255,255,255,0.9)",
+              }}
             >
-              {/* 主体光影质感：钛金白 ➔ 冰川翡翠 */}
-              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-emerald-300 drop-shadow-[0_0_90px_rgba(16,185,129,0.7)]">
-                SALIN
-              </span>
-              {/* 高精度金属微光高光轮廓 */}
-              <span
-                className="absolute inset-0 text-transparent pointer-events-none"
-                style={{
-                  WebkitTextStroke:
-                    letterFont === "cinzel"
-                      ? "1.5px rgba(255,255,255,0.95)"
-                      : "2.5px rgba(255,255,255,0.9)",
-                }}
-              >
-                SALIN
-              </span>
-            </div>
-
-            {/* 字母下方仪式感光标 */}
-            <div
-              className={`mt-4 sm:mt-6 flex items-center gap-3 sm:gap-4 font-mono text-xs sm:text-sm text-emerald-400 tracking-[0.35em] uppercase transition-all duration-700 ${
-                openingStep === 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-            >
-              <span className="w-10 sm:w-16 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/80 to-transparent" />
-              <span className="font-semibold text-white/90">
-                SALIN // 12-YEAR FOUNDER ODYSSEY
-              </span>
-              <span className="w-10 sm:w-16 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/80 to-transparent" />
-            </div>
-          </div>
-
-          {/* 穿透瞬间的中央透镜光爆 (Aperture Flash) */}
-          <div
-            className={`absolute w-[700px] h-[700px] rounded-full bg-radial from-emerald-300/40 via-emerald-500/15 to-transparent blur-3xl transition-all duration-1000 ease-out pointer-events-none ${
-              openingStep === 2 ? "scale-175 opacity-100" : "scale-50 opacity-0"
-            }`}
-          />
-        </div>
-      )}
-
-      {/* 方案 B: 12 年时空飞梭穿梭与冲击波 (12-Year Temporal Warp & Shockwave · 极客叙事级) */}
-      {openingMode === "warp" && (
-        <div
-          className={`fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden transition-opacity duration-700 ${
-            openingStep >= 3 ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          {/* 深空黑底 */}
-          <div
-            className={`absolute inset-0 bg-[#040605] transition-opacity duration-600 ${
-              openingStep >= 2 ? "opacity-0" : "opacity-100"
-            }`}
-          />
-
-          {/* 中央光轴轨道 */}
-          <div
-            className={`w-[2px] h-full bg-gradient-to-b from-transparent via-emerald-400/60 to-transparent transition-opacity duration-500 ${
-              openingStep < 2 ? "opacity-100" : "opacity-0"
-            }`}
-          />
-
-          {/* 飞掠年份与纪元核心 */}
-          <div
-            className={`relative z-10 flex flex-col items-center justify-center space-y-3 transition-all duration-500 ${
-              openingStep === 2 ? "scale-110 opacity-0" : "scale-100 opacity-100"
-            }`}
-          >
-            {/* 毫秒跳动年份 */}
-            <div className="font-mono text-6xl sm:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 via-white to-emerald-400 tracking-tighter drop-shadow-[0_0_50px_#10b981]">
-              {warpYear}
-            </div>
-
-            {/* 纪元里程碑标签 */}
-            <div className="px-4 py-1.5 rounded-full border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 font-mono text-xs sm:text-sm tracking-widest backdrop-blur-md shadow-lg">
-              {warpTag}
-            </div>
-          </div>
-
-          {/* 定格瞬间的高能环状冲击波 (Radial Shockwave) */}
-          <div
-            className={`absolute rounded-full border border-emerald-400/90 shadow-[0_0_80px_#10b981] transition-all duration-700 ease-out pointer-events-none ${
-              openingStep === 2
-                ? "w-[160vw] h-[160vw] opacity-0"
-                : "w-20 h-20 opacity-100 scale-50"
-            }`}
-          />
-          <div
-            className={`absolute w-[500px] h-[500px] rounded-full bg-radial from-emerald-400/35 via-emerald-500/10 to-transparent blur-3xl transition-all duration-700 ease-out pointer-events-none ${
-              openingStep === 2 ? "scale-125 opacity-100" : "scale-50 opacity-0"
-            }`}
-          />
-        </div>
-      )}
-
-      {/* 方案 C: 莱卡级电影机械光圈与镜头拉焦 (Cinema Aperture & Lens Focus · 电影大师级) */}
-      {openingMode === "aperture" && (
-        <div
-          className={`fixed inset-0 z-50 pointer-events-none flex items-center justify-center overflow-hidden transition-opacity duration-700 ${
-            openingStep >= 3 ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          {/* 顶部机械碳素光圈叶片 (向外滑开) */}
-          <div
-            className={`absolute top-0 inset-x-0 bg-[#060907] border-b border-emerald-500/30 transition-transform duration-800 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-end justify-between p-6 sm:p-10 ${
-              openingStep >= 2 ? "-translate-y-full" : "translate-y-0 h-1/2"
-            }`}
-          >
-            <div className="font-mono text-[11px] text-white/50 tracking-widest">
-              [ LEICA // 35MM F/1.4 ASPH ]
-            </div>
-            <div className="font-mono text-[11px] text-emerald-400 tracking-widest">
-              APERTURE BLADE 01 // CALIBRATING
-            </div>
-          </div>
-
-          {/* 底部机械碳素光圈叶片 (向外滑开) */}
-          <div
-            className={`absolute bottom-0 inset-x-0 bg-[#060907] border-t border-emerald-500/30 transition-transform duration-800 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-start justify-between p-6 sm:p-10 ${
-              openingStep >= 2 ? "translate-y-full" : "translate-y-0 h-1/2"
-            }`}
-          >
-            <div className="font-mono text-[11px] text-white/50 tracking-widest">
-              35.1041° N, 118.3561° E · LINYI
-            </div>
-            <div className="font-mono text-[11px] text-emerald-400 tracking-widest">
-              ISO 400 · 24 FPS · 12-YEAR ODYSSEY
-            </div>
-          </div>
-
-          {/* 中轴变形宽银幕金色/翡翠横向光束 (Anamorphic Streak) */}
-          <div
-            className={`w-full h-[2px] bg-gradient-to-r from-transparent via-amber-100 via-emerald-300 to-transparent shadow-[0_0_40px_#10b981,0_0_90px_rgba(245,158,11,0.6)] transition-all duration-700 ease-out z-20 ${
-              openingStep === 1
-                ? "scale-x-100 opacity-100 scale-y-100"
-                : openingStep === 2
-                ? "scale-x-100 opacity-0 scale-y-[24]"
-                : "scale-x-0 opacity-0"
-            }`}
-          />
-
-          {/* 中央准心十字 (Focus Reticle) */}
-          <div
-            className={`absolute z-30 font-mono text-emerald-400 text-lg transition-all duration-500 ${
-              openingStep >= 2 ? "scale-150 opacity-0" : "scale-100 opacity-80 animate-pulse"
-            }`}
-          >
-            ⌖
-          </div>
-        </div>
-      )}
-
-      {/* ============================================================ */}
-      {/* 🌟 开屏特效实验室底栏 (Floating Opening Studio Dock) */}
-      {/* ============================================================ */}
-      <div className="fixed bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-1.5 pointer-events-auto">
-        {/* 正在演示的状态徽章 */}
-        {isPlayingOpening && (
-          <div className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/50 backdrop-blur-xl text-emerald-300 font-mono text-[11px] flex items-center gap-1.5 shadow-xl animate-bounce">
-            <Sparkles className="w-3 h-3 text-emerald-400" />
-            <span>
-              {openingMode === "portal" && "正在演示 方案 A: 字母视窗穿透推焦 (Apple Portal) ..."}
-              {openingMode === "warp" && "正在演示 方案 B: 12年时空飞梭冲击波 (12Y Warp) ..."}
-              {openingMode === "aperture" && "正在演示 方案 C: 莱卡级电影机械光圈 (Cinema Aperture) ..."}
+              SALIN
             </span>
           </div>
-        )}
 
-        {/* 实验室切换坞 (Switcher Dock) */}
-        <div className="flex items-center gap-1 p-1 rounded-2xl bg-black/90 border border-emerald-500/40 backdrop-blur-2xl shadow-[0_12px_45px_rgba(0,0,0,0.85)] font-mono text-xs">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 text-emerald-400 font-bold border-r border-white/10 hidden sm:flex">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse text-emerald-400" />
-            <span>开屏实验室:</span>
+          {/* 字母下方仪式感光标 */}
+          <div
+            className={`mt-4 sm:mt-6 flex items-center gap-3 sm:gap-4 font-mono text-xs sm:text-sm text-emerald-400 tracking-[0.35em] uppercase transition-all duration-700 ${
+              openingStep === 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            <span className="w-10 sm:w-16 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/80 to-transparent" />
+            <span className="font-semibold text-white/90">
+              SALIN // 12-YEAR FOUNDER ODYSSEY
+            </span>
+            <span className="w-10 sm:w-16 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/80 to-transparent" />
           </div>
-
-          <button
-            onClick={() => switchOpeningMode("portal")}
-            className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1 text-xs ${
-              openingMode === "portal"
-                ? "bg-emerald-500 text-black font-bold shadow-[0_0_15px_rgba(16,185,129,0.5)]"
-                : "text-white/75 hover:text-white hover:bg-white/10"
-            }`}
-            title="方案 A：字母视窗穿透推焦（苹果发布会级）"
-          >
-            <span>A. 字母穿透</span>
-            {openingMode === "portal" && <span className="text-[10px]">●</span>}
-          </button>
-
-          <button
-            onClick={() => switchOpeningMode("warp")}
-            className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1 text-xs ${
-              openingMode === "warp"
-                ? "bg-emerald-500 text-black font-bold shadow-[0_0_15px_rgba(16,185,129,0.5)]"
-                : "text-white/75 hover:text-white hover:bg-white/10"
-            }`}
-            title="方案 B：12年时空飞梭与冲击波（极客叙事级）"
-          >
-            <span>B. 时空飞梭</span>
-            {openingMode === "warp" && <span className="text-[10px]">●</span>}
-          </button>
-
-          <button
-            onClick={() => switchOpeningMode("aperture")}
-            className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1 text-xs ${
-              openingMode === "aperture"
-                ? "bg-emerald-500 text-black font-bold shadow-[0_0_15px_rgba(16,185,129,0.5)]"
-                : "text-white/75 hover:text-white hover:bg-white/10"
-            }`}
-            title="方案 C：莱卡级电影机械光圈与镜头拉焦（电影大师级）"
-          >
-            <span>C. 电影光圈</span>
-            {openingMode === "aperture" && <span className="text-[10px]">●</span>}
-          </button>
-
-          {/* 方案 A 专属：3 款高定艺术字体实时切换 */}
-          {openingMode === "portal" && (
-            <div className="flex items-center gap-1 px-2 border-l border-white/20">
-              <span className="text-[10px] text-white/50 hidden md:inline">字体:</span>
-              <button
-                onClick={() => { setLetterFont("monument"); replayCurrentOpening(); }}
-                className={`px-2 py-1 rounded-lg text-[11px] transition-all cursor-pointer ${
-                  letterFont === "monument"
-                    ? "bg-emerald-400/25 text-emerald-300 font-bold border border-emerald-400/50"
-                    : "text-white/60 hover:text-white"
-                }`}
-                title="现代雕塑体（Syne Monument · 宽宏几何 · 推荐）"
-              >
-                现代雕塑体
-              </button>
-              <button
-                onClick={() => { setLetterFont("cinzel"); replayCurrentOpening(); }}
-                className={`px-2 py-1 rounded-lg text-[11px] transition-all cursor-pointer font-serif ${
-                  letterFont === "cinzel"
-                    ? "bg-emerald-400/25 text-emerald-300 font-bold border border-emerald-400/50"
-                    : "text-white/60 hover:text-white"
-                }`}
-                title="电影罗马碑刻体（Cinzel Serif · 经典锋芒）"
-              >
-                罗马碑刻
-              </button>
-              <button
-                onClick={() => { setLetterFont("extended"); replayCurrentOpening(); }}
-                className={`px-2 py-1 rounded-lg text-[11px] transition-all cursor-pointer ${
-                  letterFont === "extended"
-                    ? "bg-emerald-400/25 text-emerald-300 font-bold border border-emerald-400/50"
-                    : "text-white/60 hover:text-white"
-                }`}
-                title="宽屏先锋机械体（Plus Jakarta · 极宽气场）"
-              >
-                宽屏先锋
-              </button>
-            </div>
-          )}
-
-          <button
-            onClick={replayCurrentOpening}
-            className="px-2.5 py-1.5 rounded-xl bg-white/[0.08] hover:bg-emerald-500/20 text-emerald-300 hover:text-white border border-white/10 transition-all cursor-pointer ml-0.5 text-xs flex items-center gap-1"
-            title="重新播放当前方案"
-          >
-            ↺ 重播
-          </button>
         </div>
+
+        {/* 穿透瞬间的中央透镜光爆 (Aperture Flash) */}
+        <div
+          className={`absolute w-[700px] h-[700px] rounded-full bg-radial from-emerald-300/40 via-emerald-500/15 to-transparent blur-3xl transition-all duration-1000 ease-out pointer-events-none ${
+            openingStep === 2 ? "scale-175 opacity-100" : "scale-50 opacity-0"
+          }`}
+        />
       </div>
     </div>
   );
