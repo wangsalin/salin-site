@@ -29,15 +29,12 @@ import {
   TrendingUp,
   Cpu,
   Coffee,
-  Bookmark,
   Database,
-  Search,
   MessageCircle,
-  HelpCircle,
 } from "lucide-react";
 import { siteConfig } from "@/data/site";
 
-// 桌面手办与灵感物件 (somehowliving 风格)
+// 桌面手办与灵感物件
 const DESK_TOYS = [
   {
     id: "luffy",
@@ -72,43 +69,68 @@ const DESK_TOYS = [
     series: "图腾 · 2000+ 餐饮服务",
     motto: "始于舌尖，不忘初心",
     desc: "2014-2021《舌尖上的临沂》官方徽章。吃包子的鳄鱼，记录 2000 多家实体店的烟火记忆。",
-    image: "/images/brand/eyu-logo.png",
+    image: "/images/brand/eyu-official-hi-res.png",
     tag: "EYU // 2014 VINTAGE",
   },
 ];
 
-// 英雄大图交互热点
+// 英雄大图交互热点 (基于实战工作台大图)
 const HERO_HOTSPOTS = [
   {
-    id: "eli",
-    title: "01 // 饿狸 (youeli.com)",
-    desc: "2026 旗舰：专为实体门店打造的 AI 获客武器。解决小店内容荒与引流乏力。",
-    coords: "left-[50%] top-[42%]",
+    id: "elidashboard",
+    title: "01 // 饿狸 (youeli.com) 餐饮看板",
+    desc: "平板实时运行饿狸增长引擎，实时解析实体门店翻台率、毛利率与引流数据。",
+    coords: "left-[76%] top-[50%]",
   },
   {
     id: "offline",
-    title: "02 // 实体店压粉锤与票据",
-    desc: "4年亲自开店开吧台的实操物证。每天算毛利、抠损耗，深知实体生意的艰难。",
-    coords: "left-[68%] top-[58%]",
+    title: "02 // 实体店压粉锤与前台小票夹",
+    desc: "4年亲历开店、开吧台的实操物证。每天算毛利、抠损耗，深知实体生意的艰难。",
+    coords: "left-[18%] top-[45%]",
   },
   {
-    id: "salinui",
-    title: "03 // Salin UI 军火库",
-    desc: "252+ 纯净 TSX 组件库，专为 Cursor、Claude 与 Agent 打造的高颜值前端资产。",
-    coords: "left-[32%] top-[62%]",
+    id: "toys",
+    title: "03 // 出海少年与机械身代码",
+    desc: "桌面常驻海贼王路飞与源氏手办。身虽由机械与代码铸就，心永远保持少年的热血出海。",
+    coords: "left-[79%] top-[24%]",
   },
   {
-    id: "gougehub",
-    title: "04 // 狗哥资源库 (zl.eyu.ink)",
-    desc: "2400+ 免费商业与 AI 落地资产，服务全国开发与实体创业者。",
-    coords: "left-[50%] top-[78%]",
+    id: "eyutotem",
+    title: "04 // 2014 饿鱼图腾与十年笔记",
+    desc: "桌角真实的绿色吃包子鳄鱼徽章与创业手账本。2014 愚人节起步，12年不改其志。",
+    coords: "left-[30%] top-[72%]",
+  },
+];
+
+// 饿狸实战 3D 场景切换配置 (图三、四、五修改整合)
+const ELI_SCENES = [
+  {
+    id: "kitchen",
+    label: "后厨毛利分析",
+    sub: "菜品成本与毛利率精细核算",
+    image: "/images/projects/eli/eli-scene-kitchen.jpg",
+    desc: "实时把脉招牌菜与低效菜品，精准把控食材毛利与出品品质。",
+  },
+  {
+    id: "meeting",
+    label: "餐饮增长中心",
+    sub: "门店营业额与翻台率推演",
+    image: "/images/projects/eli/eli-scene-meeting.jpg",
+    desc: "推演淡季引流套餐与客流复购，让每一次营销活动都有据可依。",
+  },
+  {
+    id: "desk",
+    label: "商家获客工作台",
+    sub: "小红书/点评文案与内容日历",
+    image: "/images/projects/eli/eli-scene-desk.jpg",
+    desc: "一键生成探店文案与爆款笔记，彻底告别老板不会写、员工不愿拍。",
   },
 ];
 
 // 破冰交流建议话题
 const CONVERSATION_STARTERS = [
-  "你好狗哥，我想聊聊实体门店接入「饿狸」AI 获客工具",
-  "狗哥好，想交流下 Salin UI 前端设计系统与 MCP 工作流",
+  "你好 Salin，我想聊聊实体门店接入「饿狸」AI 获客工具",
+  "Salin 好，想交流下 Salin UI 前端设计系统与 MCP 工作流",
   "你好狗哥，看了你的 12 年餐饮经历，想交流下本地生活与自媒体",
 ];
 
@@ -122,6 +144,7 @@ export function ModernFounderHome() {
   const [showQrModal, setShowQrModal] = useState(false);
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
   const [selectedToy, setSelectedToy] = useState<typeof DESK_TOYS[0]>(DESK_TOYS[0]);
+  const [activeEliScene, setActiveEliScene] = useState<typeof ELI_SCENES[0]>(ELI_SCENES[0]);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const totalSlides = 5;
@@ -210,9 +233,9 @@ export function ModernFounderHome() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-[#050806] text-[#E1E8E3] select-none font-sans">
-      {/* 顶部悬浮取景器 HUD (dsgnbyhl.com & arbatov.dev 极简风格) */}
+      {/* 顶部悬浮取景器 HUD */}
       <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none px-4 sm:px-8 py-3.5 flex items-center justify-between border-b border-white/[0.07] bg-[#050806]/80 backdrop-blur-md">
-        {/* 左侧：品牌与坐标 */}
+        {/* 左侧：Salin 品牌与实时坐标 */}
         <div className="pointer-events-auto flex items-center gap-3">
           <button
             onClick={() => scrollToSlide(0)}
@@ -220,17 +243,17 @@ export function ModernFounderHome() {
           >
             <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse" />
             <span className="font-mono text-xs sm:text-sm font-bold tracking-wider text-white group-hover:text-emerald-400 transition-colors">
-              WANG SALIN // 汪狗哥
+              SALIN // BUILDER & FOUNDER
             </span>
           </button>
           <span className="hidden md:inline text-white/30 text-xs font-mono">|</span>
           <div className="hidden lg:flex items-center gap-2 font-mono text-[11px] text-white/60">
             <span>LINYI [35.1041° N, 118.3561° E]</span>
             <span className="text-white/30">·</span>
-            <span className="text-emerald-400 font-semibold">{timeStr || "21:00:00"} CST</span>
+            <span className="text-emerald-400 font-semibold">{timeStr || "21:10:00"} CST</span>
             <span className="text-white/30">·</span>
             <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-[10px]">
-              12Y FOUNDER
+              12Y ODYSSEY
             </span>
           </div>
         </div>
@@ -331,7 +354,7 @@ export function ModernFounderHome() {
         style={{ scrollBehavior: "smooth" }}
       >
         {/* ============================================================ */}
-        {/* SLIDE 01: 封面画卷 (布局模式：全景居中展柜与环绕悬浮指标) */}
+        {/* SLIDE 01: 封面画卷 (实战工作台大图 · 融合开店物证与 AI 终端) */}
         {/* ============================================================ */}
         <section
           id="slide-0"
@@ -345,8 +368,8 @@ export function ModernFounderHome() {
 
           {/* 背景巨型建筑字体水印 */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-[0.03]">
-            <span className="text-[20vw] font-black tracking-tighter text-white whitespace-nowrap select-none font-mono">
-              WANG SALIN
+            <span className="text-[22vw] font-black tracking-tighter text-white whitespace-nowrap select-none font-mono">
+              SALIN
             </span>
           </div>
 
@@ -354,22 +377,22 @@ export function ModernFounderHome() {
           <div className="relative z-10 text-center max-w-4xl mx-auto pt-2 space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              FOUNDER ODYSSEY // 2014.04.01 — 2026
+              SALIN // 2014.04.01 — 2026 ODYSSEY
             </div>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white">
               从实体餐饮 <span className="text-emerald-400 font-serif italic">2000+</span> 商家服务，到自研 AI 商业化落地。
             </h1>
             <p className="text-xs sm:text-sm text-white/70 max-w-2xl mx-auto font-sans">
-              12 年真实摸爬滚打 · 实体店创业者 · 全栈独立开发者 · 饿狸 (youeli.com) 创始人
+              我是 <strong className="text-white font-semibold">Salin</strong>（身边朋友大多叫我<span className="text-emerald-400 font-semibold">狗哥</span>）。12年真实摸爬滚打 · 实体店创业者 · 全栈独立开发者 · 饿狸 (youeli.com) 创始人
             </p>
           </div>
 
-          {/* 中间核心：全景 16:9 博物馆级超宽画卷大图 */}
+          {/* 中间核心：实战创作者工作台 16:9 巨幅画卷大图 */}
           <div className="relative z-10 max-w-5xl mx-auto w-full flex-1 max-h-[50vh] min-h-[260px] my-2">
             <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] bg-black group">
               <Image
-                src="/images/showcase/hero-editorial-curated.jpg"
-                alt="汪狗哥核心装备与创作者物证大图"
+                src="/images/showcase/salin-hero-workbench.jpg"
+                alt="Salin 真实创作者与开店实操工作台大图"
                 fill
                 priority
                 sizes="(max-width: 1280px) 100vw, 1200px"
@@ -409,10 +432,10 @@ export function ModernFounderHome() {
               {/* 展柜底部参数标签 */}
               <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/60">
                 <span className="px-2 py-0.5 rounded bg-black/70 border border-white/10">
-                  [ SPECIMEN // FOUNDER ARTIFACTS & TOTE ]
+                  [ ARTIFACT // SALIN'S FOUNDER WORKBENCH ]
                 </span>
                 <span className="text-emerald-400 hidden sm:inline">
-                  ● 点击发光探针检视物证详情
+                  ● 点击发光探针检视开店物证、手办与 AI 看板
                 </span>
               </div>
             </div>
@@ -457,7 +480,7 @@ export function ModernFounderHome() {
         </section>
 
         {/* ============================================================ */}
-        {/* SLIDE 02: 十二年餐饮摸爬滚打史诗 (布局模式：左巨幅实拍胶片，右四段阶梯纵向轴) */}
+        {/* SLIDE 02: 十二年餐饮摸爬滚打史诗 (左实拍胶片带官方饿鱼标，右阶梯纵向轴) */}
         {/* ============================================================ */}
         <section
           id="slide-1"
@@ -469,7 +492,7 @@ export function ModernFounderHome() {
           </div>
 
           <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* 左侧 (45%)：2017 实拍热气腾腾大照片 + 官方饿鱼徽章贴标 */}
+            {/* 左侧 (45%)：2017 实拍热气腾腾大照片 + 官方高保真饿鱼 Logo (X盘源文件) */}
             <div className="lg:col-span-5 flex flex-col items-center">
               <div className="relative w-full aspect-[4/5] max-h-[58vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
                 <Image
@@ -481,11 +504,11 @@ export function ModernFounderHome() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
 
-                {/* 饿鱼 2014 正版 Logo 标牌 */}
+                {/* 饿鱼 2014 正版官方 Logo 标牌 (来自 X:\舌尖上的临沂\【logo】) */}
                 <div className="absolute top-4 left-4 flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-black/85 border border-emerald-500/40 backdrop-blur-md shadow-xl">
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white/10 p-0.5">
+                  <div className="relative w-9 h-9 rounded-full overflow-hidden bg-white/10 p-0.5">
                     <Image
-                      src="/images/brand/eyu-logo.png"
+                      src="/images/brand/eyu-official-hi-res.png"
                       alt="2014 饿鱼官方Logo"
                       fill
                       className="object-contain"
@@ -494,7 +517,7 @@ export function ModernFounderHome() {
                   <div>
                     <div className="font-mono text-xs font-bold text-white flex items-center gap-1">
                       <span>饿鱼 · EYU</span>
-                      <span className="text-[10px] text-emerald-400">2014</span>
+                      <span className="text-[10px] text-emerald-400">2014 ORIGIN</span>
                     </div>
                     <div className="text-[10px] text-white/60">《舌尖上的临沂》官方图腾</div>
                   </div>
@@ -583,7 +606,7 @@ export function ModernFounderHome() {
         </section>
 
         {/* ============================================================ */}
-        {/* SLIDE 03: 旗舰项目 · 饿狸 (布局模式：左大标语与三列解决方案，右巨幅3D发光吉祥物) */}
+        {/* SLIDE 03: 旗舰项目 · 饿狸 (实战 3D 餐饮场景切换与标语) */}
         {/* ============================================================ */}
         <section
           id="slide-2"
@@ -595,15 +618,14 @@ export function ModernFounderHome() {
           </div>
 
           <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* 左侧 (55%)：标语、官方网址与三大实战解法 (文字主攻) */}
-            <div className="lg:col-span-7 flex flex-col justify-center space-y-4">
+            {/* 左侧 (52%)：标语、官方网址与三大实战解法 */}
+            <div className="lg:col-span-6 flex flex-col justify-center space-y-4">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs">
                     <Bot className="w-3.5 h-3.5" />
                     FLAGSHIP // 实体商家 AI 获客武器
                   </div>
-                  {/* 官方网址徽章 */}
                   <a
                     href="https://youeli.com"
                     target="_blank"
@@ -628,7 +650,7 @@ export function ModernFounderHome() {
               </div>
 
               <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-sans">
-                实体老板不是大厂高管，不需要假大空的数字化报表。饿狸针对实体小店的真实痛点，把大模型封装成开箱即用的获客流水线。
+                实体老板不需要假大空的数字化报表。饿狸把复杂的 AI Agent 包装成极简工具，解决小店最头疼的“怎么发小红书、怎么做营销活动、怎么把客人招揽进门”。
               </p>
 
               {/* 三大实战功能卡片 */}
@@ -682,30 +704,48 @@ export function ModernFounderHome() {
               </div>
             </div>
 
-            {/* 右侧 (45%)：饿狸 3D 官方大标 (右侧发光展台) */}
-            <div className="lg:col-span-5 flex flex-col items-center">
-              <div className="relative w-full aspect-square max-w-[460px] max-h-[55vh] rounded-3xl overflow-hidden border border-emerald-500/40 shadow-[0_0_60px_rgba(16,185,129,0.25)] bg-gradient-to-b from-emerald-950/40 via-black to-black p-2 group">
-                <div className="relative w-full h-full rounded-2xl overflow-hidden bg-black">
-                  <Image
-                    src="/images/brand/eli-brand-full.png"
-                    alt="饿狸 youeli.com - 实体商家 AI 获客武器"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 45vw"
-                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                  <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/70">
-                    <span className="px-2 py-0.5 rounded bg-black/80 border border-emerald-500/30 text-emerald-400">
-                      [ 饿狸 ELI · 官方 3D 品牌标牌 ]
-                    </span>
-                    <a
-                      href="https://youeli.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white hover:text-emerald-400 transition-colors"
-                    >
-                      youeli.com ↗
-                    </a>
-                  </div>
+            {/* 右侧 (48%)：饿狸 3D 真实实战场景画卷 (支持 3 场景交互切换) */}
+            <div className="lg:col-span-6 flex flex-col items-center space-y-2.5">
+              {/* 场景切换药丸 */}
+              <div className="flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/10 font-mono text-[11px]">
+                {ELI_SCENES.map((scene) => (
+                  <button
+                    key={scene.id}
+                    onClick={() => setActiveEliScene(scene)}
+                    className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
+                      activeEliScene.id === scene.id
+                        ? "bg-emerald-500 text-black font-bold shadow-[0_0_10px_rgba(16,185,129,0.5)]"
+                        : "text-white/70 hover:text-white"
+                    }`}
+                  >
+                    {scene.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* 大图容器 */}
+              <div className="relative w-full aspect-[16/10] max-h-[50vh] rounded-2xl overflow-hidden border border-emerald-500/40 shadow-[0_0_50px_rgba(16,185,129,0.2)] bg-black group">
+                <Image
+                  src={activeEliScene.image}
+                  alt={activeEliScene.label}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
+
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between font-mono text-[11px] text-white/80">
+                  <span className="px-2 py-0.5 rounded bg-black/80 border border-emerald-500/30 text-emerald-300">
+                    [ {activeEliScene.label} // {activeEliScene.sub} ]
+                  </span>
+                  <a
+                    href="https://youeli.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-emerald-400 font-bold transition-colors"
+                  >
+                    youeli.com ↗
+                  </a>
                 </div>
               </div>
             </div>
@@ -713,7 +753,7 @@ export function ModernFounderHome() {
         </section>
 
         {/* ============================================================ */}
-        {/* SLIDE 04: 双核开发者与商业军火库 (布局模式：左右双大卡对撞 Salin UI + 狗哥资源库) */}
+        {/* SLIDE 04: 双核开发者与商业军火库 (Salin UI + 狗哥资源库) */}
         {/* ============================================================ */}
         <section
           id="slide-3"
@@ -725,7 +765,6 @@ export function ModernFounderHome() {
           </div>
 
           <div className="max-w-7xl mx-auto w-full space-y-4">
-            {/* 顶栏标题与副标题 */}
             <div className="text-center max-w-3xl mx-auto space-y-1">
               <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs">
                 <Database className="w-3.5 h-3.5" />
@@ -736,12 +775,11 @@ export function ModernFounderHome() {
               </h2>
             </div>
 
-            {/* 双大卡横向对比布局 (左 Salin UI，右 狗哥资源库) */}
+            {/* 双大卡横向对比布局 */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch pt-1">
               {/* 卡片 A: Salin UI */}
               <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5 flex flex-col justify-between hover:border-emerald-500/40 transition-all group">
                 <div className="space-y-3">
-                  {/* 大图预览 */}
                   <div className="relative w-full aspect-[16/9] max-h-[28vh] rounded-xl overflow-hidden border border-white/10 bg-black">
                     <Image
                       src="/images/showcase/project-salin-ui.jpg"
@@ -765,7 +803,6 @@ export function ModernFounderHome() {
                     </p>
                   </div>
 
-                  {/* 终端复制 */}
                   <div className="p-2.5 rounded-lg bg-black/80 border border-white/10 font-mono text-xs flex items-center justify-between">
                     <code className="text-emerald-300 text-[11px] truncate">
                       npx salin-ui add @mcp/server
@@ -796,7 +833,6 @@ export function ModernFounderHome() {
               {/* 卡片 B: 狗哥资源站 (Gouge Hub) */}
               <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5 flex flex-col justify-between hover:border-emerald-500/40 transition-all group">
                 <div className="space-y-3">
-                  {/* 大图预览 */}
                   <div className="relative w-full aspect-[16/9] max-h-[28vh] rounded-xl overflow-hidden border border-white/10 bg-black">
                     <Image
                       src="/images/showcase/project-gouge-hub.jpg"
@@ -820,7 +856,6 @@ export function ModernFounderHome() {
                     </p>
                   </div>
 
-                  {/* 资产特性标牌 */}
                   <div className="grid grid-cols-3 gap-2 font-mono text-[11px] text-center">
                     <div className="p-1.5 rounded bg-white/[0.03] border border-white/5 text-white/80">
                       2400+ 资产
@@ -851,7 +886,7 @@ export function ModernFounderHome() {
         </section>
 
         {/* ============================================================ */}
-        {/* SLIDE 05: 真实生活、手办与触达优化 (布局模式：三栏画卷 左实拍人物，中手办展柜，右触达控制台) */}
+        {/* SLIDE 05: 真实生活、手办与触达优化 (三栏画卷 左实拍人物，中手办展柜，右触达控制台) */}
         {/* ============================================================ */}
         <section
           id="slide-4"
@@ -863,12 +898,12 @@ export function ModernFounderHome() {
           </div>
 
           <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            {/* 栏 1 (左 28%)：2025 山路人物实拍大图 (Keep Real) */}
+            {/* 栏 1 (左 28%)：2025 山路人物实拍大图 */}
             <div className="lg:col-span-3 hidden lg:flex flex-col items-center">
               <div className="relative w-full aspect-[3/4] max-h-[56vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
                 <Image
                   src="/images/portrait/salin-2025.jpg"
-                  alt="2025年狗哥在山路上的实拍照片"
+                  alt="2025年 Salin 在山路上的实拍照片"
                   fill
                   sizes="(max-width: 1024px) 100vw, 30vw"
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -883,7 +918,7 @@ export function ModernFounderHome() {
               </div>
             </div>
 
-            {/* 栏 2 (中 44%)：桌面手办与灵感物件展柜 (可点击切换物证详情) */}
+            {/* 栏 2 (中 44%)：桌面手办与灵感物件展柜 */}
             <div className="lg:col-span-5 flex flex-col justify-center space-y-3">
               <div>
                 <div className="inline-flex items-center gap-1.5 font-mono text-xs text-emerald-400 tracking-wider mb-1">
@@ -912,7 +947,7 @@ export function ModernFounderHome() {
                         src={toy.image}
                         alt={toy.name}
                         fill
-                        className="object-cover"
+                        className="object-contain p-1"
                       />
                     </div>
                     <div className="font-mono text-[11px] font-bold text-white truncate text-center">
@@ -922,7 +957,7 @@ export function ModernFounderHome() {
                 ))}
               </div>
 
-              {/* 当前选中手办深度独白卡 */}
+              {/* 当前选中手办独白 */}
               <div className="p-3 rounded-xl bg-white/[0.04] border border-emerald-500/30 font-sans space-y-1">
                 <div className="flex items-center justify-between font-mono text-xs">
                   <span className="font-bold text-emerald-400">{selectedToy.series}</span>
@@ -940,7 +975,7 @@ export function ModernFounderHome() {
               <div className="space-y-1.5 font-mono text-[11px]">
                 <div className="text-white/40 flex items-center gap-1">
                   <MessageCircle className="w-3 h-3 text-emerald-400" />
-                  <span>点击快捷复制沟通意向（可直接微信粘贴）：</span>
+                  <span>点击快捷复制沟通意向（可直接在微信中粘贴）：</span>
                 </div>
                 <div className="flex flex-col gap-1">
                   {CONVERSATION_STARTERS.map((topic, i) => (
@@ -959,19 +994,19 @@ export function ModernFounderHome() {
               </div>
             </div>
 
-            {/* 栏 3 (右 28%~32%)：直达连接控制台 (触达控制台) */}
+            {/* 栏 3 (右 28%~32%)：直达连接控制台 */}
             <div className="lg:col-span-4 flex flex-col justify-center space-y-3.5 p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 shadow-xl">
               <div>
                 <div className="font-mono text-xs text-emerald-400 font-bold mb-1">
                   DIRECT ACCESS // 快速联系
                 </div>
-                <h4 className="text-lg font-bold text-white">随时与狗哥打个招呼</h4>
+                <h4 className="text-lg font-bold text-white">随时与 Salin 打个招呼</h4>
                 <p className="text-xs text-white/60 pt-0.5">
-                  实体获客、代码合作、亦或聊聊创业经历，皆可直接沟通。
+                  实体获客、代码合作、亦或交流创业经历，皆可直接沟通。
                 </p>
               </div>
 
-              {/* 微信控制卡片 (内嵌二维码缩略图，一目了然) */}
+              {/* 微信控制卡片 */}
               <div className="p-3 rounded-xl bg-black/60 border border-emerald-500/40 space-y-2">
                 <div className="flex items-center gap-3">
                   <button
@@ -981,7 +1016,7 @@ export function ModernFounderHome() {
                   >
                     <Image
                       src="/images/wechat-qr.jpg"
-                      alt="狗哥微信二维码缩略图"
+                      alt="Salin 微信二维码缩略图"
                       fill
                       className="object-contain p-0.5 group-hover:scale-105 transition-transform"
                     />
@@ -1045,7 +1080,7 @@ export function ModernFounderHome() {
 
           {/* 极简底部声明 */}
           <div className="absolute bottom-1.5 left-0 right-0 text-center font-mono text-[10px] text-white/25">
-            © 2014—2026 WANG SALIN. ALL RIGHTS RESERVED. 35.1041° N, 118.3561° E.
+            © 2014—2026 SALIN. ALL RIGHTS RESERVED. 35.1041° N, 118.3561° E.
           </div>
         </section>
       </div>
@@ -1065,7 +1100,7 @@ export function ModernFounderHome() {
               <div className="font-mono text-xs text-emerald-400 font-bold tracking-wider">
                 WECHAT DIRECT // 微信直接沟通
               </div>
-              <h3 className="text-xl font-bold text-white">扫描二维码添加狗哥微信</h3>
+              <h3 className="text-xl font-bold text-white">扫描二维码添加微信</h3>
               <p className="text-xs text-white/60">
                 微信号: <code className="text-emerald-400 font-mono font-bold">{siteConfig.wechat}</code>
               </p>
@@ -1074,7 +1109,7 @@ export function ModernFounderHome() {
             <div className="relative w-56 h-56 mx-auto rounded-xl overflow-hidden border-2 border-emerald-500/50 bg-white p-2 shadow-inner">
               <Image
                 src="/images/wechat-qr.jpg"
-                alt="狗哥微信二维码"
+                alt="Salin 微信二维码"
                 fill
                 className="object-contain p-1"
               />

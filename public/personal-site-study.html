@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#eef0eb">
+    <title>狗哥 / Wang Salin — 个人站方向样页</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #eef0eb;
+        --paper-deep: #e2e7e0;
+        --ink: #19221d;
+        --muted: #59665e;
+        --moss: #526e5d;
+        --rust: #bd5038;
+        --night: #1b2821;
+        --line: rgba(25, 34, 29, 0.18);
+        --line-light: rgba(238, 240, 235, 0.26);
+        --serif: Georgia, "Songti SC", "STSong", "Noto Serif SC", serif;
+        --sans: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+        --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+      body.dialog-open { overflow: hidden; }
+      a { color: inherit; text-decoration: none; }
+      button { color: inherit; font: inherit; }
+      button:focus-visible, a:focus-visible {
+        outline: 2px solid var(--rust);
+        outline-offset: 4px;
+      }
+      img { display: block; max-width: 100%; }
+      [hidden] { display: none !important; }
+
+      .topbar {
+        position: relative;
+        z-index: 5;
+        min-height: 68px;
+        padding: 0 5vw;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+      }
+      .wordmark {
+        width: fit-content;
+        display: inline-flex;
+        align-items: baseline;
+        gap: 10px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .wordmark small {
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 400;
+      }
+      .main-nav { display: flex; align-items: center; gap: 30px; }
+      .main-nav a {
+        color: var(--muted);
+        font-size: 13px;
+        transition: color 180ms ease;
+      }
+      .main-nav a:hover { color: var(--rust); }
+      .top-contact {
+        justify-self: end;
+        color: var(--ink);
+        font-size: 12px;
+        border-bottom: 1px solid var(--rust);
+        padding: 5px 0;
+      }
+
+      .hero {
+        min-height: 84vh;
+        padding: 34px 5vw 42px;
+        display: grid;
+        align-items: center;
+      }
+      .hero-layout {
+        width: min(100%, 1480px);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(330px, 0.82fr) minmax(0, 1.18fr);
+        align-items: center;
+        gap: clamp(40px, 6vw, 92px);
+      }
+      .hero-copy { position: relative; z-index: 1; padding: 24px 0; }
+      .eyebrow, .section-index, .image-caption, .story-stat-label, .project-meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        line-height: 1.5;
+        letter-spacing: 0.04em;
+      }
+      .eyebrow { color: var(--moss); }
+      .eyebrow::before {
+        content: "";
+        display: inline-block;
+        width: 22px;
+        height: 1px;
+        margin: 0 10px 3px 0;
+        background: var(--rust);
+      }
+      .hero h1 {
+        margin: 25px 0 10px -7px;
+        font-family: var(--serif);
+        font-size: 112px;
+        font-weight: 500;
+        line-height: 0.92;
+      }
+      .hero-name {
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 12px;
+      }
+      .hero-thesis {
+        max-width: 470px;
+        margin: 36px 0 0;
+        font-family: var(--serif);
+        font-size: 29px;
+        line-height: 1.42;
+      }
+      .hero-desc {
+        max-width: 410px;
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.9;
+      }
+      .hero-actions {
+        margin-top: 31px;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+      .text-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 0;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .text-link span { color: var(--rust); font-size: 18px; transition: transform 180ms ease; }
+      .text-link:hover span { transform: translate(3px, 2px); }
+      .hero-portrait {
+        position: relative;
+        height: min(73vh, 760px);
+        min-height: 560px;
+        overflow: hidden;
+        background: var(--paper-deep);
+      }
+      .hero-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 33%; }
+      .image-caption {
+        position: absolute;
+        left: 22px;
+        bottom: 19px;
+        color: #fff;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+      }
+      .hero-edge-note {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        writing-mode: vertical-rl;
+        color: rgba(255, 255, 255, 0.86);
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+      }
+      .next-cue {
+        width: min(100%, 1480px);
+        margin: 7px auto 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 10px;
+      }
+      .next-cue::before { content: ""; width: 30px; height: 1px; background: var(--rust); }
+
+      .story-section {
+        padding: 112px 5vw 128px;
+        background: var(--paper-deep);
+      }
+      .section-head {
+        width: min(100%, 1480px);
+        margin: 0 auto 48px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 32px;
+      }
+      .section-index { color: var(--rust); }
+      .section-head h2, .work-head h2, .contact-copy h2 {
+        margin: 14px 0 0;
+        font-family: var(--serif);
+        font-size: 58px;
+        font-weight: 500;
+        line-height: 1.16;
+      }
+      .section-head p {
+        max-width: 345px;
+        margin: 0 0 7px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .story-layout {
+        width: min(100%, 1480px);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(205px, 0.37fr) minmax(0, 1.63fr);
+        gap: clamp(34px, 6vw, 90px);
+        align-items: center;
+      }
+      .story-tabs {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .story-tabs::before {
+        content: "";
+        position: absolute;
+        top: 14px;
+        bottom: 14px;
+        left: 5px;
+        width: 1px;
+        background: rgba(25, 34, 29, 0.2);
+      }
+      .story-tab {
+        position: relative;
+        width: 100%;
+        padding: 17px 0 17px 25px;
+        border: 0;
+        background: transparent;
+        text-align: left;
+        cursor: pointer;
+      }
+      .story-tab::before {
+        content: "";
+        position: absolute;
+        left: 1px;
+        top: 24px;
+        width: 9px;
+        height: 9px;
+        border: 1px solid var(--moss);
+        border-radius: 50%;
+        background: var(--paper-deep);
+        transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+      }
+      .story-tab[aria-pressed="true"]::before {
+        background: var(--rust);
+        border-color: var(--rust);
+        transform: scale(1.18);
+      }
+      .story-tab[aria-pressed="true"] .story-tab-title { color: var(--ink); }
+      .story-tab-period { display: block; color: var(--muted); font-family: var(--mono); font-size: 10px; }
+      .story-tab-title { display: block; margin-top: 6px; color: #78827b; font-family: var(--serif); font-size: 21px; transition: color 180ms ease; }
+      .story-tab:hover .story-tab-title { color: var(--ink); }
+      .story-feature {
+        display: grid;
+        grid-template-columns: minmax(0, 1.14fr) minmax(250px, 0.86fr);
+        align-items: stretch;
+        min-height: 450px;
+      }
+      .story-photo { min-height: 450px; background: #b9c3ba; overflow: hidden; }
+      .story-photo img { width: 100%; height: 100%; min-height: 450px; object-fit: cover; object-position: center; transition: opacity 200ms ease; }
+      .story-photo img.is-changing { opacity: 0.35; }
+      .story-copy {
+        padding: 42px 0 42px 46px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .story-period { color: var(--rust); font-family: var(--mono); font-size: 11px; }
+      .story-copy h3 { margin: 20px 0 13px; font-family: var(--serif); font-size: 35px; font-weight: 500; line-height: 1.28; }
+      .story-copy p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.95; }
+      .story-stat { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); }
+      .story-stat strong { display: block; color: var(--ink); font-family: var(--serif); font-size: 39px; font-weight: 500; }
+      .story-stat-label { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+
+      .work-section { padding: 108px 5vw 124px; background: var(--night); color: var(--paper); }
+      .work-head {
+        width: min(100%, 1480px);
+        margin: 0 auto 38px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 30px;
+      }
+      .work-head .section-index { color: #dc8169; }
+      .work-head h2 { font-size: 55px; }
+      .work-head p { max-width: 300px; margin: 0 0 5px; color: #bdc7bf; font-size: 14px; line-height: 1.8; }
+      .filter-row {
+        width: min(100%, 1480px);
+        margin: 0 auto 28px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .filter-button {
+        padding: 9px 14px;
+        border: 1px solid var(--line-light);
+        border-radius: 999px;
+        background: transparent;
+        color: #d9e0da;
+        font-size: 12px;
+        cursor: pointer;
+        transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+      }
+      .filter-button:hover, .filter-button[aria-pressed="true"] {
+        border-color: var(--paper);
+        background: var(--paper);
+        color: var(--night);
+      }
+      .project-grid {
+        width: min(100%, 1480px);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+      .project-card {
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+      .project-image { display: block; overflow: hidden; background: #344239; aspect-ratio: 1.42; }
+      .project-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 450ms cubic-bezier(.2,.7,.2,1); }
+      .project-card:hover .project-image img { transform: scale(1.035); }
+      .project-meta { display: block; margin-top: 19px; color: #9ead9f; font-size: 10px; }
+      .project-title-row { margin-top: 7px; display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+      .project-title { font-family: var(--serif); font-size: 27px; font-weight: 500; }
+      .project-arrow { color: #e1856d; font-size: 20px; transition: transform 180ms ease; }
+      .project-card:hover .project-arrow { transform: translate(3px, -3px); }
+      .project-desc { max-width: 360px; margin: 9px 0 0; color: #bdc7bf; font-size: 13px; line-height: 1.75; }
+      .result-count { margin-left: auto; color: #9ead9f; font-family: var(--mono); font-size: 10px; }
+
+      .contact-section {
+        padding: 96px 5vw 38px;
+        background: var(--paper);
+      }
+      .contact-inner {
+        width: min(100%, 1480px);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 36px;
+        padding-bottom: 70px;
+      }
+      .contact-copy h2 { max-width: 750px; font-size: 66px; }
+      .contact-copy p { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
+      .contact-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 15px; }
+      .contact-primary {
+        min-height: 48px;
+        padding: 0 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--rust);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        transition: background 180ms ease, transform 180ms ease;
+      }
+      .contact-primary:hover { background: #a9412d; transform: translateY(-2px); }
+      .copy-button {
+        padding: 4px 0;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        background: transparent;
+        color: var(--muted);
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .copy-button:hover { color: var(--ink); border-color: var(--rust); }
+      .copy-status { min-height: 16px; color: var(--moss); font-size: 11px; }
+      .footer-line {
+        min-height: 50px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 9px;
+      }
+
+      .project-dialog {
+        width: min(720px, calc(100% - 32px));
+        max-height: min(88svh, 800px);
+        padding: 0;
+        border: 0;
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .project-dialog::backdrop { background: rgba(14, 24, 18, 0.76); }
+      .dialog-image { width: 100%; aspect-ratio: 1.7; object-fit: cover; background: var(--paper-deep); }
+      .dialog-body { padding: 26px 30px 30px; }
+      .dialog-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+      .dialog-category { color: var(--rust); font-family: var(--mono); font-size: 10px; }
+      .dialog-close {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: transparent;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .dialog-body h2 { margin: 12px 0 10px; font-family: var(--serif); font-size: 34px; font-weight: 500; }
+      .dialog-body p { max-width: 560px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
+      .dialog-link { display: inline-block; margin-top: 20px; color: var(--rust); font-size: 13px; font-weight: 700; }
+
+      @media (max-width: 900px) {
+        .topbar { grid-template-columns: 1fr auto; }
+        .main-nav { gap: 18px; }
+        .top-contact { display: none; }
+        .hero { min-height: auto; padding-top: 30px; }
+        .hero-layout { grid-template-columns: minmax(270px, 0.82fr) minmax(0, 1.18fr); gap: 34px; }
+        .hero h1 { font-size: 88px; }
+        .hero-thesis { font-size: 25px; }
+        .hero-portrait { min-height: 500px; }
+        .section-head h2 { font-size: 49px; }
+        .story-layout { grid-template-columns: 1fr; gap: 28px; }
+        .story-tabs { flex-direction: row; align-items: stretch; gap: 0; }
+        .story-tabs::before { top: auto; right: 0; bottom: 0; left: 0; width: auto; height: 1px; }
+        .story-tab { flex: 1; min-width: 0; padding: 14px 10px 18px 17px; }
+        .story-tab::before { top: auto; bottom: -4px; left: 0; }
+        .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 42px; }
+      }
+      @media (max-width: 640px) {
+        html { scroll-padding-top: 58px; }
+        .topbar { min-height: 58px; padding: 0 20px; }
+        .wordmark { gap: 7px; font-size: 12px; }
+        .wordmark small { font-size: 8px; }
+        .main-nav { gap: 13px; }
+        .main-nav a { font-size: 11px; }
+        .hero {
+          position: relative;
+          min-height: 78svh;
+          padding: 0;
+          align-items: end;
+          overflow: hidden;
+          background: var(--night);
+          color: #f4f5f0;
+        }
+        .hero::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(17, 27, 21, 0.04) 22%, rgba(17, 27, 21, 0.16) 44%, rgba(17, 27, 21, 0.94) 100%);
+        }
+        .hero-layout { position: relative; z-index: 1; display: block; width: 100%; }
+        .hero-copy { padding: 0 23px 36px; }
+        .hero .eyebrow { color: #d6e2d7; font-size: 9px; }
+        .hero h1 { margin: 17px 0 7px -3px; font-size: 76px; }
+        .hero-name { color: rgba(244, 245, 240, 0.72); font-size: 10px; }
+        .hero-thesis { max-width: 340px; margin-top: 22px; font-size: 24px; }
+        .hero-desc { max-width: 360px; margin-top: 8px; color: rgba(244, 245, 240, 0.78); font-size: 12px; line-height: 1.8; }
+        .hero-actions { margin-top: 17px; gap: 20px; }
+        .hero .text-link { font-size: 12px; }
+        .hero .text-link span { color: #e58b72; }
+        .hero-portrait { position: absolute; z-index: 0; inset: 0; height: 100%; min-height: 0; }
+        .hero-portrait img { object-position: 53% 30%; }
+        .image-caption { left: auto; right: 20px; bottom: auto; top: 20px; font-size: 9px; }
+        .hero-edge-note { top: 18px; left: 20px; right: auto; font-size: 8px; }
+        .next-cue { padding: 0 22px; margin-top: 15px; font-size: 8px; }
+        .story-section, .work-section { padding: 78px 22px 84px; }
+        .section-head, .work-head { margin-bottom: 30px; display: block; }
+        .section-head h2, .work-head h2 { margin-top: 11px; font-size: 40px; }
+        .section-head p, .work-head p { margin-top: 13px; font-size: 12px; }
+        .story-layout { gap: 21px; }
+        .story-tab { padding: 12px 5px 16px 12px; }
+        .story-tab-period { font-size: 8px; }
+        .story-tab-title { margin-top: 5px; font-size: 16px; }
+        .story-feature { display: flex; flex-direction: column; min-height: 0; }
+        .story-photo, .story-photo img { min-height: 0; height: auto; aspect-ratio: 1.2; }
+        .story-copy { padding: 24px 0 0; }
+        .story-copy h3 { margin: 12px 0 9px; font-size: 29px; }
+        .story-copy p { font-size: 13px; }
+        .story-stat { margin-top: 22px; padding-top: 14px; }
+        .story-stat strong { font-size: 32px; }
+        .filter-row { gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+        .filter-button { padding: 8px 11px; font-size: 10px; }
+        .result-count { width: 100%; margin: 5px 0 0; }
+        .project-grid { grid-template-columns: 1fr; gap: 34px; }
+        .project-image { aspect-ratio: 1.32; }
+        .project-meta { margin-top: 14px; }
+        .project-title { font-size: 25px; }
+        .contact-section { padding: 68px 22px 20px; }
+        .contact-inner { grid-template-columns: 1fr; gap: 28px; padding-bottom: 44px; }
+        .contact-copy h2 { margin-top: 11px; font-size: 44px; }
+        .contact-copy p { font-size: 12px; line-height: 1.8; }
+        .contact-actions { gap: 11px; }
+        .footer-line { min-height: 48px; font-size: 8px; }
+        .dialog-image { aspect-ratio: 1.3; }
+        .dialog-body { padding: 20px; }
+        .dialog-body h2 { font-size: 29px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="#top" aria-label="回到首页">狗哥 <small>WANG SALIN</small></a>
+      <nav class="main-nav" aria-label="页面导航">
+        <a href="#story">经历</a>
+        <a href="#work">作品</a>
+        <a href="#contact">联系</a>
+      </nav>
+      <a class="top-contact" href="mailto:salin910525@gmail.com">聊一个真实问题 ↗</a>
+    </header>
+
+    <main>
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-layout">
+          <div class="hero-copy">
+            <div class="eyebrow">独立创业者 · AI 产品实践者</div>
+            <h1 id="hero-title">狗哥</h1>
+            <div class="hero-name">王善林 / WANG SALIN</div>
+            <p class="hero-thesis">在真实生意里，做能落地的产品。</p>
+            <p class="hero-desc">做过本地生活内容，亲自开过店。现在，把一线遇到的问题变成有人愿意用的工具。</p>
+            <div class="hero-actions">
+              <a class="text-link" href="#story">看经历 <span aria-hidden="true">↓</span></a>
+              <a class="text-link" href="#work">看作品 <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <figure class="hero-portrait">
+            <img src="./images/portrait/salin-2025.jpg" alt="王善林在山路现场的照片">
+            <figcaption class="image-caption">2025 · 山路 · 始终在现场</figcaption>
+            <span class="hero-edge-note" aria-hidden="true">LINYI / SHANDONG</span>
+          </figure>
+        </div>
+      </section>
+      <div class="next-cue" aria-hidden="true">向下，沿着经历继续</div>
+
+      <section class="story-section" id="story" aria-labelledby="story-heading">
+        <div class="section-head">
+          <div>
+            <div class="section-index">来时路 / 2014 — 2026</div>
+            <h2 id="story-heading">每一次，都离现场更近。</h2>
+          </div>
+          <p>从内容服务到亲自经营，再把经营里的问题做成工具。</p>
+        </div>
+
+        <div class="story-layout">
+          <div class="story-tabs" role="group" aria-label="选择一段经历">
+            <button class="story-tab" type="button" aria-pressed="true"
+              data-period="2014 — 2020"
+              data-title="从镜头前走进门店。"
+              data-copy="《舌尖上的临沂》从本地生活内容起步。七年里，和 2,000 多家餐饮商家一起做内容、做获客。"
+              data-stat="2,000+"
+              data-stat-label="服务过的餐饮商家"
+              data-image="./images/portrait/salin-2017-food.png"
+              data-alt="王善林在餐饮现场体验制作菜品">
+              <span class="story-tab-period">2014 — 2020</span>
+              <span class="story-tab-title">内容与商家</span>
+            </button>
+            <button class="story-tab" type="button" aria-pressed="false"
+              data-period="2021 — 2025"
+              data-title="从服务者，变成店老板。"
+              data-copy="选址、产品、供应链、现金流。四年亲自经营，让我学会先看经营里的真实摩擦。"
+              data-stat="4 年"
+              data-stat-label="餐饮经营一线"
+              data-image="./images/portrait/salin-2017-flag-full.jpg"
+              data-alt="王善林早期创业与经营经历的现场照片">
+              <span class="story-tab-period">2021 — 2025</span>
+              <span class="story-tab-title">亲自开店</span>
+            </button>
+            <button class="story-tab" type="button" aria-pressed="false"
+              data-period="2026 — NOW"
+              data-title="再回到一线，把问题做成工具。"
+              data-copy="现在主导饿狸与 FoodOps 的 AI 产品实践，让门店能直接用上内容、运营和经营协同能力。"
+              data-stat="AI × 现场"
+              data-stat-label="产品工作的起点"
+              data-image="./images/showcase/project-foodops.jpg"
+              data-alt="FoodOps 餐饮运营工作台与门店现场">
+              <span class="story-tab-period">2026 — NOW</span>
+              <span class="story-tab-title">AI 产品</span>
+            </button>
+          </div>
+
+          <div class="story-feature" aria-live="polite">
+            <figure class="story-photo">
+              <img id="story-image" src="./images/portrait/salin-2017-food.png" alt="王善林在餐饮现场体验制作菜品">
+            </figure>
+            <div class="story-copy">
+              <span class="story-period" id="story-period">2014 — 2020</span>
+              <h3 id="story-title">从镜头前走进门店。</h3>
+              <p id="story-description">《舌尖上的临沂》从本地生活内容起步。七年里，和 2,000 多家餐饮商家一起做内容、做获客。</p>
+              <div class="story-stat">
+                <strong id="story-stat">2,000+</strong>
+                <span class="story-stat-label" id="story-stat-label">服务过的餐饮商家</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="work-section" id="work" aria-labelledby="work-heading">
+        <div class="work-head">
+          <div>
+            <div class="section-index">把问题变成作品</div>
+            <h2 id="work-heading">做过的几件事。</h2>
+          </div>
+          <p>真实的场景、清楚的用途。先看图，再决定要不要深入。</p>
+        </div>
+        <div class="filter-row" role="group" aria-label="筛选项目">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">全部</button>
+          <button class="filter-button" type="button" data-filter="ai" aria-pressed="false">AI 产品</button>
+          <button class="filter-button" type="button" data-filter="tools" aria-pressed="false">开发工具</button>
+          <button class="filter-button" type="button" data-filter="library" aria-pressed="false">资源平台</button>
+          <span class="result-count" id="result-count" aria-live="polite">3 项作品</span>
+        </div>
+        <div class="project-grid">
+          <article class="project-item" data-category="ai">
+            <button class="project-card" type="button" data-open-project
+              data-title="FoodOps"
+              data-category-label="AI 产品 / 餐饮经营"
+              data-description="面向餐饮企业的 AI 运营与内容协同系统。把商家知识、营销内容和门店日常工作放进更连贯的流程里。"
+              data-image="./images/showcase/project-foodops.jpg"
+              data-alt="FoodOps 餐饮 AI 运营工作台">
+              <span class="project-image"><img src="./images/showcase/project-foodops.jpg" alt="FoodOps 餐饮 AI 运营工作台" loading="lazy"></span>
+              <span class="project-meta">AI 产品 · 餐饮经营</span>
+              <span class="project-title-row"><span class="project-title">FoodOps</span><span class="project-arrow" aria-hidden="true">↗</span></span>
+              <span class="project-desc">让门店经营流程更清楚，让 AI 真正进入日常工作。</span>
+            </button>
+          </article>
+          <article class="project-item" data-category="tools">
+            <button class="project-card" type="button" data-open-project
+              data-title="Salin UI"
+              data-category-label="开发工具 / AI 编程"
+              data-description="为 AI 辅助开发准备的界面资产中心，包含组件、交互动效、页面骨架和完整案例。"
+              data-image="./images/showcase/project-salin-ui.jpg"
+              data-alt="Salin UI 开发者界面资产库">
+              <span class="project-image"><img src="./images/showcase/project-salin-ui.jpg" alt="Salin UI 开发者界面资产库" loading="lazy"></span>
+              <span class="project-meta">开发工具 · AI 编程</span>
+              <span class="project-title-row"><span class="project-title">Salin UI</span><span class="project-arrow" aria-hidden="true">↗</span></span>
+              <span class="project-desc">把高质量的界面方向，变成 AI 可以直接使用的资产。</span>
+            </button>
+          </article>
+          <article class="project-item" data-category="library">
+            <button class="project-card" type="button" data-open-project
+              data-title="狗哥资源库"
+              data-category-label="资源平台 / 商业与 AI"
+              data-description="持续整理并实测可用的 AI 工具、餐饮经营资料、内容模板与商业效率资产。"
+              data-image="./images/showcase/project-gouge-hub.jpg"
+              data-alt="狗哥资源库商业与 AI 资源平台">
+              <span class="project-image"><img src="./images/showcase/project-gouge-hub.jpg" alt="狗哥资源库商业与 AI 资源平台" loading="lazy"></span>
+              <span class="project-meta">资源平台 · 商业与 AI</span>
+              <span class="project-title-row"><span class="project-title">狗哥资源库</span><span class="project-arrow" aria-hidden="true">↗</span></span>
+              <span class="project-desc">把十二年积累的资料，整理成创业者找得到的入口。</span>
+            </button>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+        <div class="contact-inner">
+          <div class="contact-copy">
+            <div class="section-index">从一个具体问题开始</div>
+            <h2 id="contact-heading">把一线的事，聊具体。</h2>
+            <p>AI 产品、餐饮经营、内容获客，或者一次真实的创业复盘。</p>
+          </div>
+          <div class="contact-actions">
+            <a class="contact-primary" href="mailto:salin910525@gmail.com">发邮件聊聊 <span aria-hidden="true">↗</span></a>
+            <button class="copy-button" id="copy-wechat" type="button">复制微信号 50219067</button>
+            <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+        <footer class="footer-line">
+          <span>WANG SALIN · DOGE</span>
+          <span>LINYI, CHINA · 2026</span>
+        </footer>
+      </section>
+    </main>
+
+    <dialog class="project-dialog" id="project-dialog" aria-labelledby="dialog-title">
+      <img class="dialog-image" id="dialog-image" src="./images/showcase/project-foodops.jpg" alt="">
+      <div class="dialog-body">
+        <div class="dialog-top">
+          <span class="dialog-category" id="dialog-category"></span>
+          <button class="dialog-close" type="button" id="dialog-close" aria-label="关闭项目详情">×</button>
+        </div>
+        <h2 id="dialog-title"></h2>
+        <p id="dialog-description"></p>
+        <a class="dialog-link" id="dialog-link" href="#" target="_blank" rel="noreferrer" hidden>打开项目 ↗</a>
+      </div>
+    </dialog>
+
+    <script>
+      const storyImage = document.querySelector("#story-image");
+      const storyPeriod = document.querySelector("#story-period");
+      const storyTitle = document.querySelector("#story-title");
+      const storyDescription = document.querySelector("#story-description");
+      const storyStat = document.querySelector("#story-stat");
+      const storyStatLabel = document.querySelector("#story-stat-label");
+
+      document.querySelectorAll(".story-tab").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".story-tab").forEach((tab) => tab.setAttribute("aria-pressed", "false"));
+          button.setAttribute("aria-pressed", "true");
+          storyImage.classList.add("is-changing");
+          storyImage.src = button.dataset.image;
+          storyImage.alt = button.dataset.alt;
+          storyPeriod.textContent = button.dataset.period;
+          storyTitle.textContent = button.dataset.title;
+          storyDescription.textContent = button.dataset.copy;
+          storyStat.textContent = button.dataset.stat;
+          storyStatLabel.textContent = button.dataset.statLabel;
+          requestAnimationFrame(() => storyImage.classList.remove("is-changing"));
+        });
+      });
+
+      const projectItems = [...document.querySelectorAll(".project-item")];
+      const resultCount = document.querySelector("#result-count");
+      document.querySelectorAll(".filter-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".filter-button").forEach((filter) => filter.setAttribute("aria-pressed", "false"));
+          button.setAttribute("aria-pressed", "true");
+          const category = button.dataset.filter;
+          let visible = 0;
+          projectItems.forEach((item) => {
+            const show = category === "all" || item.dataset.category === category;
+            item.hidden = !show;
+            if (show) visible += 1;
+          });
+          resultCount.textContent = `${visible} 项作品`;
+        });
+      });
+
+      const dialog = document.querySelector("#project-dialog");
+      const dialogImage = document.querySelector("#dialog-image");
+      const dialogCategory = document.querySelector("#dialog-category");
+      const dialogTitle = document.querySelector("#dialog-title");
+      const dialogDescription = document.querySelector("#dialog-description");
+      const dialogLink = document.querySelector("#dialog-link");
+
+      document.querySelectorAll("[data-open-project]").forEach((button) => {
+        button.addEventListener("click", () => {
+          dialogImage.src = button.dataset.image;
+          dialogImage.alt = button.dataset.alt;
+          dialogCategory.textContent = button.dataset.categoryLabel;
+          dialogTitle.textContent = button.dataset.title;
+          dialogDescription.textContent = button.dataset.description;
+          const url = button.dataset.url;
+          dialogLink.hidden = !url;
+          if (url) dialogLink.href = url;
+          dialog.showModal();
+          document.body.classList.add("dialog-open");
+        });
+      });
+      function closeDialog() {
+        dialog.close();
+        document.body.classList.remove("dialog-open");
+      }
+      document.querySelector("#dialog-close").addEventListener("click", closeDialog);
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeDialog();
+      });
+      dialog.addEventListener("close", () => document.body.classList.remove("dialog-open"));
+
+      document.querySelector("#copy-wechat").addEventListener("click", async () => {
+        const status = document.querySelector("#copy-status");
+        try {
+          await navigator.clipboard.writeText("50219067");
+          status.textContent = "微信号已复制";
+        } catch {
+          status.textContent = "微信号：50219067（可手动复制）";
+        }
+      });
+    </script>
+  </body>
+</html>
