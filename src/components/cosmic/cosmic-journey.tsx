@@ -6,7 +6,7 @@ import { CosmicCanvas } from "./cosmic-canvas";
 import { PlanetRender, PlanetType } from "./planet-render";
 import { CosmicHUD, WAYPOINTS } from "./cosmic-hud";
 import { PlanetModal, ProjectDetail } from "./planet-modal";
-import { ArrowUpRight, Sparkles, ChevronDown, MessageSquare, Mail, RotateCcw } from "lucide-react";
+import { ArrowUpRight, Sparkles, ChevronDown, MessageSquare, Mail, RotateCcw, Glasses } from "lucide-react";
 
 const CELESTIAL_STATIONS = [
   {
@@ -14,110 +14,110 @@ const CELESTIAL_STATIONS = [
     type: "earth" as PlanetType,
     name: "地球 (EARTH // 母港)",
     au: 0.0,
-    kicker: "MISSION LAUNCH // 启航母星",
-    title: "狗哥 (Wang Salin)",
-    subtitle: "做过本地生活内容，亲自下场经营过餐饮。把十多年商业积淀，变成真正能交付的 AI 工具。",
-    tags: ["实体商业操盘", "AI 架构设计", "全案代码交付"],
-    ctaLabel: "查看核心档案",
+    kicker: "MISSION LAUNCH // 启航坐标",
+    title: "汪狗哥 (Wang Salin)",
+    subtitle: "做过实体商业，踩过开店的坑，写过生产级代码。现在专注用 AI 架构赋能真实商业落地。",
+    tags: ["实体商业操盘", "AI 架构落地", "全栈交付"],
+    ctaLabel: "查阅个人坐标",
     projectDetail: {
       id: "salin-origin",
       planetName: "地球母港",
-      badge: "ORIGIN · 商业与 AI 实践",
-      title: "狗哥 (Wang Salin)",
-      tagline: "实体商业 × 商业敏锐度 × AI 产品落地",
+      badge: "ORIGIN · 商业与 AI 操盘手",
+      title: "汪狗哥 (Wang Salin)",
+      tagline: "实体商业 x 技术研发 x AI 生产力落地",
       description:
-        "在餐饮实体前线经营过门店、管理过团队、跑通了整套供应链降本。在 AI 爆发期，将这些不可替代的商业手感转化成了可落地的工具与数字化系统。",
+        "这里是星际航程的母港。我是汪狗哥，具有线下实体开店经验和多年全栈架构能力。不聊空洞概念，只做能落地交付的商业产品，帮助企业与创业者用 AI 实现真正降本增效。",
       highlights: [
-        "10+ 年线下商业与数字化经验",
-        "亲自下场开店餐饮实战操盘",
-        "全栈掌握 Next.js / AI Agent / MCP",
-        "坚持 ROI 导向，拒绝空洞概念",
+        "10+ 年商业与技术实操经验",
+        "餐饮供应链实操操盘手",
+        "技术栈覆盖 Next.js / AI Agent / MCP",
+        "极度注重 ROI 与客户真实买单意愿",
       ],
       metrics: [
-        { label: "商业积淀", value: "10+ 年" },
-        { label: "实操案例", value: "多店落地" },
-        { label: "核心交付", value: "100% 真实" },
+        { label: "实操沉淀", value: "10+ 年" },
+        { label: "交付标准", value: "生产级" },
+        { label: "落地率", value: "100% 真实" },
       ],
-      primaryLink: { label: "了解合作方向", href: "/contact" },
-      secondaryLink: { label: "实战笔记", href: "/notes" },
+      primaryLink: { label: "预约深入交流", href: "/contact" },
+      secondaryLink: { label: "阅读实战笔记", href: "/notes" },
       accentColor: "border-sky-400",
     },
   },
   {
     id: "moon",
     type: "moon" as PlanetType,
-    name: "月球 (MOON // 轨道军械库)",
+    name: "月球 (MOON // 界面弹药库)",
     au: 0.0026,
-    kicker: "0.0026 AU // 旗舰级 AI 界面弹药库",
+    kicker: "0.0026 AU // 近地 AI 界面军械库",
     title: "Salin UI",
-    subtitle: "面向 Cursor / Claude / v0 的专业级界面弹药库。252+ 资产，单文件 TSX 复制，原生 MCP 协议直连。",
-    tags: ["252+ 全栈资产", "MCP 协议直连", "全案样板间一键复刻"],
-    ctaLabel: "进入 Salin UI 弹药库",
+    subtitle: "专为 Cursor / Claude / v0 打造的现代界面弹药库。252+ 资产组件，单文件 TSX 零依赖，原生 MCP 协议直连。",
+    tags: ["252+ 优质组件", "MCP 原生直连", "零依赖单文件复制"],
+    ctaLabel: "检阅 Salin UI 军械库",
     projectDetail: {
       id: "salin-ui",
-      planetName: "月球轨道前哨",
+      planetName: "月球界面基地",
       badge: "FLAGSHIP · AI 界面弹药库",
       title: "Salin UI",
-      tagline: "面向 AI 编程时代（Cursor / Claude / v0）的专业武器库",
+      tagline: "专为 AI 编程打造的开箱即用高质量组件库",
       description:
-        "收录 68 核心组件、88 交互动效、40 骨架布局、31 风格系统与 24 数据图表。支持在编辑器内通过 MCP 协议让 AI 自行调取，几秒内构建殿堂级高颜值商业前端。",
+        "包含 68 个基础组件、88 个业务场景组件、40 个动效组件、31 个完整页面模板及 24 个复合区块。每个组件均支持原生 MCP 协议直接注入 AI 上下文，彻底告别低质拼凑感。",
       highlights: [
-        "单文件 TSX 零侵入复制运行",
-        "全景商业样板间一键复刻克隆",
-        "原生 MCP 协议直连 IDE 提示词",
-        "全响应式 H5 移动端与桌面双向适配",
+        "单文件 TSX 复制即用无幽灵依赖",
+        "专为现代商业界面定制美学规范",
+        "原生 MCP 协议直连 Cursor / Claude",
+        "完整覆盖 H5 移动端与桌面端自适应",
       ],
       metrics: [
-        { label: "全栈资产", value: "252+" },
-        { label: "核心分类", value: "5 大类" },
-        { label: "MCP 状态", value: "原生直连" },
+        { label: "精选组件", value: "252+" },
+        { label: "核心类目", value: "5 大类" },
+        { label: "MCP 支持", value: "原生直连" },
       ],
-      primaryLink: { label: "立即进入弹药库", href: "/ui/" },
-      secondaryLink: { label: "查看项目档案", href: "/projects/salin-ui" },
+      primaryLink: { label: "直达弹药库界面", href: "/ui/" },
+      secondaryLink: { label: "查看项目详情", href: "/projects/salin-ui" },
       accentColor: "border-emerald-400",
     },
   },
   {
     id: "mars",
     type: "mars" as PlanetType,
-    name: "火星 (MARS // 红色开拓基地)",
+    name: "火星 (MARS // 实体数字化)",
     au: 0.52,
-    kicker: "0.52 AU // 实体下场数字化操盘",
-    title: "FoodOps 数字化系统",
-    subtitle: "亲自下场开店、管后厨、跑供应链。将真实门店痛点转化为自动化成本分析与数字化工单排班全案。",
-    tags: ["供应链降本 18%", "后厨效能 +35%", "多店实测落地"],
-    ctaLabel: "查看实战复盘",
+    kicker: "0.52 AU // 实体数字化实战",
+    title: "FoodOps 餐饮数字化系统",
+    subtitle: "下场开店、踩坑亏钱、自研系统。把真实的餐饮供应链痛点转化为可落地的降本增效系统。",
+    tags: ["供应链降本 18%", "后厨效率 +35%", "多门店实时看板"],
+    ctaLabel: "查看实战全案",
     projectDetail: {
       id: "foodops",
       planetName: "火星开拓基地",
-      badge: "ENTERPRISE FDE · 餐饮门店供应链",
-      title: "FoodOps 数字化全案",
-      tagline: "餐饮门店经营与供应链数字化实战系统",
+      badge: "ENTERPRISE FDE · 实体餐饮数字化",
+      title: "FoodOps 餐饮数字化系统",
+      tagline: "实体餐饮开店与供应链实战降本系统",
       description:
-        "针对餐饮门店食材损耗大、后厨出单混乱、排班不合理等顽疾，构建全流程动态盘点、自动补货模型与工单看板，经真实单店与连锁店持续验证。",
+        "从真实开店的原料损耗率、后厨排班断层、各门店采购比价不透明等真实痛点出发，重构供应链采购、智能排班与损耗监控，帮助实体餐饮省去巨额隐形成本。",
       highlights: [
-        "食材 BOM 成本动态损耗追踪",
-        "后厨工单看板与出餐节拍平衡",
-        "连锁多店供应链集中采购结算",
-        "综合降低食材与损耗成本 18%",
+        "动态 BOM 原料损耗实时监控",
+        "后厨智能工单与出餐节拍看板",
+        "智能多门店比价与采购协同流",
+        "单店综合损耗率实测降低 18%",
       ],
       metrics: [
-        { label: "供应链降本", value: "18%" },
-        { label: "效能提升", value: "+35%" },
-        { label: "测试验证", value: "多店落地" },
+        { label: "损耗降低", value: "18%" },
+        { label: "效率提升", value: "+35%" },
+        { label: "系统状态", value: "生产级落地" },
       ],
-      primaryLink: { label: "查看实战案例", href: "/projects/foodops" },
+      primaryLink: { label: "查看实战项目", href: "/projects/foodops" },
       accentColor: "border-rose-400",
     },
   },
   {
     id: "jupiter",
     type: "jupiter" as PlanetType,
-    name: "木星 (JUPITER // 知识巨引源)",
+    name: "木星 (JUPITER // 知识引力场)",
     au: 4.2,
-    kicker: "4.2 AU // 本地商业与实体知识库",
+    kicker: "4.2 AU // 实体商业沉淀与实操引力",
     title: "狗哥资源库 (Gouge Hub)",
-    subtitle: "连接真实商业场景的知识库。实体获客 SOP、餐饮创业避坑手册与精选工具导航，赋能创业团队。",
+    subtitle: "聚集真实商业与创业实战资料。从 0 到 1 开店 SOP、本地生活全域获客与高性价比 AI 提效工具。",
     tags: ["40+ 实操手册", "私域全域打通", "持续高频收录"],
     ctaLabel: "调取知识档案",
     projectDetail: {
@@ -177,36 +177,36 @@ const CELESTIAL_STATIONS = [
     },
   },
   {
-    id: "outpost",
-    type: "outpost" as PlanetType,
-    name: "深空前哨 (OUTPOST // 商业合作)",
+    id: "blackhole",
+    type: "blackhole" as PlanetType,
+    name: "终极奇点 · 黑洞 (BLACK HOLE // 终点站)",
     au: 15.0,
-    kicker: "15.0 AU // 深空指挥部",
-    title: "商业合作与业务对接",
-    subtitle: "聊点真实的业务，做点能交付的作品。提供企业 AI 工具落地、餐饮供应链数字化全案、Salin UI 商业共建。",
-    tags: ["企业 AI 定制", "餐饮数字化全案", "Salin UI 共建", "项目共创"],
-    ctaLabel: "立即对接合作",
+    kicker: "15.0 AU // 宇宙引力奇点 · 视界边缘",
+    title: "引力奇点 · 商业合作与共创指挥部",
+    subtitle: "所有星际航程的终极引力汇聚点。从概念到落地，从技术到商业变现。在此打破维度壁垒，开启深度商业合作、企业 AI 定制与项目共创。",
+    tags: ["无限引力吸积", "企业 AI 全案交付", "Salin UI 商业化", "项目共创深度合作"],
+    ctaLabel: "进入奇点引力场",
     projectDetail: {
-      id: "cooperation",
-      planetName: "深空前哨指挥部",
-      badge: "COOPERATION · 合作对接中心",
-      title: "商业合作与项目共创",
-      tagline: "把成熟的实战经验，转化为您的商业增长动力",
+      id: "blackhole-singularity",
+      planetName: "终极奇点 · 黑洞",
+      badge: "EVENT HORIZON · 终极商业奇点",
+      title: "引力奇点 · 商业合作与共创",
+      tagline: "在时空弯曲的终点，把 AI 生产力与商业价值压缩为真实结果",
       description:
-        "适合交流：中小企业内部 AI 知识库与 Agent 工作流定制、餐饮与连锁品牌供应链降本增效全案、Salin UI 私有化商业部署、早期创业项目共创合作。",
+        "这里是汪狗哥（Salin）所有业务与思考的引力中心。不讲虚无概念，只做能落地交付的真实商业闭环。支持企业 AI 工作流深度定制、餐饮数字化全案、Salin UI 商业授权与私有化、早期创业联合共创。",
       highlights: [
-        "支持驻场 FDE 诊断与敏捷开发",
-        "从原型设计到生产级代码全栈交付",
-        "提供长期运维与技术迭代支持",
-        "支持微信直接沟通需求",
+        "企业级 AI Agent 与 MCP 基础设施定制交付",
+        "实体连锁与餐饮供应链降本增效全案落地",
+        "Salin UI 商业化授权、共建与私有部署",
+        "创始人直联深度交流与项目操盘诊断",
       ],
       metrics: [
-        { label: "交付周期", value: "敏捷迭代" },
-        { label: "合作方式", value: "咨询/全案/共创" },
-        { label: "响应速度", value: "24h 内" },
+        { label: "引力场强", value: "∞ 奇点" },
+        { label: "交付质量", value: "生产级" },
+        { label: "响应速度", value: "24h 内直联" },
       ],
-      primaryLink: { label: "提交合作需求", href: "/contact" },
-      accentColor: "border-emerald-400",
+      primaryLink: { label: "立即预约深度沟通", href: "/contact" },
+      accentColor: "border-amber-400",
     },
   },
 ];
@@ -219,9 +219,25 @@ export function CosmicJourney() {
   const [activeStationIndex, setActiveStationIndex] = useState(0);
   const [warpMultiplier, setWarpMultiplier] = useState(0);
 
+  // 3D Parallax & Stereoscopic Glasses states
+  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
+  const [stereo3D, setStereo3D] = useState(false);
+
   // Selected project for modal detail inspection
   const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
   const [showWechatModal, setShowWechatModal] = useState(false);
+
+  // Mouse move listener for 3D stereoscopic tilt
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = (e.clientY / window.innerHeight) * 2 - 1;
+      setMouseOffset({ x, y });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   useEffect(() => {
     let lastScrollTop = 0;
@@ -242,11 +258,11 @@ export function CosmicJourney() {
       const p = Math.max(0, Math.min(1, scrollTop / totalScrollable));
       setScrollProgress(p);
 
-      // Calculate instantaneous scroll speed for warp effect
+      // Instantaneous scroll velocity for hyperspace warp streak
       const now = Date.now();
       const dt = Math.max(16, now - lastTime);
       const dy = Math.abs(scrollTop - lastScrollTop);
-      const velocity = dy / dt; // pixels per ms
+      const velocity = dy / dt; // px per ms
       const warp = Math.min(1, velocity * 0.45);
       setWarpMultiplier(warp);
 
@@ -257,12 +273,20 @@ export function CosmicJourney() {
       const au = p * 15.0;
       setCurrentAU(au);
 
-      // Determine active station
-      const idx = Math.min(
-        CELESTIAL_STATIONS.length - 1,
-        Math.floor(p * CELESTIAL_STATIONS.length)
-      );
-      setActiveStationIndex(idx);
+      // Determine active station based on scroll thresholds
+      if (p < 0.12) {
+        setActiveStationIndex(0); // Earth
+      } else if (p < 0.32) {
+        setActiveStationIndex(1); // Moon
+      } else if (p < 0.52) {
+        setActiveStationIndex(2); // Mars
+      } else if (p < 0.72) {
+        setActiveStationIndex(3); // Jupiter
+      } else if (p < 0.88) {
+        setActiveStationIndex(4); // Saturn
+      } else {
+        setActiveStationIndex(5); // Black Hole
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -274,70 +298,113 @@ export function CosmicJourney() {
   const handleWarpTo = (targetProgress: number) => {
     const container = containerRef.current;
     if (!container) return;
-    const totalScrollable = container.offsetHeight - window.innerHeight;
-    const targetY = targetProgress * totalScrollable;
-    window.scrollTo({ top: targetY, behavior: "smooth" });
+    const containerHeight = container.offsetHeight;
+    const windowHeight = window.innerHeight;
+    const totalScrollable = containerHeight - windowHeight;
+
+    const targetTop = container.offsetTop + targetProgress * totalScrollable;
+    window.scrollTo({
+      top: targetTop,
+      behavior: "smooth",
+    });
   };
 
   const currentStation = CELESTIAL_STATIONS[activeStationIndex] || CELESTIAL_STATIONS[0];
+  const isNearBlackHole = scrollProgress > 0.84;
 
   return (
-    <div className="relative bg-slate-950 text-white min-h-screen select-none font-sans overflow-x-hidden">
-      {/* 3D Deep Space Starfield & Warp Streaks Canvas */}
-      <CosmicCanvas warpSpeed={warpMultiplier} />
+    <div className="relative bg-slate-950 text-white min-h-screen selection:bg-cyan-500 selection:text-slate-950">
+      {/* 3D Cosmic Canvas (Starfield, warp streaks, gravitational lensing, 3D anaglyph) */}
+      <CosmicCanvas
+        warpSpeed={warpMultiplier}
+        mouseOffset={mouseOffset}
+        stereo3D={stereo3D}
+        isNearBlackHole={isNearBlackHole}
+      />
 
-      {/* Flight Telemetry HUD & Waypoint Selector */}
+      {/* Cosmic HUD Telemetry & Interplanetary Waypoint Rail */}
       <CosmicHUD
         currentAU={currentAU}
         activeWaypointIndex={activeStationIndex}
         warpMultiplier={warpMultiplier}
+        stereo3D={stereo3D}
+        onToggleStereo3D={() => setStereo3D((prev) => !prev)}
         onWarpTo={handleWarpTo}
       />
 
-      {/* 600vh Scroll Runway */}
-      <div
-        ref={containerRef}
-        className="relative"
-        style={{ height: "600vh" }}
-      >
-        {/* Sticky 100vh Observation Cockpit Viewport */}
-        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-          {/* Ambient Cosmic Radial Nebulae */}
-          <div className="absolute inset-0 bg-radial from-cyan-950/20 via-transparent to-slate-950 pointer-events-none" />
-
-          {/* Central 3D Celestial Body Display */}
+      {/* Scroll Odyssey Track (6 viewport heights for smooth planet warping) */}
+      <div ref={containerRef} className="relative h-[640vh] w-full">
+        {/* Sticky 3D Space Viewport */}
+        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4 sm:px-8">
+          {/* Subtle Ambient Cosmic Glow tailored to current planet */}
           <div
-            className="relative z-10 flex items-center justify-center transition-all duration-300 ease-out"
-            style={{
-              transform: `scale(${1 - warpMultiplier * 0.15}) translateY(${
-                Math.sin(scrollProgress * 20) * 10
-              }px)`,
-            }}
-          >
-            <PlanetRender type={currentStation.type} size={280} />
-          </div>
+            className={`absolute w-[600px] h-[600px] rounded-full blur-[160px] pointer-events-none transition-all duration-1000 ${
+              currentStation.id === "earth"
+                ? "bg-sky-500/15"
+                : currentStation.id === "moon"
+                ? "bg-slate-400/15"
+                : currentStation.id === "mars"
+                ? "bg-rose-500/15"
+                : currentStation.id === "jupiter"
+                ? "bg-amber-500/15"
+                : currentStation.id === "saturn"
+                ? "bg-yellow-500/15"
+                : "bg-amber-500/25"
+            }`}
+          />
 
-          {/* Tactical Project Glass Card Floating Below/Alongside Planet */}
-          <div className="absolute bottom-20 sm:bottom-24 left-1/2 -translate-x-1/2 z-20 w-[92vw] max-w-xl pointer-events-auto">
-            <div className="p-6 sm:p-8 rounded-3xl bg-slate-950/85 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_20px_60px_rgba(0,0,0,0.85)] relative overflow-hidden transition-all duration-300 hover:border-cyan-400/60">
-              {/* Luminous top border accent */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
+          {/* Central Celestial Stage (Planet + Tactical Data Card) */}
+          <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14">
+            {/* Left: 3D Photorealistic Celestial Body */}
+            <div className="flex-1 flex items-center justify-center py-4">
+              <PlanetRender
+                type={currentStation.type}
+                size={
+                  typeof window !== "undefined" && window.innerWidth < 640
+                    ? 250
+                    : currentStation.id === "saturn"
+                    ? 440
+                    : currentStation.id === "blackhole"
+                    ? 400
+                    : 340
+                }
+                mouseOffset={mouseOffset}
+                stereo3D={stereo3D}
+              />
+            </div>
 
-              {/* Station Kicker & AU Badge */}
+            {/* Right: Holographic Tactical Station Card */}
+            <div
+              className={`flex-1 w-full max-w-xl bg-slate-950/80 backdrop-blur-2xl rounded-3xl p-6 sm:p-9 border border-cyan-500/30 shadow-[0_24px_80px_rgba(0,0,0,0.9)] transition-all duration-500 ${
+                stereo3D ? "stereo-3d-active border-rose-500/40" : ""
+              }`}
+              style={{
+                transform: `perspective(1000px) rotateY(${mouseOffset.x * 6}deg) rotateX(${-mouseOffset.y * 6}deg) translateZ(40px)`,
+                transition: "transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+            >
+              {/* Station Kicker & Telemetry Coordinates */}
               <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="text-[11px] font-mono text-cyan-400 font-bold tracking-wider">
+                <span className="text-[11px] font-mono font-bold tracking-widest text-cyan-400 uppercase">
                   {currentStation.kicker}
                 </span>
-                <span className="text-[11px] font-mono text-slate-400">
-                  {currentStation.au.toFixed(2)} AU
+                <span className="text-[10px] font-mono text-slate-400 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10">
+                  STATION {activeStationIndex + 1} / 6
                 </span>
               </div>
 
-              {/* Title & Subtitle */}
-              <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-2">
+              {/* Station Planet Name */}
+              <div className="text-xs font-mono text-slate-400 mb-1 tracking-wider uppercase">
+                {currentStation.name}
+              </div>
+
+              {/* Title */}
+              <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight mb-3">
                 {currentStation.title}
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-5">
                 {currentStation.subtitle}
               </p>
 
@@ -354,11 +421,15 @@ export function CosmicJourney() {
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setSelectedProject(currentStation.projectDetail)}
-                  className="px-5 py-2.5 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-1.5 cursor-pointer"
+                  className={`px-5 py-2.5 rounded-full font-black text-xs sm:text-sm transition-all shadow-lg flex items-center gap-1.5 cursor-pointer ${
+                    currentStation.id === "blackhole"
+                      ? "bg-gradient-to-r from-amber-400 to-rose-400 hover:from-amber-300 hover:to-rose-300 text-slate-950 shadow-amber-400/30"
+                      : "bg-cyan-400 hover:bg-cyan-300 text-slate-950 shadow-cyan-400/25 hover:-translate-y-0.5 active:translate-y-0"
+                  }`}
                 >
                   <span>{currentStation.ctaLabel}</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -373,19 +444,19 @@ export function CosmicJourney() {
                   </Link>
                 )}
 
-                {currentStation.id === "outpost" && (
+                {currentStation.id === "blackhole" && (
                   <button
                     type="button"
                     onClick={() => setShowWechatModal(true)}
-                    className="px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition-all flex items-center gap-1 cursor-pointer"
+                    className="px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 cursor-pointer shadow-lg shadow-emerald-500/25"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
-                    <span>微信咨询</span>
+                    <span>微信直联</span>
                   </button>
                 )}
 
                 <div className="text-[10px] font-mono text-slate-400 ml-auto hidden sm:block">
-                  滑动探索下一个星球 ↓
+                  {activeStationIndex < 5 ? "滑动前往下一个星球 ↓" : "已抵达终极奇点 ✦"}
                 </div>
               </div>
             </div>
@@ -401,41 +472,44 @@ export function CosmicJourney() {
         </div>
       </div>
 
-      {/* Deep Space Terminal Station / Final Landing Area (0 to 15 AU destination) */}
+      {/* Event Horizon Final Terminal / Black Hole Singularity Landing Base */}
       <section
         id="terminal-base"
-        className="relative z-30 bg-slate-950 border-t border-cyan-500/20 py-20 px-4 sm:px-6 lg:px-8 text-white"
+        className="relative z-30 bg-slate-950 border-t border-amber-500/30 py-24 px-4 sm:px-6 lg:px-8 text-white overflow-hidden"
       >
-        <div className="max-w-4xl mx-auto text-center space-y-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-400 font-mono text-xs font-bold">
-            <Sparkles className="w-4 h-4 animate-spin-slow" />
-            <span>15.0 AU · 星际航线已全部贯通</span>
+        {/* Background Singularity Accretion Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/10 rounded-full blur-[180px] pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto text-center space-y-10 relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-rose-500/20 border border-amber-400/40 text-amber-300 font-mono text-xs font-bold">
+            <Sparkles className="w-4 h-4 animate-spin-slow text-amber-400" />
+            <span>15.0 AU · 终极奇点引力场已完全激活</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            深空前哨指挥部 · 合作与启航
+          <h2 className="text-3xl sm:text-6xl font-black text-white tracking-tight">
+            引力奇点 · 商业与未来共创指挥部
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed">
-            从地球母港的商业启航，到月球 Salin UI 界面军械库、火星 FoodOps 餐饮实战、木星商业知识库、土星实战手记。
-            不聊空洞概念，只交付客户愿意买单的真实生产力。
+          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            从地球母港的商业启航，经历月球 Salin UI 界面军械库、火星 FoodOps 餐饮实操数字化、木星实战知识库、土星商业手记，最终抵达时空终极黑洞奇点。
+            把技术与真实商业闭环深度融合，只交付客户愿意买单的高价值成果。
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <button
               type="button"
               onClick={() => setShowWechatModal(true)}
-              className="px-6 py-3 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-sm transition-all shadow-lg shadow-cyan-400/25 flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm transition-all shadow-lg shadow-emerald-500/30 flex items-center gap-2 cursor-pointer"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>微信沟通合作</span>
+              <span>微信直接沟通需求</span>
             </button>
 
             <Link
               href="/ui/"
-              className="px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm transition-all shadow-lg shadow-emerald-500/25 flex items-center gap-2 cursor-pointer"
+              className="px-6 py-3 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black text-sm transition-all shadow-lg shadow-cyan-400/25 flex items-center gap-2 cursor-pointer"
             >
-              <span>Salin UI 弹药库 ↗</span>
+              <span>检阅 Salin UI 弹药库 ↗</span>
             </Link>
 
             <Link
@@ -443,7 +517,7 @@ export function CosmicJourney() {
               className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
             >
               <Mail className="w-4 h-4" />
-              <span>商务对接通道</span>
+              <span>提交商务合作需求</span>
             </Link>
 
             <button
@@ -452,7 +526,7 @@ export function CosmicJourney() {
               className="px-6 py-3 rounded-full bg-slate-900 hover:bg-slate-800 text-cyan-300 font-mono text-xs sm:text-sm border border-cyan-500/30 transition-all flex items-center gap-2 cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>重返地球母港再次航行 ↺</span>
+              <span>重返地球母港再次启航 ↺</span>
             </button>
           </div>
 
@@ -466,7 +540,7 @@ export function CosmicJourney() {
               <Link href="https://x.com/EyuSalin" target="_blank" className="hover:text-slate-300">
                 X (Twitter)
               </Link>
-              <Link href="/ui/" className="hover:text-emerald-400">
+              <Link href="/ui/" className="hover:text-cyan-400">
                 Salin UI 弹药库
               </Link>
             </div>
@@ -484,20 +558,20 @@ export function CosmicJourney() {
       {showWechatModal && (
         <div
           onClick={() => setShowWechatModal(false)}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="p-6 rounded-3xl bg-slate-900 border border-cyan-500/40 max-w-sm w-full text-center space-y-4 shadow-2xl"
+            className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-amber-500/40 max-w-sm w-full text-center space-y-4 shadow-[0_24px_80px_rgba(245,158,11,0.25)]"
           >
-            <h4 className="text-lg font-bold text-white">添加狗哥微信</h4>
-            <p className="text-xs text-slate-400">
-              请备注来意（如：AI 工具定制 / 商业合作 / Salin UI）
+            <h4 className="text-xl font-black text-white">添加汪狗哥微信</h4>
+            <p className="text-xs text-slate-300">
+              请备注来意（如：AI 工具定制 / 餐饮数字化 / Salin UI 商业合作）
             </p>
-            <div className="relative w-56 h-56 mx-auto rounded-2xl overflow-hidden border border-white/10 bg-white p-2">
+            <div className="relative w-56 h-56 mx-auto rounded-2xl overflow-hidden border border-white/15 bg-white p-2">
               <img
                 src="/images/wechat-qr.jpg"
-                alt="狗哥微信二维码"
+                alt="汪狗哥微信二维码"
                 className="w-full h-full object-contain"
               />
             </div>
