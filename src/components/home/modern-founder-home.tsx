@@ -231,6 +231,51 @@ export function ModernFounderHome() {
   const [selectedToy, setSelectedToy] = useState<typeof DESK_TOYS[0]>(DESK_TOYS[0]);
   const [activeEliScene, setActiveEliScene] = useState<typeof ELI_SCENES[0]>(ELI_SCENES[0]);
   const [activeOdysseyStage, setActiveOdysseyStage] = useState(0);
+  // 电影级开门破晓震撼开幕特效状态
+  const [curtainState, setCurtainState] = useState<"holding" | "opening" | "closed">("holding");
+  const [loadProgress, setLoadProgress] = useState(0);
+
+  // 触发开门开幕
+  const handleOpenCurtain = () => {
+    setCurtainState("opening");
+    setTimeout(() => {
+      setCurtainState("closed");
+    }, 1100);
+  };
+
+  // 重新重播开幕特效
+  const handleReplayCurtain = () => {
+    setCurtainState("holding");
+    setLoadProgress(0);
+    setTimeout(() => {
+      setCurtainState("opening");
+      setTimeout(() => {
+        setCurtainState("closed");
+      }, 1100);
+    }, 600);
+  };
+
+  // 页面加载自动播放开幕
+  useEffect(() => {
+    const progressInterval = setInterval(() => {
+      setLoadProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(progressInterval);
+          return 100;
+        }
+        return prev + Math.floor(Math.random() * 30) + 20;
+      });
+    }, 70);
+
+    const timer = setTimeout(() => {
+      handleOpenCurtain();
+    }, 950);
+
+    return () => {
+      clearInterval(progressInterval);
+      clearTimeout(timer);
+    };
+  }, []);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const totalSlides = 5;
@@ -383,6 +428,13 @@ export function ModernFounderHome() {
             <Scan className="w-3 h-3 mr-1 text-emerald-400" />
             二维码
           </button>
+          <button
+            onClick={handleReplayCurtain}
+            className="hidden sm:inline-flex px-2 py-1 rounded bg-white/[0.04] hover:bg-emerald-500/20 border border-white/10 hover:border-emerald-500/40 text-white/70 hover:text-emerald-300 font-mono text-[11px] transition-colors cursor-pointer"
+            title="重温开门特效"
+          >
+            ↺ 开门特效
+          </button>
           <div className="px-2 py-1 rounded bg-white/[0.06] border border-white/10 text-white font-mono text-[11px] font-bold">
             [{String(activeSlide + 1).padStart(2, "0")} / 05]
           </div>
@@ -468,13 +520,13 @@ export function ModernFounderHome() {
           <div className="absolute bottom-16 left-6 sm:left-12 font-mono text-xs text-white/30 select-none z-20">+</div>
           <div className="absolute bottom-16 right-6 sm:right-12 font-mono text-xs text-white/30 select-none z-20">+</div>
 
-          {/* 巨幅建筑字体水印 SALIN 铺开至全屏跨度 (左对齐，气势恢宏) */}
-          <div className="absolute inset-x-0 top-[12%] z-10 flex items-center justify-start overflow-hidden pointer-events-none select-none pl-6 sm:pl-14 lg:pl-20">
+          {/* 巨幅建筑字体水印 SALIN (上浮天际线布局 · 不割裂屏幕与笔记本 · 气势宏大) */}
+          <div className="absolute inset-x-0 top-[4%] sm:top-[6%] z-10 flex items-center justify-start overflow-hidden pointer-events-none select-none pl-6 sm:pl-14 lg:pl-20">
             <span
-              className="text-[26vw] sm:text-[24vw] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white/[0.18] via-white/[0.08] to-transparent whitespace-nowrap font-mono select-none"
+              className="text-[19vw] sm:text-[18vw] font-black text-transparent bg-clip-text bg-gradient-to-r from-white/[0.22] via-white/[0.08] to-transparent whitespace-nowrap font-mono select-none uppercase drop-shadow-sm"
               style={{
-                WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.16)",
-                letterSpacing: "-0.04em",
+                WebkitTextStroke: "1.2px rgba(255, 255, 255, 0.2)",
+                letterSpacing: "0.04em",
               }}
             >
               SALIN
@@ -1316,6 +1368,78 @@ export function ModernFounderHome() {
           </div>
         </div>
       )}
-    </div>
+    
+      {/* ============================================================ */}
+      {/* 电影级双门开门破晓震撼开幕特效 (Curtain Opening / Aperture Shutter) */}
+      {/* ============================================================ */}
+      {curtainState !== "closed" && (
+        <div
+          className={`fixed inset-0 z-[100] flex items-center justify-center select-none overflow-hidden ${
+            curtainState === "opening" ? "pointer-events-none" : "pointer-events-auto"
+          }`}
+        >
+          {/* 左侧大门 (平滑向左滑出全屏) */}
+          <div
+            className={`absolute top-0 bottom-0 left-0 w-1/2 bg-[#050806] border-r border-white/10 z-20 transition-transform duration-1000 ease-[cubic-bezier(0.77,0,0.175,1)] flex flex-col justify-between p-6 sm:p-12 ${
+              curtainState === "opening" ? "-translate-x-full" : "translate-x-0"
+            }`}
+          >
+            <div className="font-mono text-xs text-white/40 tracking-widest">[ SHUTTER_L // SALIN.WANG ]</div>
+            <div className="font-mono text-[11px] text-emerald-400/70">35.1041° N, 118.3561° E · LINYI</div>
+          </div>
+
+          {/* 右侧大门 (平滑向右滑出全屏) */}
+          <div
+            className={`absolute top-0 bottom-0 right-0 w-1/2 bg-[#050806] border-l border-white/10 z-20 transition-transform duration-1000 ease-[cubic-bezier(0.77,0,0.175,1)] flex flex-col justify-between p-6 sm:p-12 items-end ${
+              curtainState === "opening" ? "translate-x-full" : "translate-x-0"
+            }`}
+          >
+            <div className="font-mono text-xs text-white/40 tracking-widest">[ SHUTTER_R // 2014—2026 ]</div>
+            <div className="font-mono text-[11px] text-white/40">12-YEAR FOUNDER ODYSSEY</div>
+          </div>
+
+          {/* 中轴贯穿高能破晓光线束与爆发光晕 (眼前一亮核心！) */}
+          <div
+            className={`absolute inset-0 z-30 pointer-events-none flex items-center justify-center transition-opacity duration-700 ${
+              curtainState === "opening" ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <div className="w-[3px] h-full bg-gradient-to-b from-transparent via-emerald-300 to-transparent shadow-[0_0_50px_#10b981] animate-ping" />
+            <div className="absolute inset-0 bg-radial from-emerald-500/25 via-transparent to-transparent animate-out fade-out duration-700" />
+          </div>
+
+          {/* 开门前中央系统准心徽章 */}
+          <div
+            className={`relative z-40 flex flex-col items-center justify-center space-y-4 transition-all duration-500 ${
+              curtainState === "opening" ? "scale-125 opacity-0" : "scale-100 opacity-100"
+            }`}
+          >
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl border border-emerald-500/50 bg-[#070b08]/90 p-3 shadow-[0_0_50px_rgba(16,185,129,0.35)] flex flex-col items-center justify-center backdrop-blur-2xl">
+              <span className="w-3.5 h-3.5 rounded-full bg-emerald-400 shadow-[0_0_15px_#10b981] animate-ping absolute" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 mb-2" />
+              <span className="font-mono text-xs font-black tracking-widest text-white">SALIN</span>
+              <span className="font-mono text-[9px] text-emerald-400">12Y FOUNDER</span>
+            </div>
+
+            <div className="text-center space-y-1 font-mono">
+              <div className="text-xs text-white font-bold tracking-widest">
+                INITIALIZING FOUNDER CANVAS
+              </div>
+              <div className="text-[11px] text-emerald-400">
+                [{Math.min(loadProgress, 100)}% · 准备就绪]
+              </div>
+            </div>
+
+            <button
+              onClick={handleOpenCurtain}
+              className="px-3.5 py-1 rounded-full border border-white/20 bg-white/[0.05] hover:bg-white/15 text-white/70 hover:text-white font-mono text-[10px] tracking-wider transition-colors cursor-pointer"
+            >
+              CLICK TO ENTER ↗
+            </button>
+          </div>
+        </div>
+      )}
+
+</div>
   );
 }
