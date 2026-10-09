@@ -28,24 +28,34 @@ import {
   Flame,
   Store,
   Share2,
+  Layers,
+  Award,
 } from "lucide-react";
 import { siteConfig } from "@/data/site";
 
 // 真实手记长文精选
 const FEATURED_NOTES = [
   {
+    slug: "ten-years-from-local-food-to-ai",
+    title: "从 2014《舌尖上的临沂》到 2026 饿狸：十二年餐饮摸爬滚打的生存哲学",
+    category: "创业随笔",
+    date: "2026-03",
+    readTime: "12 分钟",
+    summary: "2014年愚人节起步，服务过2000+餐饮，亲自开店4年。从服务者到从业者再回到服务者，聊聊这十二年用真金白银换来的真认知。",
+  },
+  {
     slug: "ai-products-not-from-features",
-    title: "AI 产品不是功能堆出来的：聊聊企业客户为什么真正愿意买单",
+    title: "AI 产品不是功能堆出来的：聊聊实体商家为什么真正愿意买单",
     category: "商业复盘",
     date: "2026-03",
     readTime: "8 分钟",
-    summary: "技术自嗨往往解决不了真实问题。从实体商家的真实账本出发，剖析什么样的 AI 解决方案能让客户爽快买单。",
+    summary: "技术自嗨解决不了餐饮痛点。从实体店老板每天的房租、员工、食材损耗与客流焦虑出发，剖析商家真正需要什么样的 AI 工具。",
   },
   {
     slug: "ai-real-business",
     title: "为什么很多 AI 项目赚不到钱：技术狂欢与商业现金流的鸿沟",
     category: "实战心得",
-    date: "2026-03",
+    date: "2026-02",
     readTime: "10 分钟",
     summary: "脱离业务场景的 AI 无论多炫目都会死于续费率。拆解从 Demo 到商业现金流必须跨越的三个死穴。",
   },
@@ -57,14 +67,6 @@ const FEATURED_NOTES = [
     readTime: "6 分钟",
     summary: "为什么 AntD / MUI 在 AI 编程时代变得笨重？单文件 TSX 零幽灵依赖为什么是 Cursor 时代的终极答案。",
   },
-  {
-    slug: "ten-years-from-local-food-to-ai",
-    title: "从 2017《舌尖上的临沂》到 2026 饿狸：十年摸爬滚打的生存哲学",
-    category: "创业随笔",
-    date: "2026-02",
-    readTime: "12 分钟",
-    summary: "从街头巷尾端着相机做美食博主，到打造实体商家 AI 获客工具‘饿狸’。这十年我学到的唯一道理：永远保持对真实世界的敬畏。",
-  },
 ];
 
 // 精选桌面手办与灵感物件 (somehowliving 风格)
@@ -72,18 +74,18 @@ const DESK_TOYS = [
   {
     id: "eli-mascot",
     name: "饿狸 · 3D 吉祥物",
-    sub: "ELI MASCOT · 找客流问饿狸",
+    sub: "ELI MASCOT · 餐饮营销问饿狸",
     tag: "主项目担当",
-    desc: "打着绿色三角领巾的小浣熊。‘餐饮营销没思路，问问饿狸’。代表着高效、靠谱与解决真实问题的亲和力。",
+    desc: "打着绿色三角领巾的小浣熊。‘餐饮营销没思路，问问饿狸’。代表着高效、靠谱与解决商家真实获客难题的亲和力。",
     image: "/images/brand/eli-mascot.jpg",
     badge: "实体 AI 伙伴",
   },
   {
     id: "eyu-origin",
-    name: "饿鱼 · 2017 经典图腾",
-    sub: "EYU 2017 · 舌尖上的临沂",
-    tag: "十年初心起点",
-    desc: "大口嚼着包子的萌趣绿鳄鱼。2017 年手举旗帜上的它，曾是 10万+ 临沂人的美食向导，如今传承为 zl.eyu.ink。",
+    name: "饿鱼 · 2014-2021 经典图腾",
+    sub: "EYU 2014 · 舌尖上的临沂",
+    tag: "2000+ 餐饮服务图腾",
+    desc: "大口嚼着包子的萌趣绿鳄鱼。服务过超 2000 家餐饮门店，见证了临沂餐饮的风风雨雨，如今传承为 zl.eyu.ink。",
     image: "/images/brand/eyu-logo.png",
     badge: "经典图腾",
   },
@@ -92,7 +94,7 @@ const DESK_TOYS = [
     name: "海贼王 · 蒙奇·D·路飞",
     sub: "ONE PIECE · LUFFY",
     tag: "桌面精神图腾",
-    desc: "认准了要当海贼王，就绝不回头。写代码和创业一样，要永远保持出海冒险的热血与好奇心。",
+    desc: "认准了要当海贼王，就绝不回头。写代码和创业一样，十二年来经历起伏，永远保持出海冒险的热血与少年气。",
     image: "/images/toys/luffy-figure.jpg",
     badge: "冒险与出海",
   },
@@ -101,7 +103,7 @@ const DESK_TOYS = [
     name: "守望先锋 · 源氏",
     sub: "OVERWATCH · GENJI",
     tag: "机械身，人类心",
-    desc: "身虽为机械，心犹是人魂。AI 是最锋利的数字忍刀，但解决真实问题的核心永远是对人性和商业的洞察。",
+    desc: "身虽为机械，心犹是人魂。AI 是最锋利的数字忍刀，但解决真实问题的核心永远是对人性和商业本质的洞察。",
     image: "/images/toys/overwatch-figure.jpg",
     badge: "人机协同",
   },
@@ -116,7 +118,7 @@ const SELECTED_PROJECTS = [
     enTitle: "AI MARKETING & OPERATIONS AGENT FOR LOCAL BUSINESSES",
     category: "AI Local Commerce & Content Agent",
     year: "2026",
-    tag: "当前核心主项目 · 生产级落地",
+    tag: "当前核心主项目 · 带着完全认知回归",
     image: "/images/brand/eli-brand-full.png",
     summary:
       "餐饮营销没思路，问问饿狸！专为实体商家研发的 AI 智能工作台。深度解决商家的内容生产困境（一键出小红书/抖音/大众点评爆款文案与营销日历）、多维经营数据分析与节日引流活动策划难题。",
@@ -124,7 +126,7 @@ const SELECTED_PROJECTS = [
       { label: "产品定位", val: "实体商家 AI 获客工具" },
       { label: "核心口号", val: "找客流 · 做活动 · 写文案" },
       { label: "解决痛点", val: "内容生产困境 / 数据分析" },
-      { label: "落地场景", val: "餐饮门店 / 本地生活商家" },
+      { label: "创始底气", val: "2000+ 餐饮服务 × 4年亲自开店" },
     ],
     primaryLink: "/projects/eli",
     primaryLabel: "查看饿狸详情复盘 ↗",
@@ -178,11 +180,11 @@ const SELECTED_PROJECTS = [
     title: "狗哥资源库 (zl.eyu.ink) · 延续“饿鱼”十年的实操手册",
     enTitle: "ENTREPRENEURIAL FIELD KNOWLEDGE REPOSITORY",
     category: "Knowledge Base & Local Commerce",
-    year: "2017—2026",
+    year: "2014—2026",
     tag: "传承饿鱼 IP · 持续更新",
     image: "/images/projects/ziliaoku-cover.jpg",
     summary:
-      "承接 2017 年“饿鱼 / 舌尖上的临沂”创业基因，沉淀十余年一线实战经验的独立知识库。收录实体获客、本地流量逻辑、AI 工具落地操作手册与踩坑血泪经验。",
+      "承接 2014 年“饿鱼 / 舌尖上的临沂”创业基因，沉淀十二年一线实战经验的独立知识库。收录实体获客、本地流量逻辑、AI 工具落地操作手册与踩坑血泪经验。",
     specs: [
       { label: "知识收录", val: "数百篇精选实操" },
       { label: "源起品牌", val: "舌尖上的临沂 · 饿鱼" },
@@ -272,7 +274,7 @@ export function ModernFounderHome() {
               ONLINE
             </span>
             <span className="tracking-wide">
-              SHANDONG · LINYI <span className="text-[#141815] dark:text-white font-semibold">{timeStr || "20:48:00"}</span> CST
+              SHANDONG · LINYI <span className="text-[#141815] dark:text-white font-semibold">{timeStr || "20:55:00"}</span> CST
             </span>
             <span className="hidden md:inline text-neutral-300 dark:text-neutral-700">|</span>
             <span className="hidden md:inline text-[11px]">35.1041° N, 118.3564° E</span>
@@ -281,7 +283,7 @@ export function ModernFounderHome() {
           {/* 右侧：历程标线与颗粒切换 */}
           <div className="flex items-center gap-3 sm:gap-4">
             <span className="hidden sm:inline-flex items-center gap-1 text-[11px] opacity-85 text-emerald-800 dark:text-emerald-300 font-medium">
-              [ 2017 饿鱼 / 舌尖临沂 → 2026 饿狸 ELI × SALIN UI ]
+              [ 2014.04.01 创业起步 → 2026 饿狸 ELI × SALIN UI ]
             </span>
             <button
               onClick={() => setFilmGrain(!filmGrain)}
@@ -318,7 +320,7 @@ export function ModernFounderHome() {
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/5 text-emerald-800 dark:text-emerald-300 text-xs font-mono tracking-wider">
                 <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                ELI FOUNDER · SALIN UI CRAFTSMAN · 10-YEAR LOCAL COMMERCE
+                2014.04.01 FOUNDER · 12 YEARS IN F&B TO AI ARCHITECTURE
               </div>
               <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#0F1410] dark:text-[#F3F5F2] font-serif leading-[1.05]">
                 WANG SALIN<br />
@@ -326,11 +328,16 @@ export function ModernFounderHome() {
                   汪狗哥
                 </span>
               </h1>
-              <p className="text-lg sm:text-xl text-[#4A534D] dark:text-[#A1ABA4] max-w-2xl font-normal leading-relaxed">
-                2017 年创办《舌尖上的临沂》（吉祥物饿鱼）；现主导研发<strong className="text-[#141815] dark:text-white font-semibold">「饿狸」</strong>（实体商家 AI 获客工具）与<strong className="text-[#141815] dark:text-white font-semibold">「Salin UI」</strong>（面向 AI 编程的开发者界面弹药库）。
-                <br className="hidden sm:inline" />
-                下过厨房跑过商家，写过代码搞过 Agent。解决商家的真难题，只做能交付的作品。
-              </p>
+              <div className="space-y-2 text-[#4A534D] dark:text-[#A1ABA4] max-w-2xl text-base sm:text-lg leading-relaxed">
+                <p className="font-medium text-[#141815] dark:text-[#E8ECE6]">
+                  “从餐饮服务者，到餐饮从业者，再回到餐饮服务者。”
+                </p>
+                <p className="text-sm sm:text-base">
+                  2014 年 4 月 1 日，创业就像一个天大的愚人节玩笑。
+                  7 年自媒体服务过 2000+ 餐饮商家，4 年亲自下场开店摸爬滚打。
+                  2026 年再次回归服务者，这一次带着对餐饮完全的实战认知——让 AI 工具「饿狸」真正解决商家的痛点。
+                </p>
+              </div>
             </div>
 
             {/* 右侧：纵向极简导航目录 (CHI, QUÁCH 侧边目录) */}
@@ -359,7 +366,7 @@ export function ModernFounderHome() {
               >
                 <span className="tracking-wider">03 // STORY</span>
                 <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
-                  从饿鱼到饿狸 ↗
+                  12 年餐饮三次蜕变 ↗
                 </span>
               </div>
               <div
@@ -421,13 +428,49 @@ export function ModernFounderHome() {
                     [ 2025 · 依然热血，步履不停 ]
                   </div>
                   <p className="text-sm text-neutral-200 max-w-xl">
-                    十年过去，眼神里的笃定和对未知世界的探索欲丝毫未减。从市井烟火到代码键盘，一直在做真正交付的实事。
+                    经历过自媒体的黄金时代，也扛过实体开店的风雨。眼神里的笃定和探索欲丝毫未减——12 年创业长跑，我们才刚刚开始。
                   </p>
+                </div>
+              </div>
+
+              {/* 底部 4 维核心实战标尺 */}
+              <div className="border-t border-[#E5E8E2] dark:border-[#202822] bg-[#FAFBF9] dark:bg-[#131915] px-6 py-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left font-mono">
+                <div>
+                  <div className="text-lg sm:text-xl font-bold text-[#141815] dark:text-[#EFF2EE]">
+                    12 年
+                  </div>
+                  <div className="text-xs text-[#6C766F] dark:text-[#8E9790]">
+                    2014.04.01 至今创业历程
+                  </div>
+                </div>
+                <div>
+                  <div className="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400">
+                    2000+
+                  </div>
+                  <div className="text-xs text-[#6C766F] dark:text-[#8E9790]">
+                    深度服务过的餐饮门店
+                  </div>
+                </div>
+                <div>
+                  <div className="text-lg sm:text-xl font-bold text-[#141815] dark:text-[#EFF2EE]">
+                    4 年
+                  </div>
+                  <div className="text-xs text-[#6C766F] dark:text-[#8E9790]">
+                    亲自开店从业实战经验
+                  </div>
+                </div>
+                <div>
+                  <div className="text-lg sm:text-xl font-bold text-[#141815] dark:text-[#EFF2EE]">
+                    饿狸 ELI
+                  </div>
+                  <div className="text-xs text-[#6C766F] dark:text-[#8E9790]">
+                    2026 AI 解决餐饮痛点
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* 右侧 4 列：2017 经典“舌尖上的临沂”火锅扯面与官方饿鱼图腾 */}
+            {/* 右侧 4 列：2017 经典火锅扯面生活照与官方饿鱼 Logo */}
             <div className="lg:col-span-4 flex flex-col gap-6 justify-between">
               {/* 2017 火锅扯面生活照 (极具感染力与真实感) */}
               <div className="rounded-2xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-4 shadow-lg group relative overflow-hidden flex-1 flex flex-col justify-between">
@@ -448,12 +491,12 @@ export function ModernFounderHome() {
                     从一碗热气腾腾的面开始
                   </h3>
                   <p className="text-xs text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                    走遍大街小巷，用文字和镜头记录临沂的味道。做过 10万+ 人的美食向导，深知实体商家的不容易与内容获客的痛。
+                    走遍大街小巷，用镜头记录临沂的味道。服务过 2000+ 家餐厅，深知实体商家的不容易与对客流的渴望。
                   </p>
                 </div>
               </div>
 
-              {/* 2017 饿鱼官方 Logo */}
+              {/* 2014-2021 饿鱼官方 Logo */}
               <div className="rounded-2xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-4 shadow-lg flex items-center gap-4">
                 <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-amber-400/20 shrink-0 border border-amber-500/30 p-1">
                   <Image
@@ -465,10 +508,10 @@ export function ModernFounderHome() {
                 </div>
                 <div className="space-y-1">
                   <div className="font-mono text-xs font-bold text-amber-700 dark:text-amber-400">
-                    ORIGIN // 饿鱼 (EYU)
+                    ORIGIN // 饿鱼 (2014—2021)
                   </div>
                   <div className="text-xs text-[#525B54] dark:text-[#9AA39C]">
-                    2017《舌尖上的临沂》经典吉祥物。如今初心传承，进化为实体 AI 获客工具 <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">「饿狸 ELI」</span>。
+                    服务 2000+ 餐饮的经典吉祥物。如今带着完全认知，进化为 AI 获客工具 <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">「饿狸 ELI」</span>。
                   </div>
                 </div>
               </div>
@@ -611,95 +654,95 @@ export function ModernFounderHome() {
       </section>
 
       {/* ========================================================
-          SECTION 02: THE JOURNEY · 从饿鱼到饿狸的心路历程 (致敬 somehowliving.tech)
+          SECTION 02: THE 12-YEAR JOURNEY · 餐饮十二年三次蜕变 (致敬 somehowliving.tech)
           ======================================================== */}
       <section id="journey" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621] bg-[#F7F9F6] dark:bg-[#0E1310]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
               <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wider mb-2">
-                // 02 · THE JOURNEY · 从饿鱼到饿狸
+                // 02 · THE 12-YEAR ODYSSEY · 十二年餐饮三次蜕变
               </div>
               <h2 className="text-3xl sm:text-5xl font-bold tracking-tight font-serif">
-                十年摸爬滚打，一直在解决真问题
+                从服务者到从业者，再回到服务者
               </h2>
             </div>
             <p className="text-sm text-[#5A645D] dark:text-[#9AA39C] max-w-md font-sans">
-              从手持微单穿梭后厨的美食向导，到自研实体商家 AI 获客工具「饿狸」，再到写出支持 MCP 原生协议的 Salin UI。
+              只有真金白银肉身下场亏过钱、算过账，才能真正做出击中餐饮商家命脉的 AI 工具。
             </p>
           </div>
 
-          {/* 时间轴里程碑 (somehowliving 风格) */}
+          {/* 时间轴里程碑 (根据用户自述定制 4 阶段) */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 font-mono">
-            {/* Milestone 1 */}
+            {/* Stage 1 */}
             <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
               <div>
                 <div className="text-xs text-amber-700 dark:text-amber-400 font-bold mb-2">
-                  2017 // ORIGIN
+                  2014.04.01 // 愚人节的起点
                 </div>
                 <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  舌尖上的临沂 · 饿鱼诞生
+                  开一个天大的玩笑
                 </h3>
                 <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  跑遍临沂 500+ 家餐厅，拍视频做内容。做到 10万+ 粉丝的美食向导，深知实体商家的获客不易与对流量的渴望。
+                  2014 年 4 月 1 日正式迈出创业第一步。像一个愚人节的玩笑，却开启了整整十二年的餐饮长跑。
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                关键词: 饿鱼图腾 · 市井烟火
+                身份: 初心初创 · 少年意气
               </div>
             </div>
 
-            {/* Milestone 2 */}
+            {/* Stage 2 */}
             <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
               <div>
                 <div className="text-xs text-blue-700 dark:text-blue-400 font-bold mb-2">
-                  2019-2023 // EXPERIENCE
+                  2014—2021 // 餐饮服务者 (7年)
                 </div>
                 <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  深潜本地生活与实体商业
+                  舌尖上的临沂 · 服务2000+餐饮
                 </h3>
                 <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  真金白银做实体经营、本地获客。摸透了商家最痛苦的根本不是理论，而是每天到底发什么朋友圈、怎么写小红书、活动怎么做。
+                  深耕自媒体公众号《舌尖上的临沂》（吉祥物饿鱼）。累计服务超 2000 家餐饮品牌，第一次从外部摸透了流量与营销。
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                关键词: 商家困境 · 实战痛点
+                身份: 餐饮服务者 · 外部视角
               </div>
             </div>
 
-            {/* Milestone 3 */}
+            {/* Stage 3 */}
             <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
               <div>
-                <div className="text-xs text-emerald-700 dark:text-emerald-400 font-bold mb-2">
-                  2024-2025 // CRAFTSMAN
+                <div className="text-xs text-rose-700 dark:text-rose-400 font-bold mb-2">
+                  2021—2025 // 餐饮从业者 (4年)
                 </div>
                 <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  手搓 Salin UI 开发者弹药库
+                  肉身下场开店 · 换骨蜕变
                 </h3>
                 <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  在 AI 辅助编程时代，手搓 252+ 纯净 TSX 组件库，打通 MCP 原生协议。用极客的方式把前端开发效率推向极致。
+                  不再只是指点江山，真金白银自己开店！抗房租、盯后厨、管员工、算每克原料损耗。真正体会到开店的辛酸与困境。
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                关键词: Salin UI · MCP 协议
+                身份: 餐饮从业者 · 敬畏现实
               </div>
             </div>
 
-            {/* Milestone 4 */}
+            {/* Stage 4 */}
             <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
               <div>
                 <div className="text-xs text-emerald-700 dark:text-emerald-400 font-bold mb-2">
-                  2026 // NOW SHIPPING
+                  2026 // 重回服务者 · 饿狸诞生
                 </div>
                 <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  饿狸 (ELI) 主项目落地
+                  完全认知 · 让 AI 解决痛点
                 </h3>
                 <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  将十年的本地经验与 AI 技术结合，研发‘饿狸’AI 获客工具。帮助实体商家解决内容生产困境、数据分析与活动策划难题。
+                  带着从业 4 年的深刻认知，再次回到服务者行列。自研「饿狸」AI 获客工具，让 AI 真正解决商家内容困境与营销难题。
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                关键词: 饿狸 ELI · 找客流做活动
+                身份: 完全认知服务者 · AI 赋能
               </div>
             </div>
           </div>
@@ -707,16 +750,16 @@ export function ModernFounderHome() {
           {/* 建造者闭环 (The Loop，致敬 somehowliving.tech) */}
           <div className="mt-12 p-8 rounded-2xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] text-center font-mono">
             <div className="text-xs text-[#7A837C] dark:text-[#8D968F] mb-4">
-              // THE BUILDER'S LOOP · 狗哥做事的方法论
+              // THE 12-YEAR CONSCIOUSNESS LOOP · 狗哥的核心壁垒
             </div>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-sm font-bold text-[#141815] dark:text-[#E8ECE6]">
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">肉身踩坑</span>
+              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">2000+ 餐饮服务经验</span>
               <span className="text-emerald-500">→</span>
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">商家痛点</span>
+              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">4 年真实肉身开店</span>
               <span className="text-emerald-500">→</span>
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">AI 工具化</span>
+              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">形成完全商业认知</span>
               <span className="text-emerald-500">→</span>
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">拿到真实客流</span>
+              <span className="px-3 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">造出‘饿狸’AI工具</span>
               <span className="text-emerald-500">→</span>
               <span className="font-serif italic text-emerald-600 dark:text-emerald-400 text-lg">repeat.</span>
             </div>
@@ -847,7 +890,7 @@ export function ModernFounderHome() {
       {/* ========================================================
           SECTION 05: LET'S TALK & ELSEWHERE · 即时联络 (致敬 somehowliving.tech & arbatov)
           ======================================================== */}
-      <section id="contact" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621]">
+      <section id="contact" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621] bg-[#F7F9F6] dark:bg-[#0E1310]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl sm:rounded-3xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-8 sm:p-12 shadow-xl relative overflow-hidden">
             {/* 取景器角标 */}
