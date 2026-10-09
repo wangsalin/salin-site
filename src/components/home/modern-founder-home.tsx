@@ -1461,201 +1461,316 @@ export function ModernFounderHome() {
         </section>
 
         {/* ============================================================ */}
-        {/* SLIDE 05: 真实生活、手办与触达优化 (三栏画卷 左实拍人物，中手办展柜，右触达控制台) */}
+        {/* SLIDE 05: 真实生活与触达连接 (收官之卷 · 创始人图腾与直达中枢) */}
         {/* ============================================================ */}
         <section
           id="slide-4"
-          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-6 bg-gradient-to-b from-[#050806] via-[#09100c] to-[#040605]"
+          className="w-full h-screen min-h-[700px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-10 lg:px-16 2xl:px-24 pt-14 pb-6 bg-[#040605]"
         >
-          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">[05]</div>
-          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">
-            STUDIO & CONNECT // 真实与触达
+          {/* 双色动态全景背光：左侧暖翠生活光晕 + 右侧青冷科技连接光晕 */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-1/4 -left-1/4 w-[75vw] h-[75vw] max-w-[750px] max-h-[750px] rounded-full bg-emerald-500/10 blur-[140px]" />
+            <div className="absolute -bottom-1/4 -right-1/4 w-[75vw] h-[75vw] max-w-[750px] max-h-[750px] rounded-full bg-teal-500/10 blur-[140px]" />
+            {/* 微点阵背景纹理 */}
+            <div
+              className="absolute inset-0 opacity-[0.035]"
+              style={{
+                backgroundImage: "radial-gradient(#10b981 1px, transparent 1px)",
+                backgroundSize: "28px 28px",
+              }}
+            />
           </div>
 
-          <div className="w-full px-6 sm:px-14 lg:px-20 2xl:px-28 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* 栏 1 (左 28%)：2025 山路人物实拍大图 */}
-            <div className="lg:col-span-3 hidden lg:flex flex-col items-center">
-              <div className="relative w-full aspect-[3/4] max-h-[56vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
-                <Image
-                  src="/images/portrait/salin-2025.jpg"
-                  alt="2025年 Salin 在山路上的实拍照片"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 30vw"
-                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3 font-mono text-[10px] text-white/70 flex items-center justify-between">
-                  <span className="px-1.5 py-0.5 rounded bg-black/70 border border-white/10">
-                    2025 · MOUNTAIN ROAD
-                  </span>
-                  <span className="text-emerald-400">KEEP REAL</span>
-                </div>
-              </div>
-            </div>
+          {/* 巨幅建筑字体水印 CONNECT // SALIN (天际线延展 · 宏大品牌气势) */}
+          <div className="absolute inset-x-0 top-[2%] sm:top-[3.5%] z-0 flex items-center justify-start overflow-hidden pointer-events-none select-none pl-6 sm:pl-14 lg:pl-20">
+            <span
+              className="text-[18vw] sm:text-[17vw] font-black text-transparent bg-clip-text bg-gradient-to-r from-white/[0.12] via-white/[0.04] to-transparent whitespace-nowrap font-mono select-none uppercase tracking-wider font-monument"
+              style={{
+                WebkitTextStroke: "1px rgba(255, 255, 255, 0.14)",
+                letterSpacing: "0.03em",
+              }}
+            >
+              CONNECT // SALIN
+            </span>
+          </div>
 
-            {/* 栏 2 (中 44%)：桌面手办与灵感物件展柜 */}
-            <div className="lg:col-span-5 flex flex-col justify-center space-y-3">
-              <div>
-                <div className="inline-flex items-center gap-1.5 font-mono text-xs text-emerald-400 tracking-wider mb-1">
+          {/* HUD 取景器标记 */}
+          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/30 select-none z-10">
+            [05] // LIFE & DIRECT ACCESS
+          </div>
+          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/30 select-none z-10 hidden sm:block">
+            FOUNDER SANCTUARY × CONNECT · LINYI // 2026
+          </div>
+          <div className="absolute bottom-16 left-6 sm:left-12 font-mono text-xs text-white/20 select-none z-10">+</div>
+          <div className="absolute bottom-16 right-6 sm:right-12 font-mono text-xs text-white/20 select-none z-10">+</div>
+
+          {/* 全屏铺开内容容器 */}
+          <div className="w-full relative z-10 space-y-4">
+            {/* 顶层非对称左对齐排版 (铺开！不居中！) */}
+            <div className="space-y-1.5 text-left max-w-4xl">
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs backdrop-blur-sm">
                   <Coffee className="w-3.5 h-3.5" />
-                  DESK TOYS & SPIRIT INSPIRATION
+                  STUDIO SANCTUARY // 真实生活 · 精神图腾 · 随时触达
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                  桌面上的公仔，写代码时的少年气。
-                </h3>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/10 bg-black/60 text-white/70 font-mono text-[11px] backdrop-blur-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  微信号 {siteConfig.wechat} 在线
+                </div>
               </div>
 
-              {/* 4 个手办网格 */}
-              <div className="grid grid-cols-4 gap-2">
-                {DESK_TOYS.map((toy) => (
-                  <button
-                    key={toy.id}
-                    onClick={() => setSelectedToy(toy)}
-                    className={`p-1.5 rounded-xl border text-left transition-all cursor-pointer ${
-                      selectedToy.id === toy.id
-                        ? "border-emerald-400 bg-emerald-500/10 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-                        : "border-white/10 bg-white/[0.02] hover:border-white/30"
-                    }`}
-                  >
-                    <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-black/60 mb-1">
-                      <Image
-                        src={toy.image}
-                        alt={toy.name}
-                        fill
-                        className="object-contain p-1"
-                      />
-                    </div>
-                    <div className="font-mono text-[11px] font-bold text-white truncate text-center">
-                      {toy.name}
-                    </div>
-                  </button>
-                ))}
-              </div>
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+                不装逼，
+                <span className="text-emerald-400 font-serif italic">做点有趣且真实的事。</span>
+              </h2>
 
-              {/* 当前选中手办独白 */}
-              <div className="p-3 rounded-xl bg-white/[0.04] border border-emerald-500/30 font-sans space-y-1">
-                <div className="flex items-center justify-between font-mono text-xs">
-                  <span className="font-bold text-emerald-400">{selectedToy.series}</span>
-                  <span className="text-white/40 text-[10px]">{selectedToy.tag}</span>
-                </div>
-                <div className="text-xs font-bold text-white italic">
-                  “{selectedToy.motto}”
-                </div>
-                <p className="text-[11px] text-white/75 leading-relaxed">
-                  {selectedToy.desc}
-                </p>
-              </div>
-
-              {/* 破冰交流建议 */}
-              <div className="space-y-1.5 font-mono text-[11px]">
-                <div className="text-white/40 flex items-center gap-1">
-                  <MessageCircle className="w-3 h-3 text-emerald-400" />
-                  <span>点击快捷复制沟通意向（可直接在微信中粘贴）：</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  {CONVERSATION_STARTERS.map((topic, i) => (
-                    <button
-                      key={i}
-                      onClick={() => handleCopyTopic(topic)}
-                      className="px-2.5 py-1 rounded bg-white/[0.03] hover:bg-emerald-500/10 border border-white/10 hover:border-emerald-500/40 text-left text-white/80 hover:text-white transition-all cursor-pointer flex items-center justify-between group"
-                    >
-                      <span className="truncate">{topic}</span>
-                      <span className="text-[10px] text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity ml-2 shrink-0">
-                        {copiedTopic === topic ? "已复制!" : "复制"}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-sans">
+                在 12 年实体店的烟火气与深夜的代码终端之间自由穿行。无论是实体获客、代码合作、亦或聊聊创业经历，随时与 Salin 打个招呼。
+              </p>
             </div>
 
-            {/* 栏 3 (右 28%~32%)：直达连接控制台 */}
-            <div className="lg:col-span-4 flex flex-col justify-center space-y-3.5 p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 shadow-xl">
-              <div>
-                <div className="font-mono text-xs text-emerald-400 font-bold mb-1">
-                  DIRECT ACCESS // 快速联系
-                </div>
-                <h4 className="text-lg font-bold text-white">随时与 Salin 打个招呼</h4>
-                <p className="text-xs text-white/60 pt-0.5">
-                  实体获客、代码合作、亦或交流创业经历，皆可直接沟通。
-                </p>
-              </div>
-
-              {/* 微信控制卡片 */}
-              <div className="p-3 rounded-xl bg-black/60 border border-emerald-500/40 space-y-2">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setShowQrModal(true)}
-                    className="relative w-14 h-14 rounded-lg overflow-hidden border border-emerald-500/50 bg-white p-0.5 shrink-0 cursor-pointer group"
-                    title="点击放大二维码"
-                  >
+            {/* 双翼舒展铺开：左翼 50% 真实生活与图腾 + 右翼 50% 极速触达中枢 */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+              {/* 左翼 (50% · lg:col-span-6)：真实人物实拍 + 4 大桌面精神手办展台 */}
+              <div className="lg:col-span-6 rounded-2xl border border-white/15 bg-black/60 p-4 sm:p-5 flex flex-col justify-between backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)] space-y-3.5">
+                {/* 顶部：人物实拍与宣言横向融合 */}
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3.5 p-3 rounded-xl bg-white/[0.02] border border-white/10">
+                  <div className="relative w-28 sm:w-32 aspect-[3/4] rounded-lg overflow-hidden border border-white/15 bg-black shrink-0 group">
                     <Image
-                      src="/images/wechat-qr.jpg"
-                      alt="Salin 微信二维码缩略图"
+                      src="/images/portrait/salin-2025.jpg"
+                      alt="2025年 Salin 在山路上的实拍照片"
                       fill
-                      className="object-contain p-0.5 group-hover:scale-105 transition-transform"
+                      sizes="(max-width: 1024px) 120px, 150px"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
-                  </button>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[10px] text-white/40 font-mono">WECHAT ID</div>
-                    <div className="text-sm font-mono font-bold text-emerald-400 truncate">
-                      {siteConfig.wechat}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-1.5 left-1.5 right-1.5 font-mono text-[9px] text-emerald-300 text-center bg-black/70 px-1 py-0.5 rounded border border-white/10">
+                      2025 · 山路实拍
                     </div>
-                    <div className="text-[10px] text-white/60">扫码或复制均可添加</div>
+                  </div>
+
+                  <div className="flex-1 space-y-1.5 text-left min-w-0">
+                    <div className="flex items-center justify-between font-mono text-xs">
+                      <span className="font-bold text-white text-sm">Salin（朋友多叫狗哥）</span>
+                      <span className="text-emerald-400 text-[11px] font-bold">12Y FOUNDER</span>
+                    </div>
+                    <div className="text-xs text-white/90 italic font-medium leading-relaxed">
+                      “认准了就走到底。无论是出海冒险，还是深耕实体。”
+                    </div>
+                    <div className="flex flex-wrap gap-1 font-mono text-[10px] text-white/60">
+                      <span className="px-1.5 py-0.5 rounded bg-white/[0.05] border border-white/10">实体餐饮一线</span>
+                      <span className="px-1.5 py-0.5 rounded bg-white/[0.05] border border-white/10">全栈 AI 开发者</span>
+                      <span className="px-1.5 py-0.5 rounded bg-white/[0.05] border border-white/10">皮实耐造</span>
+                    </div>
+
+                    {/* 破冰词快捷点击复制 */}
+                    <div className="space-y-1 pt-1 font-mono text-[11px]">
+                      <div className="text-white/40 text-[10px] flex items-center gap-1">
+                        <MessageCircle className="w-3 h-3 text-emerald-400" />
+                        <span>快捷复制破冰意向（微信中可直接发）：</span>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        {CONVERSATION_STARTERS.map((topic, i) => (
+                          <button
+                            key={i}
+                            onClick={() => handleCopyTopic(topic)}
+                            className="px-2 py-0.5 rounded bg-white/[0.03] hover:bg-emerald-500/10 border border-white/5 hover:border-emerald-500/30 text-left text-white/75 hover:text-white transition-all cursor-pointer flex items-center justify-between text-[11px] group"
+                          >
+                            <span className="truncate">{topic}</span>
+                            <span className="text-[10px] text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity ml-1 shrink-0 font-bold">
+                              {copiedTopic === topic ? "已复制!" : "复制"}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 font-mono text-xs pt-1">
-                  <button
-                    onClick={handleCopyWechat}
-                    className="py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold inline-flex items-center justify-center gap-1 cursor-pointer transition-colors"
-                  >
-                    {copiedWechat ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                    <span>{copiedWechat ? "已复制" : "复制微信"}</span>
-                  </button>
-                  <button
-                    onClick={() => setShowQrModal(true)}
-                    className="py-1.5 rounded-lg border border-white/20 hover:border-white/40 bg-white/[0.05] text-white font-medium inline-flex items-center justify-center gap-1 cursor-pointer transition-colors"
-                  >
-                    <Scan className="w-3 h-3 text-emerald-400" />
-                    <span>查看大码</span>
-                  </button>
+                {/* 底部：4 大桌面精神手办交互展台 */}
+                <div className="space-y-2 pt-1">
+                  <div className="flex items-center justify-between font-mono text-xs">
+                    <span className="text-white/60 flex items-center gap-1 font-bold">
+                      <Sparkles className="w-3 h-3 text-emerald-400" />
+                      桌面精神手办与图腾（点击切换灵感）:
+                    </span>
+                    <span className="text-emerald-400 text-[10px]">
+                      [ {selectedToy.name} ]
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-4 gap-2">
+                    {DESK_TOYS.map((toy) => (
+                      <button
+                        key={toy.id}
+                        onClick={() => setSelectedToy(toy)}
+                        className={`p-1.5 rounded-xl border text-center transition-all cursor-pointer ${
+                          selectedToy.id === toy.id
+                            ? "border-emerald-400 bg-emerald-500/15 shadow-[0_0_15px_rgba(16,185,129,0.4)] scale-102"
+                            : "border-white/10 bg-white/[0.02] hover:border-white/30"
+                        }`}
+                      >
+                        <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-black/60 mb-1">
+                          <Image
+                            src={toy.image}
+                            alt={toy.name}
+                            fill
+                            className="object-contain p-1"
+                          />
+                        </div>
+                        <div className="font-mono text-[11px] font-bold text-white truncate">
+                          {toy.name}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* 当前选中手办独白卡片 */}
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-emerald-500/30 font-sans space-y-0.5 text-left">
+                    <div className="flex items-center justify-between font-mono text-[11px]">
+                      <span className="font-bold text-emerald-400">{selectedToy.series}</span>
+                      <span className="text-white/40 text-[10px]">{selectedToy.tag}</span>
+                    </div>
+                    <div className="text-xs font-bold text-white italic">
+                      “{selectedToy.motto}”
+                    </div>
+                    <p className="text-[11px] text-white/75 leading-relaxed line-clamp-2">
+                      {selectedToy.desc}
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              {/* 邮箱直达 */}
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/10 font-mono text-xs">
-                <div className="truncate">
-                  <span className="text-white/40 text-[10px] block">EMAIL</span>
-                  <span className="text-white text-xs">{siteConfig.email}</span>
-                </div>
-                <button
-                  onClick={handleCopyEmail}
-                  className="px-2 py-1 rounded bg-white/[0.08] hover:bg-white/[0.15] text-white text-[11px] cursor-pointer"
-                >
-                  {copiedEmail ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-                </button>
-              </div>
+              {/* 右翼 (50% · lg:col-span-6)：高能量快速触达中枢 (WeChat Hub + Direct Access) */}
+              <div className="lg:col-span-6 rounded-2xl border border-emerald-500/30 bg-black/60 p-4 sm:p-5 flex flex-col justify-between backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)] hover:border-emerald-500/50 transition-colors space-y-3.5">
+                {/* 核心 A: 微信高能交互大卡片 */}
+                <div className="p-3.5 sm:p-4 rounded-xl bg-black/80 border border-emerald-500/40 space-y-3 shadow-lg">
+                  <div className="flex items-center gap-3.5">
+                    <button
+                      onClick={() => setShowQrModal(true)}
+                      className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 border-emerald-400 bg-white p-0.5 shrink-0 cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.35)] group"
+                      title="点击全屏查看并长按识别二维码"
+                    >
+                      <Image
+                        src="/images/wechat-qr.jpg"
+                        alt="Salin 微信二维码"
+                        fill
+                        className="object-contain p-0.5 group-hover:scale-105 transition-transform"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center font-mono text-[10px] text-white font-bold">
+                        放大
+                      </div>
+                    </button>
 
-              {/* 阵地链接 */}
-              <div className="pt-1 flex flex-wrap items-center gap-3 font-mono text-[11px] text-white/50 border-t border-white/10 pt-2">
-                <a href="https://github.com/wangsalin" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">
-                  GitHub ↗
-                </a>
-                <a href="https://x.com/EyuSalin" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">
-                  X (Twitter) ↗
-                </a>
-                <a href="https://zl.eyu.ink" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">
-                  资源库 ↗
-                </a>
-                <span>公众号: 狗哥的胡思乱想</span>
+                    <div className="flex-1 min-w-0 space-y-1 text-left">
+                      <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[10px] font-bold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        PRIMARY CONTACT // 主理人微信
+                      </div>
+                      <div className="text-base sm:text-lg font-mono font-black text-white flex items-center gap-2">
+                        <span>微信号:</span>
+                        <span className="text-emerald-400">{siteConfig.wechat}</span>
+                      </div>
+                      <div className="text-xs text-white/70">
+                        实体获客、代码合作、亦或纯粹交个朋友，扫码或搜索添加皆可。
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 font-mono text-xs pt-1">
+                    <button
+                      onClick={handleCopyWechat}
+                      className="py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold inline-flex items-center justify-center gap-1.5 cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all"
+                    >
+                      {copiedWechat ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copiedWechat ? "已成功复制微信号" : "复制微信号 50219067"}</span>
+                    </button>
+                    <button
+                      onClick={() => setShowQrModal(true)}
+                      className="py-2 rounded-xl border border-white/20 hover:border-emerald-500/50 bg-white/[0.05] hover:bg-white/[0.1] text-white font-medium inline-flex items-center justify-center gap-1.5 cursor-pointer transition-all"
+                    >
+                      <Scan className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>查看微信二维码大图</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* 核心 B: 邮箱直达 */}
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/10 font-mono text-xs">
+                  <div className="truncate text-left space-y-0.5">
+                    <span className="text-white/40 text-[10px] block">DIRECT EMAIL // 商务与合作邮箱</span>
+                    <span className="text-white text-xs sm:text-sm font-bold">{siteConfig.email}</span>
+                  </div>
+                  <button
+                    onClick={handleCopyEmail}
+                    className="shrink-0 px-3 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.15] text-white text-[11px] font-bold cursor-pointer inline-flex items-center gap-1"
+                  >
+                    {copiedEmail ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                    <span>{copiedEmail ? "已复制邮箱" : "复制"}</span>
+                  </button>
+                </div>
+
+                {/* 核心 C: 全域阵地传送门 */}
+                <div className="space-y-1.5 text-left">
+                  <div className="font-mono text-[10px] text-white/40 tracking-wider">
+                    PRESENCE MATRIX // 核心产品与社交阵地直达:
+                  </div>
+                  <div className="flex flex-wrap gap-2 font-mono text-[11px]">
+                    <a
+                      href="https://youeli.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-bold inline-flex items-center gap-1 transition-colors"
+                    >
+                      <span>🤖 饿狸 (youeli.com) ↗</span>
+                    </a>
+                    <a
+                      href="https://salin.wang/ui"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 rounded-lg bg-white/[0.05] hover:bg-white/15 border border-white/15 text-white font-medium inline-flex items-center gap-1 transition-colors"
+                    >
+                      <span>⚔️ Salin UI (salin.wang/ui) ↗</span>
+                    </a>
+                    <a
+                      href="https://zl.eyu.ink"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 font-bold inline-flex items-center gap-1 transition-colors"
+                    >
+                      <span>📚 狗哥资源库 (zl.eyu.ink) ↗</span>
+                    </a>
+                    <a
+                      href="https://github.com/wangsalin"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/10 border border-white/10 text-white/80 hover:text-white transition-colors"
+                    >
+                      GitHub ↗
+                    </a>
+                    <a
+                      href="https://x.com/EyuSalin"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2.5 py-1 rounded-lg bg-white/[0.04] hover:bg-white/10 border border-white/10 text-white/80 hover:text-white transition-colors"
+                    >
+                      X (Twitter) ↗
+                    </a>
+                  </div>
+                </div>
+
+                {/* 底部收官心意注脚 */}
+                <div className="pt-2 flex items-center justify-between border-t border-white/10 font-mono text-[11px] text-white/40">
+                  <span>© 2014—2026 SALIN · LINYI, CHINA</span>
+                  <button
+                    onClick={() => scrollToSlide(0)}
+                    className="text-emerald-400 hover:text-emerald-300 font-bold cursor-pointer inline-flex items-center gap-1 transition-colors"
+                  >
+                    <span>↺ 平滑返回封面画卷</span>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* 极简底部声明 */}
-          <div className="absolute bottom-1.5 left-0 right-0 text-center font-mono text-[10px] text-white/25">
-            © 2014—2026 SALIN. ALL RIGHTS RESERVED. 35.1041° N, 118.3561° E.
           </div>
         </section>
       </div>
