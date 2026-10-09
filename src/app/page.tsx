@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/data/site";
-import { CosmicJourney } from "@/components/cosmic/cosmic-journey";
+import { ModernFounderHome } from "@/components/home/modern-founder-home";
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return <CosmicJourney />;
+  return <ModernFounderHome />;
 }

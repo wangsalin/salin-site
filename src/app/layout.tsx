@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="h-full dark" suppressHydrationWarning>
+    <html lang="zh-CN" className="h-full" suppressHydrationWarning>
       <head>
         <meta property="og:type" content="website" />
         <meta property="og:url" content={siteConfig.url} />
@@ -63,7 +63,7 @@ export default function RootLayout({
           href="/feed.xml"
         />
       </head>
-      <body className="min-h-full flex flex-col antialiased bg-slate-950 text-white selection:bg-emerald-500 selection:text-slate-950">
+      <body className="min-h-full flex flex-col antialiased bg-[var(--background)] text-[var(--foreground)] selection:bg-[var(--brand)] selection:text-white transition-colors duration-200">
         <LayoutChrome>{children}</LayoutChrome>
         <Analytics />
       </body>
