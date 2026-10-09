@@ -25,6 +25,9 @@ import {
   Sword,
   Bot,
   Zap,
+  Flame,
+  Store,
+  Share2,
 } from "lucide-react";
 import { siteConfig } from "@/data/site";
 
@@ -36,7 +39,7 @@ const FEATURED_NOTES = [
     category: "商业复盘",
     date: "2026-03",
     readTime: "8 分钟",
-    summary: "技术自嗨往往解决不了真实问题。从企业客户的账本出发，剖析什么样的 AI 解决方案能让客户爽快买单。",
+    summary: "技术自嗨往往解决不了真实问题。从实体商家的真实账本出发，剖析什么样的 AI 解决方案能让客户爽快买单。",
   },
   {
     slug: "ai-real-business",
@@ -56,16 +59,34 @@ const FEATURED_NOTES = [
   },
   {
     slug: "ten-years-from-local-food-to-ai",
-    title: "从 2017《舌尖上的临沂》到 2026 AI 架构：十年摸爬滚打的生存哲学",
+    title: "从 2017《舌尖上的临沂》到 2026 饿狸：十年摸爬滚打的生存哲学",
     category: "创业随笔",
     date: "2026-02",
     readTime: "12 分钟",
-    summary: "从街头巷尾端着相机做美食博主，到下场开店摸爬滚打，再到手搓 AI 界面。这十年我学到的唯一道理：永远保持对真实世界的敬畏。",
+    summary: "从街头巷尾端着相机做美食博主，到打造实体商家 AI 获客工具‘饿狸’。这十年我学到的唯一道理：永远保持对真实世界的敬畏。",
   },
 ];
 
-// 精选手办与日常好奇心物件 (somehowliving 风格)
+// 精选桌面手办与灵感物件 (somehowliving 风格)
 const DESK_TOYS = [
+  {
+    id: "eli-mascot",
+    name: "饿狸 · 3D 吉祥物",
+    sub: "ELI MASCOT · 找客流问饿狸",
+    tag: "主项目担当",
+    desc: "打着绿色三角领巾的小浣熊。‘餐饮营销没思路，问问饿狸’。代表着高效、靠谱与解决真实问题的亲和力。",
+    image: "/images/brand/eli-mascot.jpg",
+    badge: "实体 AI 伙伴",
+  },
+  {
+    id: "eyu-origin",
+    name: "饿鱼 · 2017 经典图腾",
+    sub: "EYU 2017 · 舌尖上的临沂",
+    tag: "十年初心起点",
+    desc: "大口嚼着包子的萌趣绿鳄鱼。2017 年手举旗帜上的它，曾是 10万+ 临沂人的美食向导，如今传承为 zl.eyu.ink。",
+    image: "/images/brand/eyu-logo.png",
+    badge: "经典图腾",
+  },
   {
     id: "luffy",
     name: "海贼王 · 蒙奇·D·路飞",
@@ -84,34 +105,37 @@ const DESK_TOYS = [
     image: "/images/toys/overwatch-figure.jpg",
     badge: "人机协同",
   },
-  {
-    id: "doge",
-    name: "汪狗哥 · 柴犬公仔",
-    sub: "SALIN MASCOT",
-    tag: "接地气 · 咬定青山",
-    desc: "为什么大家都叫狗哥？因为接地气。认准了要做的事，咬住了就不松口，必须把交付成果做出来。",
-    image: "/images/toys/dog-mascot.jpg",
-    badge: "务实交付",
-  },
-  {
-    id: "eyu",
-    name: "饿鱼 · 2017 舌尖经典",
-    sub: "EYU 2017 · 临沂美食向导",
-    tag: "创业起点",
-    desc: "2017 年《舌尖上的临沂》旗帜上的小鳄鱼。曾是 10万+ 临沂人的美食向导，如今化作资源库 zl.eyu.ink，初心未改。",
-    image: "/images/portrait/eyu-mascot-crop.jpg",
-    badge: "十年初心",
-  },
 ];
 
-// 核心大图项目展厅 (去掉 FoodOps，专注 Salin UI、Gouge Hub、狗哥资源库)
+// 核心大图项目展厅 (突出主项目“饿狸” + Salin UI + Gouge Hub + 狗哥资源库)
 const SELECTED_PROJECTS = [
   {
-    id: "salin-ui",
+    id: "eli",
     num: "01",
+    title: "饿狸 (Eli) · 专为实体商家打造的 AI 获客工具",
+    enTitle: "AI MARKETING & OPERATIONS AGENT FOR LOCAL BUSINESSES",
+    category: "AI Local Commerce & Content Agent",
+    year: "2026",
+    tag: "当前核心主项目 · 生产级落地",
+    image: "/images/brand/eli-brand-full.png",
+    summary:
+      "餐饮营销没思路，问问饿狸！专为实体商家研发的 AI 智能工作台。深度解决商家的内容生产困境（一键出小红书/抖音/大众点评爆款文案与营销日历）、多维经营数据分析与节日引流活动策划难题。",
+    specs: [
+      { label: "产品定位", val: "实体商家 AI 获客工具" },
+      { label: "核心口号", val: "找客流 · 做活动 · 写文案" },
+      { label: "解决痛点", val: "内容生产困境 / 数据分析" },
+      { label: "落地场景", val: "餐饮门店 / 本地生活商家" },
+    ],
+    primaryLink: "/projects/eli",
+    primaryLabel: "查看饿狸详情复盘 ↗",
+    secondaryAction: "wechat-consult",
+  },
+  {
+    id: "salin-ui",
+    num: "02",
     title: "Salin UI · 开发者 AI 界面弹药库",
     enTitle: "DEVELOPER AI UI ARSENAL & DESIGN SYSTEM",
-    category: "AI Developer Tooling",
+    category: "AI Developer Tooling & Framework",
     year: "2026",
     tag: "持续高频迭代 · v5.2",
     image: "/images/showcase/project-salin-ui.jpg",
@@ -129,7 +153,7 @@ const SELECTED_PROJECTS = [
   },
   {
     id: "gouge-hub",
-    num: "02",
+    num: "03",
     title: "Gouge Hub · 全域内容中枢与 AI 自动化集群",
     enTitle: "OMNI-CHANNEL CONTENT AUTOMATION & AGENT COCKPIT",
     category: "Multi-Agent Swarms & Distribution",
@@ -150,12 +174,12 @@ const SELECTED_PROJECTS = [
   },
   {
     id: "ziliaoku",
-    num: "03",
-    title: "狗哥资源库 (zl.eyu.ink) · 十年创业与实战手册",
+    num: "04",
+    title: "狗哥资源库 (zl.eyu.ink) · 延续“饿鱼”十年的实操手册",
     enTitle: "ENTREPRENEURIAL FIELD KNOWLEDGE REPOSITORY",
     category: "Knowledge Base & Local Commerce",
     year: "2017—2026",
-    tag: "持续沉淀更新",
+    tag: "传承饿鱼 IP · 持续更新",
     image: "/images/projects/ziliaoku-cover.jpg",
     summary:
       "承接 2017 年“饿鱼 / 舌尖上的临沂”创业基因，沉淀十余年一线实战经验的独立知识库。收录实体获客、本地流量逻辑、AI 工具落地操作手册与踩坑血泪经验。",
@@ -248,7 +272,7 @@ export function ModernFounderHome() {
               ONLINE
             </span>
             <span className="tracking-wide">
-              SHANDONG · LINYI <span className="text-[#141815] dark:text-white font-semibold">{timeStr || "20:45:00"}</span> CST
+              SHANDONG · LINYI <span className="text-[#141815] dark:text-white font-semibold">{timeStr || "20:48:00"}</span> CST
             </span>
             <span className="hidden md:inline text-neutral-300 dark:text-neutral-700">|</span>
             <span className="hidden md:inline text-[11px]">35.1041° N, 118.3564° E</span>
@@ -256,8 +280,8 @@ export function ModernFounderHome() {
 
           {/* 右侧：历程标线与颗粒切换 */}
           <div className="flex items-center gap-3 sm:gap-4">
-            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] opacity-80">
-              [ 2017 舌尖上的临沂 → 2026 SALIN UI ]
+            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] opacity-85 text-emerald-800 dark:text-emerald-300 font-medium">
+              [ 2017 饿鱼 / 舌尖临沂 → 2026 饿狸 ELI × SALIN UI ]
             </span>
             <button
               onClick={() => setFilmGrain(!filmGrain)}
@@ -294,7 +318,7 @@ export function ModernFounderHome() {
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/5 text-emerald-800 dark:text-emerald-300 text-xs font-mono tracking-wider">
                 <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                10-YEAR FOUNDER · LOCAL LIFE TO AI CRAFTSMAN
+                ELI FOUNDER · SALIN UI CRAFTSMAN · 10-YEAR LOCAL COMMERCE
               </div>
               <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#0F1410] dark:text-[#F3F5F2] font-serif leading-[1.05]">
                 WANG SALIN<br />
@@ -303,9 +327,9 @@ export function ModernFounderHome() {
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-[#4A534D] dark:text-[#A1ABA4] max-w-2xl font-normal leading-relaxed">
-                从 2017 年创办《舌尖上的临沂》（吉祥物饿鱼），到 2026 年打造面向 AI 时代的 Salin UI 界面弹药库。
+                2017 年创办《舌尖上的临沂》（吉祥物饿鱼）；现主导研发<strong className="text-[#141815] dark:text-white font-semibold">「饿狸」</strong>（实体商家 AI 获客工具）与<strong className="text-[#141815] dark:text-white font-semibold">「Salin UI」</strong>（面向 AI 编程的开发者界面弹药库）。
                 <br className="hidden sm:inline" />
-                深入过市井街巷搞实体，也通宵敲过代码做系统。不端着，不吹牛，只做能真正交付的作品。
+                下过厨房跑过商家，写过代码搞过 Agent。解决商家的真难题，只做能交付的作品。
               </p>
             </div>
 
@@ -313,38 +337,38 @@ export function ModernFounderHome() {
             <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-[#E2E6DF] dark:border-[#222A24] pt-4 lg:pt-0 lg:pl-8 space-y-3 font-mono text-xs text-[#525B54] dark:text-[#9AA39C]">
               <div
                 className="flex justify-between items-center group cursor-pointer"
-                onClick={() => document.getElementById("journey")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => document.getElementById("works")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <span className="tracking-wider">01 // STORY</span>
+                <span className="tracking-wider">01 // ELI (饿狸)</span>
                 <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
-                  十年真实创业历程 ↗
-                </span>
-              </div>
-              <div
-                className="flex justify-between items-center group cursor-pointer"
-                onClick={() => document.getElementById("toys")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                <span className="tracking-wider">02 // TOYS</span>
-                <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
-                  桌面手办与好奇心 ↗
+                  主项目：商家 AI 获客 ↗
                 </span>
               </div>
               <div
                 className="flex justify-between items-center group cursor-pointer"
                 onClick={() => document.getElementById("works")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <span className="tracking-wider">03 // WORKS</span>
+                <span className="tracking-wider">02 // SALIN UI</span>
                 <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
-                  Salin UI 旗舰大图 ↗
+                  开发者界面弹药库 ↗
                 </span>
               </div>
               <div
                 className="flex justify-between items-center group cursor-pointer"
-                onClick={() => document.getElementById("writing")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => document.getElementById("journey")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <span className="tracking-wider">04 // WRITING</span>
+                <span className="tracking-wider">03 // STORY</span>
                 <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
-                  一线实战长文 ↗
+                  从饿鱼到饿狸 ↗
+                </span>
+              </div>
+              <div
+                className="flex justify-between items-center group cursor-pointer"
+                onClick={() => document.getElementById("toys")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                <span className="tracking-wider">04 // TOYS</span>
+                <span className="text-emerald-600 dark:text-emerald-400 group-hover:translate-x-0.5 transition-transform font-sans font-semibold">
+                  手办与玩物精神 ↗
                 </span>
               </div>
 
@@ -356,10 +380,10 @@ export function ModernFounderHome() {
                   加狗哥微信
                 </button>
                 <Link
-                  href="/ui/"
-                  className="py-2 px-3 rounded border border-[#D5DDD2] dark:border-[#2C372F] font-sans font-medium text-xs hover:border-emerald-500/50 transition-colors text-center"
+                  href="/projects/eli"
+                  className="py-2 px-3 rounded border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 font-sans font-medium text-xs hover:bg-emerald-500/20 transition-colors text-center"
                 >
-                  检阅 Salin UI
+                  了解饿狸
                 </Link>
               </div>
             </div>
@@ -374,7 +398,7 @@ export function ModernFounderHome() {
               {/* 取景器角标 */}
               <div className="absolute top-4 left-4 z-20 font-mono text-[11px] text-[#8C968F] dark:text-[#6E7870] flex items-center gap-1.5 select-none bg-black/40 backdrop-blur-md text-white px-2.5 py-1 rounded-md">
                 <span className="text-emerald-400 font-bold">+</span>
-                <span>2025 // MOUNTAIN EXPEDITION · WANG SALIN</span>
+                <span>2025 // EXPEDITION · WANG SALIN (汪狗哥)</span>
               </div>
               <div className="absolute top-4 right-4 z-20 font-mono text-[11px] select-none bg-black/40 backdrop-blur-md text-white px-2.5 py-1 rounded-md flex items-center gap-2">
                 <span>LINYI, SHANDONG</span>
@@ -403,7 +427,7 @@ export function ModernFounderHome() {
               </div>
             </div>
 
-            {/* 右侧 4 列：2017 经典“舌尖上的临沂”火锅扯面与旗帜物证卡片 */}
+            {/* 右侧 4 列：2017 经典“舌尖上的临沂”火锅扯面与官方饿鱼图腾 */}
             <div className="lg:col-span-4 flex flex-col gap-6 justify-between">
               {/* 2017 火锅扯面生活照 (极具感染力与真实感) */}
               <div className="rounded-2xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-4 shadow-lg group relative overflow-hidden flex-1 flex flex-col justify-between">
@@ -424,27 +448,27 @@ export function ModernFounderHome() {
                     从一碗热气腾腾的面开始
                   </h3>
                   <p className="text-xs text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                    走遍大街小巷，用文字和镜头记录临沂的味道。做过 10万+ 人的美食向导，深知真实用户的信任来之不易。
+                    走遍大街小巷，用文字和镜头记录临沂的味道。做过 10万+ 人的美食向导，深知实体商家的不容易与内容获客的痛。
                   </p>
                 </div>
               </div>
 
-              {/* 2017 饿鱼旗帜与十年初心 */}
+              {/* 2017 饿鱼官方 Logo */}
               <div className="rounded-2xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-4 shadow-lg flex items-center gap-4">
-                <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-800 shrink-0 border border-emerald-500/30">
+                <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-amber-400/20 shrink-0 border border-amber-500/30 p-1">
                   <Image
-                    src="/images/portrait/eyu-mascot-crop.jpg"
-                    alt="饿鱼 logo"
+                    src="/images/brand/eyu-logo.png"
+                    alt="饿鱼官方 logo"
                     fill
-                    className="object-contain p-1"
+                    className="object-contain p-0.5"
                   />
                 </div>
                 <div className="space-y-1">
-                  <div className="font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                  <div className="font-mono text-xs font-bold text-amber-700 dark:text-amber-400">
                     ORIGIN // 饿鱼 (EYU)
                   </div>
                   <div className="text-xs text-[#525B54] dark:text-[#9AA39C]">
-                    10万+ 临沂人的美食向导图腾。如今延续为 <span className="font-mono font-semibold text-[#141815] dark:text-white">zl.eyu.ink</span> 实战资源库。
+                    2017《舌尖上的临沂》经典吉祥物。如今初心传承，进化为实体 AI 获客工具 <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">「饿狸 ELI」</span>。
                   </div>
                 </div>
               </div>
@@ -454,21 +478,154 @@ export function ModernFounderHome() {
       </section>
 
       {/* ========================================================
-          SECTION 01: THE JOURNEY · 十年实战心路历程 (致敬 somehowliving.tech)
+          SECTION 01: SELECTED WORKS · 大图旗舰展厅 (主推“饿狸” + Salin UI)
+          ======================================================== */}
+      <section id="works" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-4">
+            <div>
+              <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wider mb-2">
+                // 01 · SELECTED WORKS · 旗舰作品展厅
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight font-serif">
+                大图实证：只展示正在交付的核心系统
+              </h2>
+            </div>
+            <p className="text-sm text-[#5A645D] dark:text-[#9AA39C] max-w-md font-sans">
+              一手托起实体商家的 AI 获客工具（饿狸），一手锻造属于极客开发者的界面弹药库（Salin UI）。
+            </p>
+          </div>
+
+          {/* 旗舰大图列表 */}
+          <div className="space-y-16 sm:space-y-24">
+            {SELECTED_PROJECTS.map((proj) => (
+              <div
+                key={proj.id}
+                className="rounded-2xl sm:rounded-3xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group"
+              >
+                {/* 顶部元数据标尺 */}
+                <div className="border-b border-[#EAEFE7] dark:border-[#1E2520] px-6 py-3.5 bg-[#FAFBF9] dark:bg-[#131915] flex flex-wrap items-center justify-between text-xs font-mono text-[#6A736C] dark:text-[#8D968F] gap-2">
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold text-[#141815] dark:text-white">
+                      [{proj.num}]
+                    </span>
+                    <span className="uppercase tracking-wider">
+                      {proj.category}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold">
+                      {proj.tag}
+                    </span>
+                    <span>{proj.year}</span>
+                  </div>
+                </div>
+
+                {/* 核心巨幅实景截图 (大图！) */}
+                <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-neutral-100 dark:bg-neutral-900 overflow-hidden cursor-pointer">
+                  <Image
+                    src={proj.image}
+                    alt={proj.title}
+                    fill
+                    className="object-contain md:object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 p-2 md:p-0"
+                    sizes="(max-width: 1280px) 100vw, 1280px"
+                  />
+                  {/* 取景器悬浮标签 */}
+                  <div className="absolute bottom-4 right-4 z-10 px-3 py-1.5 rounded-lg bg-black/70 backdrop-blur-md text-white font-mono text-xs flex items-center gap-2">
+                    <Eye className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>VIEW LIVE ARTIFACT</span>
+                  </div>
+                </div>
+
+                {/* 下半部分：项目说明与技术规格指标 */}
+                <div className="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  <div className="lg:col-span-7 space-y-3">
+                    <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold">
+                      {proj.enTitle}
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#141815] dark:text-[#EFF2EE]">
+                      {proj.title}
+                    </h3>
+                    <p className="text-sm sm:text-base text-[#4E5650] dark:text-[#99A29B] leading-relaxed">
+                      {proj.summary}
+                    </p>
+                    <div className="pt-3 flex flex-wrap gap-3">
+                      {proj.secondaryAction === "external" ? (
+                        <a
+                          href={proj.primaryLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F1410] dark:bg-[#F3F5F2] text-white dark:text-[#0F1410] font-sans font-medium text-xs tracking-wide hover:opacity-90 transition-opacity"
+                        >
+                          {proj.primaryLabel}
+                        </a>
+                      ) : (
+                        <Link
+                          href={proj.primaryLink}
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F1410] dark:bg-[#F3F5F2] text-white dark:text-[#0F1410] font-sans font-medium text-xs tracking-wide hover:opacity-90 transition-opacity"
+                        >
+                          {proj.primaryLabel}
+                        </Link>
+                      )}
+
+                      {proj.secondaryAction === "wechat-consult" && (
+                        <button
+                          onClick={() => setShowQrModal(true)}
+                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 text-xs font-mono font-medium hover:bg-emerald-500/20 transition-colors"
+                        >
+                          <Scan className="w-3.5 h-3.5" />
+                          申请接入饿狸内测
+                        </button>
+                      )}
+
+                      {proj.secondaryAction === "copy-mcp" && (
+                        <button
+                          onClick={handleCopyMcp}
+                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#D5DDD2] dark:border-[#2C372F] text-xs font-mono font-medium hover:border-emerald-500/50 transition-colors"
+                        >
+                          {copiedMcp ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                          {copiedMcp ? "已复制 MCP 协议配置" : "复制 MCP 协议配置"}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 右侧：规格指标列表 (dsgnbyhl 标尺) */}
+                  <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-[#EAEFE7] dark:border-[#1E2520] pt-4 lg:pt-0 lg:pl-8 grid grid-cols-2 gap-4 font-mono">
+                    {proj.specs.map((sp, idx) => (
+                      <div key={idx} className="p-3 rounded-lg bg-[#FAFBF9] dark:bg-[#131915] border border-[#EAEFE7] dark:border-[#1F2620]">
+                        <div className="text-[11px] text-[#717A73] dark:text-[#8D968F] mb-1">
+                          {sp.label}
+                        </div>
+                        <div className="text-sm font-bold text-[#141815] dark:text-[#E8EAE6]">
+                          {sp.val}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          SECTION 02: THE JOURNEY · 从饿鱼到饿狸的心路历程 (致敬 somehowliving.tech)
           ======================================================== */}
       <section id="journey" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621] bg-[#F7F9F6] dark:bg-[#0E1310]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
               <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wider mb-2">
-                // 01 · THE JOURNEY · 真实创业旅程
+                // 02 · THE JOURNEY · 从饿鱼到饿狸
               </div>
               <h2 className="text-3xl sm:text-5xl font-bold tracking-tight font-serif">
                 十年摸爬滚打，一直在解决真问题
               </h2>
             </div>
             <p className="text-sm text-[#5A645D] dark:text-[#9AA39C] max-w-md font-sans">
-              从手持微单穿梭后厨的美食博主，到下场踩坑创业，再到写出支持 MCP 原生协议的 Salin UI。
+              从手持微单穿梭后厨的美食向导，到自研实体商家 AI 获客工具「饿狸」，再到写出支持 MCP 原生协议的 Salin UI。
             </p>
           </div>
 
@@ -477,54 +634,54 @@ export function ModernFounderHome() {
             {/* Milestone 1 */}
             <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
               <div>
-                <div className="text-xs text-emerald-700 dark:text-emerald-400 font-bold mb-2">
+                <div className="text-xs text-amber-700 dark:text-amber-400 font-bold mb-2">
                   2017 // ORIGIN
                 </div>
                 <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
                   舌尖上的临沂 · 饿鱼诞生
                 </h3>
                 <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  跑遍临沂 500+ 家餐厅，拍视频做内容。做到 10万+ 粉丝的本地美食向导，第一次摸透流量与实体生意的本质。
+                  跑遍临沂 500+ 家餐厅，拍视频做内容。做到 10万+ 粉丝的美食向导，深知实体商家的获客不易与对流量的渴望。
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                关键词: 市井烟火 · 内容流量
+                关键词: 饿鱼图腾 · 市井烟火
               </div>
             </div>
 
             {/* Milestone 2 */}
             <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
               <div>
-                <div className="text-xs text-amber-700 dark:text-amber-400 font-bold mb-2">
-                  2019-2023 // HARD TRUTH
+                <div className="text-xs text-blue-700 dark:text-blue-400 font-bold mb-2">
+                  2019-2023 // EXPERIENCE
                 </div>
                 <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  下场实体商业 · 肉身算账
+                  深潜本地生活与实体商业
                 </h3>
                 <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  真金白银下场开店、做实体经营。摸透了库存损耗、店长排班、供应链跑冒滴漏，明白了为什么很多看似风光的生意其实在亏钱。
+                  真金白银做实体经营、本地获客。摸透了商家最痛苦的根本不是理论，而是每天到底发什么朋友圈、怎么写小红书、活动怎么做。
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                关键词: 账本穿透 · 敬畏现实
+                关键词: 商家困境 · 实战痛点
               </div>
             </div>
 
             {/* Milestone 3 */}
             <div className="p-6 rounded-2xl border border-[#DFE3DC] dark:border-[#222A23] bg-white dark:bg-[#121814] flex flex-col justify-between hover:border-emerald-500/40 transition-colors shadow-sm">
               <div>
-                <div className="text-xs text-blue-700 dark:text-blue-400 font-bold mb-2">
-                  2024-2025 // EMBRACE AI
+                <div className="text-xs text-emerald-700 dark:text-emerald-400 font-bold mb-2">
+                  2024-2025 // CRAFTSMAN
                 </div>
                 <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  全面融入 AI 辅助编程
+                  手搓 Salin UI 开发者弹药库
                 </h3>
                 <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  深度使用 Cursor、Claude Code、v0。发现市面上重型组件库与 AI 生成逻辑严重脱节，萌生了重塑一套属于 AI 时代界面库的想法。
+                  在 AI 辅助编程时代，手搓 252+ 纯净 TSX 组件库，打通 MCP 原生协议。用极客的方式把前端开发效率推向极致。
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                关键词: 极客觉醒 · 协议打通
+                关键词: Salin UI · MCP 协议
               </div>
             </div>
 
@@ -535,14 +692,14 @@ export function ModernFounderHome() {
                   2026 // NOW SHIPPING
                 </div>
                 <h3 className="text-base font-bold font-sans text-[#141815] dark:text-white mb-2">
-                  Salin UI 弹药库交付
+                  饿狸 (ELI) 主项目落地
                 </h3>
                 <p className="text-xs font-sans text-[#525B54] dark:text-[#9AA39C] leading-relaxed">
-                  上线 Salin UI v5.2，收录 252+ 纯净 TSX 组件，支持 MCP 协议直连投喂。搭建 Gouge Hub 自动化内容中枢，高频迭代。
+                  将十年的本地经验与 AI 技术结合，研发‘饿狸’AI 获客工具。帮助实体商家解决内容生产困境、数据分析与活动策划难题。
                 </p>
               </div>
               <div className="pt-4 mt-4 border-t border-[#EEF2EB] dark:border-[#1F2621] text-[11px] text-[#717A73]">
-                关键词: 纯净架构 · 持续交付
+                关键词: 饿狸 ELI · 找客流做活动
               </div>
             </div>
           </div>
@@ -555,11 +712,11 @@ export function ModernFounderHome() {
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-sm font-bold text-[#141815] dark:text-[#E8ECE6]">
               <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">肉身踩坑</span>
               <span className="text-emerald-500">→</span>
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">账本穿透</span>
+              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">商家痛点</span>
               <span className="text-emerald-500">→</span>
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">手搓代码</span>
+              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">AI 工具化</span>
               <span className="text-emerald-500">→</span>
-              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">拿到交付</span>
+              <span className="px-3 py-1.5 rounded-lg bg-neutral-100 dark:bg-neutral-800">拿到真实客流</span>
               <span className="text-emerald-500">→</span>
               <span className="font-serif italic text-emerald-600 dark:text-emerald-400 text-lg">repeat.</span>
             </div>
@@ -568,14 +725,14 @@ export function ModernFounderHome() {
       </section>
 
       {/* ========================================================
-          SECTION 02: DESK TOYS · 桌面手办与日常爱好 (致敬 somehowliving.tech)
+          SECTION 03: DESK TOYS · 桌面手办与日常爱好 (致敬 somehowliving.tech)
           ======================================================== */}
       <section id="toys" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
               <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wider mb-2">
-                // 02 · DESK TOYS & INSPIRATIONS · 桌面手办与玩物
+                // 03 · DESK TOYS & INSPIRATIONS · 桌面手办与玩物
               </div>
               <h2 className="text-3xl sm:text-5xl font-bold tracking-tight font-serif">
                 代码和生意之外，是手办和少年气
@@ -631,132 +788,9 @@ export function ModernFounderHome() {
       </section>
 
       {/* ========================================================
-          SECTION 03: SELECTED WORKS · 大图旗舰展厅 (dsgnbyhl 质感大图卡片)
-          ======================================================== */}
-      <section id="works" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621] bg-[#F7F9F6] dark:bg-[#0E1310]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-4">
-            <div>
-              <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold tracking-wider mb-2">
-                // 03 · SELECTED WORKS · 旗舰作品展厅
-              </div>
-              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight font-serif">
-                大图实证：只展示交付成果
-              </h2>
-            </div>
-            <p className="text-sm text-[#5A645D] dark:text-[#9AA39C] max-w-md font-sans">
-              不搞 PPT 概念，每一个项目都全量运行在生产环境，真实可用。
-            </p>
-          </div>
-
-          {/* 旗舰大图列表 */}
-          <div className="space-y-16 sm:space-y-24">
-            {SELECTED_PROJECTS.map((proj) => (
-              <div
-                key={proj.id}
-                className="rounded-2xl sm:rounded-3xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group"
-              >
-                {/* 顶部元数据标尺 */}
-                <div className="border-b border-[#EAEFE7] dark:border-[#1E2520] px-6 py-3.5 bg-[#FAFBF9] dark:bg-[#131915] flex flex-wrap items-center justify-between text-xs font-mono text-[#6A736C] dark:text-[#8D968F] gap-2">
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-[#141815] dark:text-white">
-                      [{proj.num}]
-                    </span>
-                    <span className="uppercase tracking-wider">
-                      {proj.category}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold">
-                      {proj.tag}
-                    </span>
-                    <span>{proj.year}</span>
-                  </div>
-                </div>
-
-                {/* 核心巨幅实景截图 (大图！) */}
-                <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-neutral-100 dark:bg-neutral-900 overflow-hidden cursor-pointer">
-                  <Image
-                    src={proj.image}
-                    alt={proj.title}
-                    fill
-                    className="object-cover object-center group-hover:scale-[1.02] transition-transform duration-700"
-                    sizes="(max-width: 1280px) 100vw, 1280px"
-                  />
-                  {/* 取景器悬浮标签 */}
-                  <div className="absolute bottom-4 right-4 z-10 px-3 py-1.5 rounded-lg bg-black/70 backdrop-blur-md text-white font-mono text-xs flex items-center gap-2">
-                    <Eye className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>VIEW LIVE ARTIFACT</span>
-                  </div>
-                </div>
-
-                {/* 下半部分：项目说明与技术规格指标 */}
-                <div className="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                  <div className="lg:col-span-7 space-y-3">
-                    <div className="font-mono text-xs text-emerald-700 dark:text-emerald-400 font-semibold">
-                      {proj.enTitle}
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold font-serif text-[#141815] dark:text-[#EFF2EE]">
-                      {proj.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-[#4E5650] dark:text-[#99A29B] leading-relaxed">
-                      {proj.summary}
-                    </p>
-                    <div className="pt-3 flex flex-wrap gap-3">
-                      {proj.secondaryAction === "external" ? (
-                        <a
-                          href={proj.primaryLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F1410] dark:bg-[#F3F5F2] text-white dark:text-[#0F1410] font-sans font-medium text-xs tracking-wide hover:opacity-90 transition-opacity"
-                        >
-                          {proj.primaryLabel}
-                        </a>
-                      ) : (
-                        <Link
-                          href={proj.primaryLink}
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F1410] dark:bg-[#F3F5F2] text-white dark:text-[#0F1410] font-sans font-medium text-xs tracking-wide hover:opacity-90 transition-opacity"
-                        >
-                          {proj.primaryLabel}
-                        </Link>
-                      )}
-
-                      {proj.secondaryAction === "copy-mcp" && (
-                        <button
-                          onClick={handleCopyMcp}
-                          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#D5DDD2] dark:border-[#2C372F] text-xs font-mono font-medium hover:border-emerald-500/50 transition-colors"
-                        >
-                          {copiedMcp ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                          {copiedMcp ? "已复制 MCP 协议配置" : "复制 MCP 协议配置"}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* 右侧：规格指标列表 (dsgnbyhl 标尺) */}
-                  <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-[#EAEFE7] dark:border-[#1E2520] pt-4 lg:pt-0 lg:pl-8 grid grid-cols-2 gap-4 font-mono">
-                    {proj.specs.map((sp, idx) => (
-                      <div key={idx} className="p-3 rounded-lg bg-[#FAFBF9] dark:bg-[#131915] border border-[#EAEFE7] dark:border-[#1F2620]">
-                        <div className="text-[11px] text-[#717A73] dark:text-[#8D968F] mb-1">
-                          {sp.label}
-                        </div>
-                        <div className="text-sm font-bold text-[#141815] dark:text-[#E8EAE6]">
-                          {sp.val}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================
           SECTION 04: WRITING · 实战手记 (致敬 arbatov.dev)
           ======================================================== */}
-      <section id="writing" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621]">
+      <section id="writing" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621] bg-[#F7F9F6] dark:bg-[#0E1310]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
@@ -813,7 +847,7 @@ export function ModernFounderHome() {
       {/* ========================================================
           SECTION 05: LET'S TALK & ELSEWHERE · 即时联络 (致敬 somehowliving.tech & arbatov)
           ======================================================== */}
-      <section id="contact" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621] bg-[#F7F9F6] dark:bg-[#0E1310]">
+      <section id="contact" className="py-16 sm:py-24 border-t border-[#E5E8E2] dark:border-[#1F2621]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-2xl sm:rounded-3xl border border-[#DFE4DC] dark:border-[#222C24] bg-white dark:bg-[#111713] p-8 sm:p-12 shadow-xl relative overflow-hidden">
             {/* 取景器角标 */}
@@ -835,7 +869,7 @@ export function ModernFounderHome() {
                   做点有趣且真实的事。
                 </h2>
                 <p className="text-sm sm:text-base text-[#4A534D] dark:text-[#A1ABA4] leading-relaxed max-w-xl">
-                  无论是讨论前端 UI/UX 设计系统、Agent 自动化工作流，还是实体商业流量合作，随时欢迎直接与狗哥打个招呼。
+                  无论你是想让门店接入「饿狸」AI 获客工具，还是讨论「Salin UI」前端设计系统与 Agent 自动化工作流，随时欢迎直接与狗哥打个招呼。
                 </p>
 
                 <div className="pt-2 flex flex-wrap gap-3 font-mono text-xs">
@@ -869,6 +903,13 @@ export function ModernFounderHome() {
                   // ELSEWHERE · 全网矩阵
                 </div>
                 <div className="space-y-2.5">
+                  <a
+                    href="/projects/eli"
+                    className="flex justify-between items-center p-3 rounded-lg bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors"
+                  >
+                    <span className="font-bold">旗舰主项目: 饿狸 (ELI) 获客工具</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
                   <a
                     href={siteConfig.github}
                     target="_blank"
