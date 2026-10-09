@@ -620,14 +620,16 @@ const AboutSection = ({ onOpenQr }: { onOpenQr: () => void }) => {
           className={`absolute ${totem.pos} z-10 group cursor-pointer flex flex-col items-center`}
         >
           <motion.div
-            animate={{ y: [0, i % 2 === 0 ? -12 : 12, 0] }}
+            animate={{ y: [0, i % 2 === 0 ? -10 : 10, 0] }}
             transition={{ repeat: Infinity, duration: 4 + i, ease: "easeInOut" }}
-            className="relative w-[110px] sm:w-[160px] md:w-[210px] aspect-square transition-transform group-hover:scale-110 drop-shadow-[0_15px_35px_rgba(0,0,0,0.8)]"
+            className="relative w-[110px] sm:w-[150px] md:w-[190px] aspect-square transition-transform group-hover:scale-110 drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]"
           >
+            {/* 3D 悬浮霓虹环境光 */}
+            <div className="absolute inset-2 rounded-full bg-emerald-500/15 blur-xl -z-10 group-hover:bg-emerald-400/25 transition-all" />
             <img
               src={totem.image}
               alt={totem.name}
-              className="w-full h-full object-contain pointer-events-none"
+              className="w-full h-full object-contain pointer-events-none drop-shadow-lg"
             />
           </motion.div>
 
@@ -751,13 +753,24 @@ const Card = ({
   index: number;
   totalCards: number;
 }) => {
-  const cardRef = useRef(null);
+  const trackRef = useRef(null);
+  // 精准卡片层叠物理算法：当当前卡片到达粘滞吸附点后，随着向下滚动，在下一张卡片滑上来的过程中顺滑微缩放
   const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "start start"],
+    target: trackRef,
+    offset: ["start start", "end start"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1 - (totalCards - 1 - index) * 0.03]);
+  // 当前卡片在后续卡片滑过时从 1 缩放到 0.94，呈现真实的扑克物理叠层效果
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [1, 1 - (totalCards - 1 - index) * 0.045]
+  );
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.9, 1],
+    [1, 0.9, index === totalCards - 1 ? 1 : 0.6]
+  );
 
   // 饿狸 AI 模拟交互状态
   const [activeEliPrompt, setActiveEliPrompt] = useState(0);
@@ -779,13 +792,16 @@ const Card = ({
 
   return (
     <div
-      ref={cardRef}
-      className="md:sticky md:h-[88vh] flex items-center justify-center w-full py-4 md:py-0"
-      style={{ top: `${80 + index * 24}px` }}
+      ref={trackRef}
+      className="relative w-full h-[95vh] md:h-[110vh] flex items-start justify-center pb-12 md:pb-24"
     >
       <motion.div
-        style={{ scale }}
-        className="w-full max-w-6xl min-h-[580px] md:h-full md:max-h-[820px] bg-[#0C0C0C] rounded-[28px] sm:rounded-[44px] md:rounded-[56px] border-2 border-[#D7E2EA] p-5 sm:p-7 md:p-8 flex flex-col justify-between gap-4 shadow-2xl relative overflow-hidden"
+        style={{
+          scale,
+          opacity,
+          top: `${80 + index * 20}px`,
+        }}
+        className="sticky w-full max-w-5xl lg:max-w-6xl h-[70vh] md:h-[72vh] max-h-[640px] bg-[#0C0C0C] rounded-[28px] sm:rounded-[36px] md:rounded-[48px] border-2 border-[#D7E2EA] p-5 sm:p-6 md:p-8 flex flex-col justify-between gap-3 sm:gap-4 shadow-[0_-20px_50px_rgba(0,0,0,0.95)] overflow-hidden z-[10]"
       >
         {/* 卡片头部 */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-3 shrink-0 border-b border-[#D7E2EA]/15 pb-3">
