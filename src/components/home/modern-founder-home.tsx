@@ -134,6 +134,91 @@ const CONVERSATION_STARTERS = [
   "你好狗哥，看了你的 12 年餐饮经历，想交流下本地生活与自媒体",
 ];
 
+// 十二年创业历程四阶段交互数据
+const ODYSSEY_STAGES = [
+  {
+    id: "2014-origin",
+    step: "01",
+    era: "2014.04.01",
+    tag: "THE APRIL FOOL'S ORIGIN",
+    title: "创业的愚人节 · 从 0 到 1 创立《舌尖上的临沂》",
+    role: "初创者 · 本地美食自媒体拓荒者",
+    quote: "“创业就像开了一个天大的愚人节玩笑，我用它拉开了长达十二年对商业摸爬滚打的序幕。”",
+    desc: "在地方微信自媒体刚刚萌芽的时代，拿着相机和纸笔走街串巷。从零起步创立《舌尖上的临沂》，开辟了临沂本地美食与生活消费的第一线矩阵阵地。",
+    metrics: [
+      { label: "开局节点", value: "2014.04.01" },
+      { label: "初创初心", value: "吃遍临沂" },
+      { label: "官方图腾", value: "饿鱼吃包子" },
+    ],
+    primaryImage: "/images/portrait/salin-2017-flag-full.jpg",
+    logoBadge: "/images/brand/eyu-official-hi-res.png",
+    badgeTitle: "2014 饿鱼图腾 · 舌尖上的临沂",
+    stamp: "LINYI // 2014.04.01 FOUNDING ODYSSEY",
+    accent: "from-amber-400 to-emerald-400",
+  },
+  {
+    id: "2014-2021-service",
+    step: "02",
+    era: "2014 — 2021",
+    tag: "2000+ MERCHANTS SERVED",
+    title: "餐饮服务者 · 七年深耕服务超 2000+ 实体餐饮",
+    role: "餐饮自媒体主力军 · 探店与营销服务者",
+    quote: "“吃了整整 7 年的大街小巷，见证了 2000 多家小店的排队火爆与黯然退场。实体老板有多难，我亲眼看了 7 年。”",
+    desc: "公众号矩阵累计深度服务超 2000 家本地实体餐饮。做爆款策划、写探店推文、推排队引流套餐，亲眼见证餐饮老板每一个营销无助与获客焦虑的真实痛点。",
+    metrics: [
+      { label: "服务门店", value: "2,000+ 家" },
+      { label: "深耕时间", value: "整整 7 年" },
+      { label: "实战策划", value: "1,500+ 场" },
+    ],
+    primaryImage: "/images/portrait/salin-2017-food.png",
+    logoBadge: "/images/brand/shejian-official-hi-res.png",
+    badgeTitle: "舌尖上的临沂 · 官方印鉴",
+    stamp: "LINYI // 2017.06.18 HOTPOT EXPEDITION",
+    accent: "from-emerald-400 to-teal-300",
+  },
+  {
+    id: "2021-2025-practice",
+    step: "03",
+    era: "2021 — 2025.H2",
+    tag: "IN THE TRENCHES · OWNED SHOPS",
+    title: "餐饮从业者 · 躬身开店四年，从岸上变成店老板",
+    role: "实体餐饮店主 · 亲自下场管店",
+    quote: "“从岸上的看客下场变成水里的游泳者。亲自算毛利、抠损耗、顶房租、带员工，只有真金白银亏过赚过，才知开店之艰。”",
+    desc: "整整四年亲力亲为开店经营。站在吧台后抓出品、守在后厨抓品控、半夜算当天的毛利与物料损耗。彻底打破纸上谈兵的局外视角，深刻理解每天的跑冒滴漏与真实获客成本。",
+    metrics: [
+      { label: "亲自开店", value: "整整 4 年" },
+      { label: "身份蜕变", value: "服务者 → 从业者" },
+      { label: "核心体悟", value: "毛利与损耗" },
+    ],
+    primaryImage: "/images/evidence/kitchen-frontline.png",
+    logoBadge: "/images/brand/eyu-official-hi-res.png",
+    badgeTitle: "一线后厨实操物证",
+    stamp: "IN THE TRENCHES // 2021-2025 KITCHEN OPS",
+    accent: "from-orange-400 to-amber-300",
+  },
+  {
+    id: "2026-rebirth",
+    step: "04",
+    era: "2026 NOW",
+    tag: "AI × REAL COMMERCE",
+    title: "认知觉醒 · 重返服务者，自研 AI 饿狸彻底破局",
+    role: "AI 获客工具主理人 · 实体商业认知赋能者",
+    quote: "“这次回到餐饮服务者行列，带来的是对实体商业完全通透的认知。让自研 AI（饿狸）不再悬浮，真正帮餐饮人解决获客难题！”",
+    desc: "将 12 年的餐饮服务经验、实体开店血泪，与全栈 AI 代码工程深度融合。打造「饿狸 (youeli.com)」，把复杂的营销推演和内容日历做成小老板一键能用的工具流水线。",
+    metrics: [
+      { label: "旗舰产品", value: "饿狸 youeli.com" },
+      { label: "技术军火", value: "252+ Salin UI" },
+      { label: "终极使命", value: "让 AI 斩断实体痛点" },
+    ],
+    primaryImage: "/images/projects/eli/eli-scene-kitchen.jpg",
+    logoBadge: "/images/brand/eyu-official-hi-res.png",
+    badgeTitle: "饿狸 ELI · 2026 实体 AI 武器",
+    stamp: "COGNITIVE REBIRTH // 2026 AI × MERCHANTS",
+    accent: "from-emerald-300 to-cyan-300",
+  },
+];
+
+
 export function ModernFounderHome() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [timeStr, setTimeStr] = useState("");
@@ -145,6 +230,7 @@ export function ModernFounderHome() {
   const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
   const [selectedToy, setSelectedToy] = useState<typeof DESK_TOYS[0]>(DESK_TOYS[0]);
   const [activeEliScene, setActiveEliScene] = useState<typeof ELI_SCENES[0]>(ELI_SCENES[0]);
+  const [activeOdysseyStage, setActiveOdysseyStage] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const totalSlides = 5;
@@ -490,130 +576,227 @@ export function ModernFounderHome() {
 
         <section
           id="slide-1"
-          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8 bg-gradient-to-b from-[#050806] via-[#080d09] to-[#050806]"
+          className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-between px-6 sm:px-14 lg:px-20 2xl:px-28 pt-18 pb-6 bg-gradient-to-b from-[#050806] via-[#070d09] to-[#050806]"
         >
-          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/20 select-none">[02]</div>
-          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/20 select-none">
-            ARCHIVE // 2014—2026
+          {/* 取景器四角标记 */}
+          <div className="absolute top-18 left-6 sm:left-12 font-mono text-xs text-white/30 select-none z-20">[02]</div>
+          <div className="absolute top-18 right-6 sm:right-12 font-mono text-xs text-white/30 select-none z-20">
+            THE 12-YEAR ARCHIVE // 2014—2026
           </div>
 
-          <div className="w-full px-6 sm:px-14 lg:px-20 2xl:px-28 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-            {/* 左侧 (45%)：2017 实拍热气腾腾大照片 + 官方高保真饿鱼 Logo (X盘源文件) */}
-            <div className="lg:col-span-5 flex flex-col items-center">
-              <div className="relative w-full aspect-[4/5] max-h-[58vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black group">
-                <Image
-                  src="/images/portrait/salin-2017-food.png"
-                  alt="2017年舌尖上的临沂热气腾腾实拍"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-
-                {/* 饿鱼 2014 正版官方 Logo 标牌 (来自 X:\舌尖上的临沂\【logo】) */}
-                <div className="absolute top-4 left-4 flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-black/85 border border-emerald-500/40 backdrop-blur-md shadow-xl">
-                  <div className="relative w-9 h-9 rounded-full overflow-hidden bg-white/10 p-0.5">
-                    <Image
-                      src="/images/brand/eyu-official-hi-res.png"
-                      alt="2014 饿鱼官方Logo"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                  <div>
-                    <div className="font-mono text-xs font-bold text-white flex items-center gap-1">
-                      <span>饿鱼 · EYU</span>
-                      <span className="text-[10px] text-emerald-400">2014 ORIGIN</span>
-                    </div>
-                    <div className="text-[10px] text-white/60">《舌尖上的临沂》官方图腾</div>
-                  </div>
-                </div>
-
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/70">
-                  <span className="px-2 py-0.5 rounded bg-black/70 border border-white/10">
-                    [ EXPOSURE // 2017.06.18 LINYI ]
-                  </span>
-                  <span className="text-emerald-400">实拍真实烟火</span>
-                </div>
-              </div>
-            </div>
-
-            {/* 右侧 (55%)：垂直时间阶梯轴 */}
-            <div className="lg:col-span-7 flex flex-col justify-center space-y-4">
+          {/* 顶栏：全屏横向动态穿梭时光轨 (4 大阶段交互药丸切换器) */}
+          <div className="relative z-20 w-full pt-1 pb-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2.5 border-b border-white/10">
               <div>
-                <div className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wider mb-1">
-                  <Clock className="w-3.5 h-3.5" />
-                  THE 12-YEAR FOUNDER ODYSSEY
+                <div className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wider">
+                  <Clock className="w-3.5 h-3.5 animate-pulse" />
+                  INTERACTIVE TIME CAPSULE // 十二年实战演进时光轨
                 </div>
-                <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                  创业开了一个愚人节玩笑，
-                  <br />
-                  我用十二年把它变成对实体商业的敬畏。
+                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight pt-0.5">
+                  从餐饮服务者，到餐饮从业者，再重返服务者。
                 </h2>
               </div>
 
-              <div className="space-y-2.5 font-sans">
-                {/* 阶段 1 */}
-                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 transition-colors">
-                  <div className="flex items-center justify-between font-mono text-xs text-emerald-400 mb-0.5">
-                    <span className="font-bold">2014.04.01 · 创业的愚人节</span>
-                    <span className="text-white/40">STAGE 01</span>
-                  </div>
-                  <p className="text-xs text-white/80 leading-relaxed">
-                    创业就像开了一个天大的愚人节玩笑。从 0 到 1 创立《舌尖上的临沂》，投身地方自媒体浪潮。
-                  </p>
-                </div>
-
-                {/* 阶段 2 */}
-                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 transition-colors">
-                  <div className="flex items-center justify-between font-mono text-xs text-emerald-400 mb-0.5">
-                    <span className="font-bold">2014 — 2021 · 餐饮服务者 (7年深耕)</span>
-                    <span className="text-white/40">2,000+ RESTAURANTS</span>
-                  </div>
-                  <p className="text-xs text-white/80 leading-relaxed">
-                    自媒体矩阵累计服务超 2000 家餐饮，亲眼见证餐饮老板每一个营销、流量与生存痛点。
-                  </p>
-                </div>
-
-                {/* 阶段 3 */}
-                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-emerald-500/30 transition-colors">
-                  <div className="flex items-center justify-between font-mono text-xs text-amber-400 mb-0.5">
-                    <span className="font-bold">2021 — 2025 · 餐饮从业者 (4年躬身开店)</span>
-                    <span className="text-white/40">IN THE TRENCHES</span>
-                  </div>
-                  <p className="text-xs text-white/80 leading-relaxed">
-                    从岸上服务者下场变成水里的店老板。亲自管店、抓品控、算损耗，体会每天跑冒滴漏之苦。
-                  </p>
-                </div>
-
-                {/* 阶段 4 */}
-                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/40 hover:border-emerald-500/60 transition-colors">
-                  <div className="flex items-center justify-between font-mono text-xs text-emerald-300 mb-0.5">
-                    <span className="font-bold">2026 · 认知觉醒，重返服务者</span>
-                    <span className="text-emerald-400">AI × MERCHANTS</span>
-                  </div>
-                  <p className="text-xs text-emerald-100 leading-relaxed">
-                    带着对实体商业刻骨铭心的深度认知与自研 AI 重新杀回服务者行列。打造「饿狸」，彻底斩断获客困境！
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-1 flex items-center justify-between font-mono text-xs text-white/50">
-                <span>“只有真刀真枪开过店的人，做出的 AI 才不飘。”</span>
+              {/* 阶段快速切换按钮 */}
+              <div className="flex items-center gap-1.5 font-mono text-xs">
+                <span className="text-white/40 text-[11px] mr-2">
+                  [{String(activeOdysseyStage + 1).padStart(2, "0")} / 04 纪元]
+                </span>
                 <button
-                  onClick={() => scrollToSlide(2)}
-                  className="text-emerald-400 hover:text-emerald-300 font-bold inline-flex items-center gap-1 cursor-pointer"
+                  onClick={() => setActiveOdysseyStage((prev) => (prev > 0 ? prev - 1 : ODYSSEY_STAGES.length - 1))}
+                  className="px-2.5 py-1 rounded-lg border border-white/20 bg-white/[0.05] hover:bg-white/[0.12] text-white transition-colors cursor-pointer"
+                  title="上一纪元"
                 >
-                  前往饿狸 (youeli.com) →
+                  ← 上一阶段
+                </button>
+                <button
+                  onClick={() => setActiveOdysseyStage((prev) => (prev < ODYSSEY_STAGES.length - 1 ? prev + 1 : 0))}
+                  className="px-2.5 py-1 rounded-lg border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-bold transition-colors cursor-pointer"
+                  title="下一纪元"
+                >
+                  下一阶段 →
                 </button>
               </div>
+            </div>
+
+            {/* 横向横跨的 4 大阶段时光刻度按钮条 (全屏铺开) */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 pt-2.5">
+              {ODYSSEY_STAGES.map((stg, idx) => {
+                const isActive = activeOdysseyStage === idx;
+                return (
+                  <button
+                    key={stg.id}
+                    onClick={() => setActiveOdysseyStage(idx)}
+                    className={`relative p-2.5 sm:p-3 rounded-xl border text-left transition-all duration-300 cursor-pointer group ${
+                      isActive
+                        ? "border-emerald-400 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.25)]"
+                        : "border-white/10 bg-white/[0.02] hover:border-white/30 hover:bg-white/[0.05]"
+                    }`}
+                  >
+                    {isActive && (
+                      <span className="absolute -top-[1px] left-3 right-3 h-[2px] bg-emerald-400 rounded-full shadow-[0_0_8px_#10b981]" />
+                    )}
+                    <div className="flex items-center justify-between font-mono text-xs mb-1">
+                      <span className={`font-bold ${isActive ? "text-emerald-400" : "text-white/60"}`}>
+                        STAGE {stg.step}
+                      </span>
+                      <span className={`text-[10px] ${isActive ? "text-emerald-300 font-bold" : "text-white/40"}`}>
+                        {stg.era}
+                      </span>
+                    </div>
+                    <div className="font-sans text-xs font-bold text-white line-clamp-1 group-hover:text-emerald-300 transition-colors">
+                      {stg.title.split(" · ")[0]}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 中间核心：大舞台双翼联动 (随当前阶段平滑切换大图与深度叙事) */}
+          {(() => {
+            const currentStage = ODYSSEY_STAGES[activeOdysseyStage];
+            return (
+              <div
+                key={currentStage.id}
+                className="relative z-20 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 items-center my-auto animate-in fade-in zoom-in-95 duration-300"
+              >
+                {/* 左翼 (50%)：巨幕实拍档案大图展示 (平滑联动切换) */}
+                <div className="lg:col-span-6 flex flex-col items-center">
+                  <div className="relative w-full aspect-[16/10] max-h-[46vh] rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black group">
+                    <Image
+                      src={currentStage.primaryImage}
+                      alt={currentStage.title}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+
+                    {/* 正版官方 Logo 标牌 (动态对应阶段) */}
+                    <div className="absolute top-4 left-4 flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-black/85 border border-emerald-500/40 backdrop-blur-md shadow-xl">
+                      <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white/10 p-0.5">
+                        <Image
+                          src={currentStage.logoBadge}
+                          alt={currentStage.badgeTitle}
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <div>
+                        <div className="font-mono text-xs font-bold text-white flex items-center gap-1.5">
+                          <span>{currentStage.badgeTitle}</span>
+                          <span className="text-[10px] text-emerald-400">STAGE {currentStage.step}</span>
+                        </div>
+                        <div className="text-[10px] text-white/60">{currentStage.role}</div>
+                      </div>
+                    </div>
+
+                    {/* 照片底部参数 */}
+                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-[11px] text-white/70">
+                      <span className="px-2 py-0.5 rounded bg-black/75 border border-white/10">
+                        [ {currentStage.stamp} ]
+                      </span>
+                      <span className="text-emerald-400 font-bold hidden sm:inline">
+                        ● 纪元存档物证
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 右翼 (50%)：大字号纪元主标题、独白与三项核心指标 */}
+                <div className="lg:col-span-6 flex flex-col justify-center space-y-3 text-left">
+                  <div className="space-y-1">
+                    <div className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wider">
+                      <span className="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 font-bold">
+                        {currentStage.tag}
+                      </span>
+                      <span className="text-white/40">/</span>
+                      <span className="text-white/70">{currentStage.role}</span>
+                    </div>
+
+                    <div className="text-3xl sm:text-5xl font-black font-mono tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-white to-white/80">
+                      {currentStage.era}
+                    </div>
+
+                    <h3 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
+                      {currentStage.title}
+                    </h3>
+                  </div>
+
+                  {/* 真实感悟语录框 */}
+                  <div className="p-2.5 sm:p-3 rounded-xl bg-white/[0.03] border-l-2 border-emerald-400 border-y border-r border-white/10 font-sans">
+                    <p className="text-xs sm:text-sm text-emerald-100 italic leading-relaxed">
+                      {currentStage.quote}
+                    </p>
+                  </div>
+
+                  {/* 深度叙事段落 */}
+                  <p className="text-xs text-white/75 leading-relaxed font-sans">
+                    {currentStage.desc}
+                  </p>
+
+                  {/* 该纪元 3 项硬核数据 */}
+                  <div className="grid grid-cols-3 gap-2 font-mono text-xs pt-1 border-t border-white/10">
+                    {currentStage.metrics.map((m, i) => (
+                      <div key={i} className="p-2 rounded-lg bg-white/[0.02] border border-white/5">
+                        <div className="text-white/40 text-[10px]">{m.label}</div>
+                        <div className="text-sm font-bold text-emerald-300 pt-0.5">{m.value}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* 快速下一步 */}
+                  <div className="flex items-center gap-3 pt-1">
+                    {activeOdysseyStage < 3 ? (
+                      <button
+                        onClick={() => setActiveOdysseyStage(activeOdysseyStage + 1)}
+                        className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs inline-flex items-center gap-1.5 transition-all cursor-pointer shadow-md hover:scale-105"
+                      >
+                        <span>检视下一阶段：{ODYSSEY_STAGES[activeOdysseyStage + 1].era}</span>
+                        <ChevronDown className="w-3.5 h-3.5 -rotate-90" />
+                      </button>
+                    ) : (
+                      <a
+                        href="https://youeli.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-mono text-xs inline-flex items-center gap-1.5 transition-all cursor-pointer shadow-md hover:scale-105"
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>体验 2026 旗舰成果：饿狸 (youeli.com) ↗</span>
+                      </a>
+                    )}
+                    <button
+                      onClick={() => scrollToSlide(2)}
+                      className="text-white/60 hover:text-white font-mono text-xs transition-colors cursor-pointer"
+                    >
+                      跳过直接看产品 →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* 底部全宽进度刻度 */}
+          <div className="relative z-20 w-full pt-2 flex items-center justify-between border-t border-white/10 font-mono text-xs text-white/40">
+            <div className="flex items-center gap-3">
+              <span>ODYSSEY TRACK // 2014 愚人节</span>
+              <div className="w-32 h-1 bg-white/10 rounded-full overflow-hidden hidden sm:block">
+                <div
+                  className="h-full bg-emerald-400 transition-all duration-500 shadow-[0_0_8px_#10b981]"
+                  style={{ width: `${((activeOdysseyStage + 1) / 4) * 100}%` }}
+                />
+              </div>
+              <span>2026 饿狸 AI</span>
+            </div>
+            <div className="text-[11px] text-emerald-400">
+              ● 点击上方药丸刻度或按钮穿梭时光纪元
             </div>
           </div>
         </section>
 
-        {/* ============================================================ */}
-        {/* SLIDE 03: 旗舰项目 · 饿狸 (实战 3D 餐饮场景切换与标语) */}
-        {/* ============================================================ */}
         <section
           id="slide-2"
           className="w-full h-screen min-h-[680px] snap-start snap-always relative overflow-hidden flex flex-col justify-center px-4 sm:px-12 lg:px-20 pt-16 pb-8 bg-gradient-to-b from-[#050806] via-[#08120d] to-[#050806]"
