@@ -744,11 +744,11 @@ const Card = ({ project, index, totalCards }: any) => {
     <div
       ref={cardRef}
       className="sticky h-[85vh] flex items-center justify-center w-full"
-      style={{ top: `${96 + index * 28}px` }}
+      style={{ top: `${96 + index * 28}px`, zIndex: index + 10 }}
     >
       <motion.div
         style={{ scale }}
-        className="w-full max-w-6xl h-full max-h-[800px] bg-[#0C0C0C] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8 flex flex-col gap-6"
+        className="w-full max-w-6xl h-full max-h-[800px] bg-[#0C0C0C] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8 flex flex-col gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.9)]"
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 shrink-0">
           <div className="flex items-center gap-6">
@@ -915,7 +915,7 @@ export function ModernFounderHome() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0C0C0C] text-[#D7E2EA] font-kanit selection:bg-[#D7E2EA] selection:text-[#0C0C0C] overflow-x-clip relative">
+    <div className="min-h-screen bg-[#0C0C0C] text-[#D7E2EA] font-kanit selection:bg-[#D7E2EA] selection:text-[#0C0C0C] relative">
       {/* 核心段落 */}
       <HeroSection onOpenQr={() => setShowQrModal(true)} onReplayOpening={triggerOpening} />
       <MarqueeSection />
