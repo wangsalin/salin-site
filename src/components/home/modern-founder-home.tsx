@@ -743,38 +743,32 @@ const ServicesSection = () => {
   );
 };
 
-// 数字军火库单卡：纯粹、高级的扑克式物理层叠设计
+// 数字军火库单卡：对标 Olivier Larose / Awwwards 顶尖交互的物理层叠卡片 (Cards Parallax)
 const Card = ({
+  i,
   project,
-  index,
-  totalCards,
+  progress,
+  range,
+  targetScale,
 }: {
+  i: number;
   project: (typeof PROJECTS_DATA)[number];
-  index: number;
-  totalCards: number;
+  progress: any;
+  range: [number, number];
+  targetScale: number;
 }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "start start"],
-  });
-
-  // 优雅物理层叠微缩放：卡片到达粘滞点后随滚动自然微缩放 (1 -> 0.94)，呈现极佳的空间纵深感
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [1, 1 - (totalCards - 1 - index) * 0.035]
-  );
+  // 根据滚动进度驱动平滑缩放与深度空间感
+  const scale = useTransform(progress, range, [1, targetScale]);
 
   return (
-    <div
-      ref={cardRef}
-      className="sticky h-[80vh] sm:h-[82vh] max-h-[740px] flex items-center justify-center w-full"
-      style={{ top: `${76 + index * 26}px` }}
-    >
+    <div className="h-screen flex items-center justify-center sticky top-0 px-4 sm:px-8 md:px-12 pointer-events-none">
       <motion.div
-        style={{ scale }}
-        className="w-full max-w-6xl h-full bg-[#0C0C0C] rounded-[32px] sm:rounded-[44px] md:rounded-[56px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8 flex flex-col justify-between gap-4 md:gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.95)] overflow-hidden"
+        style={{
+          scale,
+          top: `calc(4vh + ${i * 28}px)`,
+          transformOrigin: "top center",
+        }}
+        className="w-full max-w-6xl h-[78vh] sm:h-[82vh] max-h-[720px] bg-[#0C0C0C] rounded-[32px] sm:rounded-[44px] md:rounded-[56px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8 flex flex-col justify-between gap-4 md:gap-6 shadow-[0_-25px_60px_rgba(0,0,0,0.95)] overflow-hidden relative pointer-events-auto"
       >
         {/* 卡片头部 */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 sm:gap-4 shrink-0 border-b border-[#D7E2EA]/15 pb-3 sm:pb-4">
@@ -837,21 +831,41 @@ const Card = ({
   );
 };
 
-// 数字军火库 (Arsenal) - 纯粹、优雅的多卡物理层叠交互
+// 数字军火库 (Arsenal) - Awwwards 级平滑物理卡片堆叠与翻页交互
 const ProjectsSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
   return (
     <section
+      ref={containerRef}
       id="projects"
-      className="bg-[#0C0C0C] rounded-t-[36px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 relative px-4 sm:px-8 md:px-10 py-20 pb-44 w-full select-none"
+      className="bg-[#0C0C0C] rounded-t-[36px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 relative pt-20 pb-28 w-full select-none"
     >
-      <h2 className="hero-heading font-black uppercase text-center text-[clamp(2.8rem,11vw,150px)] mb-16 sm:mb-20 md:mb-28 leading-none">
-        Arsenal
-      </h2>
+      <div className="sticky top-6 z-0 text-center mb-6 pointer-events-none">
+        <h2 className="hero-heading font-black uppercase text-[clamp(2.8rem,11vw,150px)] leading-none inline-block">
+          Arsenal
+        </h2>
+      </div>
 
-      <div className="flex flex-col">
-        {PROJECTS_DATA.map((proj, i) => (
-          <Card key={i} project={proj} index={i} totalCards={PROJECTS_DATA.length} />
-        ))}
+      <div className="relative">
+        {PROJECTS_DATA.map((project, i) => {
+          const targetScale = 1 - (PROJECTS_DATA.length - 1 - i) * 0.05;
+          const start = i * 0.33;
+          return (
+            <Card
+              key={i}
+              i={i}
+              project={project}
+              progress={scrollYProgress}
+              range={[start, 1]}
+              targetScale={targetScale}
+            />
+          );
+        })}
       </div>
     </section>
   );
