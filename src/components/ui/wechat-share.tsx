@@ -5,13 +5,13 @@ import { siteConfig } from "@/data/site";
 
 export function WeChatShare() {
   useEffect(() => {
-    // Only execute inside WeChat browser
+    // 仅在微信内置浏览器环境中执行
     if (typeof window === "undefined") return;
     const ua = navigator.userAgent.toLowerCase();
     const isWeChat = /micromessenger/.test(ua);
     if (!isWeChat) return;
 
-    // URL to sign must match current page URL without hash (#)
+    // 微信签名 URL 必须匹配当前去掉 hash 的完整 URL
     const currentUrl = window.location.href.split("#")[0];
 
     fetch(`/api/wechat/jssdk?url=${encodeURIComponent(currentUrl)}`)
@@ -31,30 +31,30 @@ export function WeChatShare() {
         });
 
         wx.ready(() => {
-          // 1. 分享给朋友 (Send to Chat)
+          // 1. 分享给朋友 (Send to WeChat Chat)
           wx.updateAppMessageShareData({
-            title: siteConfig.title,
-            desc: siteConfig.description,
+            title: "Salin · 狗哥 | 12年餐饮老炮的 AI 实战独立站",
+            desc: "从服务2000+餐饮实体到自研AI商业化落地。认准了就走到底，做点有趣且真实的事。",
             link: siteConfig.url,
-            imgUrl: siteConfig.wechatThumb,
+            imgUrl: `${siteConfig.url}/images/wechat-share-thumb.jpg`,
             success: () => {
-              // Successfully registered share data
+              // 成功注册好友分享卡片
             },
           });
 
           // 2. 分享到朋友圈 (Share to Moments)
           wx.updateTimelineShareData({
-            title: `${siteConfig.brandName}｜${siteConfig.role}`,
+            title: "Salin · 狗哥 | 12年创业摸爬滚打，把餐饮实战方法论写进自研 AI",
             link: siteConfig.url,
-            imgUrl: siteConfig.wechatThumb,
+            imgUrl: `${siteConfig.url}/images/wechat-share-thumb.jpg`,
             success: () => {
-              // Successfully registered timeline share data
+              // 成功注册朋友圈分享卡片
             },
           });
         });
       })
       .catch(() => {
-        // Silently fail if API is unreachable
+        // 静默降级：由页面内首图与 meta itemprop 兜底抓取
       });
   }, []);
 
