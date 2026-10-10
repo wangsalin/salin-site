@@ -163,7 +163,7 @@ const DESK_TOTEMS = [
     subtitle: "MILK TEA // LOCAL BEVERAGE",
     desc: "走街串巷吃遍临沂，探店两千家实体餐饮的烟火记忆。",
     image: "/images/assets/3d-milktea.png",
-    pos: "top-[4%] left-[2%] sm:left-[3%]",
+    style: { top: "3%", left: "3%" },
     tag: "餐饮烟火",
   },
   {
@@ -172,7 +172,7 @@ const DESK_TOTEMS = [
     subtitle: "STREET FOOD // MERCHANTS",
     desc: "后厨滋滋作响的热气，见证无数小店老板的坚韧奋斗。",
     image: "/images/assets/3d-snack.png",
-    pos: "top-[4%] right-[2%] sm:right-[3%]",
+    style: { top: "3%", right: "3%" },
     tag: "深耕实战",
   },
   {
@@ -181,7 +181,7 @@ const DESK_TOTEMS = [
     subtitle: "ANIME HERO // LUFFY FIGURE",
     desc: "桌面常伴的草帽海贼王：认准了航向就一往无前走到底。",
     image: "/images/assets/3d-figure.png",
-    pos: "bottom-[6%] left-[2%] sm:left-[4%]",
+    style: { bottom: "4%", left: "3%" },
     tag: "少年纯粹",
   },
   {
@@ -190,77 +190,11 @@ const DESK_TOTEMS = [
     subtitle: "CYBER GAMING // GENJI & PAD",
     desc: "深夜敲代码与手柄对决，保持极客专注与极限操作。",
     image: "/images/assets/3d-game.png",
-    pos: "bottom-[6%] right-[2%] sm:right-[4%]",
+    style: { bottom: "4%", right: "3%" },
     tag: "硬核探索",
   },
 ];
 
-// 饿狸 AI 3 大实战推演题库
-const ELI_PROMPTS = [
-  {
-    id: "traffic",
-    label: "🔥 3公里客流引爆",
-    tag: "开业裂变打法",
-    question: "新开社区火锅店，开业前三天怎么利用社群与短视频引爆周边 3 公里客流？",
-    response: {
-      strategy: "【饿狸 3 公里透雨打法】：锁定周边 25 个成熟小区物业群，实施『邻里抢鲜内测券』+ 抖音同城 50 位本地达人阶梯佣金爆破。",
-      copy: "“临沂街坊邻居，我们把后厨底料熬透了！凭本条视频到店，首锅鲜切牛肉直接由老板请客，不限量送完即止。”",
-      metric: "预期首周引流 1,200+ 堂食桌次 · 真实获客成本降低 62%",
-    },
-  },
-  {
-    id: "campaign",
-    label: "❄️ 周二淡季裂变",
-    tag: "午市毛利优化",
-    question: "周二中午上座率不到 30%，如何设计不伤毛利的限时引流活动？",
-    response: {
-      strategy: "【饿狸 阶梯毛利拼团】：针对周边写字楼推出『双人午市元气包』，主打出餐 8 分钟以内的预制高毛利组合，绑定下周晚餐抵扣券锁定复购。",
-      copy: "“打工人的周二不该吃对付的盒饭！热气腾腾的招牌小锅仅限午市 11:30-13:30，吃完再送 20 元深夜食堂券。”",
-      metric: "午市翻台率提升 45% · 晚餐二阶段复购转化率达 28%",
-    },
-  },
-  {
-    id: "copy",
-    label: "✍️ 爆款探店推文",
-    tag: "沉浸五感文案",
-    question: "想在大众点评和小红书发打卡笔记，如何写出既真实自然又能过审的爆款推文？",
-    response: {
-      strategy: "【饿狸 沉浸五感文案算法】：抛弃死板推销词，从『深夜厨房的锅气声』『红油翻滚的气味』切入，以本地食客第一人称对话展开。",
-      copy: "“在临沂挖到这家藏在巷子深处的宝藏小馆！刚掀开帘子就被满屋热腾腾的牛骨香治愈了，老板亲自掌勺 10 年，第一口汤就鲜掉眉毛…”",
-      metric: "同城曝光率提升 3.8 倍 · 收藏与到店打卡转化率提升 55%",
-    },
-  },
-];
-
-// 狗哥资源库 4 大核心分类交互
-const GOUGE_CATEGORIES = [
-  {
-    id: "catering",
-    label: "实体餐饮全案",
-    count: "1,500+ 份",
-    desc: "从选址评估、开业筹备到淡旺季引流套餐方案完整打法。",
-  },
-  {
-    id: "sop",
-    label: "连锁运营 SOP",
-    count: "380+ 套",
-    desc: "后厨出品标准、前厅服务流程与店长每日巡店考核表。",
-  },
-  {
-    id: "scripts",
-    label: "爆款营销话术",
-    count: "820+ 篇",
-    desc: "朋友圈私域促单、大众点评好评引导与会员储值活动脚本。",
-  },
-  {
-    id: "video",
-    label: "探店短视频脚本",
-    count: "560+ 个",
-    desc: "同城探店达人拍摄镜头脚本、黄金前三秒吸睛文案范式。",
-  },
-];
-
-// 图四：真正换成我们自己的 3 大项目真实多联实景截图！
 const PROJECTS_DATA = [
   {
     num: "01",
@@ -366,55 +300,57 @@ const HeroSection = ({
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.6 }}
-        className="flex w-full items-center justify-between pt-4 md:pt-6 z-20"
+        className="flex w-full items-center justify-between pt-3 sm:pt-4 md:pt-6 z-20"
       >
-        <div className="flex items-center gap-4 sm:gap-6">
-          {/* 网站品牌名称 Logo */}
-          <a
-            href="#"
-            className="flex items-center gap-2 group text-left cursor-pointer"
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse" />
-            <span className="font-mono text-sm sm:text-base md:text-lg font-black tracking-wider text-white group-hover:text-emerald-400 transition-colors uppercase">
-              SALIN
-            </span>
-          </a>
-          <span className="text-white/20 font-mono text-xs hidden sm:inline">|</span>
+        {/* 左侧品牌 Logo */}
+        <a
+          href="#"
+          className="flex items-center gap-1.5 group text-left cursor-pointer shrink-0"
+        >
+          <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse" />
+          <span className="font-mono text-sm sm:text-base md:text-lg font-black tracking-wider text-white group-hover:text-emerald-400 transition-colors uppercase">
+            SALIN
+          </span>
+        </a>
+
+        {/* 中间核心导航链接：弹性间距，移动端舒展无重叠 */}
+        <div className="flex items-center gap-3.5 sm:gap-6 font-mono text-xs sm:text-sm font-medium uppercase tracking-wider">
           <a
             href="#about"
-            className="text-xs sm:text-sm md:text-base font-mono font-medium uppercase tracking-wider text-[#D7E2EA] transition-opacity hover:opacity-70"
+            className="text-[#D7E2EA] transition-opacity hover:opacity-70 whitespace-nowrap"
           >
             Odyssey
           </a>
           <a
             href="#services"
-            className="text-xs sm:text-sm md:text-base font-mono font-medium uppercase tracking-wider text-[#D7E2EA] transition-opacity hover:opacity-70"
+            className="text-[#D7E2EA] transition-opacity hover:opacity-70 whitespace-nowrap"
           >
-            饿狸 AI
+            饿狸
           </a>
           <a
             href="#projects"
-            className="text-xs sm:text-sm md:text-base font-mono font-medium uppercase tracking-wider text-[#D7E2EA] transition-opacity hover:opacity-70"
+            className="text-[#D7E2EA] transition-opacity hover:opacity-70 whitespace-nowrap"
           >
             Arsenal
           </a>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* 右侧微信号与微信扫码按钮 */}
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={onReplayOpening}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/10 hover:border-emerald-500/40 bg-white/[0.04] hover:bg-emerald-500/10 text-white/70 hover:text-emerald-300 font-mono text-xs transition-colors cursor-pointer"
+            className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 hover:border-emerald-500/40 bg-white/[0.04] hover:bg-emerald-500/10 text-white/70 hover:text-emerald-300 font-mono text-xs transition-colors cursor-pointer"
             title="重播电影开幕光效"
           >
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-            <span>电影开幕</span>
+            <span>开幕</span>
           </button>
           <button
             onClick={onOpenQr}
-            className="px-3.5 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+            className="px-3 sm:px-3.5 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-[0_0_12px_rgba(16,185,129,0.2)] whitespace-nowrap"
           >
             <Scan className="w-3.5 h-3.5" />
-            <span>微信 {siteConfig.wechat}</span>
+            <span>微信</span>
           </button>
         </div>
       </motion.nav>
@@ -596,7 +532,7 @@ const AboutSection = ({ onOpenQr }: { onOpenQr: () => void }) => {
       id="about"
       className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 md:px-12 py-24 bg-[#0C0C0C] overflow-hidden w-full text-center"
     >
-      {/* 4 大全新定制桌面精神物证饰件 (奶茶 / 小吃 / 手办 / 游戏) */}
+      {/* 4 大全新定制桌面精神物证饰件 (严格定位在屏幕四角，永不居中拥挤) */}
       {DESK_TOTEMS.map((totem, i) => (
         <motion.div
           key={totem.id}
@@ -604,7 +540,8 @@ const AboutSection = ({ onOpenQr }: { onOpenQr: () => void }) => {
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.1 * i, duration: 0.8 }}
           viewport={{ once: true }}
-          className={`absolute ${totem.pos} z-10 group cursor-pointer flex flex-col items-center`}
+          style={totem.style}
+          className="absolute z-10 group cursor-pointer flex flex-col items-center"
         >
           <motion.div
             animate={{ y: [0, i % 2 === 0 ? -10 : 10, 0] }}
@@ -1017,7 +954,7 @@ export function ModernFounderHome() {
           }`}
         >
           {/* 字母框与辉光轮廓 (现代雕塑体 Syne Monument) */}
-          <div className="relative font-black leading-none select-none uppercase font-monument tracking-[0.16em] text-[22vw] sm:text-[16vw]">
+          <div className="relative font-black leading-none select-none uppercase font-monument tracking-[0.16em] text-[13.5vw] sm:text-[16vw]">
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-emerald-300 drop-shadow-[0_0_90px_rgba(16,185,129,0.7)]">
               SALIN
             </span>
@@ -1032,7 +969,7 @@ export function ModernFounderHome() {
           </div>
 
           <div
-            className={`mt-4 sm:mt-6 flex items-center gap-2 font-mono text-[10px] sm:text-xs text-white/50 tracking-[0.4em] uppercase transition-opacity duration-500 ${
+            className={`mt-4 sm:mt-6 flex items-center gap-2 font-mono text-[10px] sm:text-xs text-white/50 tracking-[0.2em] sm:tracking-[0.4em] uppercase transition-opacity duration-500 ${
               openingStep === 1 ? "opacity-100" : "opacity-0"
             }`}
           >
