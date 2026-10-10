@@ -18,13 +18,23 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
+    images: [
+      {
+        url: `${siteConfig.url}/images/og-share-card.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "Salin · 12年创业者 / 饿狸主理人 / 独立开发者",
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
+    creator: siteConfig.twitterHandle,
+    site: siteConfig.twitterHandle,
+    images: [`${siteConfig.url}/images/og-share-card.jpg`],
   },
   robots: {
     index: true,
@@ -44,17 +54,20 @@ export default function RootLayout({
         <meta property="og:url" content={siteConfig.url} />
         <meta property="og:title" content={siteConfig.title} />
         <meta property="og:description" content={siteConfig.description} />
-        <meta property="og:image" content={siteConfig.ogImage} />
+        <meta property="og:image" content={`${siteConfig.url}/images/og-share-card.jpg`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:site_name" content={siteConfig.name} />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content={siteConfig.twitterHandle} />
+        <meta name="twitter:creator" content={siteConfig.twitterHandle} />
         <meta name="twitter:title" content={siteConfig.title} />
         <meta name="twitter:description" content={siteConfig.description} />
-        <meta name="twitter:image" content={siteConfig.ogImage} />
+        <meta name="twitter:image" content={`${siteConfig.url}/images/og-share-card.jpg`} />
         <meta itemProp="name" content={siteConfig.title} />
         <meta itemProp="description" content={siteConfig.description} />
-        <meta itemProp="image" content={siteConfig.wechatThumb} />
+        <meta itemProp="image" content={`${siteConfig.url}/images/wechat-share-300.jpg`} />
         <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js" defer />
         <link
           rel="alternate"
