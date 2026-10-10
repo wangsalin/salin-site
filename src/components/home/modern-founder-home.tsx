@@ -163,7 +163,8 @@ const DESK_TOTEMS = [
     subtitle: "MILK TEA // LOCAL BEVERAGE",
     desc: "走街串巷吃遍临沂，探店两千家实体餐饮的烟火记忆。",
     image: "/images/assets/3d-milktea.png",
-    style: { top: "3%", left: "3%" },
+    posClasses: "top-4 left-3 sm:top-8 sm:left-6 md:top-12 md:left-8",
+    style: { top: "16px", left: "14px" },
     tag: "餐饮烟火",
   },
   {
@@ -172,7 +173,8 @@ const DESK_TOTEMS = [
     subtitle: "STREET FOOD // MERCHANTS",
     desc: "后厨滋滋作响的热气，见证无数小店老板的坚韧奋斗。",
     image: "/images/assets/3d-snack.png",
-    style: { top: "3%", right: "3%" },
+    posClasses: "top-4 right-3 sm:top-8 sm:right-6 md:top-12 md:right-8",
+    style: { top: "16px", right: "14px" },
     tag: "深耕实战",
   },
   {
@@ -181,7 +183,8 @@ const DESK_TOTEMS = [
     subtitle: "ANIME HERO // LUFFY FIGURE",
     desc: "桌面常伴的草帽海贼王：认准了航向就一往无前走到底。",
     image: "/images/assets/3d-figure.png",
-    style: { bottom: "4%", left: "3%" },
+    posClasses: "bottom-6 left-3 sm:bottom-8 sm:left-6 md:bottom-12 md:left-8",
+    style: { bottom: "24px", left: "14px" },
     tag: "少年纯粹",
   },
   {
@@ -190,7 +193,8 @@ const DESK_TOTEMS = [
     subtitle: "CYBER GAMING // GENJI & PAD",
     desc: "深夜敲代码与手柄对决，保持极客专注与极限操作。",
     image: "/images/assets/3d-game.png",
-    style: { bottom: "4%", right: "3%" },
+    posClasses: "bottom-6 right-3 sm:bottom-8 sm:right-6 md:bottom-12 md:right-8",
+    style: { bottom: "24px", right: "14px" },
     tag: "硬核探索",
   },
 ];
@@ -300,7 +304,7 @@ const HeroSection = ({
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.6 }}
-        className="flex w-full items-center justify-between pt-3 sm:pt-4 md:pt-6 z-20"
+        className="flex w-full items-center justify-between px-2 xs:px-4 sm:px-6 pt-3 sm:pt-4 md:pt-6 z-20"
       >
         {/* 左侧品牌 Logo */}
         <a
@@ -313,8 +317,8 @@ const HeroSection = ({
           </span>
         </a>
 
-        {/* 中间核心导航链接：弹性间距，移动端舒展无重叠 */}
-        <div className="flex items-center gap-3.5 sm:gap-6 font-mono text-xs sm:text-sm font-medium uppercase tracking-wider">
+        {/* 中间核心导航链接：间距充裕，文字单行不折行 */}
+        <div className="flex items-center gap-3 xs:gap-4 sm:gap-7 font-mono text-[11px] xs:text-xs sm:text-sm font-medium uppercase tracking-wider">
           <a
             href="#about"
             className="text-[#D7E2EA] transition-opacity hover:opacity-70 whitespace-nowrap"
@@ -335,19 +339,11 @@ const HeroSection = ({
           </a>
         </div>
 
-        {/* 右侧微信号与微信扫码按钮 */}
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            onClick={onReplayOpening}
-            className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 hover:border-emerald-500/40 bg-white/[0.04] hover:bg-emerald-500/10 text-white/70 hover:text-emerald-300 font-mono text-xs transition-colors cursor-pointer"
-            title="重播电影开幕光效"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-            <span>开幕</span>
-          </button>
+        {/* 右侧微信扫码胶囊按钮 */}
+        <div className="flex items-center shrink-0">
           <button
             onClick={onOpenQr}
-            className="px-3 sm:px-3.5 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-[0_0_12px_rgba(16,185,129,0.2)] whitespace-nowrap"
+            className="px-2.5 sm:px-3.5 py-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-[0_0_12px_rgba(16,185,129,0.2)] whitespace-nowrap"
           >
             <Scan className="w-3.5 h-3.5" />
             <span>微信</span>
@@ -362,8 +358,7 @@ const HeroSection = ({
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.15, duration: 0.8, ease: "easeOut" }}
-            className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[12vw] xs:text-[13vw] sm:text-[14.5vw] md:text-[15.5vw] lg:text-[16.5vw] mt-4 sm:mt-2 select-none"
-          >
+            className="hero-heading font-black uppercase tracking-tighter leading-none whitespace-nowrap w-full text-[17.5vw] xs:text-[18.5vw] sm:text-[16vw] md:text-[17vw] lg:text-[17.5vw] mt-2 sm:mt-0 select-none">
             Hi, i&apos;m salin
           </motion.h1>
         </div>
@@ -541,12 +536,12 @@ const AboutSection = ({ onOpenQr }: { onOpenQr: () => void }) => {
           transition={{ delay: 0.1 * i, duration: 0.8 }}
           viewport={{ once: true }}
           style={totem.style}
-          className="absolute z-10 group cursor-pointer flex flex-col items-center"
+          className={`absolute ${totem.posClasses} z-10 group cursor-pointer flex flex-col items-center`}
         >
           <motion.div
             animate={{ y: [0, i % 2 === 0 ? -10 : 10, 0] }}
             transition={{ repeat: Infinity, duration: 4 + i, ease: "easeInOut" }}
-            className="relative w-[72px] xs:w-[90px] sm:w-[140px] md:w-[190px] aspect-square transition-transform group-hover:scale-110 drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]"
+            className="relative w-[115px] xs:w-[130px] sm:w-[160px] md:w-[195px] aspect-square transition-transform group-hover:scale-110 drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]"
           >
             {/* 3D 悬浮霓虹环境光 */}
             <div className="absolute inset-2 rounded-full bg-emerald-500/15 blur-xl -z-10 group-hover:bg-emerald-400/25 transition-all" />
@@ -558,7 +553,7 @@ const AboutSection = ({ onOpenQr }: { onOpenQr: () => void }) => {
           </motion.div>
 
           {/* 悬停说明卡片 */}
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none mt-1 px-3 py-1.5 rounded-xl bg-black/90 border border-emerald-500/40 text-left font-mono text-[11px] shadow-2xl backdrop-blur-md">
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none mt-1 px-3 py-1.5 rounded-xl bg-black/90 border border-emerald-500/40 text-left font-mono text-[11px] shadow-2xl backdrop-blur-md hidden sm:block">
             <span className="text-emerald-400 font-bold block">{totem.name}</span>
             <span className="text-white/70 text-[10px] block">{totem.desc}</span>
           </div>
