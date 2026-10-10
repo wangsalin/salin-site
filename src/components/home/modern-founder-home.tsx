@@ -267,41 +267,28 @@ const PROJECTS_DATA = [
     label: "Flagship AI · 实体商家 AI 获客武器",
     name: "饿狸 youeli.com",
     link: "https://youeli.com",
-    desc: "餐饮营销没思路，问问饿狸。找客流 | 做活动 | 写文案，0.4 秒生成真实餐饮实战方案，后厨毛利动态追踪。",
-    badge: "12年实体餐饮一线方法论打包",
-    // 真实饿狸 3D 实战多联大图
-    img1: "/images/projects/eli/eli-scene-desk.jpg",
-    img2: "/images/projects/eli/eli-scene-kitchen.jpg",
-    img3: "/images/projects/eli/eli-scene-meeting.jpg",
-    type: "eli",
+    img1: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
+    img2: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
+    img3: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85"
   },
   {
     num: "02",
-    label: "Dev Arsenal · 252+ TSX · 原生 MCP",
+    label: "Dev Arsenal · 252+ TSX · MCP",
     name: "Salin UI",
     link: "https://salin.wang/ui",
-    desc: "专为 Cursor、Claude、Antigravity 调教的高美学纯净前端骨架。零冗余三方依赖、复制即用纯 TSX，原生 MCP 协议支持。",
-    badge: "React 19 · Tailwind v4 · 纯净 TSX",
-    command: "npx salin-ui add @mcp/server",
-    // 真实 Salin UI 实景多联图
-    img1: "/images/evidence/ai-dashboard.png",
-    img2: "/images/showcase/salin-hero-workbench.jpg",
-    img3: "/images/showcase/project-salin-ui.jpg",
-    type: "salin-ui",
+    img1: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
+    img2: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
+    img3: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85"
   },
   {
     num: "03",
     label: "2,400+ 商业资产 · 永久免费",
     name: "狗哥资源库 Gouge Hub",
     link: "https://zl.eyu.ink",
-    desc: "12 年摸爬滚打沉淀的商业资产枢纽。涵盖实体餐饮全案策划、连锁运营规范手册、爆款营销话术库与探店短视频脚本。",
-    badge: "2400+ 免费资产 · 终身免费开放",
-    // 真实狗哥资源库多联图
-    img1: "/images/evidence/merchant-service.png",
-    img2: "/images/evidence/local-life.png",
-    img3: "/images/showcase/project-gouge-hub.jpg",
-    type: "gouge-hub",
-  },
+    img1: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
+    img2: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
+    img3: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85"
+  }
 ];
 
 const SERVICES = [
@@ -743,86 +730,68 @@ const ServicesSection = () => {
   );
 };
 
-// 数字军火库单卡：对标 Olivier Larose / Awwwards 顶尖交互的物理层叠卡片 (Cards Parallax)
-const Card = ({
-  i,
-  project,
-  progress,
-  range,
-  targetScale,
-}: {
-  i: number;
-  project: (typeof PROJECTS_DATA)[number];
-  progress: any;
-  range: [number, number];
-  targetScale: number;
-}) => {
-  // 根据滚动进度驱动平滑缩放与深度空间感
-  const scale = useTransform(progress, range, [1, targetScale]);
+const Card = ({ project, index, totalCards }: any) => {
+  const cardRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "start start"],
+  });
+
+  // Calculate dynamic scale. When card reaches top, it slowly scales down as user scrolls further.
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1 - (totalCards - 1 - index) * 0.03]);
 
   return (
-    <div className="h-screen flex items-center justify-center sticky top-0 px-4 sm:px-8 md:px-12 pointer-events-none">
+    <div
+      ref={cardRef}
+      className="sticky h-[85vh] flex items-center justify-center w-full"
+      style={{ top: `${96 + index * 28}px` }}
+    >
       <motion.div
-        style={{
-          scale,
-          top: `calc(4vh + ${i * 28}px)`,
-          transformOrigin: "top center",
-        }}
-        className="w-full max-w-6xl h-[78vh] sm:h-[82vh] max-h-[720px] bg-[#0C0C0C] rounded-[32px] sm:rounded-[44px] md:rounded-[56px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8 flex flex-col justify-between gap-4 md:gap-6 shadow-[0_-25px_60px_rgba(0,0,0,0.95)] overflow-hidden relative pointer-events-auto"
+        style={{ scale }}
+        className="w-full max-w-6xl h-full max-h-[800px] bg-[#0C0C0C] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8 flex flex-col gap-6"
       >
-        {/* 卡片头部 */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 sm:gap-4 shrink-0 border-b border-[#D7E2EA]/15 pb-3 sm:pb-4">
-          <div className="flex items-center gap-4 sm:gap-6 text-left">
-            <span className="font-black text-[clamp(2.4rem,6.5vw,84px)] leading-none text-[#D7E2EA] font-mono">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 shrink-0">
+          <div className="flex items-center gap-6">
+            <span className="font-black text-[clamp(3rem,8vw,100px)] leading-none text-[#D7E2EA] font-mono">
               {project.num}
             </span>
             <div className="flex flex-col">
-              <span className="font-mono text-[#D7E2EA]/60 uppercase tracking-widest text-xs mb-1">
+              <span className="font-light text-[#D7E2EA]/60 uppercase tracking-widest text-sm mb-1 font-mono">
                 {project.label}
               </span>
-              <h3 className="font-medium text-[#D7E2EA] text-[clamp(1.35rem,2.8vw,2.3rem)] tracking-tight">
+              <h3 className="font-medium text-[#D7E2EA] text-[clamp(1.5rem,3vw,2.5rem)]">
                 {project.name}
               </h3>
             </div>
           </div>
-
           <a
             href={project.link}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full border-2 border-[#D7E2EA] px-6 py-2 uppercase tracking-widest text-xs sm:text-sm text-[#D7E2EA] transition-all hover:bg-[#D7E2EA] hover:text-[#0C0C0C] font-mono font-medium whitespace-nowrap inline-flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+            className="rounded-full border-2 border-[#D7E2EA] px-6 py-2 uppercase tracking-widest text-sm text-[#D7E2EA] transition-all hover:bg-[#D7E2EA] hover:text-[#0C0C0C] font-medium whitespace-nowrap cursor-pointer"
           >
-            <span>Live Project</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            Live Project
           </a>
         </div>
 
-        {/* 卡片主视窗：非对称三联真实项目大图 */}
-        <div className="flex flex-col md:flex-row gap-3.5 sm:gap-4 h-full overflow-hidden flex-1 min-h-0">
-          {/* 左侧两联（小图） */}
-          <div className="flex md:flex-col gap-3.5 sm:gap-4 w-full md:w-[42%] h-[42%] md:h-full min-h-0">
-            <div className="w-1/2 md:w-full h-full md:h-[48%] rounded-[20px] sm:rounded-[28px] md:rounded-[36px] overflow-hidden border border-white/10 group bg-neutral-900 min-h-0">
-              <img
-                src={project.img1}
-                alt={`${project.name} 场景 1`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-            </div>
-            <div className="w-1/2 md:w-full h-full md:h-[48%] rounded-[20px] sm:rounded-[28px] md:rounded-[36px] overflow-hidden border border-white/10 group bg-neutral-900 min-h-0 flex-1">
-              <img
-                src={project.img2}
-                alt={`${project.name} 场景 2`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-            </div>
+        <div className="flex flex-col md:flex-row gap-4 h-full overflow-hidden">
+          <div className="flex flex-col gap-4 w-full md:w-[40%] h-full">
+            <img
+              src={project.img1}
+              alt={`${project.name} preview 1`}
+              className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px] h-[clamp(130px,16vw,230px)]"
+            />
+            <img
+              src={project.img2}
+              alt={`${project.name} preview 2`}
+              className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px] h-[clamp(160px,22vw,340px)] flex-1"
+            />
           </div>
-
-          {/* 右侧主宽画幅大图 */}
-          <div className="w-full md:w-[58%] h-[58%] md:h-full min-h-0 rounded-[20px] sm:rounded-[28px] md:rounded-[36px] overflow-hidden border border-white/10 group bg-neutral-900">
+          <div className="w-full md:w-[60%] h-full">
             <img
               src={project.img3}
-              alt={`${project.name} 全景大图`}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              alt={`${project.name} preview 3`}
+              className="w-full h-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
             />
           </div>
         </div>
@@ -831,41 +800,20 @@ const Card = ({
   );
 };
 
-// 数字军火库 (Arsenal) - Awwwards 级平滑物理卡片堆叠与翻页交互
 const ProjectsSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
   return (
     <section
-      ref={containerRef}
       id="projects"
-      className="bg-[#0C0C0C] rounded-t-[36px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 relative pt-20 pb-28 w-full select-none"
+      className="bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 relative px-5 sm:px-8 md:px-10 py-20 pb-40 w-full"
     >
-      <div className="sticky top-6 z-0 text-center mb-6 pointer-events-none">
-        <h2 className="hero-heading font-black uppercase text-[clamp(2.8rem,11vw,150px)] leading-none inline-block">
-          Arsenal
-        </h2>
-      </div>
+      <h2 className="hero-heading font-black uppercase text-center text-[clamp(3rem,12vw,160px)] mb-16 sm:mb-20 md:mb-28">
+        Arsenal
+      </h2>
 
-      <div className="relative">
-        {PROJECTS_DATA.map((project, i) => {
-          const targetScale = 1 - (PROJECTS_DATA.length - 1 - i) * 0.05;
-          const start = i * 0.33;
-          return (
-            <Card
-              key={i}
-              i={i}
-              project={project}
-              progress={scrollYProgress}
-              range={[start, 1]}
-              targetScale={targetScale}
-            />
-          );
-        })}
+      <div className="flex flex-col">
+        {PROJECTS_DATA.map((proj, i) => (
+          <Card key={i} project={proj} index={i} totalCards={PROJECTS_DATA.length} />
+        ))}
       </div>
     </section>
   );
