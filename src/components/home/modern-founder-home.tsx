@@ -426,7 +426,7 @@ const HeroSection = ({
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.15, duration: 0.8, ease: "easeOut" }}
-            className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[13.5vw] sm:text-[14.5vw] md:text-[15.5vw] lg:text-[16.5vw] mt-4 sm:mt-2 select-none"
+            className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[12vw] xs:text-[13vw] sm:text-[14.5vw] md:text-[15.5vw] lg:text-[16.5vw] mt-4 sm:mt-2 select-none"
           >
             Hi, i&apos;m salin
           </motion.h1>
@@ -455,7 +455,7 @@ const HeroSection = ({
       </motion.div>
 
       {/* 底部全宽信息栏 */}
-      <div className="flex w-full items-end justify-between pb-4 sm:pb-6 md:pb-8 relative z-20">
+      <div className="flex flex-col sm:flex-row w-full items-start sm:items-end justify-between gap-4 sm:gap-0 pb-4 sm:pb-6 md:pb-8 relative z-20">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -609,7 +609,7 @@ const AboutSection = ({ onOpenQr }: { onOpenQr: () => void }) => {
           <motion.div
             animate={{ y: [0, i % 2 === 0 ? -10 : 10, 0] }}
             transition={{ repeat: Infinity, duration: 4 + i, ease: "easeInOut" }}
-            className="relative w-[110px] sm:w-[150px] md:w-[190px] aspect-square transition-transform group-hover:scale-110 drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]"
+            className="relative w-[72px] xs:w-[90px] sm:w-[140px] md:w-[190px] aspect-square transition-transform group-hover:scale-110 drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]"
           >
             {/* 3D 悬浮霓虹环境光 */}
             <div className="absolute inset-2 rounded-full bg-emerald-500/15 blur-xl -z-10 group-hover:bg-emerald-400/25 transition-all" />
@@ -743,23 +743,27 @@ const Card = ({ project, index, totalCards }: any) => {
   return (
     <div
       ref={cardRef}
-      className="sticky h-[85vh] flex items-center justify-center w-full"
-      style={{ top: `${96 + index * 28}px`, zIndex: index + 10 }}
+      className="sticky h-[82vh] sm:h-[85vh] flex items-center justify-center w-full"
+      style={{
+        top: `clamp(${56 + index * 16}px, 7vh + ${index * 22}px, ${96 + index * 28}px)`,
+        zIndex: index + 10,
+      }}
     >
       <motion.div
         style={{ scale }}
-        className="w-full max-w-6xl h-full max-h-[800px] bg-[#0C0C0C] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8 flex flex-col gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.9)]"
+        className="w-full max-w-6xl h-full max-h-[820px] bg-[#0C0C0C] rounded-[24px] sm:rounded-[44px] md:rounded-[60px] border-2 border-[#D7E2EA] p-3.5 sm:p-6 md:p-8 flex flex-col gap-3 sm:gap-5 md:gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.95)]"
       >
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 shrink-0">
-          <div className="flex items-center gap-6">
-            <span className="font-black text-[clamp(3rem,8vw,100px)] leading-none text-[#D7E2EA] font-mono">
+        {/* 卡片头部：移动端紧凑自适应，桌面端大气舒展 */}
+        <div className="flex flex-row justify-between items-center sm:items-end gap-3 sm:gap-6 shrink-0 border-b border-[#D7E2EA]/10 pb-2.5 sm:pb-4">
+          <div className="flex items-center gap-3 sm:gap-6">
+            <span className="font-black text-[clamp(2.2rem,6vw,96px)] leading-none text-[#D7E2EA] font-mono">
               {project.num}
             </span>
-            <div className="flex flex-col">
-              <span className="font-light text-[#D7E2EA]/60 uppercase tracking-widest text-sm mb-1 font-mono">
+            <div className="flex flex-col text-left">
+              <span className="font-light text-[#D7E2EA]/60 uppercase tracking-widest text-[10px] sm:text-xs mb-0.5 sm:mb-1 font-mono">
                 {project.label}
               </span>
-              <h3 className="font-medium text-[#D7E2EA] text-[clamp(1.5rem,3vw,2.5rem)]">
+              <h3 className="font-medium text-[#D7E2EA] text-[clamp(1.15rem,2.6vw,2.4rem)] leading-tight">
                 {project.name}
               </h3>
             </div>
@@ -768,30 +772,37 @@ const Card = ({ project, index, totalCards }: any) => {
             href={project.link}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full border-2 border-[#D7E2EA] px-6 py-2 uppercase tracking-widest text-sm text-[#D7E2EA] transition-all hover:bg-[#D7E2EA] hover:text-[#0C0C0C] font-medium whitespace-nowrap cursor-pointer"
+            className="rounded-full border-2 border-[#D7E2EA] px-3.5 py-1.5 sm:px-6 sm:py-2 uppercase tracking-widest text-xs sm:text-sm text-[#D7E2EA] transition-all hover:bg-[#D7E2EA] hover:text-[#0C0C0C] font-medium whitespace-nowrap cursor-pointer shrink-0"
           >
             Live Project
           </a>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 h-full overflow-hidden">
-          <div className="flex flex-col gap-4 w-full md:w-[40%] h-full">
-            <img
-              src={project.img1}
-              alt={`${project.name} preview 1`}
-              className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px] h-[clamp(130px,16vw,230px)]"
-            />
-            <img
-              src={project.img2}
-              alt={`${project.name} preview 2`}
-              className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px] h-[clamp(160px,22vw,340px)] flex-1"
-            />
+        {/* 卡片图像展示：移动端顶置主图+并排双联，桌面端经典 40/60 非对称三联 */}
+        <div className="flex flex-col md:flex-row gap-2.5 sm:gap-4 h-full overflow-hidden flex-1 min-h-0">
+          {/* 左侧两联（移动端并列展示，桌面端上下堆叠） */}
+          <div className="flex flex-row md:flex-col gap-2.5 sm:gap-4 w-full md:w-[40%] h-[36%] md:h-full shrink-0 md:shrink">
+            <div className="w-1/2 md:w-full h-full md:h-[48%] overflow-hidden rounded-[16px] sm:rounded-[32px] md:rounded-[48px] bg-neutral-900">
+              <img
+                src={project.img1}
+                alt={`${project.name} preview 1`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="w-1/2 md:w-full h-full md:h-[48%] overflow-hidden rounded-[16px] sm:rounded-[32px] md:rounded-[48px] bg-neutral-900 flex-1">
+              <img
+                src={project.img2}
+                alt={`${project.name} preview 2`}
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
-          <div className="w-full md:w-[60%] h-full">
+          {/* 右侧主宽画幅大图 */}
+          <div className="w-full md:w-[60%] h-[64%] md:h-full overflow-hidden rounded-[16px] sm:rounded-[32px] md:rounded-[48px] bg-neutral-900 flex-1">
             <img
               src={project.img3}
               alt={`${project.name} preview 3`}
-              className="w-full h-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>
@@ -804,9 +815,9 @@ const ProjectsSection = () => {
   return (
     <section
       id="projects"
-      className="bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 relative px-5 sm:px-8 md:px-10 py-20 pb-40 w-full"
+      className="bg-[#0C0C0C] rounded-t-[36px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 relative px-3.5 sm:px-8 md:px-10 py-16 sm:py-20 pb-36 sm:pb-44 w-full select-none"
     >
-      <h2 className="hero-heading font-black uppercase text-center text-[clamp(3rem,12vw,160px)] mb-16 sm:mb-20 md:mb-28">
+      <h2 className="hero-heading font-black uppercase text-center text-[clamp(2.8rem,11vw,160px)] mb-12 sm:mb-18 md:mb-24">
         Arsenal
       </h2>
 
